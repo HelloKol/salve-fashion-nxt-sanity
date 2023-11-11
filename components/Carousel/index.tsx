@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import Link from "next/link";
 // @ts-ignore
 import Slider from "react-slick";
-// @ts-ignore
 import { motion } from "framer-motion";
 import { Button, ImageTag, Section } from "@/components";
 import ArrowRight from "@/components/svg/ArrowRight";
