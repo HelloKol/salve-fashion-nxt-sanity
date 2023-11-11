@@ -1,0 +1,149 @@
+@import "../../styles/base/variables";
+
+// ==========================================================================
+// Global
+// ==========================================================================
+.dialogOverlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99999;
+}
+
+.dialogContent {
+    display: block;
+    overflow: hidden;
+    overflow-y: scroll;
+    z-index: 999999;
+
+    &.consentCookieBar {
+        height: max-content;
+        width: 100vw;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        padding: 50px 25px 25px 25px;
+        background-color: rgb(255, 255, 255);
+        animation: contentShowCookieBar 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 0px 3px 49px -10px rgba(0, 0, 0, 0.75);
+
+        .closeBtn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+    }
+
+    &.search {
+        height: 100vh;
+        width: 100vw;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgb(255, 255, 255);
+        animation: contentShow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        .closeBtn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            svg {
+                width: 30px;
+                height: 30px;
+            }
+        }
+    }
+
+    &.subscribeNewsLetter {
+        max-height: 500px;
+        max-width: 800px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgb(255, 255, 255);
+        animation: contentShow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        .closeBtn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1;
+        }
+    }
+}
+
+// ==========================================================================
+// Mobile
+// ==========================================================================
+@media (min-width: $breakMobile) {
+    .dialogContent {
+        &.subscribeNewsLetter {
+            .closeBtn {
+                fill: white;
+                svg {
+                    width: 25px;
+                    height: 25px;
+                }
+            }
+        }
+    }
+}
+
+// ==========================================================================
+// Mobile Large
+// ==========================================================================
+@media (min-width: $breakMobileLarge) {
+}
+
+// ==========================================================================
+// Tablet
+// ==========================================================================
+@media (min-width: $breakTablet) {
+}
+
+// ==========================================================================
+// Desktop
+// ==========================================================================
+@media (min-width: $breakDesktop) {
+    .dialogContent {
+        &.subscribeNewsLetter {
+            .closeBtn {
+                fill: black;
+                svg {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+        }
+    }
+}
+
+// ==========================================================================
+// Desktop Large
+// ==========================================================================
+@media (min-width: $breakDesktopLarge) {
+}
+
+@keyframes contentShow {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes contentShowCookieBar {
+    from {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}

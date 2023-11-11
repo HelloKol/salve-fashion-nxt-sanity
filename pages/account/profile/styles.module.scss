@@ -1,0 +1,9 @@
+.productList {
+    grid-column: 1/13;
+}
+.productItem {
+    grid-column: span 4;
+}
+.featureImage {
+    height: 250px;
+}

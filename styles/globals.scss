@@ -1,0 +1,125 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import "./base/variables";
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
+
+body {
+  background-color: #e9ebe0;
+}
+
+a.primary,
+a.secondary,
+a.tertiary {
+  position: relative;
+  padding-left: 30px;
+}
+
+a.primary::before,
+a.secondary::before,
+a.tertiary::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 18px;
+  width: 5px;
+  height: 5px;
+  background: black;
+  border-radius: 100%;
+  transform: translateY(-50%);
+}
+
+a.secondary::before {
+  background: white;
+}
+
+a.secondary:hover::before {
+  background: black;
+}
+
+a.tertiary:hover::before {
+  background: white;
+}
+
+.SelectItem[data-disabled] {
+  color: red;
+  pointer-events: none;
+}
+
+.SelectItem[data-highlighted] {
+  outline: none;
+  background-color: #bebeb8;
+}
+
+.thumbsFragment > div {
+  flex-direction: column !important;
+  gap: 20px;
+}
+
+.categoryImgWrapper:hover img {
+  transition: transform 0.3s ease-in-out;
+  transform: scale(1.2);
+}
+
+/* Customizes the scrollbar */
+::-webkit-scrollbar {
+  width: 8px; /* Adjusts the width of the scrollbar */
+  height: 8px; /* Adjusts the heig.ht of the scrollbar (for horizontal scrollbars) */
+}
+
+/* Customizes the scrollbar track */
+::-webkit-scrollbar-track {
+  background-color: transparent; /* Sets the background color of the scrollbar track */
+  border-radius: 10px; /* Adds rounded corners to the scrollbar track */
+}
+
+/* Customizes the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background-color: rgb(11, 11, 11);
+  border-radius: 10px; /* Adds rounded corners to the scrollbar thumb */
+}
+
+/* Customizes the scrollbar thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(58, 58, 58);
+}
+
+/* Customizes the scrollbar for Firefox */
+* {
+  scrollbar-width: thin; /* Adjusts the width of the scrollbar */
+  scrollbar-color: #888 #f0f0f0; /* Sets the scrollbar thumb and track color */
+}
+
+// ==========================================================================
+// Mobile
+// ==========================================================================
+@media (min-width: $breakMobile) {
+}
+
+// ==========================================================================
+// Mobile Large
+// ==========================================================================
+@media (min-width: $breakMobileLarge) {
+}
+
+// ==========================================================================
+// Tablet
+// ==========================================================================
+@media (min-width: $breakTablet) {
+}
+
+// ==========================================================================
+// Desktop
+// ==========================================================================
+@media (min-width: $breakDesktop) {
+}
+
+// ==========================================================================
+// Desktop Large
+// ==========================================================================
+@media (min-width: $breakDesktopLarge) {
+  article p {
+    margin-bottom: 30px;
+  }
+}
