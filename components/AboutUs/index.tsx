@@ -4,7 +4,7 @@ import { Container, Grid, ImageTag, Section } from "..";
 // Props
 interface Props {}
 
-export default function index({}: Props) {
+export default function AboutUs({}: Props) {
   return (
     <Section>
       <Container>

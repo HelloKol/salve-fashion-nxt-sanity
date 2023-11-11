@@ -11,5 +11,9 @@ export default function index({
   className,
   withPadding = true,
 }: Props) {
-  return <main className={`py-24 ${className}`}>{children}</main>;
+  return (
+    <main className={`${withPadding ? `py-24` : ``} ${className}`}>
+      {children}
+    </main>
+  );
 }

@@ -2,6 +2,7 @@ export { default as AboutUs } from "./AboutUs";
 export { default as Button } from "./Button";
 export { default as Carousel } from "./Carousel";
 export { default as Category } from "./Category";
+export { default as ComingSoon } from "./ComingSoon";
 export { default as Container } from "./Container";
 export { default as FilterProduct } from "./FilterProduct";
 export { default as FollowUs } from "./FollowUs";

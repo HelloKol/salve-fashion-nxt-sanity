@@ -3,14 +3,14 @@ import type { AppProps } from "next/app";
 import { CookiesProvider } from "react-cookie";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ApolloProvider } from "@apollo/client";
-import { Layout } from "@/components";
+import { Layout, ComingSoon } from "@/components";
 import { ShoppingCartProvider } from "@/context/Cart";
 import { AuthProvider } from "@/context/User";
-import { ToastProvider } from "@/context/Toast";
 import { apolloClient, queryClient } from "@/utils";
-import { useEffect } from "react";
 
 export default function App({ Component, pageProps }: AppProps) {
+  return <ComingSoon />;
+
   return (
     <CookiesProvider>
       <ApolloProvider client={apolloClient}>
