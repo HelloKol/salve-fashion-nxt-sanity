@@ -7,7 +7,7 @@ import { Button, ImageTag, Section } from "@/components";
 import ArrowRight from "@/components/svg/ArrowRight";
 import styles from "./styles.module.scss";
 
-export default function index({ collections }) {
+export default function Carousel({ collections }: any) {
   const sliderRef = useRef(null);
 
   const settings = {

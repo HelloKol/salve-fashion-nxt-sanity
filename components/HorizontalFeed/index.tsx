@@ -13,7 +13,7 @@ interface Props {
   href: string;
 }
 
-export default function index({ title, data, href }: Props) {
+export default function HorizontalFeed({ title, data, href }: Props) {
   const feedRef = useRef<HTMLUListElement | null>(null);
   const prevBtnRef = useRef<HTMLButtonElement>(null);
   const nextBtnRef = useRef<HTMLButtonElement>(null);

@@ -22,4 +22,6 @@ const ToastProgress = forwardRef<HTMLDivElement, ToastProgressProps>(
   }
 );
 
+ToastProgress.displayName = "ToastProgress";
+
 export default ToastProgress;

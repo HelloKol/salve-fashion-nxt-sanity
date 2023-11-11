@@ -19,8 +19,8 @@ export default function index({}: Props) {
             <article className="py-6">
               <p>
                 Discover the latest additions to our catalog, now available in
-                our 'New Arrivals' section. Stay ahead of the curve with fresh
-                styles and must-have products.
+                our &apos;New Arrivals&apos; section. Stay ahead of the curve
+                with fresh styles and must-have products.
               </p>
             </article>
           </div>

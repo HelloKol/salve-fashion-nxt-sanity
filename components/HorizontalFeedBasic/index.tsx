@@ -12,7 +12,7 @@ interface Props {
   data: [];
 }
 
-export default function index({ title, data }: Props) {
+export default function HorizontalFeedBasic({ title, data }: Props) {
   const feedRef = useRef<HTMLUListElement | null>(null);
   useDragScroll(feedRef);
 

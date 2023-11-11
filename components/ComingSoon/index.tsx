@@ -45,10 +45,10 @@ const ComingSoon = () => {
               <div className="col-span-12 md:col-start-1 md:col-end-8 lg:col-start-2 lg:col-end-7 xl:col-end-6 pb-8 lg:p-0 content text-left">
                 <h1 className="text-6xl font-semibold mb-4">Coming soon!</h1>
                 <p className="text-lg mb-6">
-                  Our brand new e-commerce store is in the works, and we can't
-                  wait to share it with you. Get ready for an exceptional
-                  shopping experience with the latest products and exclusive
-                  deals.
+                  Our brand new e-commerce store is in the works, and we
+                  can&apos;t wait to share it with you. Get ready for an
+                  exceptional shopping experience with the latest products and
+                  exclusive deals.
                 </p>
 
                 <div id="countdown" className="text-2xl mb-6">
