@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
+// @ts-ignore
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 

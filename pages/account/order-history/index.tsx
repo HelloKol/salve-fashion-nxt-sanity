@@ -48,7 +48,7 @@ export default function OrderHistoryPage({}: PageProps): JSX.Element | null {
 
   const renderOrders = () =>
     data &&
-    data.map((item, index) => {
+    data.map((item: any, index: any) => {
       const { node } = item;
       const orderNo = node?.orderNumber;
       const formattedDate = formatDate(node?.processedAt);

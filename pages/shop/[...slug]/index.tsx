@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+// @ts-ignore
 import { useSpringCarousel } from "react-spring-carousel";
 import {
   Button,
@@ -48,7 +49,7 @@ export default function Page() {
     }),
   });
 
-  useListenToCustomEvent((data) => {
+  useListenToCustomEvent((data: any) => {
     if (data.eventName === "onSlideStartChange") {
       setIndex(data.nextItem.index);
     }
