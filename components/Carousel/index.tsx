@@ -1,14 +1,14 @@
-import React, { useRef } from "react";
-import Link from "next/link";
+import React, { useRef } from "react"
+import Link from "next/link"
 // @ts-ignore
-import Slider from "react-slick";
-import { motion } from "framer-motion";
-import { Button, ImageTag, Section } from "@/components";
-import ArrowRight from "@/components/svg/ArrowRight";
-import styles from "./styles.module.scss";
+import Slider from "react-slick"
+import { motion } from "framer-motion"
+import { Button, ImageTag, Section } from "@/components"
+import ArrowRight from "@/components/svg/ArrowRight"
+import styles from "./styles.module.scss"
 
 export default function Carousel({ collections }: any) {
-  const sliderRef = useRef(null);
+  const sliderRef = useRef(null)
 
   const settings = {
     speed: 1000,
@@ -17,16 +17,16 @@ export default function Carousel({ collections }: any) {
     infinite: true,
     autoplay: false,
     autoplaySpeed: 5000,
-  };
+  }
 
   const renderCollections = () =>
     collections &&
     collections.map((item: any, index: number) => {
-      const { modules, store } = item;
-      const { title, slug, imageUrl } = store;
-      const newTitle = title.split(" ");
-      const thumbnailTop = modules[0];
-      const thumbnailBottom = modules[1];
+      const { modules, store } = item
+      const { title, slug, imageUrl } = store
+      const newTitle = title.split(" ")
+      const thumbnailTop = modules[0]
+      const thumbnailBottom = modules[1]
 
       return (
         <div key={index} className={styles.carouselItem}>
@@ -83,8 +83,8 @@ export default function Carousel({ collections }: any) {
             />
           </div>
         </div>
-      );
-    });
+      )
+    })
 
   return (
     <Section className="overflow-hidden pt-0">
@@ -94,5 +94,5 @@ export default function Carousel({ collections }: any) {
         </Slider>
       </div>
     </Section>
-  );
+  )
 }

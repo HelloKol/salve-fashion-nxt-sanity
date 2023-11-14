@@ -1,11 +1,11 @@
-import React from "react";
-import Link from "next/link";
-import { Button, Container, Grid, ImageTag, Section } from "@/components";
+import React from "react"
+import Link from "next/link"
+import { Button, Container, Grid, ImageTag, Section } from "@/components"
 // Props
 interface Props {
-  title: string;
-  instagramAccount: any;
-  instagramPosts: any;
+  title: string
+  instagramAccount: any
+  instagramPosts: any
 }
 
 export default function index({
@@ -13,31 +13,31 @@ export default function index({
   instagramAccount,
   instagramPosts,
 }: Props) {
-  if (!instagramPosts) return null;
-  const { username } = instagramAccount;
+  if (!instagramPosts) return null
+  const { username } = instagramAccount
 
   const renderInstagramPosts = () =>
     instagramPosts &&
     instagramPosts.slice(0, 8).map((post: any, index: any) => {
-      const { id, media_url, permalink } = post;
+      const { id, media_url, permalink } = post
       return (
         <Link
           key={id}
           href={`${permalink}`}
           target={"_blank"}
-          className="col-span-6 sm:col-span-4 md:col-span-4 xl:col-span-3 h-[200px] sm:h-[300px] md:h-[300px] lg:h-[400px] xl:h-[650px] overflow-hidden rounded-2xl"
+          className="col-span-6 h-[200px] overflow-hidden rounded-2xl sm:col-span-4 sm:h-[300px] md:col-span-4 md:h-[300px] lg:h-[400px] xl:col-span-3 xl:h-[650px]"
         >
           <ImageTag src={media_url} layout="fill" objectFit="cover" />
         </Link>
-      );
-    });
+      )
+    })
 
   return (
     <Section>
       <Container>
         <Grid>
           <Link
-            className="col-span-full sm:text-sm md:text-md lg:text-5xl uppercase"
+            className="md:text-md col-span-full uppercase sm:text-sm lg:text-5xl"
             href={`https://www.instagram.com/${username}`}
             target={"_blank"}
           >
@@ -48,5 +48,5 @@ export default function index({
         </Grid>
       </Container>
     </Section>
-  );
+  )
 }

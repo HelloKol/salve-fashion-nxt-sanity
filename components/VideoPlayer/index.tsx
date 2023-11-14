@@ -1,29 +1,29 @@
-import React, { useRef, useState } from "react";
-import { Section } from "@/components";
+import React, { useRef, useState } from "react"
+import { Section } from "@/components"
 
 interface VideoPlayerProps {
-  videoSrc: string;
+  videoSrc: string
 }
 
 const VideoPlayer = ({ videoSrc }: VideoPlayerProps) => {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [showThumbnail, setShowThumbnail] = useState(true);
-  const thumbnailSrc = `/static/mock_prodct_images/vid.avif`;
+  const videoRef = useRef<HTMLVideoElement | null>(null)
+  const [showThumbnail, setShowThumbnail] = useState(true)
+  const thumbnailSrc = `/static/mock_prodct_images/vid.avif`
 
   const handleVideoClick = () => {
     if (videoRef.current?.paused) {
-      videoRef.current?.play();
-      setShowThumbnail(false);
+      videoRef.current?.play()
+      setShowThumbnail(false)
     } else {
-      videoRef.current?.pause();
+      videoRef.current?.pause()
     }
-  };
+  }
 
   return (
     <Section className="relative">
       {showThumbnail && (
         <div
-          className="w-full cursor-pointer aspect-w-16 aspect-h-9"
+          className="aspect-w-16 aspect-h-9 w-full cursor-pointer"
           onClick={handleVideoClick}
         >
           <img src={thumbnailSrc} />
@@ -42,7 +42,7 @@ const VideoPlayer = ({ videoSrc }: VideoPlayerProps) => {
 
       {showThumbnail && (
         <div
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+          className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 transform"
           onClick={handleVideoClick}
         >
           <svg
@@ -57,7 +57,7 @@ const VideoPlayer = ({ videoSrc }: VideoPlayerProps) => {
         </div>
       )}
     </Section>
-  );
-};
+  )
+}
 
-export default VideoPlayer;
+export default VideoPlayer

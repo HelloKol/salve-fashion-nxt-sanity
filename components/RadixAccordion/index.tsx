@@ -1,14 +1,8 @@
-import React from "react";
-import {
-  Root,
-  Trigger,
-  Header,
-  Content,
-  Item,
-} from "@radix-ui/react-accordion";
-import classNames from "classnames";
-import ChevronDown from "@/components/svg/ChevronDown";
-import styles from "./styles.module.scss";
+import React from "react"
+import { Root, Trigger, Header, Content, Item } from "@radix-ui/react-accordion"
+import classNames from "classnames"
+import ChevronDown from "@/components/svg/ChevronDown"
+import styles from "./styles.module.scss"
 
 const RadixAccordion = () => (
   <Root
@@ -23,12 +17,14 @@ const RadixAccordion = () => (
         <ChevronDown className="h-4 fill-black" />
       </AccordionTrigger>
       <AccordionContent>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-        expedita totam laboriosam, labore a libero tenetur eius impedit est, ea
-        laudantium sapiente illum asperiores? Consequatur reprehenderit tenetur,
-        vero velit mollitia eaque repudiandae voluptas cum nostrum dolorem,
-        tempora repellat, suscipit quaerat tempore minima quisquam esse fugit!
-        Laudantium harum earum adipisci? Vitae!
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
+          expedita totam laboriosam, labore a libero tenetur eius impedit est,
+          ea laudantium sapiente illum asperiores? Consequatur reprehenderit
+          tenetur, vero velit mollitia eaque repudiandae voluptas cum nostrum
+          dolorem, tempora repellat, suscipit quaerat tempore minima quisquam
+          esse fugit! Laudantium harum earum adipisci? Vitae!
+        </p>
       </AccordionContent>
     </Item>
 
@@ -38,12 +34,14 @@ const RadixAccordion = () => (
         <ChevronDown className="h-4 fill-black" />
       </AccordionTrigger>
       <AccordionContent>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-        expedita totam laboriosam, labore a libero tenetur eius impedit est, ea
-        laudantium sapiente illum asperiores? Consequatur reprehenderit tenetur,
-        vero velit mollitia eaque repudiandae voluptas cum nostrum dolorem,
-        tempora repellat, suscipit quaerat tempore minima quisquam esse fugit!
-        Laudantium harum earum adipisci? Vitae!
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
+          expedita totam laboriosam, labore a libero tenetur eius impedit est,
+          ea laudantium sapiente illum asperiores? Consequatur reprehenderit
+          tenetur, vero velit mollitia eaque repudiandae voluptas cum nostrum
+          dolorem, tempora repellat, suscipit quaerat tempore minima quisquam
+          esse fugit! Laudantium harum earum adipisci? Vitae!
+        </p>
       </AccordionContent>
     </Item>
 
@@ -53,12 +51,14 @@ const RadixAccordion = () => (
         <ChevronDown className="h-4 fill-black" />
       </AccordionTrigger>
       <AccordionContent>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-        expedita totam laboriosam, labore a libero tenetur eius impedit est, ea
-        laudantium sapiente illum asperiores? Consequatur reprehenderit tenetur,
-        vero velit mollitia eaque repudiandae voluptas cum nostrum dolorem,
-        tempora repellat, suscipit quaerat tempore minima quisquam esse fugit!
-        Laudantium harum earum adipisci? Vitae!
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
+          expedita totam laboriosam, labore a libero tenetur eius impedit est,
+          ea laudantium sapiente illum asperiores? Consequatur reprehenderit
+          tenetur, vero velit mollitia eaque repudiandae voluptas cum nostrum
+          dolorem, tempora repellat, suscipit quaerat tempore minima quisquam
+          esse fugit! Laudantium harum earum adipisci? Vitae!
+        </p>
       </AccordionContent>
     </Item>
 
@@ -68,16 +68,18 @@ const RadixAccordion = () => (
         <ChevronDown className="h-4 fill-black" />
       </AccordionTrigger>
       <AccordionContent>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-        expedita totam laboriosam, labore a libero tenetur eius impedit est, ea
-        laudantium sapiente illum asperiores? Consequatur reprehenderit tenetur,
-        vero velit mollitia eaque repudiandae voluptas cum nostrum dolorem,
-        tempora repellat, suscipit quaerat tempore minima quisquam esse fugit!
-        Laudantium harum earum adipisci? Vitae!
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
+          expedita totam laboriosam, labore a libero tenetur eius impedit est,
+          ea laudantium sapiente illum asperiores? Consequatur reprehenderit
+          tenetur, vero velit mollitia eaque repudiandae voluptas cum nostrum
+          dolorem, tempora repellat, suscipit quaerat tempore minima quisquam
+          esse fugit! Laudantium harum earum adipisci? Vitae!
+        </p>
       </AccordionContent>
     </Item>
   </Root>
-);
+)
 
 const AccordionTrigger = React.forwardRef(
   (
@@ -86,7 +88,7 @@ const AccordionTrigger = React.forwardRef(
   ) => (
     <Header className={styles.AccordionHeader}>
       <Trigger
-        className={classNames(styles.AccordionTrigger, className)}
+        className={`py-8 ${styles.AccordionTrigger}`}
         {...props}
         ref={forwardedRef}
       >
@@ -94,7 +96,7 @@ const AccordionTrigger = React.forwardRef(
       </Trigger>
     </Header>
   )
-);
+)
 
 const AccordionContent = React.forwardRef(
   (
@@ -106,12 +108,14 @@ const AccordionContent = React.forwardRef(
       {...props}
       ref={forwardedRef}
     >
-      <article className={styles.AccordionContentText}>{children}</article>
+      <article className={`pb-4 text-lg ${styles.AccordionContentText}`}>
+        {children}
+      </article>
     </Content>
   )
-);
+)
 
-AccordionTrigger.displayName = "AccordionTrigger";
-AccordionContent.displayName = "AccordionContent";
+AccordionTrigger.displayName = "AccordionTrigger"
+AccordionContent.displayName = "AccordionContent"
 
-export default RadixAccordion;
+export default RadixAccordion

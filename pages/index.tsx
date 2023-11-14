@@ -1,5 +1,5 @@
-import { GetStaticPropsResult } from "next";
-import groq from "groq";
+import { GetStaticPropsResult } from "next"
+import groq from "groq"
 import {
   AboutUs,
   Carousel,
@@ -9,18 +9,18 @@ import {
   Main,
   NewArrivals,
   VideoPlayer,
-} from "@/components";
-import { ShopifyProduct } from "@/types";
-import { ALL_PRODUCTS } from "@/services/queries";
-import { graphqlClient } from "@/utils/graphql";
-import { sanityClient } from "@/utils/sanity";
-import Head from "next/head";
+} from "@/components"
+import { ShopifyProduct } from "@/types"
+import { ALL_PRODUCTS } from "@/services/queries"
+import { graphqlClient } from "@/utils/graphql"
+import { sanityClient } from "@/utils/sanity"
+import Head from "next/head"
 
 interface props {
-  page: any;
-  products: ShopifyProduct[];
-  instagramAccount: any;
-  instagramPosts: any;
+  page: any
+  products: ShopifyProduct[]
+  instagramAccount: any
+  instagramPosts: any
 }
 
 export default function Home({
@@ -29,8 +29,8 @@ export default function Home({
   instagramAccount,
   instagramPosts,
 }: props): JSX.Element | null {
-  if (!page) return null;
-  const { body, collections } = page;
+  if (!page) return null
+  const { body, collections } = page
 
   return (
     <>
@@ -52,7 +52,7 @@ export default function Home({
         />
       </Main>
     </>
-  );
+  )
 }
 
 export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
@@ -80,20 +80,19 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
       },
     }
     `
-    );
+    )
 
-    const products: any = await graphqlClient.request(ALL_PRODUCTS);
+    const products: any = await graphqlClient.request(ALL_PRODUCTS)
 
     const instagramAccountRes = await fetch(
       `https://salvefashion.com/api/instagramAccount?accessToken=${process.env.NEXT_PUBLIC_INSTAGRAM_ACCESS_TOKEN}`
-    );
-    const instagramAccount = await instagramAccountRes.json();
+    )
+    const instagramAccount = await instagramAccountRes.json()
     const instagramPostsRes = await fetch(
       `https://salvefashion.com/api/instagramPosts?accessToken=${process.env.NEXT_PUBLIC_INSTAGRAM_ACCESS_TOKEN}`
-    );
-    const instagramPostsData = await instagramPostsRes.json();
-    const instagramPosts = instagramPostsData.data ?? [];
-    console.log(instagramAccount, instagramPosts, "<<<<<< PAGE");
+    )
+    const instagramPostsData = await instagramPostsRes.json()
+    const instagramPosts = instagramPostsData.data ?? []
 
     return {
       props: {
@@ -103,10 +102,10 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
         instagramPosts,
       },
       revalidate: 60,
-    };
+    }
   } catch (err) {
     return {
       notFound: true,
-    };
+    }
   }
 }

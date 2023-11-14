@@ -1,9 +1,9 @@
-import React from "react";
+import React from "react"
 // Props
 interface Props {
-  children: React.ReactNode | React.ReactNode[];
-  className?: string;
-  withPadding?: boolean;
+  children: React.ReactNode | React.ReactNode[]
+  className?: string
+  withPadding?: boolean
 }
 
 export default function index({
@@ -12,8 +12,8 @@ export default function index({
   withPadding = true,
 }: Props) {
   return (
-    <main className={`${withPadding ? `py-24` : ``} ${className}`}>
+    <main className={`${withPadding ? `py-24` : ``} ${className || ""}`}>
       {children}
     </main>
-  );
+  )
 }

@@ -21,7 +21,6 @@
 }
 
 .AccordionTrigger {
-    padding: 10px 0 10px 0;
     height: 45px;
     flex: 1;
     display: flex;
@@ -43,6 +42,9 @@
     font-size: 15px;
     color: var(--mauve-11);
     max-width: 1000px;
+    p {
+        margin: 0;
+    }
 }
 
 .AccordionContent[data-state="open"] {
@@ -53,17 +55,8 @@
     animation: slideUp 300ms cubic-bezier(0.87, 0, 0.13, 1);
 }
 
-.AccordionContentText {
-    padding: 15px 0 30px 0;
-}
-
 .AccordionTrigger {
     text-transform: uppercase;
-    padding: 40px 0 40px 0;
-}
-
-.AccordionContentText {
-    font-size: 20px;
 }
 
 @keyframes slideDown {

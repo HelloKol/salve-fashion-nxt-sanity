@@ -1,7 +1,7 @@
-import React from "react";
-import Link from "next/link";
+import React from "react"
+import Link from "next/link"
 // Components
-import { Container, Grid, ImageTag, Section } from "@/components";
+import { Container, Grid, ImageTag, Section } from "@/components"
 
 // Props
 interface Props {}
@@ -12,7 +12,7 @@ export default function index({}: Props) {
       <Container>
         <Grid>
           <div className="col-span-full lg:col-start-1 lg:col-end-4">
-            <h1 className="row-span-1 text-3xl text-4xl md:text-5xl lg:text-5xl xl:text-6xl uppercase">
+            <h1 className="row-span-1 text-3xl text-4xl uppercase md:text-5xl lg:text-5xl xl:text-6xl">
               New Arrivals
             </h1>
 
@@ -30,7 +30,7 @@ export default function index({}: Props) {
             href={`/shop/asd`}
           >
             <div
-              className={`w-full h-[500px] md:h-[470px] lg:h-[550px] xl:h-[650px] rounded-2xl overflow-hidden`}
+              className={`h-[500px] w-full overflow-hidden rounded-2xl md:h-[470px] lg:h-[550px] xl:h-[650px]`}
             >
               <ImageTag src="/static/mock_prodct_images/hoodie_3.webp" />
             </div>
@@ -43,7 +43,7 @@ export default function index({}: Props) {
             href={`/shop/asd`}
           >
             <div
-              className={`w-full h-[500px] md:h-[470px] lg:h-[550px] xl:h-[650px] rounded-2xl overflow-hidden`}
+              className={`h-[500px] w-full overflow-hidden rounded-2xl md:h-[470px] lg:h-[550px] xl:h-[650px]`}
             >
               <ImageTag src="/static/mock_prodct_images/hoodie_2.webp" />
             </div>
@@ -52,11 +52,11 @@ export default function index({}: Props) {
           </Link>
 
           <Link
-            className={`col-start-1 col-end-13 lg:col-start-8 lg:col-end-13 lg:row-start-1 lg:row-end-3 xl:col-start-7 xl:col-end-13 xl:row-start-1 xl:row-end-3 h-full`}
+            className={`col-start-1 col-end-13 h-full lg:col-start-8 lg:col-end-13 lg:row-start-1 lg:row-end-3 xl:col-start-7 xl:col-end-13 xl:row-start-1 xl:row-end-3`}
             href={`/shop/asd`}
           >
             <div
-              className={`h-[500px] md:h-[800px] lg:h-full w-full rounded-2xl overflow-hidden`}
+              className={`h-[500px] w-full overflow-hidden rounded-2xl md:h-[800px] lg:h-full`}
             >
               <ImageTag src="/static/mock_prodct_images/hoodie_1.webp" />
             </div>
@@ -66,5 +66,5 @@ export default function index({}: Props) {
         </Grid>
       </Container>
     </Section>
-  );
+  )
 }
