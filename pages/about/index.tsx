@@ -2,7 +2,7 @@ import React from "react"
 import Head from "next/head"
 import { Container, Grid, ImageTag, Section } from "@/components"
 
-export default function AboutPage() {
+export default function Page() {
   return (
     <>
       <Head>

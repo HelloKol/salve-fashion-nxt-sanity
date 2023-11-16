@@ -2,7 +2,7 @@ import React from "react"
 import Link from "next/link"
 import { Container, Grid, ImageTag, Section } from "@/components"
 
-export default function index() {
+export default function Page() {
   return (
     <Section className="py-24 lg:py-14">
       <Container>

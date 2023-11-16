@@ -9,10 +9,14 @@ import {
   Main,
   Section,
 } from "@/components"
+import { useWindowDimension } from "@/hooks"
 
-export default function MenPage() {
-  const initialTrimLength = 140
+export default function Page() {
+  const { isMobile, isMobileLarge, isTablet, isDesktop, isWidescreen } =
+    useWindowDimension()
   const [showFullArticle, setShowFullArticle] = useState(false)
+
+  const initialTrimLength = 140
   const trimLength = showFullArticle ? Infinity : initialTrimLength
 
   const articleText = `

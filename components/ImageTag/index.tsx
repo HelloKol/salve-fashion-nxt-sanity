@@ -1,5 +1,5 @@
-import React from "react";
-import Image from "next/image";
+import React from "react"
+import Image from "next/image"
 
 export default function ImageTag({
   src,
@@ -9,15 +9,15 @@ export default function ImageTag({
   quality,
   priority,
 }: {
-  src: string;
-  alt?: string;
-  layout?: string;
-  objectFit?: string;
-  quality?: number;
-  priority?: boolean;
+  src: string
+  alt?: string
+  layout?: string
+  objectFit?: string
+  quality?: number
+  priority?: boolean
 }) {
   return (
-    <div className="relative w-full h-full">
+    <div className="relative h-full w-full">
       <Image
         src={src}
         alt={alt}
@@ -28,5 +28,5 @@ export default function ImageTag({
         priority={priority}
       />
     </div>
-  );
+  )
 }

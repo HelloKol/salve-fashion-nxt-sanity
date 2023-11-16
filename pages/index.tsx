@@ -23,7 +23,7 @@ interface props {
   instagramPosts: any
 }
 
-export default function Home({
+export default function Page({
   page,
   products,
   instagramAccount,

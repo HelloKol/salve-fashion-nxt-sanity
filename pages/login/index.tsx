@@ -6,7 +6,7 @@ import { useDialogBox, useLoginForm } from "@/hooks"
 import { useToastOpen } from "@/context/Toast"
 import styles from "./styles.module.scss"
 
-export default function LoginPage() {
+export default function Page() {
   const loginToast = useDialogBox()
   const {
     register,

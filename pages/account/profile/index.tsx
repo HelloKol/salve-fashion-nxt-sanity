@@ -1,19 +1,19 @@
-import { GetStaticPropsResult } from "next";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { Main, Section, Container, Grid, Button, Logout } from "@/components";
-import { sanityClient } from "@/utils/sanity";
-import styles from "./styles.module.scss";
+import { GetStaticPropsResult } from "next"
+import Head from "next/head"
+import { useRouter } from "next/router"
+import { Main, Section, Container, Grid, Button, Logout } from "@/components"
+import { sanityClient } from "@/utils/sanity"
+import styles from "./styles.module.scss"
 
 const navigationLinks = [
   { href: "/account/profile", text: "Account" },
   { href: "/account/order-history", text: "Order history" },
-];
+]
 
 interface PageProps {}
 
-export default function AccountProfilePage({}: PageProps): JSX.Element | null {
-  const router = useRouter();
+export default function Page({}: PageProps): JSX.Element | null {
+  const router = useRouter()
 
   return (
     <>
@@ -41,5 +41,5 @@ export default function AccountProfilePage({}: PageProps): JSX.Element | null {
         </Section>
       </Main>
     </>
-  );
+  )
 }

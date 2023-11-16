@@ -9,7 +9,7 @@ import Phone from "@/components/svg/Phone"
 
 interface PageProps {}
 
-export default function index({}: PageProps): JSX.Element | null {
+export default function Page({}: PageProps): JSX.Element | null {
   return (
     <Main withPadding>
       <Section>

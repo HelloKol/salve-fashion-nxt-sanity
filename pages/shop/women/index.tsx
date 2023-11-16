@@ -10,7 +10,7 @@ import {
   Section,
 } from "@/components"
 
-export default function WomenPage() {
+export default function Page() {
   const initialTrimLength = 140
   const [showFullArticle, setShowFullArticle] = useState(false)
   const trimLength = showFullArticle ? Infinity : initialTrimLength
