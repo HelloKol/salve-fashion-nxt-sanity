@@ -43,8 +43,8 @@ export default function Page({
         <AboutUs />
         <NewArrivals />
         <Category />
-        <HorizontalFeed title={"New In Women"} data={[]} href={`/shop/women`} />
         <VideoPlayer videoSrc={"/static/video/y2.mp4"} />
+        <HorizontalFeed title={"New In Women"} data={[]} href={`/shop/women`} />
         <FollowUs
           title={"Follow us on instagram"}
           instagramAccount={instagramAccount}
