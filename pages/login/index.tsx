@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
-import Head from "next/head";
-import Link from "next/link";
-import { Button, Container, Grid, ImageTag, Section } from "@/components";
-import { useDialogBox, useLoginForm } from "@/hooks";
-import { useToastOpen } from "@/context/Toast";
-import styles from "./styles.module.scss";
+import React, { useEffect } from "react"
+import Head from "next/head"
+import Link from "next/link"
+import { Button, Container, Grid, ImageTag, Section } from "@/components"
+import { useDialogBox, useLoginForm } from "@/hooks"
+import { useToastOpen } from "@/context/Toast"
+import styles from "./styles.module.scss"
 
 export default function LoginPage() {
-  const loginToast = useDialogBox();
+  const loginToast = useDialogBox()
   const {
     register,
     handleSubmit,
@@ -16,21 +16,19 @@ export default function LoginPage() {
     onSubmit,
     isLoading,
     isSucess,
-  } = useLoginForm();
+  } = useLoginForm()
 
   useEffect(() => {
     if (document) {
-      const email = document?.getElementById(
-        "email"
-      ) as HTMLInputElement | null;
-      if (email) email.value = "";
+      const email = document?.getElementById("email") as HTMLInputElement | null
+      if (email) email.value = ""
 
       const password = document?.getElementById(
         "password"
-      ) as HTMLInputElement | null;
-      if (password) password.value = "";
+      ) as HTMLInputElement | null
+      if (password) password.value = ""
     }
-  }, []);
+  }, [])
 
   // useToastOpen(false, false, isSucess, loginToast.close, {
   //   description: (
@@ -45,43 +43,45 @@ export default function LoginPage() {
   // });
 
   return (
-    <Section className="py-14">
+    <Section className="py-24 lg:py-14">
       <Container>
-        <Grid className="min-h-screen">
-          <div className="col-span-6 mt-24 flex flex-col justify-between">
+        <Grid className="lg:min-h-screen">
+          <div className="col-span-full row-start-2	mt-8 flex flex-col justify-between lg:col-span-6 lg:row-start-1 lg:mt-24">
             <div className="text-center">
-              <p className="uppercase text-xl">Largest Image Source</p>
-              <h1 className="mt-8 uppercase text-8xl">
+              <p className="hidden text-xl uppercase lg:block">
+                Largest Image Source
+              </p>
+              <h1 className="mt-8 hidden text-xl uppercase lg:block lg:text-7xl xl:text-8xl">
                 Powered by creators aroudn the world
               </h1>
-              <p className="mt-36">Don&apos;t have an account?</p>
+              <p className="lg:mt-14 xl:mt-28">Don&apos;t have an account?</p>
               <Link
-                className="inline-block mt-4 border-b-2 border-black"
-                href={`/`}
+                className="inline-block border-b-2 border-black"
+                href={`/register`}
               >
                 Create account
               </Link>
             </div>
-            <div className="mt-32 w-full h-72 overflow-hidden rounded-2xl">
+            <div className="mt-44 hidden w-full overflow-hidden rounded-2xl lg:block lg:h-56 xl:h-72">
               <ImageTag src="/static/images/product1.jpg" />
             </div>
           </div>
 
-          <div className="relative col-span-6">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-8/12 max-w-[520px] p-4 bg-[#ffffff] rounded-2xl">
-              <p className="text-center text-xl">Login to your account</p>
+          <div className="relative col-span-full md:col-start-4 md:col-end-10 lg:col-span-6">
+            <div className="z-10 w-8/12 w-full rounded-2xl lg:absolute lg:left-1/2 lg:top-1/2 lg:w-9/12 lg:max-w-[520px] lg:-translate-x-1/2 lg:-translate-y-1/2 lg:bg-[#ffffff] lg:p-4">
+              <p className="text-center text-3xl">Login to your account</p>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mt-6">
                   <label
                     htmlFor="email"
-                    className="block mb-2 text-sm font-medium text-gray-500"
+                    className="mb-2 block text-sm font-medium text-gray-500"
                   >
                     Email
                   </label>
                   <input
                     type="text"
                     id="email"
-                    className="border-b-2 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="block w-full border-b-2 border-gray-300 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                     placeholder="Enter your email"
                     required
                     {...register("email")}
@@ -91,14 +91,14 @@ export default function LoginPage() {
                 <div className="mt-6">
                   <label
                     htmlFor="password"
-                    className="block mb-2 text-sm font-medium text-gray-500"
+                    className="mb-2 block text-sm font-medium text-gray-500"
                   >
                     Password
                   </label>
                   <input
                     type="password"
                     id="password"
-                    className="border-b-2 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="block w-full border-b-2 border-gray-300 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                     placeholder="Enter your password"
                     required
                     {...register("password")}
@@ -111,7 +111,7 @@ export default function LoginPage() {
                       id="link-checkbox"
                       type="checkbox"
                       value=""
-                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
                     />
                     <label
                       htmlFor="link-checkbox"
@@ -121,11 +121,13 @@ export default function LoginPage() {
                     </label>
                   </div>
 
-                  <Link href={`/`}>Forgot your password?</Link>
+                  <Link className="text-sm" href={`/`}>
+                    Forgot your password?
+                  </Link>
                 </div>
 
                 <button
-                  className="mt-6 w-full h-fit shrink-0 bg-[#171717] rounded-xl py-4 flex items-center justify-center text-white text-sm uppercase"
+                  className="mt-6 flex h-fit w-full shrink-0 items-center justify-center rounded-xl bg-[#171717] py-4 text-sm uppercase text-white"
                   type="submit"
                 >
                   {isLoading ? "Loading...." : "LogIn"}
@@ -133,22 +135,18 @@ export default function LoginPage() {
 
                 {globalError && <p>{globalError}</p>}
 
-                {/* <Button variant={"primary"} onClick={loginToast.open}>
-                  Test
-                </Button> */}
-
-                <div className="mt-6 w-full h-24 overflow-hidden rounded-2xl">
+                <div className="mt-6 hidden h-28 w-full overflow-hidden rounded-2xl lg:block">
                   <ImageTag src="/static/images/product1.jpg" />
                 </div>
               </form>
             </div>
 
-            <div className=" w-full h-full overflow-hidden rounded-2xl">
+            <div className="hidden h-full w-full overflow-hidden rounded-2xl lg:block">
               <ImageTag src="/static/images/product1.jpg" />
             </div>
           </div>
         </Grid>
       </Container>
     </Section>
-  );
+  )
 }

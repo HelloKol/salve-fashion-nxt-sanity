@@ -10,7 +10,7 @@ import {
   Section,
 } from "@/components"
 
-export default function MenPage() {
+export default function WomenPage() {
   const initialTrimLength = 140
   const [showFullArticle, setShowFullArticle] = useState(false)
   const trimLength = showFullArticle ? Infinity : initialTrimLength
@@ -63,7 +63,7 @@ export default function MenPage() {
           <Container>
             <Grid>
               <h1 className="col-span-full mt-10 text-3xl md:text-5xl xl:mt-20">
-                All Men
+                All Women
               </h1>
 
               <article className="col-span-full text-sm md:col-end-10 md:text-xl xl:mt-2">
