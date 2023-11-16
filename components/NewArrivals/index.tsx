@@ -12,7 +12,7 @@ export default function index({}: Props) {
       <Container>
         <Grid>
           <div className="col-span-full lg:col-start-1 lg:col-end-4">
-            <h1 className="row-span-1 text-3xl text-4xl uppercase md:text-5xl lg:text-5xl xl:text-6xl">
+            <h1 className="row-span-1 uppercase sm:text-3xl md:text-4xl xl:text-5xl">
               New Arrivals
             </h1>
 

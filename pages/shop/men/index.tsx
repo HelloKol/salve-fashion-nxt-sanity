@@ -10,21 +10,26 @@ import {
   Section,
 } from "@/components"
 import { useWindowDimension } from "@/hooks"
+import styles from "./styles.module.scss"
 
 export default function Page() {
   const { isMobile, isMobileLarge, isTablet, isDesktop, isWidescreen } =
     useWindowDimension()
   const [showFullArticle, setShowFullArticle] = useState(false)
-
-  const initialTrimLength = 140
+  const initialTrimLength =
+    isMobile || isMobileLarge
+      ? 120
+      : isTablet
+        ? 135
+        : isDesktop
+          ? 175
+          : isWidescreen
+            ? 280
+            : 140
   const trimLength = showFullArticle ? Infinity : initialTrimLength
 
   const articleText = `
-    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-    Necessitatibus doloremque pariatur impedit voluptatem numquam
-    quibusdam mollitia tempore exercitationem assumenda accusamus
-    modi, sequi eius saepe. Consequuntur accusamus beatae esse
-    omnis incidunt!
+ The latest women's jackets and coats collection offers endless styles for your closet this season, find statement pieces with our women's long coats. Our outerwear seamlessly weaves signature aesthetics with functional features. Discover our range of women's puffer jackets for premium style insulated jackets that are versatile enough for any occasion. The iconic Superdry women's windcheater has been re-designed for the new season with cropped fits. Our women's leather jackets are the ideal solution for superior fit, offering beautifully crafted jackets in premium leather. Shop our range of women's t-shirts for an effortless combination with your jackets and coats to complete your casual outfits. Shop a women's parka coat for premium style and lavish warmth, and discover our recycled-fill jackets for a low-impact jacket choice.
   `.trim()
 
   const trimArticle = (str: string) => {
@@ -46,8 +51,27 @@ export default function Page() {
           className="col-span-6 mb-8 lg:mb-12 xl:col-span-4 xl:mb-14"
         >
           <Link href={`/shop/asd`} className="block">
-            <div className="h-60 w-full overflow-hidden rounded-2xl sm:h-80 md:h-[500px] lg:h-[700px] xl:h-[800px]">
+            <div
+              className={`group relative h-60 w-full overflow-hidden rounded-2xl sm:h-80 md:h-[500px] lg:h-[700px] xl:h-[800px] ${styles.imageWrapper}`}
+            >
               <ImageTag src="/static/images/product2.jpg" />
+
+              <div
+                className={`duration-250 absolute bottom-0 left-0 right-0 top-0 bg-black bg-opacity-60 opacity-0 transition-opacity ease-in-out group-hover:opacity-100 ${styles.feedInner}`}
+              >
+                <div
+                  className={`flex items-center justify-center ${styles.feedInner}`}
+                >
+                  <div className={`flex flex-col gap-4`}>
+                    <Button variant={"quaternary"} href={`/`}>
+                      Add to cart
+                    </Button>
+                    <Button variant={"secondary"} href={`/`}>
+                      Learn more
+                    </Button>
+                  </div>
+                </div>
+              </div>
             </div>
             <p className="mt-4 text-sm font-bold uppercase text-gray-600 lg:text-lg">
               Classic Beanies
@@ -70,7 +94,7 @@ export default function Page() {
                 All Men
               </h1>
 
-              <article className="col-span-full text-sm md:col-end-10 md:text-xl xl:mt-2">
+              <article className="col-span-full text-sm md:col-end-11 md:text-xl xl:col-end-9 xl:mt-2">
                 <p className="m-0">{trimArticle(articleText)}</p>
                 {articleText.length > initialTrimLength && (
                   <span

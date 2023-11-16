@@ -9,9 +9,9 @@ export default function index({}: Props) {
     <Section>
       <Container>
         <Grid>
-          <h5 className="col-start-1 col-end-13 row-span-1 text-3xl uppercase sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl">
+          <h1 className="col-start-1 col-end-13 row-span-1 text-3xl uppercase md:text-4xl xl:text-5xl">
             Categories
-          </h5>
+          </h1>
           <div className="col-span-full flex flex-col lg:flex-row">
             <Link
               href={`/shop/men`}

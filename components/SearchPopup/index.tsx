@@ -1,25 +1,24 @@
-import React from "react";
-import { Button, Container, ImageTag, RadixDialog } from "@/components";
-import { useSearchForm } from "@/hooks";
-import styles from "./styles.module.scss";
+import React from "react"
+import { Container, HorizontalFeedBasic, RadixDialog } from "@/components"
+import { useSearchForm } from "@/hooks"
 
 interface props {
-  isSearchOpen: boolean;
-  setIsSearchOpen: (isOpen: boolean) => void;
+  isSearchOpen: boolean
+  setIsSearchOpen: (isOpen: boolean) => void
 }
 
 export default function SearchPopup({ isSearchOpen, setIsSearchOpen }: props) {
   const { register, handleSubmit, globalError, onSubmit } =
-    useSearchForm(setIsSearchOpen);
+    useSearchForm(setIsSearchOpen)
 
   const handleClear = () => {
     if (document) {
       const search = document?.getElementById(
         "search"
-      ) as HTMLInputElement | null;
-      if (search) search.value = "";
+      ) as HTMLInputElement | null
+      if (search) search.value = ""
     }
-  };
+  }
 
   return (
     <RadixDialog
@@ -27,8 +26,8 @@ export default function SearchPopup({ isSearchOpen, setIsSearchOpen }: props) {
       isOpen={isSearchOpen}
       setIsOpen={setIsSearchOpen}
     >
-      <Container>
-        <p className="text-5xl text-center">
+      <Container className="py-10 md:py-12 lg:py-14">
+        <p className="text-center text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
           Search by <br />
           Collections,Products
         </p>
@@ -36,14 +35,14 @@ export default function SearchPopup({ isSearchOpen, setIsSearchOpen }: props) {
         <form className="mt-14">
           <label
             htmlFor="search"
-            className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+            className="sr-only mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
             Search product or collection
           </label>
           <div className="relative">
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               <svg
-                className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                className="h-4 w-4 text-gray-500 dark:text-gray-400"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -61,13 +60,13 @@ export default function SearchPopup({ isSearchOpen, setIsSearchOpen }: props) {
             <input
               type="search"
               id="search"
-              className="block w-full p-4 pl-10 text-sm text-black border-b-[1px] border-black"
+              className="block w-full border-b-[1px] border-black p-4 pl-10 text-sm text-black"
               placeholder="Search product or collection"
               required
             />
             <button
               type="submit"
-              className="text-gray-500 hover:text-black ease-in-out duration-300 absolute right-2.5 bottom-2.5 bg-none focus:outline-none text-sm pl-4 py-2"
+              className="absolute bottom-2.5 right-2.5 bg-none py-2 pl-4 text-sm text-gray-500 duration-300 ease-in-out hover:text-black focus:outline-none"
             >
               Search
             </button>
@@ -79,7 +78,7 @@ export default function SearchPopup({ isSearchOpen, setIsSearchOpen }: props) {
           <li>
             <button
               type="button"
-              className="text-gray-500 hover:text-black ease-in-out duration-300 bg-none focus:outline-none text-sm"
+              className="bg-none text-sm text-gray-500 duration-300 ease-in-out hover:text-black focus:outline-none"
             >
               Ring
             </button>
@@ -87,7 +86,7 @@ export default function SearchPopup({ isSearchOpen, setIsSearchOpen }: props) {
           <li>
             <button
               type="button"
-              className="text-gray-500 hover:text-black ease-in-out duration-300 bg-none focus:outline-none text-sm"
+              className="bg-none text-sm text-gray-500 duration-300 ease-in-out hover:text-black focus:outline-none"
             >
               Hat
             </button>
@@ -95,7 +94,7 @@ export default function SearchPopup({ isSearchOpen, setIsSearchOpen }: props) {
           <li>
             <button
               type="button"
-              className="text-gray-500 hover:text-black ease-in-out duration-300 bg-none focus:outline-none text-sm"
+              className="bg-none text-sm text-gray-500 duration-300 ease-in-out hover:text-black focus:outline-none"
             >
               Coats
             </button>
@@ -103,7 +102,7 @@ export default function SearchPopup({ isSearchOpen, setIsSearchOpen }: props) {
           <li>
             <button
               type="button"
-              className="text-gray-500 hover:text-black ease-in-out duration-300 bg-none focus:outline-none text-sm"
+              className="bg-none text-sm text-gray-500 duration-300 ease-in-out hover:text-black focus:outline-none"
             >
               Jacket
             </button>
@@ -111,34 +110,8 @@ export default function SearchPopup({ isSearchOpen, setIsSearchOpen }: props) {
         </ul>
 
         <p className="mt-14 text-lg uppercase">products</p>
-        <ul className="gap-4 grid grid-cols-[auto auto] grid-flow-col overflow-x-auto overflow-y-auto overscroll-contain snap-x scroll-smooth">
-          {[1, 1, 1, 1, 1].map((item, index) => (
-            <li key={index}>
-              <div
-                className={`h-[500px] overflow-hidden rounded-2xl ${styles.imageWrapper}`}
-              >
-                <ImageTag src="/static/images/product1.jpg" />
-                <div
-                  className={`flex items-center justify-center ${styles.feedInner}`}
-                >
-                  <div className={`flex flex-col gap-4`}>
-                    <Button variant={"quaternary"} href={`/`}>
-                      Add to cart
-                    </Button>
-                    <Button variant={"secondary"} href={`/`}>
-                      Learn more
-                    </Button>
-                  </div>
-                </div>
-              </div>
-              <div className="flex justify-between">
-                <p className="text-lg uppercase">Classic Beanies</p>
-                <p className="text-lg uppercase">£122.34</p>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <HorizontalFeedBasic data={[]} />
       </Container>
     </RadixDialog>
-  );
+  )
 }
