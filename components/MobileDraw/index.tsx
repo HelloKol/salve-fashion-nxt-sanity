@@ -1,36 +1,36 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
-import { useShoppingCart } from "@/context/Cart";
-import Close from "../svg/Close";
-import Hamburger from "../svg/Hamburger";
-import Search from "../svg/Search";
-import Bag from "../svg/Bag";
-import styles from "./styles.module.scss";
-import { Button, Container, SearchPopup } from "..";
-import { useDialogBox, useHeaderCollapse } from "@/hooks";
-import FullLogoStack from "../svg/FullLogoStack";
-import User from "../svg/User";
+import Link from "next/link"
+import { useRouter } from "next/router"
+import { useState, useEffect } from "react"
+import { useShoppingCart } from "@/context/Cart"
+import { Container, SearchPopup } from "@/components"
+import { useDialogBox, useHeaderCollapse } from "@/hooks"
+import FullLogoStack from "@/components/svg/FullLogoStack"
+import User from "@/components/svg/User"
+import Close from "@/components/svg/Close"
+import Hamburger from "@/components/svg/Hamburger"
+import Search from "@/components/svg/Search"
+import Bag from "@/components/svg/Bag"
+import styles from "./styles.module.scss"
 
 const MobileDraw = () => {
-  const router = useRouter();
-  const { isOpen, setIsOpen } = useDialogBox();
-  const isHeaderCollapsed = useHeaderCollapse();
-  const { isCartOpen, setIsCartOpen, cartItems } = useShoppingCart();
-  const [isMobileDrawActive, setIsMobileDrawActive] = useState(false);
-  const isLandingPage = router?.asPath === "/";
+  const router = useRouter()
+  const { isOpen, setIsOpen } = useDialogBox()
+  const isHeaderCollapsed = useHeaderCollapse()
+  const { isCartOpen, setIsCartOpen, cartItems } = useShoppingCart()
+  const [isMobileDrawActive, setIsMobileDrawActive] = useState(false)
+  const isLandingPage = router?.asPath === "/"
   const headerClasses = `${styles.mobileDrawHeader} ${
     isHeaderCollapsed || !isLandingPage ? styles.scrolled : ""
-  }`;
+  }`
 
   useEffect(() => {
-    if (isMobileDrawActive) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "auto";
-  }, [isMobileDrawActive]);
+    if (isMobileDrawActive) document.body.style.overflow = "hidden"
+    else document.body.style.overflow = "auto"
+  }, [isMobileDrawActive])
 
   const handleCart = () => {
-    setIsCartOpen(!isCartOpen);
-  };
+    setIsCartOpen(!isCartOpen)
+  }
 
   return (
     <header className={headerClasses}>
@@ -39,7 +39,7 @@ const MobileDraw = () => {
           <div className={styles.iconsWrap}>
             <div className={styles.iconLeft}>
               <Link href="/account">
-                <User className="fill-black h-5 w-5" />
+                <User className="h-5 w-5 fill-black" />
               </Link>
               <button
                 onClick={() => setIsOpen(true)}
@@ -114,7 +114,7 @@ const MobileDraw = () => {
         </Container>
       </nav>
     </header>
-  );
-};
+  )
+}
 
-export default MobileDraw;
+export default MobileDraw

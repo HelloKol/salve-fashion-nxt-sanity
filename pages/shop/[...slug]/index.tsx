@@ -120,9 +120,7 @@ export default function Page() {
               </div>
 
               <div className="col-span-full md:col-start-7 lg:col-start-8 lg:col-end-13 xl:col-start-7 xl:col-end-11">
-                <h1 className="text-4xl">Classic Beanies</h1>
-                <h3 className="mt-2 text-3xl">£122.34</h3>
-
+                <h1 className="text-3xl lg:text-4xl">Classic Beanies</h1>
                 <div className="mt-4">
                   <div className="flex items-center space-x-1">
                     <svg
@@ -172,6 +170,7 @@ export default function Page() {
                     </svg>
                   </div>
                 </div>
+                <h3 className="mt-2 text-xl lg:text-2xl">£122.34</h3>
 
                 <article className="mt-6">
                   <p className="m-0">{trimArticle(articleText)}</p>
@@ -197,7 +196,7 @@ export default function Page() {
                   <Button variant={"primary"}>Add to wishlist</Button>
                 </div>
 
-                <div className="mt-16">
+                <div className="mt-8 lg:mt-10">
                   <RadixAccordion />
                 </div>
               </div>

@@ -2,7 +2,6 @@ import React, { useRef } from "react"
 import Link from "next/link"
 // @ts-ignore
 import Slider from "react-slick"
-import { motion } from "framer-motion"
 import { Button, ImageTag, Section } from "@/components"
 import ArrowRight from "@/components/svg/ArrowRight"
 import styles from "./styles.module.scss"
@@ -46,32 +45,22 @@ export default function Carousel({ collections }: any) {
               </Link>
             </div>
             <div className={styles.thumbnailWrap}>
-              <motion.div
-                className={styles.thumbnailTop}
-                initial={{ y: 200 }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
+              <div className={styles.thumbnailTop}>
                 <ImageTag
                   src={thumbnailTop?.image?.asset.url}
                   layout="fill"
                   objectFit="cover"
                   priority={false}
                 />
-              </motion.div>
-              <motion.div
-                className={styles.thumbnailBottom}
-                initial={{ y: 200 }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
+              </div>
+              <div className={styles.thumbnailBottom}>
                 <ImageTag
                   src={thumbnailBottom?.image?.asset.url}
                   layout="fill"
                   objectFit="cover"
                   priority={false}
                 />
-              </motion.div>
+              </div>
             </div>
           </div>
           <div className={styles.featureImage}>

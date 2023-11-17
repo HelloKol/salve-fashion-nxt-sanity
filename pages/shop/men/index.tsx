@@ -1,5 +1,7 @@
-import React, { useState } from "react"
 import Link from "next/link"
+import React, { useEffect, useState } from "react"
+import { useInfiniteQuery } from "@tanstack/react-query"
+import { useInView } from "react-intersection-observer"
 import {
   Button,
   Container,
@@ -9,6 +11,7 @@ import {
   Main,
   Section,
 } from "@/components"
+import { fetchProducts, getFilteredProducts } from "@/lib"
 import { useWindowDimension } from "@/hooks"
 import styles from "./styles.module.scss"
 
@@ -42,6 +45,45 @@ export default function Page() {
   const toggleShowFullArticle = () => {
     setShowFullArticle(!showFullArticle)
   }
+
+  // ==================================================================
+  // FETCH SHOPIFY DATA
+  // ==================================================================
+  // const { ref, inView } = useInView({ threshold: 0.8 })
+  // const PRODUCT_LIMIT = 9
+
+  // const { data, isSuccess, hasNextPage, fetchNextPage } = useInfiniteQuery(
+  //   ["productsMen"],
+  //   ({ pageParam }) => fetchProducts(pageParam, PRODUCT_LIMIT),
+  //   {
+  //     getNextPageParam: (lastPage) => {
+  //       return lastPage.pageInfo.hasNextPage
+  //         ? lastPage.edges[lastPage.edges.length - 1].cursor
+  //         : undefined
+  //     },
+  //   }
+  // )
+
+  // useEffect(() => {
+  //   if (inView && hasNextPage) {
+  //     fetchNextPage()
+  //   }
+  // }, [inView, fetchNextPage, hasNextPage])
+
+  // useEffect(() => {
+  //   if (
+  //     inView &&
+  //     hasNextPage &&
+  //     getFilteredProducts(data?.pages, "men").length < PRODUCT_LIMIT
+  //   ) {
+  //     fetchNextPage()
+  //   }
+  // }, [inView, fetchNextPage, hasNextPage, data?.pages])
+
+  // console.log(data)
+  // ==================================================================
+  // FETCH SHOPIFY DATA
+  // ==================================================================
 
   const renderProducts = () =>
     [1, 1, 1, 1, 1].map((item, index) => {
