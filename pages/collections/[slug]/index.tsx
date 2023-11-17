@@ -25,12 +25,8 @@ export default function Page() {
                   className={`flex items-center justify-center ${styles.feedInner}`}
                 >
                   <div className={`flex flex-col gap-4`}>
-                    <Button variant={"quaternary"} href={`/`}>
-                      Add to cart
-                    </Button>
-                    <Button variant={"secondary"} href={`/`}>
-                      Learn more
-                    </Button>
+                    <Button variant={"quaternary"}>Add to cart</Button>
+                    <Button variant={"secondary"}>Learn more</Button>
                   </div>
                 </div>
               </div>
