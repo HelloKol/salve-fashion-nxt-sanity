@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from "@apollo/client"
 
 const ALL_PRODUCTS = gql`
   query {
@@ -33,33 +33,46 @@ const ALL_PRODUCTS = gql`
       }
     }
   }
-`;
+`
 
 const SINGLE_PRPDUCT = `
-    query getProductByHandle($handle: String!) {
-      productByHandle(handle: $handle) {
-        id
-        title
-        description
-        images(first: 1) {
-          edges {
-            node {
-              transformedSrc
-            }
-          }
+query getProductByHandle($handle: String!) {
+  productByHandle(handle: $handle) {
+    id
+    title
+    description
+    images(first: 100) {
+      edges {
+        node {
+          transformedSrc
         }
-        variants(first: 1) {
-          edges {
-            node {
-              id
-              title
-              price
-              compareAtPrice
-            }
+      }
+    }
+    variants(first: 100) {
+      edges {
+        node {
+          id
+          title
+          priceV2 {
+            amount
+            currencyCode
+          }
+          compareAtPriceV2 {
+            amount
+            currencyCode
+          }
+          selectedOptions {
+            name
+            value
+          }
+          image {
+            transformedSrc
           }
         }
       }
     }
-  `;
+  }
+}
+  `
 
-export { ALL_PRODUCTS, SINGLE_PRPDUCT };
+export { ALL_PRODUCTS, SINGLE_PRPDUCT }

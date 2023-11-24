@@ -1,5 +1,5 @@
 const Hamburger = (props: { className?: string }): JSX.Element => {
-  const { className } = props;
+  const { className } = props
   return (
     <svg
       className={className}
@@ -11,12 +11,12 @@ const Hamburger = (props: { className?: string }): JSX.Element => {
         stroke="none"
         stroke-width="1"
         fill="none"
-        fill-rule="evenodd"
+        fillRule="evenodd"
       >
         <g id="Menu">
           <rect
             id="Rectangle"
-            fill-rule="nonzero"
+            fillRule="nonzero"
             x="0"
             y="0"
             width="24"
@@ -55,7 +55,7 @@ const Hamburger = (props: { className?: string }): JSX.Element => {
         </g>
       </g>
     </svg>
-  );
-};
+  )
+}
 
-export default Hamburger;
+export default Hamburger

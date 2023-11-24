@@ -64,7 +64,7 @@ export default function Cart() {
               <Close />
             </button>
 
-            <h1 className="mb-20 text-center text-3xl">Your bag</h1>
+            <h1 className="mb-16 text-center text-3xl">Your bag</h1>
 
             {cartItems?.length ? (
               <>
@@ -77,8 +77,8 @@ export default function Cart() {
                     Delivery: <span>Free</span>
                   </p>
                   <Button
-                    className={styles.checkoutBtn}
-                    variant={"primary"}
+                    className={`w-full`}
+                    variant={"quaternary"}
                     href={checkoutUrl}
                   >
                     Go to bag

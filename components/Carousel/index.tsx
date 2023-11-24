@@ -2,7 +2,7 @@ import React, { useRef } from "react"
 import Link from "next/link"
 // @ts-ignore
 import Slider from "react-slick"
-import { Button, ImageTag, Section } from "@/components"
+import { Button, Container, ImageTag, Section } from "@/components"
 import ArrowRight from "@/components/svg/ArrowRight"
 import styles from "./styles.module.scss"
 
@@ -39,8 +39,12 @@ export default function Carousel({ collections }: any) {
               </h1>
               <Link href={`/collections/${slug.current}`}>
                 <div className={styles.exploreWrap}>
-                  Explore
-                  <ArrowRight className={styles.arrowRight} />
+                  <div className={styles.circle}>
+                    <span>
+                      Explore
+                      <ArrowRight className={styles.arrowRight} />
+                    </span>
+                  </div>
                 </div>
               </Link>
             </div>
@@ -77,11 +81,11 @@ export default function Carousel({ collections }: any) {
 
   return (
     <Section className="overflow-hidden pt-0">
-      <div className={styles.carouselContainer}>
-        <Slider ref={sliderRef} {...settings}>
+      <Container className="pt-0">
+        <Slider ref={sliderRef} {...settings} arrows={false}>
           {renderCollections()}
         </Slider>
-      </div>
+      </Container>
     </Section>
   )
 }

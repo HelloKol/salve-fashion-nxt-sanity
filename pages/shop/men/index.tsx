@@ -49,54 +49,101 @@ export default function Page() {
   // ==================================================================
   // FETCH SHOPIFY DATA
   // ==================================================================
-  // const { ref, inView } = useInView({ threshold: 0.8 })
-  // const PRODUCT_LIMIT = 9
+  const { ref, inView } = useInView({ threshold: 0 })
+  const PRODUCT_LIMIT = 9
 
-  // const { data, isSuccess, hasNextPage, fetchNextPage } = useInfiniteQuery(
-  //   ["productsMen"],
-  //   ({ pageParam }) => fetchProducts(pageParam, PRODUCT_LIMIT),
-  //   {
-  //     getNextPageParam: (lastPage) => {
-  //       return lastPage.pageInfo.hasNextPage
-  //         ? lastPage.edges[lastPage.edges.length - 1].cursor
-  //         : undefined
-  //     },
-  //   }
-  // )
+  const { data, isSuccess, hasNextPage, fetchNextPage } = useInfiniteQuery(
+    ["productsMen"],
+    ({ pageParam }) => fetchProducts(pageParam, PRODUCT_LIMIT),
+    {
+      getNextPageParam: (lastPage) => {
+        return lastPage.pageInfo.hasNextPage
+          ? lastPage.edges[lastPage.edges.length - 1].cursor
+          : undefined
+      },
+    }
+  )
 
-  // useEffect(() => {
-  //   if (inView && hasNextPage) {
-  //     fetchNextPage()
-  //   }
-  // }, [inView, fetchNextPage, hasNextPage])
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage()
+    }
+  }, [inView, fetchNextPage, hasNextPage])
 
-  // useEffect(() => {
-  //   if (
-  //     inView &&
-  //     hasNextPage &&
-  //     getFilteredProducts(data?.pages, "men").length < PRODUCT_LIMIT
-  //   ) {
-  //     fetchNextPage()
-  //   }
-  // }, [inView, fetchNextPage, hasNextPage, data?.pages])
+  useEffect(() => {
+    if (
+      inView &&
+      hasNextPage &&
+      getFilteredProducts(data?.pages, "men").length < PRODUCT_LIMIT
+    ) {
+      fetchNextPage()
+    }
+  }, [inView, fetchNextPage, hasNextPage, data?.pages])
 
-  // console.log(data)
   // ==================================================================
   // FETCH SHOPIFY DATA
   // ==================================================================
 
   const renderProducts = () =>
-    [1, 1, 1, 1, 1].map((item, index) => {
+    isSuccess &&
+    data?.pages &&
+    getFilteredProducts(data.pages, "men").map((edge: any, index: number) => {
+      const product = {
+        id: edge.node.id,
+        handle: edge.node.handle,
+        title: edge.node.title,
+        image: edge.node.featuredImage.originalSrc,
+        price: `${edge.node.priceRange.maxVariantPrice.amount} ${edge.node.priceRange.maxVariantPrice.currencyCode}`,
+      }
+      const lastItem =
+        index === getFilteredProducts(data.pages, "men").length - 1
+
+      if (lastItem)
+        return (
+          <li
+            key={index}
+            ref={ref}
+            className="col-span-6 mb-8 lg:mb-12 xl:col-span-4 xl:mb-14"
+          >
+            <Link href={`/shop/${product.handle}`} className="block">
+              <div
+                className={`group relative h-60 w-full overflow-hidden rounded-2xl sm:h-80 md:h-[500px] lg:h-[700px] xl:h-[800px] ${styles.imageWrapper}`}
+              >
+                <ImageTag src={product.image} />
+
+                <div
+                  className={`duration-250 absolute bottom-0 left-0 right-0 top-0 bg-black bg-opacity-60 opacity-0 transition-opacity ease-in-out group-hover:opacity-100 ${styles.feedInner}`}
+                >
+                  <div
+                    className={`flex items-center justify-center ${styles.feedInner}`}
+                  >
+                    <div className={`flex flex-col gap-4`}>
+                      <Button variant={"quaternary"}>Add to cart</Button>
+                      <Button variant={"secondary"}>Learn more</Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p className="mt-4 text-sm font-bold uppercase text-gray-600 lg:text-lg">
+                {product.title}
+              </p>
+              <p className="mt-2 text-sm font-bold uppercase lg:text-lg">
+                {product.price}
+              </p>
+            </Link>
+          </li>
+        )
+
       return (
         <li
           key={index}
           className="col-span-6 mb-8 lg:mb-12 xl:col-span-4 xl:mb-14"
         >
-          <Link href={`/shop/asd`} className="block">
+          <Link href={`/shop/${product.handle}`} className="block">
             <div
               className={`group relative h-60 w-full overflow-hidden rounded-2xl sm:h-80 md:h-[500px] lg:h-[700px] xl:h-[800px] ${styles.imageWrapper}`}
             >
-              <ImageTag src="/static/images/product2.jpg" />
+              <ImageTag src={product.image} />
 
               <div
                 className={`duration-250 absolute bottom-0 left-0 right-0 top-0 bg-black bg-opacity-60 opacity-0 transition-opacity ease-in-out group-hover:opacity-100 ${styles.feedInner}`}
@@ -112,10 +159,10 @@ export default function Page() {
               </div>
             </div>
             <p className="mt-4 text-sm font-bold uppercase text-gray-600 lg:text-lg">
-              Classic Beanies
+              {product.title}
             </p>
             <p className="mt-2 text-sm font-bold uppercase lg:text-lg">
-              £122.34
+              {product.price}
             </p>
           </Link>
         </li>

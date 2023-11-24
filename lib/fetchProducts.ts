@@ -1,4 +1,4 @@
-import { graphqlClient } from "@/utils/graphql";
+import { graphqlClient } from "@/utils"
 
 const fetchProducts = async (cursor: any, LIMIT: number) => {
   const productsQuery = `
@@ -27,14 +27,14 @@ const fetchProducts = async (cursor: any, LIMIT: number) => {
         }
       }
     }
-  `;
+  `
 
   const variables = {
     cursor,
-  };
+  }
 
-  const data: any = await graphqlClient.request(productsQuery, variables);
-  return data.products;
-};
+  const data: any = await graphqlClient.request(productsQuery, variables)
+  return data.products
+}
 
-export default fetchProducts;
+export default fetchProducts

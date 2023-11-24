@@ -39,9 +39,13 @@ export default function Page({}: PageProps): JSX.Element | null {
       const response = await fetch(
         `/api/orderHistory?customerAccessToken=${token}`
       )
+      const test = await response.json()
+      console.log(test, token)
       return await response.json()
     },
   })
+
+  console.log(isLoading, data, token)
 
   if (isLoading) return <p>Loading...</p>
 

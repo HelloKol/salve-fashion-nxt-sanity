@@ -32,7 +32,7 @@ export default function index({
   const buttonVariant =
     variant === "primary"
       ? isActive
-        ? "w-fit h-fit shrink-0 bg-[#171717] rounded-full px-5 py-2 flex items-center justify-center text-white text-xs sm:text-sm uppercase"
+        ? "w-fit h-fit shrink-0 bg-[#171717] border border-transparent rounded-full px-5 py-2 flex items-center justify-center text-white text-xs sm:text-sm uppercase"
         : "w-fit h-fit shrink-0 border border-black rounded-full px-5 py-2 flex items-center justify-center text-xs sm:text-sm uppercase"
       : variant === "secondary"
         ? isActive
@@ -50,12 +50,14 @@ export default function index({
 
   const disabledVariant =
     variant === "primary"
-      ? disabled && "border-gray-500 text-gray-500"
+      ? disabled && "border-gray-500 text-gray-500 cursor-no-drop"
       : variant === "secondary"
-        ? disabled && ""
+        ? disabled && "cursor-no-drop"
         : variant === "tertiary"
-          ? disabled && ""
-          : ""
+          ? disabled && "cursor-no-drop"
+          : variant === "quaternary"
+            ? disabled && "bg-[#474747] cursor-no-drop"
+            : ""
 
   if (href)
     return (

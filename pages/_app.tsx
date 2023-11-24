@@ -9,7 +9,7 @@ import { AuthProvider } from "@/context/User"
 import { apolloClient, queryClient } from "@/utils"
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <ComingSoon />
+  // return <ComingSoon />;
 
   return (
     <CookiesProvider>

@@ -1,8 +1,12 @@
 import React from "react"
 import Link from "next/link"
 import { Container, Grid, ImageTag, Section } from "@/components"
+import { useRegisterForm } from "@/hooks"
 
 export default function Page() {
+  const { register, handleSubmit, errors, globalError, onSubmit } =
+    useRegisterForm()
+
   return (
     <Section className="py-24 lg:py-14">
       <Container>
@@ -33,7 +37,7 @@ export default function Page() {
           <div className="relative col-span-full md:col-start-4 md:col-end-10 lg:col-span-6">
             <div className="z-10 w-8/12 w-full rounded-2xl lg:absolute lg:left-1/2 lg:top-1/2 lg:w-9/12 lg:max-w-[520px] lg:-translate-x-1/2 lg:-translate-y-1/2 lg:bg-[#ffffff] lg:p-4">
               <p className="text-center text-3xl">Register here</p>
-              <form>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mt-6">
                   <label
                     htmlFor="firstName"
@@ -44,10 +48,13 @@ export default function Page() {
                   <input
                     type="text"
                     id="firstName"
-                    className="block w-full border-b-2 border-gray-300 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                    className="block w-full border-b-2 border-gray-300 p-2.5 text-sm text-red-500 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                     placeholder="Enter your First name"
-                    required
+                    {...register("firstName")}
                   />
+                  {errors.firstName?.message && (
+                    <p>{errors.firstName?.message}</p>
+                  )}
                 </div>
 
                 <div className="mt-6">
@@ -60,10 +67,13 @@ export default function Page() {
                   <input
                     type="text"
                     id="lastName"
-                    className="block w-full border-b-2 border-gray-300 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                    className="block w-full border-b-2 border-gray-300 p-2.5 text-sm text-red-500 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                     placeholder="Enter your Last name"
-                    required
+                    {...register("lastName")}
                   />
+                  {errors.lastName?.message && (
+                    <p>{errors.lastName?.message}</p>
+                  )}
                 </div>
 
                 <div className="mt-6">
@@ -76,10 +86,11 @@ export default function Page() {
                   <input
                     type="text"
                     id="email"
-                    className="block w-full border-b-2 border-gray-300 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                    className="block w-full border-b-2 border-gray-300 p-2.5 text-sm text-red-500 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                     placeholder="Enter your email"
-                    required
+                    {...register("email")}
                   />
+                  {errors.email?.message && <p>{errors.email?.message}</p>}
                 </div>
 
                 <div className="mt-6">
@@ -92,10 +103,13 @@ export default function Page() {
                   <input
                     type="password"
                     id="password"
-                    className="block w-full border-b-2 border-gray-300 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                    className="block w-full border-b-2 border-gray-300 p-2.5 text-sm text-red-500 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                     placeholder="Enter your password"
-                    required
+                    {...register("password")}
                   />
+                  {errors.password?.message && (
+                    <p>{errors.password?.message}</p>
+                  )}
                 </div>
 
                 <div className="mt-6 flex items-center">

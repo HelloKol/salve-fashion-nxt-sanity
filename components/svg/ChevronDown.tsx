@@ -1,5 +1,5 @@
 const ChevronDown = (props: { className?: string }): JSX.Element => {
-  const { className } = props;
+  const { className } = props
   return (
     <svg
       className={className}
@@ -12,7 +12,7 @@ const ChevronDown = (props: { className?: string }): JSX.Element => {
         stroke="none"
         stroke-width="1"
         fill="none"
-        fill-rule="evenodd"
+        fillRule="evenodd"
       >
         <g
           id="Dribbble-Light-Preview"
@@ -28,7 +28,7 @@ const ChevronDown = (props: { className?: string }): JSX.Element => {
         </g>
       </g>
     </svg>
-  );
-};
+  )
+}
 
-export default ChevronDown;
+export default ChevronDown

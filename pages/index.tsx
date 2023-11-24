@@ -37,7 +37,7 @@ export default function Page({
       <Head>
         <title>Home</title>
       </Head>
-      <Main className="p-0">
+      <Main withPadding={false}>
         <Carousel collections={collections} />
         <HorizontalFeed title={"New In Men"} data={[]} href={`/shop/men`} />
         <AboutUs />

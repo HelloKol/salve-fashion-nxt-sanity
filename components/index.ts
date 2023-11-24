@@ -1,4 +1,5 @@
 export { default as AboutUs } from "./AboutUs"
+export { default as AddToCart } from "./AddToCart"
 export { default as Button } from "./Button"
 export { default as Carousel } from "./Carousel"
 export { default as Cart } from "./Cart"
