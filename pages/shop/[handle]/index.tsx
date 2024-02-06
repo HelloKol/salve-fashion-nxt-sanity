@@ -33,7 +33,6 @@ export default function Page({ product }: ProductProps): JSX.Element | null {
   // State to track selected size and clicked variant id
   const [selectedSize, setSelectedSize] = useState(null)
   const [clickedVariantId, setClickedVariantId] = useState("")
-
   const initialTrimLength =
     isMobile || isMobileLarge
       ? 150
@@ -121,11 +120,35 @@ export default function Page({ product }: ProductProps): JSX.Element | null {
     }),
   })
 
+  const [variantAvailability, setVariantAvailability] = useState({})
+  const selectedVariantAvailable = variantAvailability[clickedVariantId]
+
+  useEffect(() => {
+    // Update variant availability when the selected size changes
+    if (selectedSize) {
+      const availability = {}
+      edges.forEach((variant) => {
+        const sizeValue = variant.node.selectedOptions.find(
+          (opt) => opt.name === "Size"
+        ).value
+        const isAvailable = sizeValue === selectedSize
+        availability[variant.node.id] = isAvailable
+      })
+      setVariantAvailability(availability)
+    }
+  }, [selectedSize, edges])
+
   useListenToCustomEvent((data: any) => {
     if (data.eventName === "onSlideStartChange") {
       setIndex(data.nextItem.index)
     }
   })
+
+  const handleClickVariant = (index, variantID) => {
+    setClickedVariantId(variantID)
+    setIndex(index)
+    slideToItem(index)
+  }
 
   const renderSize = () =>
     sizes.map((size, index) => {
@@ -137,6 +160,34 @@ export default function Page({ product }: ProductProps): JSX.Element | null {
         >
           {size}
         </Button>
+      )
+    })
+
+  const renderVariants = () =>
+    edges &&
+    edges.map((variant, index) => {
+      const isActive = variant.node.id === clickedVariantId
+
+      return (
+        <>
+          <div
+            key={variant.node.id}
+            className={`${
+              isActive
+                ? "border-2 border-solid border-black"
+                : "border-2 border-solid border-transparent"
+            } h-14 w-14 cursor-pointer overflow-hidden rounded`}
+            onClick={() => handleClickVariant(index, variant.node.id)}
+          >
+            <ImageTag
+              src={variant.node.image.transformedSrc}
+              alt={variant.node.title}
+              layout="fill"
+              objectFit="cover"
+              priority={false}
+            />
+          </div>
+        </>
       )
     })
 
@@ -180,43 +231,32 @@ export default function Page({ product }: ProductProps): JSX.Element | null {
                   <div className="flex gap-2">{renderSize()}</div>
                 </div>
 
-                <div className="mt-6 flex gap-4">
-                  {edges.map((variant, index) => {
-                    const sizeValue = variant.node.selectedOptions.find(
-                      (opt) => opt.name === "Size"
-                    ).value
-                    const isClickable = sizeValue === selectedSize
+                <div className="mt-6 flex gap-2">{renderVariants()}</div>
 
-                    return (
-                      <div
-                        key={variant.node.id}
-                        onClick={() => {
-                          isClickable && setClickedVariantId(variant.node.id)
-                          setIndex(index)
-                        }}
-                        style={{
-                          cursor: isClickable ? "pointer" : "not-allowed",
-                          opacity: isClickable ? 1 : 0.5,
-                        }}
-                      >
-                        <img
-                          src={variant.node.image.transformedSrc}
-                          alt={variant.node.title}
-                          style={{ width: "100px", height: "auto" }}
-                        />
-                      </div>
-                    )
-                  })}
+                <div>
+                  {!selectedVariantAvailable && (
+                    <span className="mt-2 text-xs text-red-500">
+                      The select product is not available
+                    </span>
+                  )}
                 </div>
 
                 <div className={`mt-6 flex flex-wrap gap-4 xl:flex-nowrap`}>
                   <AddToCart
                     variantId={clickedVariantId}
-                    disabled={!clickedVariantId || !selectedSize}
+                    disabled={
+                      !clickedVariantId ||
+                      !selectedSize ||
+                      !selectedVariantAvailable
+                    }
                   />
                   <Button
                     variant={"primary"}
-                    disabled={!clickedVariantId || !selectedSize}
+                    disabled={
+                      !clickedVariantId ||
+                      !selectedSize ||
+                      !selectedVariantAvailable
+                    }
                   >
                     Add to wishlist
                   </Button>

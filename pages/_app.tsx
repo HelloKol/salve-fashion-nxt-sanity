@@ -5,11 +5,13 @@ import { QueryClientProvider } from "@tanstack/react-query"
 import { ApolloProvider } from "@apollo/client"
 import { Layout, ComingSoon, Cart } from "@/components"
 import { ShoppingCartProvider } from "@/context/Cart"
+import { ToastProvider } from "@/context/Toast"
 import { AuthProvider } from "@/context/User"
 import { apolloClient, queryClient } from "@/utils"
 
 export default function App({ Component, pageProps }: AppProps) {
-  // return <ComingSoon />;
+  // console.log(",,;sadsdf sdf")
+  // return <ComingSoon />
 
   return (
     <CookiesProvider>
@@ -17,12 +19,12 @@ export default function App({ Component, pageProps }: AppProps) {
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
             <ShoppingCartProvider>
-              {/* <ToastProvider> */}
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
-              <Cart />
-              {/* </ToastProvider> */}
+              <ToastProvider>
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+                <Cart />
+              </ToastProvider>
             </ShoppingCartProvider>
           </AuthProvider>
         </QueryClientProvider>

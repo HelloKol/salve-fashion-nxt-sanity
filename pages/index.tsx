@@ -1,4 +1,5 @@
-import { GetStaticPropsResult } from "next"
+import Head from "next/head"
+import { GetStaticPropsResult } from "next/types"
 import groq from "groq"
 import {
   AboutUs,
@@ -14,7 +15,6 @@ import { ShopifyProduct } from "@/types"
 import { ALL_PRODUCTS } from "@/services/queries"
 import { graphqlClient } from "@/utils/graphql"
 import { sanityClient } from "@/utils/sanity"
-import Head from "next/head"
 
 interface props {
   page: any
@@ -101,7 +101,7 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
         instagramAccount,
         instagramPosts,
       },
-      revalidate: 60,
+      revalidate: 30,
     }
   } catch (err) {
     return {

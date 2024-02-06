@@ -9,7 +9,7 @@ import styles from "./styles.module.scss"
 export default function Carousel({ collections }: any) {
   const sliderRef = useRef(null)
 
-  const settings = {
+  const sliderConfig = {
     speed: 1000,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -82,7 +82,7 @@ export default function Carousel({ collections }: any) {
   return (
     <Section className="overflow-hidden pt-0">
       <Container className="pt-0">
-        <Slider ref={sliderRef} {...settings} arrows={false}>
+        <Slider ref={sliderRef} {...sliderConfig} arrows={false}>
           {renderCollections()}
         </Slider>
       </Container>

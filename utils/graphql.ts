@@ -1,4 +1,4 @@
-import { GraphQLClient } from "graphql-request";
+import { GraphQLClient } from "graphql-request"
 
 // Create a grapqhql client
 const graphqlClient = new GraphQLClient(
@@ -9,6 +9,6 @@ const graphqlClient = new GraphQLClient(
         process.env.NEXT_PUBLIC_SHOPIFY_ACCESS_TOKEN || "",
     },
   }
-);
+)
 
-export { graphqlClient };
+export { graphqlClient }
