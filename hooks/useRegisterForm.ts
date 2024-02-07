@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+// @ts-ignore
 import { yupResolver } from "@hookform/resolvers/yup"
 import { graphqlClient } from "@/utils/graphql"
 import { REGISTER_CUSTOMER } from "@/services/queries"
@@ -7,10 +8,11 @@ import * as yup from "yup"
 import { FormData, CustomerCreateResult } from "@/types"
 
 const registerSchema = yup.object().shape({
-  email: yup.string().email().required(),
-  password: yup.string().required().min(6),
+  email: yup.string().email().required('Enter a valid e-mail address.'),
+  password: yup.string().min(6).required('Enter a valid password.'),
   firstName: yup.string().required(),
   lastName: yup.string().required(),
+  acceptPrivacy: yup.boolean().required(),
 })
 
 const useRegisterForm = () => {

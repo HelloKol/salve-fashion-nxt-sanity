@@ -1,8 +1,8 @@
-import React, { forwardRef } from "react"
+import React, { ReactNode, forwardRef } from "react"
 
 //Props
 export interface FormInputCheckboxProps {
-  label?: string
+  label?: ReactNode | string
   error?: {
     message?: string
   }

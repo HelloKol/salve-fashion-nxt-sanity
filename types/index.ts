@@ -63,6 +63,7 @@ export type FormData = {
   firstName?: string
   lastName?: string
   rememberMeCheckbox?: boolean
+  acceptPrivacy?: boolean
 }
 
 export type CustomerAccessTokenCreateResult = {

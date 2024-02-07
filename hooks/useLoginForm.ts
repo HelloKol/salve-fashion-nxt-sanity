@@ -8,8 +8,8 @@ import { FormData } from "@/types"
 import { useAuth } from "@/context/User"
 
 const loginSchema = yup.object().shape({
-  email: yup.string().email().required(),
-  password: yup.string().required(),
+  email: yup.string().email().required('Enter a valid e-mail address.'),
+  password: yup.string().min(6).required('Enter a valid password.'),
   rememberMeCheckbox: yup.boolean(),
 })
 
@@ -42,7 +42,7 @@ const useLoginForm = () => {
         return setIsSuccess(false)
       }
     } catch (err: any) {
-      setGlobalError("An error occurred while logging in.")
+      setGlobalError("An error occurred while logging in")
       setIsLoading(false)
       return setIsSuccess(false)
     }

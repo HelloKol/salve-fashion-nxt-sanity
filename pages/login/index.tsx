@@ -1,9 +1,8 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { GetStaticPropsResult } from "next/types"
 import Link from "next/link"
 import groq from "groq"
 import {
-  Button,
   Container,
   FormInputCheckbox,
   FormInputText,
@@ -15,7 +14,6 @@ import {
 } from "@/components"
 import { useDialogBox, useLoginForm } from "@/hooks"
 import { useToastOpen } from "@/context/Toast"
-import styles from "./styles.module.scss"
 import { sanityClient } from "@/utils"
 
 interface props {
@@ -136,7 +134,9 @@ export default function Page({ page }: props): JSX.Element | null {
                       {isLoading ? "Loading...." : "LogIn"}
                     </button>
 
-                    {globalError && <p>{globalError}</p>}
+                    {globalError && (
+                      <p className="mt-2 text-red-500">{globalError}</p>
+                    )}
 
                     <div className="mt-6 hidden h-28 w-full overflow-hidden rounded-2xl lg:block">
                       <ImageTag src="/static/images/product1.jpg" />

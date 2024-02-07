@@ -1,6 +1,13 @@
 import React from "react"
 import Link from "next/link"
-import { Container, Grid, ImageTag, Section } from "@/components"
+import {
+  Container,
+  FormInputCheckbox,
+  FormInputText,
+  Grid,
+  ImageTag,
+  Section,
+} from "@/components"
 import { useRegisterForm } from "@/hooks"
 
 export default function Page() {
@@ -39,77 +46,43 @@ export default function Page() {
               <p className="text-center text-3xl">Register here</p>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mt-6">
-                  <label
-                    htmlFor="firstName"
-                    className="mb-2 block text-sm font-medium text-gray-500"
-                  >
-                    First name
-                  </label>
-                  <input
+                  <FormInputText
                     type="text"
-                    id="firstName"
-                    className="block w-full border-b-2 border-gray-300 p-2.5 text-sm text-red-500 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                     placeholder="Enter your First name"
+                    label="First name"
                     {...register("firstName")}
+                    error={errors.firstName}
                   />
-                  {errors.firstName?.message && (
-                    <p>{errors.firstName?.message}</p>
-                  )}
                 </div>
 
                 <div className="mt-6">
-                  <label
-                    htmlFor="lastName"
-                    className="mb-2 block text-sm font-medium text-gray-500"
-                  >
-                    Last name
-                  </label>
-                  <input
+                  <FormInputText
                     type="text"
-                    id="lastName"
-                    className="block w-full border-b-2 border-gray-300 p-2.5 text-sm text-red-500 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                     placeholder="Enter your Last name"
+                    label="Last name"
                     {...register("lastName")}
+                    error={errors.lastName}
                   />
-                  {errors.lastName?.message && (
-                    <p>{errors.lastName?.message}</p>
-                  )}
                 </div>
 
                 <div className="mt-6">
-                  <label
-                    htmlFor="email"
-                    className="mb-2 block text-sm font-medium text-gray-500"
-                  >
-                    Email
-                  </label>
-                  <input
-                    type="text"
-                    id="email"
-                    className="block w-full border-b-2 border-gray-300 p-2.5 text-sm text-red-500 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                  <FormInputText
+                    type="email"
                     placeholder="Enter your email"
+                    label="E-mail"
                     {...register("email")}
+                    error={errors.email}
                   />
-                  {errors.email?.message && <p>{errors.email?.message}</p>}
                 </div>
 
                 <div className="mt-6">
-                  <label
-                    htmlFor="password"
-                    className="mb-2 block text-sm font-medium text-gray-500"
-                  >
-                    Password
-                  </label>
-                  <input
+                  <FormInputText
                     type="password"
-                    id="password"
-                    className="block w-full border-b-2 border-gray-300 p-2.5 text-sm text-red-500 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                     placeholder="Enter your password"
+                    label="Password"
                     {...register("password")}
+                    error={errors.password}
                   />
-                  {errors.password?.message && (
-                    <p>{errors.password?.message}</p>
-                  )}
                 </div>
 
                 <div className="mt-6 flex items-center">
@@ -129,11 +102,12 @@ export default function Page() {
                 </div>
 
                 <div className="mt-6 flex items-center">
-                  <input
+                  {/* <input
                     id="link-checkbox-agreement"
                     type="checkbox"
                     value=""
                     className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+                    {...register("acceptPrivacy")}
                   />
                   <label
                     htmlFor="link-checkbox-agreement"
@@ -146,10 +120,28 @@ export default function Page() {
                     and{" "}
                     <Link href={"/pages/privacy-policy"}>Privacy Policy</Link>
                   </label>
+ */}
+
+                  <FormInputCheckbox
+                    label={
+                      <div>
+                        I have read and agree to the{" "}
+                        <Link href={"/pages/terms-of-service"}>
+                          Terms Of Service
+                        </Link>{" "}
+                        and{" "}
+                        <Link href={"/pages/privacy-policy"}>
+                          Privacy Policy
+                        </Link>
+                      </div>
+                    }
+                    {...register("acceptPrivacy")}
+                    error={errors.acceptPrivacy}
+                  />
                 </div>
 
                 <button className="mt-6 flex h-fit w-full shrink-0 items-center justify-center rounded-xl bg-[#171717] py-4 text-sm uppercase text-white">
-                  Register
+                  Create account
                 </button>
 
                 <div className="mt-6 hidden h-28 w-full overflow-hidden rounded-2xl lg:block">

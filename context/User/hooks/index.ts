@@ -33,13 +33,13 @@ export const authHooks = (
       } else {
         return {
           status: "ERROR",
-          message: "Incorrect email or password.",
+          message: "Incorrect email or password",
         }
       }
     } catch (error) {
       return {
         status: "ERROR",
-        message: "An error occurred while logging in.",
+        message: "An error occurred while logging in",
       }
     }
   }
