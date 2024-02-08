@@ -1,13 +1,20 @@
+import { GetStaticPropsResult } from "next"
 import React from "react"
-import Head from "next/head"
-import { Container, Grid, ImageTag, Section } from "@/components"
+import groq from "groq"
+import { Container, Grid, ImageTag, MetaTags, Section } from "@/components"
+import { sanityClient } from "@/utils/sanity"
 
-export default function Page() {
+interface props {
+  page: any
+}
+
+export default function Page({ page }: props): JSX.Element | null {
+  if (!page) return null
+  const { title, slug, seo } = page
+
   return (
     <>
-      <Head>
-        <title>About</title>
-      </Head>
+      <MetaTags seo={seo} />
       <Section>
         <Container>
           <Grid>
@@ -74,4 +81,33 @@ export default function Page() {
       </Section>
     </>
   )
+}
+
+export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
+  try {
+    const page: any = await sanityClient.fetch(
+      groq`*[_type == "about" && !(_id in path('drafts.**'))][0] {
+      title,
+      slug,
+      seo
+    }
+    `
+    )
+
+    if (!page)
+      return {
+        notFound: true,
+      }
+
+    return {
+      props: {
+        page,
+      },
+      revalidate: 30,
+    }
+  } catch (err) {
+    return {
+      notFound: true,
+    }
+  }
 }

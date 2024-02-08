@@ -8,6 +8,7 @@ import {
   FollowUs,
   HorizontalFeed,
   Main,
+  MetaTags,
   NewArrivals,
   VideoPlayer,
 } from "@/components"
@@ -30,13 +31,11 @@ export default function Page({
   instagramPosts,
 }: props): JSX.Element | null {
   if (!page) return null
-  const { body, collections } = page
+  const { seo, collections } = page
 
   return (
     <>
-      <Head>
-        <title>Home</title>
-      </Head>
+      <MetaTags seo={seo} />
       <Main withPadding={false}>
         <Carousel collections={collections} />
         <HorizontalFeed title={"New In Men"} data={[]} href={`/shop/men`} />
@@ -58,7 +57,7 @@ export default function Page({
 export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
   try {
     const page: any = await sanityClient.fetch(
-      groq`*[_type == "home"][0] {
+      groq`*[_type == "home" && !(_id in path('drafts.**'))][0] {
       body,
       hero,
       seo,
@@ -93,6 +92,11 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
     )
     const instagramPostsData = await instagramPostsRes.json()
     const instagramPosts = instagramPostsData.data ?? []
+
+    if (!page)
+      return {
+        notFound: true,
+      }
 
     return {
       props: {
