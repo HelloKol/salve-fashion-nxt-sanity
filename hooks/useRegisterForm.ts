@@ -1,11 +1,11 @@
 import { useState } from "react"
+import { useRouter } from "next/router"
 import { useForm } from "react-hook-form"
 // @ts-ignore
 import { yupResolver } from "@hookform/resolvers/yup"
-import { graphqlClient } from "@/utils/graphql"
-import { REGISTER_CUSTOMER } from "@/services/queries"
 import * as yup from "yup"
-import { FormData, CustomerCreateResult } from "@/types"
+import { FormData } from "@/types"
+import { useAuth } from "@/context/User"
 
 const registerSchema = yup.object().shape({
   email: yup.string().email('Enter a valid e-mail address').required('Enter your e-mail address'),
@@ -16,6 +16,10 @@ const registerSchema = yup.object().shape({
 })
 
 const useRegisterForm = () => {
+  const { signUp } = useAuth()
+  const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
+  const [isSucess, setIsSuccess] = useState(false)
   const [globalError, setGlobalError] = useState("")
   const {
     register,
@@ -26,19 +30,24 @@ const useRegisterForm = () => {
   })
 
   const onSubmit = async (data: FormData) => {
-    const input = data
+    setIsLoading(true)
     try {
-      const result = await graphqlClient.request<CustomerCreateResult>(
-        REGISTER_CUSTOMER,
-        { input }
-      )
-      if (result.customerCreate.customer) {
-        console.log(`Customer created: ${result.customerCreate.customer.email}`)
+      const {acceptPrivacy, ...rest} = data
+      const response = await signUp({...rest})
+      if (response.status === "OK") {
+        setGlobalError("")
+        setIsLoading(false)
+        router.push("/login")
+        return setIsSuccess(true)
       } else {
-        setGlobalError(result.customerCreate.userErrors[0].message)
+        setGlobalError(response.message)
+        setIsLoading(false)
+        return setIsSuccess(false)
       }
     } catch (err: any) {
-      setGlobalError(err.message)
+      setGlobalError("An error occurred while registering user")
+      setIsLoading(false)
+      return setIsSuccess(false)
     }
   }
 
@@ -48,6 +57,8 @@ const useRegisterForm = () => {
     errors,
     globalError,
     onSubmit,
+    isLoading,
+    isSucess,
   }
 }
 

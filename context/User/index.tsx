@@ -10,6 +10,7 @@ type ProviderProps = {
 type AuthContextType = {
   accessToken: string | undefined;
   isAuthenticated: boolean;
+  signUp: (inputs: FormData) => Promise<any>;
   logIn: (inputs: FormData) => Promise<any>;
   logOut: () => Promise<any>;
 };

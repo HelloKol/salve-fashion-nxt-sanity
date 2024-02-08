@@ -1,8 +1,9 @@
 import { graphqlClient } from "@/utils"
-import { FormData, CustomerAccessTokenCreateResult } from "@/types"
+import { FormData, CustomerAccessTokenCreateResult, CustomerCreateResult } from "@/types"
 import {
   LOGIN_CUSTOMER,
   LOGOUT_CUSTOMER,
+  REGISTER_CUSTOMER,
   VERIFY_TOKEN,
 } from "@/services/queries"
 
@@ -13,6 +14,33 @@ export const authHooks = (
   removeCheckoutId: () => void,
   setIsLoggedIn: (isLoggedIn: boolean) => void
 ) => {
+  // USER REGISTER
+  const signUp = async (input: FormData) => {
+      try {
+      const result =
+        await graphqlClient.request<CustomerCreateResult>(
+          REGISTER_CUSTOMER,
+          {input}
+        )
+      if (result.customerCreate.customer) {
+        return {
+          status: "OK",
+          message: "Rgister successful",
+        }
+      } else {
+        return {
+          status: "ERROR",
+          message:result.customerCreate.userErrors[0].message|| "Could not register",
+        }
+      }
+    } catch (error:any) {
+        return {
+        status: "ERROR",
+        message: error?.response?.errors?.[0]?.message|| "An error occurred while registering user",
+      }
+    }
+  }
+
   // USER LOG IN
   const logIn = async (details: FormData) => {
     try {
@@ -98,6 +126,7 @@ export const authHooks = (
   }
 
   return {
+    signUp,
     logIn,
     logOut,
     verifyToken,

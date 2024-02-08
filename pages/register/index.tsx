@@ -12,8 +12,9 @@ import {
   MetaTags,
   Section,
 } from "@/components"
-import { useRegisterForm } from "@/hooks"
+import { useDialogBox, useRegisterForm } from "@/hooks"
 import { sanityClient } from "@/utils/sanity"
+import { useToastOpen } from "@/context/Toast"
 
 interface props {
   page: any
@@ -22,8 +23,44 @@ interface props {
 export default function Page({ page }: props): JSX.Element | null {
   if (!page) return null
   const { title, slug, seo } = page
-  const { register, handleSubmit, errors, globalError, onSubmit } =
+  const registerToast = useDialogBox()
+  const { 
+    register,
+    handleSubmit,
+    errors,
+    globalError,
+    onSubmit,
+    isLoading,
+    isSucess,
+   } =
     useRegisterForm()
+
+  const message = isLoading ? (
+    <>
+      <h4>Loading</h4>
+      <p>Your account is being created...</p>
+    </>
+  ) : !!globalError ? (
+    <>
+      <h4>Error</h4>
+      <p>{globalError}</p>
+    </>
+  ) : (
+    isSucess && (
+      <>
+        <h4>Success</h4>
+        <p>Your account is successfully created</p>
+      </>
+    )
+  )
+
+  useToastOpen(isLoading, !!globalError, isSucess, registerToast.close, {
+    description: message,
+    duration: 50000,
+    type: "foreground",
+    onClose: () => null,
+  })
+
 
   return (
     <>
@@ -116,26 +153,6 @@ export default function Page({ page }: props): JSX.Element | null {
                     </div>
 
                     <div className="mt-6 flex items-center">
-                      {/* <input
-                 id="link-checkbox-agreement"
-                 type="checkbox"
-                 value=""
-                 className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
-                 {...register("acceptPrivacy")}
-               />
-               <label
-                 htmlFor="link-checkbox-agreement"
-                 className="ml-2 text-sm font-medium"
-               >
-                 I have read and agree to the{" "}
-                 <Link href={"/pages/terms-of-service"}>
-                   Terms Of Service
-                 </Link>{" "}
-                 and{" "}
-                 <Link href={"/pages/privacy-policy"}>Privacy Policy</Link>
-               </label>
-*/}
-
                       <FormInputCheckbox
                         label={
                           <div>
@@ -155,8 +172,12 @@ export default function Page({ page }: props): JSX.Element | null {
                     </div>
 
                     <button className="mt-6 flex h-fit w-full shrink-0 items-center justify-center rounded-xl bg-[#171717] py-4 text-sm uppercase text-white">
-                      Create account
+                      {isLoading ? "Loading...." : "Create account"}
                     </button>
+
+                    {globalError && (
+                      <p className="mt-2 text-red-500">{globalError}</p>
+                    )}
 
                     <div className="mt-6 hidden h-28 w-full overflow-hidden rounded-2xl lg:block">
                       <ImageTag src="/static/images/product1.jpg" />

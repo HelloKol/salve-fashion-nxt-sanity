@@ -1,9 +1,5 @@
 import { gql } from "@apollo/client";
 
-// userErrors {
-//       field
-//       message
-//     }
 const REGISTER_CUSTOMER = gql`
   mutation customerCreate($input: CustomerCreateInput!) {
     customerCreate(input: $input) {
