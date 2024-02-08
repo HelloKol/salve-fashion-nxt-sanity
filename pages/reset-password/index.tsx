@@ -99,7 +99,7 @@ export default function Page({ page }: props): JSX.Element | null {
                     <div className="mt-6">
                       <FormInputText
                         type="email"
-                        placeholder="Enter your email"
+                        placeholder="yourname@gmail.com"
                         label="E-mail"
                         {...register("email")}
                         error={errors.email}

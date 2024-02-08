@@ -8,11 +8,11 @@ import * as yup from "yup"
 import { FormData, CustomerCreateResult } from "@/types"
 
 const registerSchema = yup.object().shape({
-  email: yup.string().email().required('Enter a valid e-mail address.'),
-  password: yup.string().min(6).required('Enter a valid password.'),
-  firstName: yup.string().required(),
-  lastName: yup.string().required(),
-  acceptPrivacy: yup.boolean().required(),
+  email: yup.string().email('Enter a valid e-mail address').required('Enter your e-mail address'),
+  password: yup.string().min(6, 'Password must be at least 6 characters').required('Enter your password'),
+  firstName: yup.string().required('Enter your first name'),
+  lastName: yup.string().required('Enter your last name'),
+  acceptPrivacy: yup.boolean().required('You must accept the privacy policy'),
 })
 
 const useRegisterForm = () => {

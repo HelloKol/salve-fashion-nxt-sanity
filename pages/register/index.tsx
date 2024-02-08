@@ -48,7 +48,7 @@ export default function Page() {
                 <div className="mt-6">
                   <FormInputText
                     type="text"
-                    placeholder="Enter your First name"
+                    placeholder="Alex"
                     label="First name"
                     {...register("firstName")}
                     error={errors.firstName}
@@ -58,7 +58,7 @@ export default function Page() {
                 <div className="mt-6">
                   <FormInputText
                     type="text"
-                    placeholder="Enter your Last name"
+                    placeholder="James"
                     label="Last name"
                     {...register("lastName")}
                     error={errors.lastName}
@@ -68,7 +68,7 @@ export default function Page() {
                 <div className="mt-6">
                   <FormInputText
                     type="email"
-                    placeholder="Enter your email"
+                    placeholder="yourname@gmail.com"
                     label="E-mail"
                     {...register("email")}
                     error={errors.email}
@@ -78,7 +78,7 @@ export default function Page() {
                 <div className="mt-6">
                   <FormInputText
                     type="password"
-                    placeholder="Enter your password"
+                    placeholder="123456"
                     label="Password"
                     {...register("password")}
                     error={errors.password}

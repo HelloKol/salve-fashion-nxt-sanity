@@ -10,7 +10,7 @@ const ChevronDown = (props: { className?: string }): JSX.Element => {
       <g
         id="Page-1"
         stroke="none"
-        stroke-width="1"
+        strokeWidth="1"
         fill="none"
         fillRule="evenodd"
       >

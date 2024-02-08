@@ -26,15 +26,13 @@ const FormInputText = forwardRef<HTMLInputElement, FormInputTextProps>(
             {label}
           </label>
         )}
-
         <input
           type={switchPasswordInput ? "text" : type}
-          className="block w-full border-b-[1px] border-black p-1 pl-0 text-sm text-gray-900 outline-none"
+          className="block w-full border-b-[1px] border-black p-2 pl-0 text-sm text-gray-900 outline-none"
           placeholder={placeholder}
           ref={ref}
           {...rest}
         />
-
         {isPassword ? (
           switchPasswordInput ? (
             <svg
@@ -47,9 +45,9 @@ const FormInputText = forwardRef<HTMLInputElement, FormInputTextProps>(
             >
               <path
                 stroke="currentColor"
-                stroke-linecap="round"
+                strokeLinecap="round"
                 stroke-linejoin="round"
-                stroke-width="2"
+                strokeWidth="2"
                 d="M4 14c-.5-.6-.9-1.3-1-2 0-1 4-6 9-6m7.6 3.8A5 5 0 0 1 21 12c0 1-3 6-9 6h-1m-6 1L19 5m-4 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
               />
             </svg>
@@ -64,19 +62,51 @@ const FormInputText = forwardRef<HTMLInputElement, FormInputTextProps>(
             >
               <path
                 stroke="currentColor"
-                stroke-width="2"
+                strokeWidth="2"
                 d="M21 12c0 1.2-4 6-9 6s-9-4.8-9-6c0-1.2 4-6 9-6s9 4.8 9 6Z"
               />
               <path
                 stroke="currentColor"
-                stroke-width="2"
+                strokeWidth="2"
                 d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
               />
             </svg>
           )
         ) : null}
 
-        {error && <p className="mt-1 text-red-500">{error.message}</p>}
+        {error && (
+          <div className="mt-1 flex items-center gap-2">
+            <svg
+              className=" h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+                stroke-width="1.5"
+                className="stroke-red-500"
+              />
+              <path
+                d="M12 17V11"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                className="stroke-red-500"
+              />
+              <circle
+                cx="1"
+                cy="1"
+                r="1"
+                transform="matrix(1 0 0 -1 11 9)"
+                className="stroke-red-500"
+              />
+            </svg>
+
+            <p className="text-red-500">{error.message}</p>
+          </div>
+        )}
       </div>
     )
   }

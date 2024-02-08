@@ -9,7 +9,7 @@ const Hamburger = (props: { className?: string }): JSX.Element => {
       <g
         id="Page-1"
         stroke="none"
-        stroke-width="1"
+        strokeWidth="1"
         fill="none"
         fillRule="evenodd"
       >
@@ -29,8 +29,8 @@ const Hamburger = (props: { className?: string }): JSX.Element => {
             y2="7"
             id="Path"
             stroke="#0C0310"
-            stroke-width="2"
-            stroke-linecap="round"
+            strokeWidth="2"
+            strokeLinecap="round"
           ></line>
           <line
             x1="5"
@@ -39,8 +39,8 @@ const Hamburger = (props: { className?: string }): JSX.Element => {
             y2="17"
             id="Path"
             stroke="#0C0310"
-            stroke-width="2"
-            stroke-linecap="round"
+            strokeWidth="2"
+            strokeLinecap="round"
           ></line>
           <line
             x1="5"
@@ -49,8 +49,8 @@ const Hamburger = (props: { className?: string }): JSX.Element => {
             y2="12"
             id="Path"
             stroke="#0C0310"
-            stroke-width="2"
-            stroke-linecap="round"
+            strokeWidth="2"
+            strokeLinecap="round"
           ></line>
         </g>
       </g>

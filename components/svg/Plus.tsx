@@ -1,5 +1,5 @@
 const Plus = (props: { className?: string }): JSX.Element => {
-  const { className } = props;
+  const { className } = props
   return (
     <svg
       className={className}
@@ -10,12 +10,12 @@ const Plus = (props: { className?: string }): JSX.Element => {
       <path
         d="M4 12H20M12 4V20"
         stroke="#000000"
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
         stroke-linejoin="round"
       />
     </svg>
-  );
-};
+  )
+}
 
-export default Plus;
+export default Plus
