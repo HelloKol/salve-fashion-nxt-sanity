@@ -42,7 +42,7 @@ export const authHooks = (
   }
 
   // USER LOG IN
-  const logIn = async (details: FormData) => {
+  const signIn = async (details: FormData) => {
     try {
       const result =
         await graphqlClient.request<CustomerAccessTokenCreateResult>(
@@ -50,6 +50,7 @@ export const authHooks = (
           details
         )
       if (result.customerAccessTokenCreate.customerAccessToken) {
+        console.log(result," <<<< res")
         const { accessToken, expiresAt } =
           result.customerAccessTokenCreate.customerAccessToken
         setToken(accessToken, expiresAt)
@@ -61,13 +62,13 @@ export const authHooks = (
       } else {
         return {
           status: "ERROR",
-          message: "Incorrect email or password",
+          message:result?.customerAccessTokenCreate?.customerUserErrors?.[0]?.message || "Incorrect email or password",
         }
       }
-    } catch (error) {
+    } catch (error:any) {
       return {
         status: "ERROR",
-        message: "An error occurred while logging in",
+        message: error?.response?.errors?.[0]?.message|| "An error occurred while logging in",
       }
     }
   }
@@ -127,7 +128,7 @@ export const authHooks = (
 
   return {
     signUp,
-    logIn,
+    signIn,
     logOut,
     verifyToken,
   }

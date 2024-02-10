@@ -14,6 +14,8 @@ import MessageChat from "@/components/svg/MessageChat"
 import MessageSmile from "@/components/svg/MessageSmile"
 import Location from "@/components/svg/Location"
 import Phone from "@/components/svg/Phone"
+import { useEffect } from "react"
+import { graphqlClientAdmin } from "@/utils"
 
 interface props {
   page: any
@@ -22,6 +24,27 @@ interface props {
 export default function Page({ page }: props): JSX.Element | null {
   if (!page) return null
   const { title, slug, seo } = page
+
+  useEffect(()=>{
+    // fetchData()
+  },[])
+
+  const fetchData = async () =>{
+    const result =
+    await graphqlClientAdmin.request(`
+      query {
+        products (first: 3) {
+          edges {
+            node {
+              id
+              title
+            }
+          }
+        }
+      }
+    `)
+    console.log(result)
+  }
 
   return (
     <>

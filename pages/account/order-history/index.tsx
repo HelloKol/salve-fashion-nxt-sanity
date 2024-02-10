@@ -47,7 +47,6 @@ export default function Page({}: PageProps): JSX.Element | null {
 
   console.log(isLoading, data, token)
 
-  if (isLoading) return <p>Loading...</p>
 
   const renderOrders = () =>
     data &&
@@ -81,6 +80,7 @@ export default function Page({}: PageProps): JSX.Element | null {
       })
     })
 
+
   return (
     <>
       <Head>
@@ -90,7 +90,10 @@ export default function Page({}: PageProps): JSX.Element | null {
         <Section>
           <Container>
             <Grid>
-              <ul className="col-span-full mb-20 flex gap-4 ">
+             {
+              isLoading ? <p>Loading...</p>:
+              <>
+               <ul className="col-span-full mb-20 flex gap-4 ">
                 {navigationLinks.map((link, index) => (
                   <Button
                     key={index}
@@ -103,6 +106,8 @@ export default function Page({}: PageProps): JSX.Element | null {
                 ))}
               </ul>
               {renderOrders()}
+              </>
+             }
             </Grid>
           </Container>
         </Section>

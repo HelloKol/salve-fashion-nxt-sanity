@@ -2,16 +2,19 @@ import { FormData } from "@/types";
 import React, { createContext, ReactNode, useContext, useState } from "react";
 import { useCookies } from "react-cookie";
 import { authHooks } from "./hooks";
+import { useQuery } from "@apollo/client";
+import { USER_DETAILS } from "@/services/queries";
 
 type ProviderProps = {
   children: ReactNode | ReactNode[];
 };
 
 type AuthContextType = {
+  userDetails:any;
   accessToken: string | undefined;
   isAuthenticated: boolean;
   signUp: (inputs: FormData) => Promise<any>;
-  logIn: (inputs: FormData) => Promise<any>;
+  signIn: (inputs: FormData) => Promise<any>;
   logOut: () => Promise<any>;
 };
 
@@ -27,13 +30,14 @@ export const AuthProvider = ({ children }: ProviderProps) => {
 
 function AuthFuncHooks() {
   const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    !!cookies["accessToken"]
-  );
-  const [checkoutIdCookie, setCheckoutId, removeCheckoutId] = useCookies([
-    "checkoutId",
-  ]);
+  const [isAuthenticated, setIsAuthenticated] = useState(!!cookies["accessToken"]);
+  const [checkoutIdCookie, setCheckoutId, removeCheckoutId] = useCookies(["checkoutId"]);
   const token: string = cookies["accessToken"];
+
+  const { loading, error, data } = useQuery(USER_DETAILS, {
+    variables: { customerAccessToken: token },
+    skip: !isAuthenticated
+  });
 
   const setToken = (accessToken: string, expiresAt: string) =>
     setCookie("accessToken", accessToken, {
@@ -59,6 +63,7 @@ function AuthFuncHooks() {
   );
 
   return {
+    userDetails:data?.customer,
     accessToken: token,
     isAuthenticated,
     ...authFuncs,

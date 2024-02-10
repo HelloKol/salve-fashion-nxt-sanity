@@ -1,5 +1,27 @@
 import { gql } from "@apollo/client";
 
+const USER_DETAILS = gql`
+  query ($customerAccessToken: String!) {
+    customer(customerAccessToken: $customerAccessToken) {
+      id
+      firstName
+      lastName
+      id
+      firstName
+      lastName
+      email
+      phone
+      createdAt
+      updatedAt
+      tags
+      defaultAddress {
+        formattedArea
+        address1
+      }
+    }
+  }
+`
+
 const ORDER_HISTORY = gql`
   query ($customerAccessToken: String!, $first: Int!) {
     customer(customerAccessToken: $customerAccessToken) {
@@ -39,4 +61,4 @@ const ORDER_HISTORY = gql`
   }
 `;
 
-export { ORDER_HISTORY };
+export {USER_DETAILS, ORDER_HISTORY };

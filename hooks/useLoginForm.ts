@@ -14,8 +14,8 @@ const loginSchema = yup.object().shape({
 })
 
 const useLoginForm = () => {
-  const { logIn } = useAuth()
   const router = useRouter()
+  const { signIn } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
   const [isSucess, setIsSuccess] = useState(false)
   const [globalError, setGlobalError] = useState("")
@@ -30,7 +30,7 @@ const useLoginForm = () => {
   const onSubmit = async ({ email, password }: FormData) => {
     setIsLoading(true)
     try {
-      const response = await logIn({ email, password })
+      const response = await signIn({ email, password })
       if (response.status === "OK") {
         setGlobalError("")
         setIsLoading(false)
