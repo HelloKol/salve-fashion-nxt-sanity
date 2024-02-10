@@ -4,7 +4,8 @@ import Link from "next/link"
 import groq from "groq"
 import {
   Container,
-  ResetPassword,
+  ChangePassword,
+  FormInputText,
   Grid,
   ImageTag,
   Main,
@@ -53,7 +54,7 @@ export default function Page({ page }: props): JSX.Element | null {
                 </div>
               </div>
 
-              <ResetPassword title={"Reset your password"} />
+              <ChangePassword title={"New password"} />
             </Grid>
           </Container>
         </Section>

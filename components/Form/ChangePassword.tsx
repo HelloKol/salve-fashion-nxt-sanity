@@ -12,7 +12,7 @@ import {
   MetaTags,
   Section,
 } from "@/components"
-import { useDialogBox, useResetPasswordForm } from "@/hooks"
+import { useDialogBox, useChangePasswordForm } from "@/hooks"
 import { useToastOpen } from "@/context/Toast"
 import { graphqlClient, sanityClient } from "@/utils"
 import { gql } from "@apollo/client"
@@ -22,7 +22,7 @@ interface props {
 }
 
 export default function ChangePassword({ title }: props): JSX.Element | null {
-  const resetPasswordToast = useDialogBox()
+  const changePasswordToast = useDialogBox()
   const {
     register,
     handleSubmit,
@@ -31,7 +31,7 @@ export default function ChangePassword({ title }: props): JSX.Element | null {
     onSubmit,
     isLoading,
     isSucess,
-  } = useResetPasswordForm()
+  } = useChangePasswordForm()
 
   const message = isLoading ? (
     <>
@@ -52,7 +52,7 @@ export default function ChangePassword({ title }: props): JSX.Element | null {
     )
   )
 
-  useToastOpen(isLoading, !!globalError, isSucess, resetPasswordToast.close, {
+  useToastOpen(isLoading, !!globalError, isSucess, changePasswordToast.close, {
     description: message,
     duration: 50000,
     type: "foreground",
@@ -67,11 +67,11 @@ export default function ChangePassword({ title }: props): JSX.Element | null {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mt-6">
             <FormInputText
-              type="email"
-              placeholder="yourname@gmail.com"
-              label="E-mail"
-              {...register("email")}
-              error={errors.email}
+              type="password"
+              placeholder="123456"
+              label="Password"
+              {...register("password")}
+              error={errors.password}
             />
           </div>
 
