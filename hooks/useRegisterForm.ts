@@ -8,11 +8,17 @@ import { FormData } from "@/types"
 import { useAuth } from "@/context/User"
 
 const registerSchema = yup.object().shape({
-  email: yup.string().email('Enter a valid e-mail address').required('Enter your e-mail address'),
-  password: yup.string().min(6, 'Password must be at least 6 characters').required('Enter your password'),
-  firstName: yup.string().required('Enter your first name'),
-  lastName: yup.string().required('Enter your last name'),
-  acceptPrivacy: yup.boolean().required('You must accept the privacy policy'),
+  email: yup
+    .string()
+    .email("Enter a valid e-mail address")
+    .required("Enter your e-mail address"),
+  password: yup
+    .string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Enter your password"),
+  firstName: yup.string().required("Enter your first name"),
+  lastName: yup.string().required("Enter your last name"),
+  acceptPrivacy: yup.boolean().required("You must accept the privacy policy"),
 })
 
 const useRegisterForm = () => {
@@ -32,8 +38,8 @@ const useRegisterForm = () => {
   const onSubmit = async (data: FormData) => {
     setIsLoading(true)
     try {
-      const {acceptPrivacy, ...rest} = data
-      const response = await signUp({...rest})
+      const { acceptPrivacy, ...rest } = data
+      const response = await signUp({ ...rest })
       if (response.status === "OK") {
         setGlobalError("")
         setIsLoading(false)

@@ -1,24 +1,24 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"
 
 const useHeaderCollapse = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollTop = window.pageYOffset;
+      const scrollTop = window.pageYOffset
       if (scrollTop > 10) {
-        setIsScrolled(true);
+        setIsScrolled(true)
       } else {
-        setIsScrolled(false);
+        setIsScrolled(false)
       }
-    };
-    window.addEventListener("scroll", handleScroll);
+    }
+    window.addEventListener("scroll", handleScroll)
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+      window.removeEventListener("scroll", handleScroll)
+    }
+  }, [])
 
-  return isScrolled;
-};
+  return isScrolled
+}
 
-export default useHeaderCollapse;
+export default useHeaderCollapse

@@ -8,8 +8,14 @@ import { FormData } from "@/types"
 import { useAuth } from "@/context/User"
 
 const loginSchema = yup.object().shape({
-  email: yup.string().email('Enter a valid e-mail address').required('Enter your e-mail address'),
-  password: yup.string().min(6, 'Password must be at least 6 characters').required('Enter your password'),
+  email: yup
+    .string()
+    .email("Enter a valid e-mail address")
+    .required("Enter your e-mail address"),
+  password: yup
+    .string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Enter your password"),
   rememberMeCheckbox: yup.boolean(),
 })
 

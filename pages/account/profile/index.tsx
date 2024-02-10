@@ -1,15 +1,15 @@
 import { GetStaticPropsResult } from "next"
 import Head from "next/head"
 import { useRouter } from "next/router"
-import { useQuery } from '@apollo/client';
-import { gql } from "@apollo/client";
+import { useQuery } from "@apollo/client"
+import { gql } from "@apollo/client"
 import { Main, Section, Container, Grid, Button, Logout } from "@/components"
 import { sanityClient } from "@/utils/sanity"
 import styles from "./styles.module.scss"
-import { USER_DETAILS } from "@/services/queries";
-import { useEffect } from "react";
-import { graphqlClient } from "@/utils";
-import { useAuth } from "@/context/User";
+import { USER_DETAILS } from "@/services/queries"
+import { useEffect } from "react"
+import { graphqlClient } from "@/utils"
+import { useAuth } from "@/context/User"
 
 const navigationLinks = [
   { href: "/account/profile", text: "Account" },

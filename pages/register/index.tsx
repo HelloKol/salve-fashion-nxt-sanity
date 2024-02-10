@@ -24,7 +24,7 @@ export default function Page({ page }: props): JSX.Element | null {
   if (!page) return null
   const { title, slug, seo } = page
   const registerToast = useDialogBox()
-  const { 
+  const {
     register,
     handleSubmit,
     errors,
@@ -32,8 +32,7 @@ export default function Page({ page }: props): JSX.Element | null {
     onSubmit,
     isLoading,
     isSucess,
-   } =
-    useRegisterForm()
+  } = useRegisterForm()
 
   const message = isLoading ? (
     <>
@@ -60,7 +59,6 @@ export default function Page({ page }: props): JSX.Element | null {
     type: "foreground",
     onClose: () => null,
   })
-
 
   return (
     <>

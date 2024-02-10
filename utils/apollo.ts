@@ -1,4 +1,4 @@
-import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { ApolloClient, InMemoryCache } from "@apollo/client"
 
 // Create a appollo client
 const apolloClient = new ApolloClient({
@@ -8,6 +8,6 @@ const apolloClient = new ApolloClient({
     "X-Shopify-Storefront-Access-Token":
       process.env.NEXT_PUBLIC_SHOPIFY_ACCESS_TOKEN || "",
   },
-});
+})
 
-export { apolloClient };
+export { apolloClient }

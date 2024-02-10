@@ -326,4 +326,4 @@ const ToastItem: React.FC<ToastProps> = ({
   )
 }
 
-export default Toast
+export default ToastProvider

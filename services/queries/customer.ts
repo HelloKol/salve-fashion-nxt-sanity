@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from "@apollo/client"
 
 const USER_DETAILS = gql`
   query ($customerAccessToken: String!) {
@@ -59,6 +59,6 @@ const ORDER_HISTORY = gql`
       }
     }
   }
-`;
+`
 
-export {USER_DETAILS, ORDER_HISTORY };
+export { USER_DETAILS, ORDER_HISTORY }

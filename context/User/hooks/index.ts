@@ -1,5 +1,9 @@
 import { graphqlClient } from "@/utils"
-import { FormData, CustomerAccessTokenCreateResult, CustomerCreateResult } from "@/types"
+import {
+  FormData,
+  CustomerAccessTokenCreateResult,
+  CustomerCreateResult,
+} from "@/types"
 import {
   LOGIN_CUSTOMER,
   LOGOUT_CUSTOMER,
@@ -16,12 +20,11 @@ export const authHooks = (
 ) => {
   // USER REGISTER
   const signUp = async (input: FormData) => {
-      try {
-      const result =
-        await graphqlClient.request<CustomerCreateResult>(
-          REGISTER_CUSTOMER,
-          {input}
-        )
+    try {
+      const result = await graphqlClient.request<CustomerCreateResult>(
+        REGISTER_CUSTOMER,
+        { input }
+      )
       if (result.customerCreate.customer) {
         return {
           status: "OK",
@@ -30,13 +33,16 @@ export const authHooks = (
       } else {
         return {
           status: "ERROR",
-          message:result.customerCreate.userErrors[0].message|| "Could not register",
+          message:
+            result.customerCreate.userErrors[0].message || "Could not register",
         }
       }
-    } catch (error:any) {
-        return {
+    } catch (error: any) {
+      return {
         status: "ERROR",
-        message: error?.response?.errors?.[0]?.message|| "An error occurred while registering user",
+        message:
+          error?.response?.errors?.[0]?.message ||
+          "An error occurred while registering user",
       }
     }
   }
@@ -50,7 +56,7 @@ export const authHooks = (
           details
         )
       if (result.customerAccessTokenCreate.customerAccessToken) {
-        console.log(result," <<<< res")
+        console.log(result, " <<<< res")
         const { accessToken, expiresAt } =
           result.customerAccessTokenCreate.customerAccessToken
         setToken(accessToken, expiresAt)
@@ -62,13 +68,17 @@ export const authHooks = (
       } else {
         return {
           status: "ERROR",
-          message:result?.customerAccessTokenCreate?.customerUserErrors?.[0]?.message || "Incorrect email or password",
+          message:
+            result?.customerAccessTokenCreate?.customerUserErrors?.[0]
+              ?.message || "Incorrect email or password",
         }
       }
-    } catch (error:any) {
+    } catch (error: any) {
       return {
         status: "ERROR",
-        message: error?.response?.errors?.[0]?.message|| "An error occurred while logging in",
+        message:
+          error?.response?.errors?.[0]?.message ||
+          "An error occurred while logging in",
       }
     }
   }

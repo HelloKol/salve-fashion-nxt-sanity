@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next"
 import { graphqlClient } from "@/utils/graphql"
 import { ORDER_HISTORY } from "@/services/queries/customer"
 
-export default async function orderHistory(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
