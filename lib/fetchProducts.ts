@@ -1,9 +1,9 @@
 import { graphqlClient } from "@/utils"
 
-const fetchProducts = async (cursor: any, LIMIT: number) => {
+const fetchProducts = async (cursor: any, LIMIT: number, query: string) => {
   const productsQuery = `
     query($cursor: String) {
-      products(first: ${LIMIT}, after: $cursor) {
+      products(first: ${LIMIT}, after: $cursor, query:"${query}") {
         pageInfo {
           hasNextPage
         }

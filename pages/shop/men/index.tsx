@@ -14,8 +14,10 @@ import {
 import { fetchProducts, getFilteredProducts } from "@/lib"
 import { useWindowDimension } from "@/hooks"
 import styles from "./styles.module.scss"
+import { useRouter } from "next/router"
 
 export default function Page() {
+  const router = useRouter()
   const { isMobile, isMobileLarge, isTablet, isDesktop, isWidescreen } =
     useWindowDimension()
   const [showFullArticle, setShowFullArticle] = useState(false)
@@ -50,11 +52,19 @@ export default function Page() {
   // FETCH SHOPIFY DATA
   // ==================================================================
   const { ref, inView } = useInView({ threshold: 0 })
-  const PRODUCT_LIMIT = 9
+  const PRODUCT_LIMIT = 20
 
   const { data, isSuccess, hasNextPage, fetchNextPage } = useInfiniteQuery(
-    ["productsMen"],
-    ({ pageParam }) => fetchProducts(pageParam, PRODUCT_LIMIT),
+    ["productsMen", router.query],
+    ({ pageParam }) => {
+      const q = router.query?.q
+
+      return fetchProducts(
+        pageParam,
+        PRODUCT_LIMIT,
+        `tag:men${q ? `, title:${q}` : ""}`
+      )
+    },
     {
       getNextPageParam: (lastPage) => {
         return lastPage.pageInfo.hasNextPage
@@ -63,19 +73,10 @@ export default function Page() {
       },
     }
   )
+  const products = data?.pages?.[0]?.edges
 
   useEffect(() => {
-    if (inView && hasNextPage) {
-      fetchNextPage()
-    }
-  }, [inView, fetchNextPage, hasNextPage])
-
-  useEffect(() => {
-    if (
-      inView &&
-      hasNextPage &&
-      getFilteredProducts(data?.pages, "men").length < PRODUCT_LIMIT
-    ) {
+    if (inView && hasNextPage && products.length < PRODUCT_LIMIT) {
       fetchNextPage()
     }
   }, [inView, fetchNextPage, hasNextPage, data?.pages])
@@ -85,9 +86,8 @@ export default function Page() {
   // ==================================================================
 
   const renderProducts = () =>
-    isSuccess &&
-    data?.pages &&
-    getFilteredProducts(data.pages, "men").map((edge: any, index: number) => {
+    products &&
+    products.map((edge: any, index: number) => {
       const product = {
         id: edge.node.id,
         handle: edge.node.handle,
@@ -192,12 +192,34 @@ export default function Page() {
               </article>
 
               <div className="col-start-1 col-end-8 mt-2 flex flex-wrap items-center gap-2 md:col-start-1 md:col-end-10 md:gap-4 xl:mt-4">
-                <Button variant="primary">All</Button>
-                <Button variant="primary" isActive={true}>
+                <Button
+                  variant="primary"
+                  isActive={!router.query.q}
+                  href={`/shop/men`}
+                >
+                  All
+                </Button>
+                <Button
+                  variant="primary"
+                  isActive={router.query.q === "hoodie"}
+                  href={`/shop/men?q=hoodie`}
+                >
                   Hoodies
                 </Button>
-                <Button variant="primary">Shirts</Button>
-                <Button variant="primary">Joggers</Button>
+                <Button
+                  variant="primary"
+                  isActive={router.query.q === "shirt"}
+                  href={`/shop/men?q=shirt`}
+                >
+                  Shirts
+                </Button>
+                <Button
+                  variant="primary"
+                  isActive={router.query.q === "jogger"}
+                  href={`/shop/men?q=jogger`}
+                >
+                  Joggers
+                </Button>
               </div>
 
               <div className="col-start-8 col-end-13 ml-auto mt-2 md:col-start-10 md:col-end-13 xl:mt-4">
@@ -210,7 +232,7 @@ export default function Page() {
                 withRowGap={false}
               >
                 <p className="col-span-full mb-4 text-sm font-bold lg:mb-6 xl:mb-8">
-                  {[1, 1, 1, 1, 1].length} items
+                  {products?.length} items
                 </p>
                 {renderProducts()}
               </Grid>

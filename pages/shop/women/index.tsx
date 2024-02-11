@@ -50,11 +50,11 @@ export default function Page() {
   // FETCH SHOPIFY DATA
   // ==================================================================
   const { ref, inView } = useInView({ threshold: 0 })
-  const PRODUCT_LIMIT = 9
+  const PRODUCT_LIMIT = 20
 
   const { data, isSuccess, hasNextPage, fetchNextPage } = useInfiniteQuery(
-    ["productsMen"],
-    ({ pageParam }) => fetchProducts(pageParam, PRODUCT_LIMIT),
+    ["productsWomenMen"],
+    ({ pageParam }) => fetchProducts(pageParam, PRODUCT_LIMIT, `women`),
     {
       getNextPageParam: (lastPage) => {
         return lastPage.pageInfo.hasNextPage
@@ -63,31 +63,21 @@ export default function Page() {
       },
     }
   )
+  const products = data?.pages?.[0]?.edges
 
   useEffect(() => {
-    if (inView && hasNextPage) {
+    if (inView && hasNextPage && products.length < PRODUCT_LIMIT) {
       fetchNextPage()
     }
-  }, [inView, fetchNextPage, hasNextPage])
-
-  useEffect(() => {
-    if (
-      inView &&
-      hasNextPage &&
-      getFilteredProducts(data?.pages, "women").length < PRODUCT_LIMIT
-    ) {
-      fetchNextPage()
-    }
-  }, [inView, fetchNextPage, hasNextPage, data?.pages])
+  }, [inView, fetchNextPage, hasNextPage, products])
 
   // ==================================================================
   // FETCH SHOPIFY DATA
   // ==================================================================
 
   const renderProducts = () =>
-    isSuccess &&
-    data?.pages &&
-    getFilteredProducts(data.pages, "women").map((edge: any, index: number) => {
+    products &&
+    products.map((edge: any, index: number) => {
       const product = {
         id: edge.node.id,
         handle: edge.node.handle,
@@ -210,7 +200,7 @@ export default function Page() {
                 withRowGap={false}
               >
                 <p className="col-span-full mb-4 text-sm font-bold lg:mb-6 xl:mb-8">
-                  {[1, 1, 1, 1, 1].length} items
+                  {products?.length} items
                 </p>
                 {renderProducts()}
               </Grid>
