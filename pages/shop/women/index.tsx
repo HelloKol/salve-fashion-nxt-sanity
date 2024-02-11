@@ -14,8 +14,10 @@ import {
 import { fetchProducts } from "@/lib"
 import { useWindowDimension } from "@/hooks"
 import styles from "./styles.module.scss"
+import { useRouter } from "next/router"
 
 export default function Page() {
+  const router = useRouter()
   const { isMobile, isMobileLarge, isTablet, isDesktop, isWidescreen } =
     useWindowDimension()
   const [showFullArticle, setShowFullArticle] = useState(false)
@@ -53,8 +55,24 @@ export default function Page() {
   const PRODUCT_LIMIT = 20
 
   const { data, hasNextPage, fetchNextPage } = useInfiniteQuery(
-    ["productsWomen"],
-    ({ pageParam }) => fetchProducts(pageParam, PRODUCT_LIMIT, `women`),
+    ["productsWommen", router.query],
+    ({ pageParam }) => {
+      const q = router.query?.q as string
+      const sort = router.query?.sort as string
+      const sortVal =
+        sort === "latest" || sort === "oldest"
+          ? "CREATED_AT"
+          : sort === "highest_price" || sort === "lowest_price"
+            ? "PRICE"
+            : ""
+
+      return fetchProducts(
+        pageParam,
+        PRODUCT_LIMIT,
+        `tag:women${q ? `, title:${q}` : ""}`,
+        sortVal
+      )
+    },
     {
       getNextPageParam: (lastPage) => {
         return lastPage.pageInfo.hasNextPage
@@ -181,12 +199,34 @@ export default function Page() {
               </article>
 
               <div className="col-start-1 col-end-8 mt-2 flex flex-wrap items-center gap-2 md:col-start-1 md:col-end-10 md:gap-4 xl:mt-4">
-                <Button variant="primary">All</Button>
-                <Button variant="primary" isActive={true}>
+                <Button
+                  variant="primary"
+                  isActive={!router.query.q}
+                  href={`/shop/women`}
+                >
+                  All
+                </Button>
+                <Button
+                  variant="primary"
+                  isActive={router.query.q === "hoodie"}
+                  href={`/shop/women?q=hoodie`}
+                >
                   Hoodies
                 </Button>
-                <Button variant="primary">Shirts</Button>
-                <Button variant="primary">Joggers</Button>
+                <Button
+                  variant="primary"
+                  isActive={router.query.q === "shirt"}
+                  href={`/shop/women?q=shirt`}
+                >
+                  Shirts
+                </Button>
+                <Button
+                  variant="primary"
+                  isActive={router.query.q === "jogger"}
+                  href={`/shop/women?q=jogger`}
+                >
+                  Joggers
+                </Button>
               </div>
 
               <div className="col-start-8 col-end-13 ml-auto mt-2 md:col-start-10 md:col-end-13 xl:mt-4">
