@@ -9,6 +9,8 @@ import {
   Grid,
   ImageTag,
   Main,
+  RadixPopover,
+  RadixSlider,
   Section,
 } from "@/components"
 import { fetchProductsSearch } from "@/lib"
@@ -59,18 +61,24 @@ export default function Page() {
     ({ pageParam }) => {
       const title = router.query?.title as string
       const sort = router.query?.sort as string
+      const minPrice = parseFloat(router.query?.min_price as string)
+      const maxPrice = parseFloat(router.query?.max_price as string)
       const sortVal =
         sort === "relevance"
           ? "RELEVANCE"
           : sort === "highest_price" || sort === "lowest_price"
             ? "PRICE"
             : ""
+      const reverse = sort === "highest_price"
 
       return fetchProductsSearch(
         pageParam,
         PRODUCT_LIMIT,
         title ? `"title:${title}"` : `""`,
-        sortVal
+        reverse,
+        sortVal,
+        minPrice,
+        maxPrice
       )
     },
     {
@@ -91,9 +99,8 @@ export default function Page() {
   }, [inView, fetchNextPage, hasNextPage, data?.pages])
 
   // ==================================================================
-  // FETCH SHOPIFY DATA
+  // RENDER ALL PRODUCTS
   // ==================================================================
-
   const renderProducts = () =>
     products &&
     products.map((edge: any, index: number) => {
@@ -186,50 +193,42 @@ export default function Page() {
           <Container>
             <Grid>
               <h1 className="col-span-full mt-10 text-3xl md:text-5xl xl:mt-20">
-                All Men
+                All Products
               </h1>
 
-              <article className="col-span-full text-sm md:col-end-11 md:text-xl xl:col-end-9 xl:mt-2">
-                <p className="m-0">{trimArticle(articleText)}</p>
-                {articleText.length > initialTrimLength && (
-                  <span
-                    onClick={toggleShowFullArticle}
-                    className="mt-1 block cursor-pointer text-sm font-semibold underline lg:mt-0 lg:text-lg"
-                  >
-                    {showFullArticle ? "less" : "more"}
-                  </span>
-                )}
-              </article>
+              <p className="col-span-full mb-4 text-sm font-bold lg:mb-6 xl:mb-8">
+                {products?.length} products
+              </p>
 
-              <div className="col-start-1 col-end-8 mt-2 flex flex-wrap items-center gap-2 md:col-start-1 md:col-end-10 md:gap-4 xl:mt-4">
-                <Button
-                  variant="primary"
-                  isActive={!router.query.q}
-                  href={`/shop/men`}
+              <div className="col-start-1 col-end-8 mt-2 md:col-start-1 md:col-end-8 xl:mt-4">
+                <RadixPopover
+                  trigger={
+                    <button className="flex items-center gap-3">
+                      Price{" "}
+                      <svg
+                        className="h-4 w-4 text-gray-800"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="m19 9-7 7-7-7"
+                        />
+                      </svg>
+                    </button>
+                  }
                 >
-                  All
-                </Button>
-                <Button
-                  variant="primary"
-                  isActive={router.query.q === "hoodie"}
-                  href={`/shop/men?q=hoodie`}
-                >
-                  Hoodies
-                </Button>
-                <Button
-                  variant="primary"
-                  isActive={router.query.q === "shirt"}
-                  href={`/shop/men?q=shirt`}
-                >
-                  Shirts
-                </Button>
-                <Button
-                  variant="primary"
-                  isActive={router.query.q === "jogger"}
-                  href={`/shop/men?q=jogger`}
-                >
-                  Joggers
-                </Button>
+                  <div className="flex items-center justify-between">
+                    <p>The highest price is £1000</p>
+                    <button>reset</button>
+                  </div>
+                  <RadixSlider />
+                </RadixPopover>
               </div>
 
               <div className="col-start-8 col-end-13 ml-auto mt-2 md:col-start-10 md:col-end-13 xl:mt-4">
@@ -241,9 +240,6 @@ export default function Page() {
                 className="col-span-full mt-4 xl:mt-8"
                 withRowGap={false}
               >
-                <p className="col-span-full mb-4 text-sm font-bold lg:mb-6 xl:mb-8">
-                  {products?.length} items
-                </p>
                 {renderProducts()}
               </Grid>
             </Grid>

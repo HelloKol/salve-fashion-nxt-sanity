@@ -47,6 +47,7 @@ export interface ShopifySingleProduct {
     title: string
     handle: string
     description: string
+    descriptionHtml: string
     images: {
       edges: ProductImageNode[]
     }

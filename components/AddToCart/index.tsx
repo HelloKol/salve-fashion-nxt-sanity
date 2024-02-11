@@ -48,7 +48,7 @@ export default function AddToCart({
       onClick={handleAddToCart}
       disabled={disabled}
     >
-      Add to cart
+      {disabled ? `Sold out` : `Add to cart`}
     </Button>
   )
 }

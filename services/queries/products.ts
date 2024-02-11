@@ -41,6 +41,7 @@ query getProductByHandle($handle: String!) {
     id
     title
     description
+    descriptionHtml
     images(first: 100) {
       edges {
         node {

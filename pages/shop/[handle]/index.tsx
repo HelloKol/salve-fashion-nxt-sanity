@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 // @ts-ignore
 import { useSpringCarousel } from "react-spring-carousel"
+import sanitizeHtml from "sanitize-html" // You may need to install a library for sanitization
 import {
   AddToCart,
   Button,
@@ -69,7 +70,8 @@ export default function Page({ product }: ProductProps): JSX.Element | null {
 
   if (!product) return <div>Product not found</div>
   const { productByHandle } = product
-  const { title, description, images, variants } = productByHandle
+  const { title, description, descriptionHtml, images, variants } =
+    productByHandle
   const { edges } = variants
 
   // Extract unique sizes
@@ -191,6 +193,19 @@ export default function Page({ product }: ProductProps): JSX.Element | null {
       )
     })
 
+  console.log(product)
+
+  // Extract unique available sizes and colors from variants
+  const availableSizes = Array.from(
+    new Set(
+      variants.edges.map(
+        (variant) =>
+          variant.node.selectedOptions.find((option) => option.name === "Size")
+            .value
+      )
+    )
+  )
+
   return (
     <>
       <Main withPadding={false}>
@@ -214,16 +229,19 @@ export default function Page({ product }: ProductProps): JSX.Element | null {
                   {edges[0].node.priceV2.amount}
                 </h3>
 
-                <article className="mt-6">
-                  <p className="m-0">{trimArticle(description)}</p>
-                  {articleText.length > initialTrimLength && (
+                <article
+                  className="mt-6"
+                  dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+                >
+                  {/* <p className="m-0">{trimArticle(description)}</p> */}
+                  {/* {articleText.length > initialTrimLength && (
                     <span
                       onClick={toggleShowFullArticle}
                       className="mt-1 block cursor-pointer text-sm font-semibold underline lg:mt-0 lg:text-lg"
                     >
                       {showFullArticle ? "less" : "more"}
                     </span>
-                  )}
+                  )} */}
                 </article>
 
                 <div className="mt-6 flex items-center gap-4">

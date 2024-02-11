@@ -126,7 +126,12 @@ export default function Page() {
                   >
                     <div className={`flex flex-col gap-4`}>
                       <Button variant={"quaternary"}>Add to cart</Button>
-                      <Button variant={"secondary"}>Learn more</Button>
+                      <Button
+                        variant={"secondary"}
+                        href={`/shop/${product.handle}`}
+                      >
+                        Learn more
+                      </Button>
                     </div>
                   </div>
                 </div>
@@ -160,7 +165,12 @@ export default function Page() {
                 >
                   <div className={`flex flex-col gap-4`}>
                     <Button variant={"quaternary"}>Add to cart</Button>
-                    <Button variant={"secondary"}>Learn more</Button>
+                    <Button
+                      variant={"secondary"}
+                      href={`/shop/${product.handle}`}
+                    >
+                      Learn more
+                    </Button>
                   </div>
                 </div>
               </div>
