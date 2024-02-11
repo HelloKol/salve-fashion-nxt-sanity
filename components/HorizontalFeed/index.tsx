@@ -66,9 +66,9 @@ export default function HorizontalFeed({ title, data, href }: Props) {
             ref={feedRef}
           >
             {[
-              "/static/mock_prodct_images/men_1.webp",
-              "/static/mock_prodct_images/men_2.webp",
-              "/static/mock_prodct_images/men_3.webp",
+              "/static/mock_product_images/men_1.webp",
+              "/static/mock_product_images/men_2.webp",
+              "/static/mock_product_images/men_3.webp",
             ].map((item, index) => (
               <li key={index}>
                 <div

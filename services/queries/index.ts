@@ -6,7 +6,13 @@ export {
 } from "./cart"
 export { COLLECTIONS_QUERY } from "./collections"
 export { ALL_PRODUCTS, SINGLE_PRPDUCT } from "./products"
-export { USER_DETAILS } from "./customer"
+export {
+  USER_DETAILS,
+  ADD_USER_ADDRESS,
+  UPDATE_USER_ADDRESS,
+  UPDATE_USER_EMAIL,
+  UPDATE_USER_PASSWORD,
+} from "./customer"
 export {
   REGISTER_CUSTOMER,
   LOGIN_CUSTOMER,

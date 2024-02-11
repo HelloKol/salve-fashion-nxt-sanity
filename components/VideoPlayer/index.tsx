@@ -8,7 +8,7 @@ interface VideoPlayerProps {
 const VideoPlayer = ({ videoSrc }: VideoPlayerProps) => {
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const [showThumbnail, setShowThumbnail] = useState(true)
-  const thumbnailSrc = `/static/mock_prodct_images/vid.avif`
+  const thumbnailSrc = `/static/mock_product_images/vid.avif`
 
   const handleVideoClick = () => {
     if (videoRef.current?.paused) {

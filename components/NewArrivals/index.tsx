@@ -32,7 +32,7 @@ export default function index({}: Props) {
             <div
               className={`h-[500px] w-full overflow-hidden rounded-2xl md:h-[470px] lg:h-[550px] xl:h-[650px]`}
             >
-              <ImageTag src="/static/mock_prodct_images/hoodie_3.webp" />
+              <ImageTag src="/static/mock_product_images/hoodie_3.webp" />
             </div>
             <p>Essentials Hoodie</p>
             <p>£122.30</p>
@@ -45,7 +45,7 @@ export default function index({}: Props) {
             <div
               className={`h-[500px] w-full overflow-hidden rounded-2xl md:h-[470px] lg:h-[550px] xl:h-[650px]`}
             >
-              <ImageTag src="/static/mock_prodct_images/hoodie_2.webp" />
+              <ImageTag src="/static/mock_product_images/hoodie_2.webp" />
             </div>
             <p>Essentials Hoodie</p>
             <p>£122.30</p>
@@ -58,7 +58,7 @@ export default function index({}: Props) {
             <div
               className={`h-[500px] w-full overflow-hidden rounded-2xl md:h-[800px] lg:h-full`}
             >
-              <ImageTag src="/static/mock_prodct_images/hoodie_1.webp" />
+              <ImageTag src="/static/mock_product_images/hoodie_1.webp" />
             </div>
             <p>Essentials Hoodie</p>
             <p>£122.30</p>

@@ -65,11 +65,20 @@ export default function ChangePassword({ title }: props): JSX.Element | null {
         <p className="text-center text-3xl uppercase">{title}</p>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mt-6">
+          <div className="mb-6">
             <FormInputText
               type="password"
-              placeholder="123456"
-              label="Password"
+              placeholder="******"
+              label="New Password"
+              {...register("password")}
+              error={errors.password}
+            />
+          </div>
+          <div className="mb-6">
+            <FormInputText
+              type="password"
+              placeholder="******"
+              label="Confirm Password"
               {...register("password")}
               error={errors.password}
             />
@@ -79,7 +88,7 @@ export default function ChangePassword({ title }: props): JSX.Element | null {
             className="mt-6 flex h-fit w-full shrink-0 items-center justify-center rounded-xl bg-[#171717] py-4 text-sm uppercase text-white"
             type="submit"
           >
-            {isLoading ? "Loading...." : "Reset password"}
+            {isLoading ? "Loading...." : "Continue"}
           </button>
 
           {globalError && <p className="mt-2 text-red-500">{globalError}</p>}

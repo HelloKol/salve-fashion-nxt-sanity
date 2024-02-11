@@ -96,7 +96,7 @@ export default function Page({ page }: props): JSX.Element | null {
                   </p>
 
                   <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="mt-6">
+                    <div className="mb-6">
                       <FormInputText
                         type="email"
                         placeholder="yourname@gmail.com"
@@ -106,10 +106,10 @@ export default function Page({ page }: props): JSX.Element | null {
                       />
                     </div>
 
-                    <div className="mt-6">
+                    <div className="mb-6">
                       <FormInputText
                         type="password"
-                        placeholder="123456"
+                        placeholder="******"
                         label="Password"
                         {...register("password")}
                         error={errors.password}
@@ -131,7 +131,7 @@ export default function Page({ page }: props): JSX.Element | null {
                       className="mt-6 flex h-fit w-full shrink-0 items-center justify-center rounded-xl bg-[#171717] py-4 text-sm uppercase text-white"
                       type="submit"
                     >
-                      {isLoading ? "Loading...." : "LogIn"}
+                      {isLoading ? "Loading...." : "Log In"}
                     </button>
 
                     {globalError && (

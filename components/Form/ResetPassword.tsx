@@ -65,7 +65,7 @@ export default function ResetPassword({ title }: props): JSX.Element | null {
         <p className="text-center text-3xl uppercase">{title}</p>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mt-6">
+          <div className="mb-6">
             <FormInputText
               type="email"
               placeholder="yourname@gmail.com"
@@ -79,7 +79,7 @@ export default function ResetPassword({ title }: props): JSX.Element | null {
             className="mt-6 flex h-fit w-full shrink-0 items-center justify-center rounded-xl bg-[#171717] py-4 text-sm uppercase text-white"
             type="submit"
           >
-            {isLoading ? "Loading...." : "Reset password"}
+            {isLoading ? "Loading...." : "Continue"}
           </button>
 
           {globalError && <p className="mt-2 text-red-500">{globalError}</p>}

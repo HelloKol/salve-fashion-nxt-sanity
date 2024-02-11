@@ -56,7 +56,6 @@ export const authHooks = (
           details
         )
       if (result.customerAccessTokenCreate.customerAccessToken) {
-        console.log(result, " <<<< res")
         const { accessToken, expiresAt } =
           result.customerAccessTokenCreate.customerAccessToken
         setToken(accessToken, expiresAt)

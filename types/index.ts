@@ -60,10 +60,24 @@ export interface ShopifySingleProduct {
 export type FormData = {
   email: string
   password: string
+  confirmPassword?: string
   firstName?: string
   lastName?: string
   rememberMeCheckbox?: boolean
   acceptPrivacy?: boolean
+}
+
+export type AddressFormData = {
+  address1: string
+  address2: string
+  city: string
+  company: string
+  country: string
+  firstName: string
+  lastName: string
+  phone: string
+  province: string
+  zip: string
 }
 
 export type CustomerAccessTokenCreateResult = {

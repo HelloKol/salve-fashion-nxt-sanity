@@ -92,9 +92,11 @@ export default function Page({ page }: props): JSX.Element | null {
 
               <div className="relative col-span-full md:col-start-4 md:col-end-10 lg:col-span-6">
                 <div className="z-10 w-8/12 w-full rounded-2xl lg:absolute lg:left-1/2 lg:top-1/2 lg:w-9/12 lg:max-w-[520px] lg:-translate-x-1/2 lg:-translate-y-1/2 lg:bg-[#ffffff] lg:p-4">
-                  <p className="text-center text-3xl">Register here</p>
+                  <p className="text-center text-3xl uppercase">
+                    Register account
+                  </p>
                   <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="mt-6">
+                    <div className="mb-6">
                       <FormInputText
                         type="text"
                         placeholder="Alex"
@@ -104,7 +106,7 @@ export default function Page({ page }: props): JSX.Element | null {
                       />
                     </div>
 
-                    <div className="mt-6">
+                    <div className="mb-6">
                       <FormInputText
                         type="text"
                         placeholder="James"
@@ -114,7 +116,7 @@ export default function Page({ page }: props): JSX.Element | null {
                       />
                     </div>
 
-                    <div className="mt-6">
+                    <div className="mb-6">
                       <FormInputText
                         type="email"
                         placeholder="yourname@gmail.com"
@@ -124,10 +126,10 @@ export default function Page({ page }: props): JSX.Element | null {
                       />
                     </div>
 
-                    <div className="mt-6">
+                    <div className="mb-6">
                       <FormInputText
                         type="password"
-                        placeholder="123456"
+                        placeholder="******"
                         label="Password"
                         {...register("password")}
                         error={errors.password}

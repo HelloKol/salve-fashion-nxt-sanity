@@ -54,7 +54,7 @@ export default function Page({ page }: props): JSX.Element | null {
                 </div>
               </div>
 
-              <ChangePassword title={"New password"} />
+              <ChangePassword title={"Change password"} />
             </Grid>
           </Container>
         </Section>

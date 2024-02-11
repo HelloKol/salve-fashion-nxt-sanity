@@ -17,7 +17,7 @@ export default function Category({}: Props) {
               href={`/shop/men`}
               className="relative h-[300px] w-full overflow-hidden sm:h-[400px] md:h-[480px] lg:h-[550px] lg:w-1/2 xl:h-[700px]"
             >
-              <ImageTag src="/static/mock_prodct_images/men.avif" />
+              <ImageTag src="/static/mock_product_images/men.avif" />
               <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full bg-black opacity-50" />
               <p className="absolute bottom-0 left-0 z-10 p-10 text-2xl text-white">
                 For Men
@@ -30,7 +30,7 @@ export default function Category({}: Props) {
               href={`/shop/women`}
               className="relative h-[300px] w-full overflow-hidden sm:h-[400px] md:h-[480px] lg:h-[550px] lg:w-1/2 xl:h-[700px]"
             >
-              <ImageTag src="/static/mock_prodct_images/women.avif" />
+              <ImageTag src="/static/mock_product_images/women.avif" />
               <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full bg-black opacity-50" />
               <p className="absolute bottom-0 left-0 z-10 p-10 text-2xl text-white">
                 For Women
