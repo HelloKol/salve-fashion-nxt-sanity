@@ -35,7 +35,7 @@ const ALL_PRODUCTS = gql`
   }
 `
 
-const SINGLE_PRPDUCT = `
+const SINGLE_PRODUCT_BY_HANDLE = `
 query getProductByHandle($handle: String!) {
   productByHandle(handle: $handle) {
     id
@@ -76,4 +76,45 @@ query getProductByHandle($handle: String!) {
 }
   `
 
-export { ALL_PRODUCTS, SINGLE_PRPDUCT }
+const SINGLE_PRODUCT_BY_ID = `
+  query getProductById($id: ID!) {
+    product(id: $id) {
+      id
+      title
+      description
+      descriptionHtml
+      images(first: 100) {
+        edges {
+          node {
+            transformedSrc
+          }
+        }
+      }
+      variants(first: 100) {
+        edges {
+          node {
+            id
+            title
+            priceV2 {
+              amount
+              currencyCode
+            }
+            compareAtPriceV2 {
+              amount
+              currencyCode
+            }
+            selectedOptions {
+              name
+              value
+            }
+            image {
+              transformedSrc
+            }
+          }
+        }
+      }
+    }
+  }
+    `
+
+export { ALL_PRODUCTS, SINGLE_PRODUCT_BY_HANDLE, SINGLE_PRODUCT_BY_ID }

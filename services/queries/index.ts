@@ -5,7 +5,11 @@ export {
   CREATE_CHECKOUT,
 } from "./cart"
 export { COLLECTIONS_QUERY } from "./collections"
-export { ALL_PRODUCTS, SINGLE_PRPDUCT } from "./products"
+export {
+  ALL_PRODUCTS,
+  SINGLE_PRODUCT_BY_HANDLE,
+  SINGLE_PRODUCT_BY_ID,
+} from "./products"
 export {
   USER_DETAILS,
   ADD_USER_ADDRESS,

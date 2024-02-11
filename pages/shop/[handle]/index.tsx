@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
 // @ts-ignore
 import { useSpringCarousel } from "react-spring-carousel"
-import sanitizeHtml from "sanitize-html" // You may need to install a library for sanitization
 import {
   AddToCart,
   Button,
@@ -11,6 +10,8 @@ import {
   ImageTag,
   Main,
   RadixAccordion,
+  RadixPopover,
+  RadixSlider,
   Section,
 } from "@/components"
 import { useWindowDimension } from "@/hooks"
@@ -18,7 +19,7 @@ import styles from "./styles.module.scss"
 import { ShopifySingleProduct } from "@/types"
 import { GetStaticPaths, GetStaticProps } from "next/types"
 import { ParsedUrlQuery } from "querystring"
-import { ALL_PRODUCTS, SINGLE_PRPDUCT } from "@/services/queries"
+import { ALL_PRODUCTS, SINGLE_PRODUCT_BY_HANDLE } from "@/services/queries"
 import { graphqlClient } from "@/utils"
 import ProductVariants from "./ProductVariants"
 
@@ -195,17 +196,6 @@ export default function Page({ product }: ProductProps): JSX.Element | null {
 
   console.log(product)
 
-  // Extract unique available sizes and colors from variants
-  const availableSizes = Array.from(
-    new Set(
-      variants.edges.map(
-        (variant) =>
-          variant.node.selectedOptions.find((option) => option.name === "Size")
-            .value
-      )
-    )
-  )
-
   return (
     <>
       <Main withPadding={false}>
@@ -261,6 +251,7 @@ export default function Page({ product }: ProductProps): JSX.Element | null {
 
                 <div className={`mt-6 flex flex-wrap gap-4 xl:flex-nowrap`}>
                   <AddToCart
+                    productId={product?.productByHandle?.id}
                     variantId={clickedVariantId}
                     disabled={
                       !clickedVariantId ||
@@ -329,7 +320,7 @@ export const getStaticProps: GetStaticProps<
       handle,
     }
     const product: ShopifySingleProduct = await graphqlClient.request(
-      SINGLE_PRPDUCT,
+      SINGLE_PRODUCT_BY_HANDLE,
       variables
     )
 
