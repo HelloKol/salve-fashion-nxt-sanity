@@ -31,7 +31,7 @@ const SelectItem = React.forwardRef<HTMLDivElement, SelectItemProps>(
 )
 SelectItem.displayName = "SelectItem"
 
-const RadixSelect = () => {
+const RadixSelect = ({ isSearchPage }: { isSearchPage?: boolean }) => {
   const router = useRouter()
 
   const updateSortParam = (val: string) => {
@@ -61,19 +61,29 @@ const RadixSelect = () => {
               <Select.Label className="SelectLabel px-6 py-2 text-xs text-gray-500 sm:text-sm">
                 Sort by
               </Select.Label>
-              <SelectItem
-                className="cursor-pointer px-6 py-2 text-xs sm:text-sm"
-                value="latest"
-                // onClick={()=>handleChange}
-              >
-                Latest
-              </SelectItem>
-              <SelectItem
-                className="cursor-pointer px-6 py-2 text-xs sm:text-sm"
-                value="oldest"
-              >
-                Oldest
-              </SelectItem>
+              {isSearchPage ? (
+                <SelectItem
+                  className="cursor-pointer px-6 py-2 text-xs sm:text-sm"
+                  value="relevance"
+                >
+                  Relevance
+                </SelectItem>
+              ) : (
+                <>
+                  <SelectItem
+                    className="cursor-pointer px-6 py-2 text-xs sm:text-sm"
+                    value="latest"
+                  >
+                    Latest
+                  </SelectItem>
+                  <SelectItem
+                    className="cursor-pointer px-6 py-2 text-xs sm:text-sm"
+                    value="oldest"
+                  >
+                    Oldest
+                  </SelectItem>
+                </>
+              )}
               <SelectItem
                 className="cursor-pointer px-6 py-2 text-xs sm:text-sm"
                 value="highest_price"
