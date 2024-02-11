@@ -11,7 +11,7 @@ import {
   Main,
   Section,
 } from "@/components"
-import { fetchProducts, getFilteredProducts } from "@/lib"
+import { fetchProducts } from "@/lib"
 import { useWindowDimension } from "@/hooks"
 import styles from "./styles.module.scss"
 import { useRouter } from "next/router"
@@ -54,15 +54,23 @@ export default function Page() {
   const { ref, inView } = useInView({ threshold: 0 })
   const PRODUCT_LIMIT = 20
 
-  const { data, isSuccess, hasNextPage, fetchNextPage } = useInfiniteQuery(
+  const { data, hasNextPage, fetchNextPage } = useInfiniteQuery(
     ["productsMen", router.query],
     ({ pageParam }) => {
-      const q = router.query?.q
+      const q = router.query?.q as string
+      const sort = router.query?.sort as string
+      const sortVal =
+        sort === "latest" || sort === "oldest"
+          ? "CREATED_AT"
+          : sort === "highest_price" || sort === "lowest_price"
+            ? "PRICE"
+            : ""
 
       return fetchProducts(
         pageParam,
         PRODUCT_LIMIT,
-        `tag:men${q ? `, title:${q}` : ""}`
+        `tag:men${q ? `, title:${q}` : ""}`,
+        sortVal
       )
     },
     {
@@ -95,8 +103,7 @@ export default function Page() {
         image: edge.node.featuredImage.originalSrc,
         price: `${edge.node.priceRange.maxVariantPrice.amount} ${edge.node.priceRange.maxVariantPrice.currencyCode}`,
       }
-      const lastItem =
-        index === getFilteredProducts(data.pages, "men").length - 1
+      const lastItem = index === products.length - 1
 
       if (lastItem)
         return (

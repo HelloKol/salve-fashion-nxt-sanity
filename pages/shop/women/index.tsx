@@ -11,7 +11,7 @@ import {
   Main,
   Section,
 } from "@/components"
-import { fetchProducts, getFilteredProducts } from "@/lib"
+import { fetchProducts } from "@/lib"
 import { useWindowDimension } from "@/hooks"
 import styles from "./styles.module.scss"
 
@@ -52,8 +52,8 @@ export default function Page() {
   const { ref, inView } = useInView({ threshold: 0 })
   const PRODUCT_LIMIT = 20
 
-  const { data, isSuccess, hasNextPage, fetchNextPage } = useInfiniteQuery(
-    ["productsWomenMen"],
+  const { data, hasNextPage, fetchNextPage } = useInfiniteQuery(
+    ["productsWomen"],
     ({ pageParam }) => fetchProducts(pageParam, PRODUCT_LIMIT, `women`),
     {
       getNextPageParam: (lastPage) => {
@@ -85,8 +85,7 @@ export default function Page() {
         image: edge.node.featuredImage.originalSrc,
         price: `${edge.node.priceRange.maxVariantPrice.amount} ${edge.node.priceRange.maxVariantPrice.currencyCode}`,
       }
-      const lastItem =
-        index === getFilteredProducts(data.pages, "women").length - 1
+      const lastItem = index === products.length - 1
 
       if (lastItem)
         return (
