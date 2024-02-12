@@ -7,38 +7,30 @@ import {
 } from "@/services/queries"
 import { graphqlClient } from "@/utils"
 import { useShoppingCart } from "@/context/Cart"
-import { RadixPopover } from ".."
+import { ImageTag, RadixPopover } from "@/components"
 import { ShopifySingleProduct } from "@/types"
 import { useState } from "react"
 
 export default function AddToCart({
-  productId,
-  variantId,
+  selectedVariantTitle,
+  selectedVariant,
   disabled,
 }: {
-  productId: string
-  variantId: string
+  selectedVariantTitle: string
+  selectedVariant: any
   disabled?: boolean
 }) {
-  const { setCartItems, fetchCartItems } = useShoppingCart()
+  if (!selectedVariant) return null
+  const { setCartItems, fetchCartItems, cartItems } = useShoppingCart()
   const [cookies] = useCookies(["checkoutId"])
   let checkoutId: string = cookies["checkoutId"]
-  const [product, setProduct] = useState(null)
+  const { id, image, selectedOptions } = selectedVariant
 
   const handleAddToCart = async () => {
     const quantity = 1
     const variables = {
       checkoutId,
-      lineItems: [{ variantId, quantity }],
-    }
-
-    try {
-      const product: any = await graphqlClient.request(SINGLE_PRODUCT_BY_ID, {
-        id: productId,
-      })
-      setProduct(product?.product)
-    } catch (error) {
-      console.error("Error fetch new cart item: ", error)
+      lineItems: [{ id, quantity }],
     }
 
     try {
@@ -61,6 +53,18 @@ export default function AddToCart({
       console.error("Error adding to cart:", error)
     }
   }
+
+  const renderVariantOptions = () =>
+    selectedOptions &&
+    selectedOptions.map((item: any) => {
+      const { name, value } = item
+
+      return (
+        <div>
+          {name}: {value}
+        </div>
+      )
+    })
 
   return (
     <RadixPopover
@@ -89,11 +93,20 @@ export default function AddToCart({
         <p>Item added to your cart</p>
       </div>
 
-      {product && (
-        <>
-          <h1>{product.title}</h1>
-        </>
-      )}
+      <div className="mt-8 flex gap-4">
+        <div className="h-28 w-24 flex-none">
+          <ImageTag src={image?.transformedSrc} />
+        </div>
+
+        <div>
+          <h1>{selectedVariantTitle}</h1>
+          <div className="mt-2">{renderVariantOptions()}</div>
+        </div>
+      </div>
+
+      <Button className={`mt-8 w-full`} variant={"quaternary"}>
+        View cart ({cartItems?.length})
+      </Button>
     </RadixPopover>
   )
 }

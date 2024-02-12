@@ -37,24 +37,50 @@ const ALL_PRODUCTS = gql`
 
 const SINGLE_PRODUCT_BY_HANDLE = `
 query getProductByHandle($handle: String!) {
-  productByHandle(handle: $handle) {
-    id
-    title
-    description
+  product(handle: $handle) {
+    availableForSale
+    createdAt
     descriptionHtml
-    images(first: 100) {
-      edges {
-        node {
-          transformedSrc
-        }
+    featuredImage {
+      altText
+      height
+      id
+      originalSrc
+      src
+      transformedSrc
+      url
+      width
+    }
+    description
+    compareAtPriceRange {
+      maxVariantPrice {
+        amount
+        currencyCode
+      }
+      minVariantPrice {
+        amount
+        currencyCode
       }
     }
+    handle
+    id
+    isGiftCard
+    onlineStoreUrl
+    productType
+    publishedAt
+    requiresSellingPlan
+    tags
+    title
+    totalInventory
+    trackingParameters
+    updatedAt
+    vendor
     variants(first: 100) {
       edges {
         node {
-          id
-          title
-          priceV2 {
+          availableForSale
+          barcode
+          compareAtPrice {
             amount
             currencyCode
           }
@@ -62,14 +88,71 @@ query getProductByHandle($handle: String!) {
             amount
             currencyCode
           }
+          currentlyNotInStock
+          id
+          image {
+            altText
+            height
+            id
+            originalSrc
+            src
+            transformedSrc
+            url
+            width
+          }
+          price {
+            amount
+            currencyCode
+          }
+          priceV2 {
+            amount
+            currencyCode
+          }
+          quantityAvailable
+          requiresShipping
+          sku
+          taxable
+          title
+          unitPrice {
+            amount
+            currencyCode
+          }
+          weight
+          weightUnit
           selectedOptions {
             name
             value
           }
-          image {
-            transformedSrc
-          }
         }
+      }
+    }
+    images(first: 100) {
+      edges {
+        node {
+          altText
+          height
+          id
+          originalSrc
+          src
+          transformedSrc
+          url
+          width
+        }
+      }
+    }
+    options(first: 100) {
+      id
+      name
+      values
+    }
+    priceRange {
+      maxVariantPrice {
+        amount
+        currencyCode
+      }
+      minVariantPrice {
+        amount
+        currencyCode
       }
     }
   }

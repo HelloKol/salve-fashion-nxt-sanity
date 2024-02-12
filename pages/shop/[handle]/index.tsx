@@ -24,55 +24,20 @@ import { graphqlClient } from "@/utils"
 import ProductVariants from "./ProductVariants"
 
 export interface ProductProps {
-  product: ShopifySingleProduct
+  productByHandle: ShopifySingleProduct
 }
 
-export default function Page({ product }: ProductProps): JSX.Element | null {
-  const { isMobile, isMobileLarge, isTablet, isDesktop, isWidescreen } =
-    useWindowDimension()
+export default function Page({
+  productByHandle,
+}: ProductProps): JSX.Element | null {
+  if (!productByHandle) return null
   const [index, setIndex] = useState(0)
-  const [showFullArticle, setShowFullArticle] = useState(false)
-  // State to track selected size and clicked variant id
   const [selectedSize, setSelectedSize] = useState(null)
-  const [clickedVariantId, setClickedVariantId] = useState("")
-  const initialTrimLength =
-    isMobile || isMobileLarge
-      ? 150
-      : isTablet
-        ? 250
-        : isDesktop
-          ? 175
-          : isWidescreen
-            ? 280
-            : 140
-  const trimLength = showFullArticle ? Infinity : initialTrimLength
+  const [selectedVariant, setSelectedVariant] = useState(null) as any
 
-  const articleText = `
-    Bringing a rustic authentic charm to any outfit, the Faux
-    Shearling Mid Jacket is the perfect layering piece to expand
-    your options whilst maintaining a distinctive personal
-    style. Since the 1950s, this outdoors staple has been a
-    popular choice adding depth to your personal look. With a
-    timelessly thick woollen lining and incredible insulation
-    and comfort, the shearling jacket is your go-to transitional
-    piece.
-  `.trim()
-
-  const trimArticle = (str: string) => {
-    if (!str?.length) return null
-    const trimmedText = str.slice(0, trimLength)
-    const ellipsis = str.length > trimLength ? "..." : ""
-    return `${trimmedText}${ellipsis}`
-  }
-
-  const toggleShowFullArticle = () => {
-    setShowFullArticle(!showFullArticle)
-  }
-
-  if (!product) return <div>Product not found</div>
-  const { productByHandle } = product
-  const { title, description, descriptionHtml, images, variants } =
-    productByHandle
+  if (!productByHandle) return <div>Product not found</div>
+  const { product } = productByHandle
+  const { title, description, descriptionHtml, images, variants } = product
   const { edges } = variants
 
   // Extract unique sizes
@@ -124,7 +89,7 @@ export default function Page({ product }: ProductProps): JSX.Element | null {
   })
 
   const [variantAvailability, setVariantAvailability] = useState({})
-  const selectedVariantAvailable = variantAvailability[clickedVariantId]
+  const selectedVariantAvailable = variantAvailability[selectedVariant?.id]
 
   useEffect(() => {
     // Update variant availability when the selected size changes
@@ -147,8 +112,8 @@ export default function Page({ product }: ProductProps): JSX.Element | null {
     }
   })
 
-  const handleClickVariant = (index, variantID) => {
-    setClickedVariantId(variantID)
+  const handleClickVariant = (index: any, variant: any) => {
+    setSelectedVariant(variant.node)
     setIndex(index)
     slideToItem(index)
   }
@@ -168,8 +133,8 @@ export default function Page({ product }: ProductProps): JSX.Element | null {
 
   const renderVariants = () =>
     edges &&
-    edges.map((variant, index) => {
-      const isActive = variant.node.id === clickedVariantId
+    edges.map((variant: any, index: any) => {
+      const isActive = variant.node.id === selectedVariant?.id
 
       return (
         <>
@@ -180,7 +145,7 @@ export default function Page({ product }: ProductProps): JSX.Element | null {
                 ? "border-2 border-solid border-black"
                 : "border-2 border-solid border-transparent"
             } h-14 w-14 cursor-pointer overflow-hidden rounded`}
-            onClick={() => handleClickVariant(index, variant.node.id)}
+            onClick={() => handleClickVariant(index, variant)}
           >
             <ImageTag
               src={variant.node.image.transformedSrc}
@@ -194,7 +159,7 @@ export default function Page({ product }: ProductProps): JSX.Element | null {
       )
     })
 
-  console.log(product)
+  console.log(selectedVariant, product, edges)
 
   return (
     <>
@@ -222,17 +187,7 @@ export default function Page({ product }: ProductProps): JSX.Element | null {
                 <article
                   className="mt-6"
                   dangerouslySetInnerHTML={{ __html: descriptionHtml }}
-                >
-                  {/* <p className="m-0">{trimArticle(description)}</p> */}
-                  {/* {articleText.length > initialTrimLength && (
-                    <span
-                      onClick={toggleShowFullArticle}
-                      className="mt-1 block cursor-pointer text-sm font-semibold underline lg:mt-0 lg:text-lg"
-                    >
-                      {showFullArticle ? "less" : "more"}
-                    </span>
-                  )} */}
-                </article>
+                />
 
                 <div className="mt-6 flex items-center gap-4">
                   <span className="uppercase">Size</span>
@@ -251,10 +206,10 @@ export default function Page({ product }: ProductProps): JSX.Element | null {
 
                 <div className={`mt-6 flex flex-wrap gap-4 xl:flex-nowrap`}>
                   <AddToCart
-                    productId={product?.productByHandle?.id}
-                    variantId={clickedVariantId}
+                    selectedVariantTitle={product.title}
+                    selectedVariant={selectedVariant}
                     disabled={
-                      !clickedVariantId ||
+                      !selectedVariant?.id ||
                       !selectedSize ||
                       !selectedVariantAvailable
                     }
@@ -262,7 +217,7 @@ export default function Page({ product }: ProductProps): JSX.Element | null {
                   <Button
                     variant={"primary"}
                     disabled={
-                      !clickedVariantId ||
+                      !selectedVariant?.id ||
                       !selectedSize ||
                       !selectedVariantAvailable
                     }
@@ -319,14 +274,14 @@ export const getStaticProps: GetStaticProps<
     const variables = {
       handle,
     }
-    const product: ShopifySingleProduct = await graphqlClient.request(
+    const productByHandle: ShopifySingleProduct = await graphqlClient.request(
       SINGLE_PRODUCT_BY_HANDLE,
       variables
     )
 
     return {
       props: {
-        product,
+        productByHandle,
       },
     }
   } catch (error) {
