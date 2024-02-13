@@ -9,7 +9,7 @@ import {
   RadixAccordion,
   MetaTags,
 } from "@/components"
-import { sanityClient } from "@/utils/sanity"
+import { sanityClient } from "@/utils"
 import MessageChat from "@/components/svg/MessageChat"
 import MessageSmile from "@/components/svg/MessageSmile"
 import Location from "@/components/svg/Location"

@@ -15,7 +15,7 @@ import {
 import { ShopifyProduct } from "@/types"
 import { ALL_PRODUCTS } from "@/services/queries"
 import { graphqlClient } from "@/utils/graphql"
-import { sanityClient } from "@/utils/sanity"
+import { sanityClient } from "@/utils"
 
 interface props {
   page: any

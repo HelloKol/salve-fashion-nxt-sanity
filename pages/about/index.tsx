@@ -2,7 +2,7 @@ import { GetStaticPropsResult } from "next"
 import React from "react"
 import groq from "groq"
 import { Container, Grid, ImageTag, MetaTags, Section } from "@/components"
-import { sanityClient } from "@/utils/sanity"
+import { sanityClient } from "@/utils"
 
 interface props {
   page: any

@@ -1,6 +1,8 @@
 import React from "react"
 import { Container, HorizontalFeedBasic, RadixDialog } from "@/components"
 import { useSearchForm } from "@/hooks"
+import settings from "../../data/settings.json"
+import Link from "next/link"
 
 interface props {
   isSearchOpen: boolean
@@ -10,6 +12,8 @@ interface props {
 export default function SearchPopup({ isSearchOpen, setIsSearchOpen }: props) {
   const { register, handleSubmit, globalError, onSubmit } =
     useSearchForm(setIsSearchOpen)
+  const { searchModal } = settings
+  const { mostSearchedProducts, predictiveSearchQuery } = searchModal
 
   const handleClear = () => {
     if (document) {
@@ -19,6 +23,20 @@ export default function SearchPopup({ isSearchOpen, setIsSearchOpen }: props) {
       if (search) search.value = ""
     }
   }
+
+  const renderMostSearchedTerms = () =>
+    mostSearchedProducts.map((term: string) => {
+      return (
+        <li onClick={() => setIsSearchOpen(false)}>
+          <Link
+            className="md:text-md col-span-full uppercase sm:text-sm"
+            href={`/shop/search?title=${term}`}
+          >
+            {term}
+          </Link>
+        </li>
+      )
+    })
 
   return (
     <RadixDialog
@@ -75,38 +93,7 @@ export default function SearchPopup({ isSearchOpen, setIsSearchOpen }: props) {
 
         <p className="mt-6 text-lg uppercase">Most searched products</p>
         <ul className="mt-3 flex items-center gap-4">
-          <li>
-            <button
-              type="button"
-              className="bg-none text-sm text-gray-500 duration-300 ease-in-out hover:text-black focus:outline-none"
-            >
-              Ring
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
-              className="bg-none text-sm text-gray-500 duration-300 ease-in-out hover:text-black focus:outline-none"
-            >
-              Hat
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
-              className="bg-none text-sm text-gray-500 duration-300 ease-in-out hover:text-black focus:outline-none"
-            >
-              Coats
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
-              className="bg-none text-sm text-gray-500 duration-300 ease-in-out hover:text-black focus:outline-none"
-            >
-              Jacket
-            </button>
-          </li>
+          {renderMostSearchedTerms()}
         </ul>
 
         <p className="mt-14 text-lg uppercase">products</p>

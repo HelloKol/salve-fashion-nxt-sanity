@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "npm run fetch-static-content && next dev",
+    "build": "npm run fetch-static-content && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "fetch-static-content": "rm -rf ./data && node ./lib/fetch-static-content.js"
   },
   "dependencies": {
     "@apollo/client": "^3.8.2",

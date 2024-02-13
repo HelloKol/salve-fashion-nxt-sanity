@@ -13,7 +13,7 @@ import {
   Section,
 } from "@/components"
 import { useDialogBox, useRegisterForm } from "@/hooks"
-import { sanityClient } from "@/utils/sanity"
+import { sanityClient } from "@/utils"
 import { useToastOpen } from "@/context/Toast"
 
 interface props {

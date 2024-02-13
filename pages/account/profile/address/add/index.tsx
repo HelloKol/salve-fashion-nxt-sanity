@@ -16,7 +16,7 @@ import {
   Logout,
   FormInputText,
 } from "@/components"
-import { sanityClient } from "@/utils/sanity"
+import { sanityClient } from "@/utils"
 import styles from "./styles.module.scss"
 import { ADD_USER_ADDRESS, USER_DETAILS } from "@/services/queries"
 import { useEffect, useState } from "react"

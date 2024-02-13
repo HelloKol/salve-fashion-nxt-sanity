@@ -14,41 +14,11 @@ import {
   Section,
 } from "@/components"
 import { fetchProductsSearch } from "@/lib"
-import { useWindowDimension } from "@/hooks"
 import styles from "./styles.module.scss"
 import { useRouter } from "next/router"
 
 export default function Page() {
   const router = useRouter()
-  const { isMobile, isMobileLarge, isTablet, isDesktop, isWidescreen } =
-    useWindowDimension()
-  const [showFullArticle, setShowFullArticle] = useState(false)
-  const initialTrimLength =
-    isMobile || isMobileLarge
-      ? 120
-      : isTablet
-        ? 135
-        : isDesktop
-          ? 175
-          : isWidescreen
-            ? 280
-            : 140
-  const trimLength = showFullArticle ? Infinity : initialTrimLength
-
-  const articleText = `
- The latest women's jackets and coats collection offers endless styles for your closet this season, find statement pieces with our women's long coats. Our outerwear seamlessly weaves signature aesthetics with functional features. Discover our range of women's puffer jackets for premium style insulated jackets that are versatile enough for any occasion. The iconic Superdry women's windcheater has been re-designed for the new season with cropped fits. Our women's leather jackets are the ideal solution for superior fit, offering beautifully crafted jackets in premium leather. Shop our range of women's t-shirts for an effortless combination with your jackets and coats to complete your casual outfits. Shop a women's parka coat for premium style and lavish warmth, and discover our recycled-fill jackets for a low-impact jacket choice.
-  `.trim()
-
-  const trimArticle = (str: string) => {
-    if (!str?.length) return null
-    const trimmedText = str.slice(0, trimLength)
-    const ellipsis = str.length > trimLength ? "..." : ""
-    return `${trimmedText}${ellipsis}`
-  }
-
-  const toggleShowFullArticle = () => {
-    setShowFullArticle(!showFullArticle)
-  }
 
   // ==================================================================
   // FETCH SHOPIFY DATA
@@ -204,7 +174,7 @@ export default function Page() {
                 <RadixPopover
                   trigger={
                     <button className="flex items-center gap-3">
-                      Price{" "}
+                      Price
                       <svg
                         className="h-4 w-4 text-gray-800"
                         aria-hidden="true"
