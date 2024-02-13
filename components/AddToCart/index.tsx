@@ -35,7 +35,6 @@ export default function AddToCart({
 
     try {
       const response: any = await graphqlClient.request(ADD_TO_CART, variables)
-      console.log("Updated checkout IN HANDLE:", response?.checkoutLineItemsAdd)
       const items =
         response?.checkoutLineItemsAdd?.checkout?.lineItems?.edges.map(
           ({ node }: any) => ({

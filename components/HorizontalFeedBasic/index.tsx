@@ -17,40 +17,40 @@ export default function HorizontalFeedBasic({ title, productsData }: Props) {
   const feedRef = useRef<HTMLUListElement | null>(null)
   useDragScroll(feedRef)
 
-  console.log(products)
-
   const renderProduct = () =>
-    products.map((item: any, index: any) => {
-      const { title, variants } = item
+    products.map((item: any) => {
+      const { id, title, handle, variants } = item
       const { edges } = variants
       const firstVariant = edges?.[0]?.node
 
       return (
-        <li key={index}>
-          <div
-            className={`h-[300px] w-[220px] overflow-hidden rounded-2xl sm:h-[360px] sm:w-[250px] md:h-[450px] md:w-[340px] lg:h-[550px] lg:w-[400px] xl:h-[650px] xl:w-[500px] ${styles.imageWrapper}`}
-          >
-            <ImageTag src={firstVariant?.image?.transformedSrc} />
+        firstVariant && (
+          <li key={id}>
             <div
-              className={`flex items-center justify-center ${styles.feedInner}`}
+              className={`h-[300px] w-[220px] overflow-hidden rounded-2xl sm:h-[360px] sm:w-[250px] md:h-[450px] md:w-[340px] lg:h-[550px] lg:w-[400px] xl:h-[650px] xl:w-[500px] ${styles.imageWrapper}`}
             >
-              <div className={`flex flex-col gap-4`}>
-                <AddToCart
-                  productTitle={title}
-                  selectedVariant={firstVariant}
-                  disabled={false}
-                />
-                <Button variant={"secondary"} href={`/`}>
-                  Learn more
-                </Button>
+              <ImageTag src={firstVariant.image.transformedSrc} />
+              <div
+                className={`flex items-center justify-center ${styles.feedInner}`}
+              >
+                <div className={`flex flex-col gap-4`}>
+                  <AddToCart
+                    productTitle={title}
+                    selectedVariant={firstVariant}
+                    disabled={false}
+                  />
+                  <Button variant={"secondary"} href={`/shop/${handle}`}>
+                    Learn more
+                  </Button>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="flex justify-between">
-            <p className="text-lg uppercase">{title}</p>
-            <p className="text-lg uppercase">£{firstVariant?.price?.amount}</p>
-          </div>
-        </li>
+            <div className="flex justify-between">
+              <p className="text-lg uppercase">{title}</p>
+              <p className="text-lg uppercase">£{firstVariant.price.amount}</p>
+            </div>
+          </li>
+        )
       )
     })
 
@@ -66,31 +66,6 @@ export default function HorizontalFeedBasic({ title, productsData }: Props) {
           ref={feedRef}
         >
           {renderProduct()}
-          {/* {[1, 1, 1, 1, 1, 1].map((item, index) => (
-            <li key={index}>
-              <div
-                className={`h-[300px] w-[220px] overflow-hidden rounded-2xl sm:h-[360px] sm:w-[250px] md:h-[450px] md:w-[340px] lg:h-[550px] lg:w-[400px] xl:h-[650px] xl:w-[500px] ${styles.imageWrapper}`}
-              >
-                <ImageTag src="/static/images/product1.jpg" />
-                <div
-                  className={`flex items-center justify-center ${styles.feedInner}`}
-                >
-                  <div className={`flex flex-col gap-4`}>
-                    <Button variant={"quaternary"} href={`/`}>
-                      Add to cart
-                    </Button>
-                    <Button variant={"secondary"} href={`/`}>
-                      Learn more
-                    </Button>
-                  </div>
-                </div>
-              </div>
-              <div className="flex justify-between">
-                <p className="text-lg uppercase">Classic Beanies</p>
-                <p className="text-lg uppercase">£122.34</p>
-              </div>
-            </li>
-          ))} */}
         </ul>
       </Grid>
     </Section>

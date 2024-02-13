@@ -125,7 +125,7 @@ const PRODUCT_VARIANT = `
 
 const ALL_PRODUCTS = gql`
   query {
-    products(first: 20) {
+    products(first: 100) {
       edges {
         node {
           ${PRODUCT_BASE}

@@ -256,15 +256,22 @@ interface HandleParams extends ParsedUrlQuery {
 }
 
 export const getStaticPaths: GetStaticPaths<HandleParams> = async () => {
-  const products: any = await graphqlClient.request(ALL_PRODUCTS)
+  try {
+    const products: any = await graphqlClient.request(ALL_PRODUCTS)
 
-  const paths = products?.products?.edges.map((product: any) => ({
-    params: { handle: product?.node.handle },
-  }))
+    const paths = products?.products?.edges.map((product: any) => ({
+      params: { handle: product?.node.handle },
+    }))
 
-  return {
-    paths,
-    fallback: false,
+    return {
+      paths,
+      fallback: false,
+    }
+  } catch {
+    return {
+      paths: [],
+      fallback: false,
+    }
   }
 }
 
