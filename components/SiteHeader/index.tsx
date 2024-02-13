@@ -21,7 +21,7 @@ const SiteHeader = () => {
     isHeaderCollapsed || !isLandingPage ? "bg-[#E9EBE0] text-black" : ""
   }`
 
-  const handleCart = () => {
+  const handleCartOpen = () => {
     setIsCartOpen(!isCartOpen)
   }
 
@@ -88,7 +88,7 @@ const SiteHeader = () => {
                     isSearchOpen={isOpen}
                     setIsSearchOpen={setIsOpen}
                   />
-                  <Button variant="primary" onClick={handleCart}>
+                  <Button variant="primary" onClick={handleCartOpen}>
                     Bag ({`${cartItems?.length}`})
                   </Button>
                 </div>

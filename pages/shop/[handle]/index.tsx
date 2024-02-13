@@ -10,8 +10,6 @@ import {
   ImageTag,
   Main,
   RadixAccordion,
-  RadixPopover,
-  RadixSlider,
   Section,
 } from "@/components"
 import { useWindowDimension } from "@/hooks"
@@ -19,33 +17,41 @@ import styles from "./styles.module.scss"
 import { ShopifySingleProduct } from "@/types"
 import { GetStaticPaths, GetStaticProps } from "next/types"
 import { ParsedUrlQuery } from "querystring"
-import { ALL_PRODUCTS, SINGLE_PRODUCT_BY_HANDLE } from "@/services/queries"
+import {
+  ALL_PRODUCTS,
+  SEARCH_QUERY_PREDICTIVE,
+  SINGLE_PRODUCT_BY_HANDLE,
+} from "@/services/queries"
 import { graphqlClient } from "@/utils"
-import ProductVariants from "./ProductVariants"
 
 export interface ProductProps {
-  productByHandle: ShopifySingleProduct
+  page: {
+    productByHandle: any
+    predictiveProducts: any
+  }
 }
 
-export default function Page({
-  productByHandle,
-}: ProductProps): JSX.Element | null {
-  if (!productByHandle) return null
+export default function Page({ page }: ProductProps): JSX.Element | null {
+  if (!page) return null
+  const { productByHandle, predictiveProducts } = page
   const [index, setIndex] = useState(0)
   const [selectedSize, setSelectedSize] = useState(null)
   const [selectedVariant, setSelectedVariant] = useState(null) as any
 
   if (!productByHandle) return <div>Product not found</div>
+  const { predictiveSearch } = predictiveProducts
   const { product } = productByHandle
   const { title, description, descriptionHtml, images, variants } = product
   const { edges } = variants
 
-  // Extract unique sizes
   const sizes = [
+    // @ts-expect-error
     ...new Set(
       edges.map(
-        (variant) =>
-          variant.node.selectedOptions.find((opt) => opt.name === "Size").value
+        (variant: any) =>
+          variant.node.selectedOptions.find(
+            (opt: { name: string }) => opt.name === "Size"
+          ).value
       )
     ),
   ]
@@ -89,17 +95,19 @@ export default function Page({
   })
 
   const [variantAvailability, setVariantAvailability] = useState({})
+  // @ts-expect-error
   const selectedVariantAvailable = variantAvailability[selectedVariant?.id]
 
   useEffect(() => {
     // Update variant availability when the selected size changes
     if (selectedSize) {
       const availability = {}
-      edges.forEach((variant) => {
+      edges.forEach((variant: any) => {
         const sizeValue = variant.node.selectedOptions.find(
-          (opt) => opt.name === "Size"
+          (opt: any) => opt.name === "Size"
         ).value
         const isAvailable = sizeValue === selectedSize
+        // @ts-expect-error
         availability[variant.node.id] = isAvailable
       })
       setVariantAvailability(availability)
@@ -159,8 +167,6 @@ export default function Page({
       )
     })
 
-  console.log(selectedVariant, product, edges)
-
   return (
     <>
       <Main withPadding={false}>
@@ -206,7 +212,7 @@ export default function Page({
 
                 <div className={`mt-6 flex flex-wrap gap-4 xl:flex-nowrap`}>
                   <AddToCart
-                    selectedVariantTitle={product.title}
+                    productTitle={product.title}
                     selectedVariant={selectedVariant}
                     disabled={
                       !selectedVariant?.id ||
@@ -232,7 +238,10 @@ export default function Page({
               </div>
 
               <div className="col-span-full mt-16 md:mt-20 lg:mt-32 xl:mt-36">
-                <HorizontalFeedBasic title={"Similar Products"} data={[]} />
+                <HorizontalFeedBasic
+                  title={"Similar Products"}
+                  productsData={predictiveSearch}
+                />
               </div>
             </Grid>
           </Container>
@@ -274,14 +283,28 @@ export const getStaticProps: GetStaticProps<
     const variables = {
       handle,
     }
-    const productByHandle: ShopifySingleProduct = await graphqlClient.request(
+
+    const productByHandle: any = await graphqlClient.request(
       SINGLE_PRODUCT_BY_HANDLE,
       variables
     )
 
+    const firstVariantTitle =
+      productByHandle?.product?.variants?.edges?.[0]?.node?.title
+
+    const predictiveProducts = await graphqlClient.request(
+      SEARCH_QUERY_PREDICTIVE,
+      {
+        query: firstVariantTitle || ``,
+      }
+    )
+
     return {
       props: {
-        productByHandle,
+        page: {
+          productByHandle,
+          predictiveProducts,
+        },
       },
     }
   } catch (error) {

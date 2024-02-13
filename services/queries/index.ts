@@ -3,10 +3,13 @@ export {
   REMOVE_FROM_CART,
   UPDATE_QUANTITY,
   CREATE_CHECKOUT,
+  PRODUCT_CART,
 } from "./cart"
 export { COLLECTIONS_QUERY } from "./collections"
 export {
   ALL_PRODUCTS,
+  PRODUCT_BASE,
+  PRODUCT_VARIANT,
   SINGLE_PRODUCT_BY_HANDLE,
   SINGLE_PRODUCT_BY_ID,
 } from "./products"
@@ -23,4 +26,4 @@ export {
   LOGOUT_CUSTOMER,
   VERIFY_TOKEN,
 } from "./user"
-export { SEARCH_QUERY } from "./search"
+export { SEARCH_QUERY_PREDICTIVE, SEARCH_QUERY } from "./search"

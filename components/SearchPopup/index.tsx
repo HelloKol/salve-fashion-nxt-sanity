@@ -110,7 +110,7 @@ export default function SearchPopup({ isSearchOpen, setIsSearchOpen }: props) {
         </ul>
 
         <p className="mt-14 text-lg uppercase">products</p>
-        <HorizontalFeedBasic data={[]} />
+        <HorizontalFeedBasic productsData={[]} />
       </Container>
     </RadixDialog>
   )

@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client"
+import { PRODUCT_CART } from "."
 
 const ADD_USER_ADDRESS = gql`
   mutation customerAddressCreate(
@@ -157,20 +158,7 @@ const ORDER_HISTORY = gql`
             lineItems(first: 5) {
               edges {
                 node {
-                  title
-                  quantity
-                  variant {
-                    id
-                    title
-                    priceV2 {
-                      amount
-                      currencyCode
-                    }
-                    image {
-                      src
-                      altText
-                    }
-                  }
+                  ${PRODUCT_CART}
                 }
               }
             }

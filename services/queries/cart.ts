@@ -1,4 +1,21 @@
-import { gql } from "@apollo/client";
+import { gql } from "@apollo/client"
+
+export const PRODUCT_CART = `
+  id
+  title
+  quantity
+  variant {
+    id
+    title
+    priceV2 {
+      amount
+      currencyCode
+    }
+    image {
+      originalSrc
+    }
+  }
+`
 
 export const ADD_TO_CART = gql`
   mutation addToCart($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!) {
@@ -9,20 +26,7 @@ export const ADD_TO_CART = gql`
         lineItems(first: 250) {
           edges {
             node {
-              id
-              title
-              quantity
-              variant {
-                id
-                title
-                priceV2 {
-                  amount
-                  currencyCode
-                }
-                image {
-                  originalSrc
-                }
-              }
+              ${PRODUCT_CART}
             }
           }
         }
@@ -33,7 +37,7 @@ export const ADD_TO_CART = gql`
       }
     }
   }
-`;
+`
 
 export const REMOVE_FROM_CART = gql`
   mutation removeFromCart($checkoutId: ID!, $lineItemIds: [ID!]!) {
@@ -47,20 +51,7 @@ export const REMOVE_FROM_CART = gql`
         lineItems(first: 250) {
           edges {
             node {
-              id
-              title
-              quantity
-              variant {
-                id
-                title
-                priceV2 {
-                  amount
-                  currencyCode
-                }
-                image {
-                  originalSrc
-                }
-              }
+              ${PRODUCT_CART}
             }
           }
         }
@@ -71,7 +62,7 @@ export const REMOVE_FROM_CART = gql`
       }
     }
   }
-`;
+`
 
 export const UPDATE_QUANTITY = gql`
   mutation updateQuantity(
@@ -85,20 +76,7 @@ export const UPDATE_QUANTITY = gql`
         lineItems(first: 250) {
           edges {
             node {
-              id
-              title
-              quantity
-              variant {
-                id
-                title
-                priceV2 {
-                  amount
-                  currencyCode
-                }
-                image {
-                  originalSrc
-                }
-              }
+              ${PRODUCT_CART}
             }
           }
         }
@@ -109,7 +87,7 @@ export const UPDATE_QUANTITY = gql`
       }
     }
   }
-`;
+`
 
 export const CREATE_CHECKOUT = gql`
   mutation checkoutCreate($input: CheckoutCreateInput!) {
@@ -125,7 +103,7 @@ export const CREATE_CHECKOUT = gql`
       }
     }
   }
-`;
+`
 
 export const GET_CHECKOUT_QUERY = gql`
   query getCheckout($checkoutId: ID!) {
@@ -141,27 +119,14 @@ export const GET_CHECKOUT_QUERY = gql`
         lineItems(first: 250) {
           edges {
             node {
-              id
-              title
-              quantity
-              variant {
-                id
-                title
-                priceV2 {
-                  amount
-                  currencyCode
-                }
-                image {
-                  originalSrc
-                }
-              }
+              ${PRODUCT_CART}
             }
           }
         }
       }
     }
   }
-`;
+`
 
 export const GET_CUSTOMER_QUERY = gql`
   query ($customerAccessToken: String!) {
@@ -173,7 +138,7 @@ export const GET_CUSTOMER_QUERY = gql`
       }
     }
   }
-`;
+`
 
 export const GET_CHECKOUT_CREATE_MUTATION = gql`
   mutation {
@@ -189,7 +154,7 @@ export const GET_CHECKOUT_CREATE_MUTATION = gql`
       }
     }
   }
-`;
+`
 
 export const GET_CHECKOUT_CUSTOMER_ASSOCIATE_V2 = gql`
   mutation checkoutCustomerAssociateV2(
@@ -206,20 +171,7 @@ export const GET_CHECKOUT_CUSTOMER_ASSOCIATE_V2 = gql`
         lineItems(first: 250) {
           edges {
             node {
-              id
-              title
-              quantity
-              variant {
-                id
-                title
-                priceV2 {
-                  amount
-                  currencyCode
-                }
-                image {
-                  originalSrc
-                }
-              }
+              ${PRODUCT_CART}
             }
           }
         }
@@ -231,4 +183,4 @@ export const GET_CHECKOUT_CUSTOMER_ASSOCIATE_V2 = gql`
       }
     }
   }
-`;
+`

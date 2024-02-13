@@ -1,6 +1,6 @@
 import React, { useRef } from "react"
 // Components
-import { Button, Grid, ImageTag, Section } from "@/components"
+import { AddToCart, Button, Grid, ImageTag, Section } from "@/components"
 // Utils
 import { useDragScroll } from "@/hooks"
 import styles from "./styles.module.scss"
@@ -8,12 +8,51 @@ import styles from "./styles.module.scss"
 // Props
 interface Props {
   title?: string
-  data: []
+  productsData: any
 }
 
-export default function HorizontalFeedBasic({ title, data }: Props) {
+export default function HorizontalFeedBasic({ title, productsData }: Props) {
+  if (!productsData?.products) return null
+  const { products } = productsData
   const feedRef = useRef<HTMLUListElement | null>(null)
   useDragScroll(feedRef)
+
+  console.log(products)
+
+  const renderProduct = () =>
+    products.map((item: any, index: any) => {
+      const { title, variants } = item
+      const { edges } = variants
+      const firstVariant = edges?.[0]?.node
+
+      return (
+        <li key={index}>
+          <div
+            className={`h-[300px] w-[220px] overflow-hidden rounded-2xl sm:h-[360px] sm:w-[250px] md:h-[450px] md:w-[340px] lg:h-[550px] lg:w-[400px] xl:h-[650px] xl:w-[500px] ${styles.imageWrapper}`}
+          >
+            <ImageTag src={firstVariant?.image?.transformedSrc} />
+            <div
+              className={`flex items-center justify-center ${styles.feedInner}`}
+            >
+              <div className={`flex flex-col gap-4`}>
+                <AddToCart
+                  productTitle={title}
+                  selectedVariant={firstVariant}
+                  disabled={false}
+                />
+                <Button variant={"secondary"} href={`/`}>
+                  Learn more
+                </Button>
+              </div>
+            </div>
+          </div>
+          <div className="flex justify-between">
+            <p className="text-lg uppercase">{title}</p>
+            <p className="text-lg uppercase">£{firstVariant?.price?.amount}</p>
+          </div>
+        </li>
+      )
+    })
 
   return (
     <Section withPadding={false}>
@@ -26,7 +65,8 @@ export default function HorizontalFeedBasic({ title, data }: Props) {
           className="grid-cols-[auto auto] col-start-1 col-end-13 grid cursor-grab snap-x grid-flow-col gap-4 overflow-x-auto overflow-y-auto overscroll-contain scroll-smooth"
           ref={feedRef}
         >
-          {[1, 1, 1, 1, 1, 1].map((item, index) => (
+          {renderProduct()}
+          {/* {[1, 1, 1, 1, 1, 1].map((item, index) => (
             <li key={index}>
               <div
                 className={`h-[300px] w-[220px] overflow-hidden rounded-2xl sm:h-[360px] sm:w-[250px] md:h-[450px] md:w-[340px] lg:h-[550px] lg:w-[400px] xl:h-[650px] xl:w-[500px] ${styles.imageWrapper}`}
@@ -50,7 +90,7 @@ export default function HorizontalFeedBasic({ title, data }: Props) {
                 <p className="text-lg uppercase">£122.34</p>
               </div>
             </li>
-          ))}
+          ))} */}
         </ul>
       </Grid>
     </Section>

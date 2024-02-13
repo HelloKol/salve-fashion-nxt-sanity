@@ -7,16 +7,16 @@ import {
 } from "@/services/queries"
 import { graphqlClient } from "@/utils"
 import { useShoppingCart } from "@/context/Cart"
-import { ImageTag, RadixPopover } from "@/components"
+import { ImageTag, RadixPopoverCart } from "@/components"
 import { ShopifySingleProduct } from "@/types"
 import { useState } from "react"
 
 export default function AddToCart({
-  selectedVariantTitle,
+  productTitle,
   selectedVariant,
   disabled,
 }: {
-  selectedVariantTitle: string
+  productTitle: string
   selectedVariant: any
   disabled?: boolean
 }) {
@@ -30,7 +30,7 @@ export default function AddToCart({
     const quantity = 1
     const variables = {
       checkoutId,
-      lineItems: [{ id, quantity }],
+      lineItems: [{ variantId: id, quantity }],
     }
 
     try {
@@ -67,7 +67,7 @@ export default function AddToCart({
     })
 
   return (
-    <RadixPopover
+    <RadixPopoverCart
       trigger={
         <button onClick={handleAddToCart} disabled={disabled}>
           {disabled ? `Sold out` : `Add to cart`}
@@ -99,7 +99,7 @@ export default function AddToCart({
         </div>
 
         <div>
-          <h1>{selectedVariantTitle}</h1>
+          <h1>{productTitle}</h1>
           <div className="mt-2">{renderVariantOptions()}</div>
         </div>
       </div>
@@ -107,6 +107,12 @@ export default function AddToCart({
       <Button className={`mt-8 w-full`} variant={"quaternary"}>
         View cart ({cartItems?.length})
       </Button>
-    </RadixPopover>
+      <Button className={`mt-2 w-full`} variant={"primary"}>
+        Checkout
+      </Button>
+      <Button className={`mt-2 w-full`} variant={"primary"}>
+        Continue shopping
+      </Button>
+    </RadixPopoverCart>
   )
 }
