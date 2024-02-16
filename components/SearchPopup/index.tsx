@@ -1,8 +1,17 @@
+import Link from "next/link"
 import React from "react"
 import { Container, HorizontalFeedBasic, RadixDialog } from "@/components"
 import { useSearchForm } from "@/hooks"
 import settings from "../../data/settings.json"
-import Link from "next/link"
+import { useQuery } from "@tanstack/react-query"
+import { fetchProducts } from "@/lib"
+import { graphqlClient } from "@/utils"
+import { gql } from "@apollo/client"
+import {
+  PRODUCT_BASE,
+  PRODUCT_VARIANT,
+  SEARCH_QUERY_PREDICTIVE,
+} from "@/services/queries"
 
 interface props {
   isSearchOpen: boolean
@@ -14,6 +23,16 @@ export default function SearchPopup({ isSearchOpen, setIsSearchOpen }: props) {
     useSearchForm(setIsSearchOpen)
   const { searchModal } = settings
   const { mostSearchedProducts, predictiveSearchQuery } = searchModal
+
+  const { data, isLoading }: { data: any; isLoading: boolean } = useQuery({
+    queryKey: ["getPredictive", predictiveSearchQuery],
+    queryFn: async () => {
+      return await await graphqlClient.request(SEARCH_QUERY_PREDICTIVE, {
+        query: predictiveSearchQuery,
+      })
+    },
+    enabled: !!predictiveSearchQuery,
+  })
 
   const handleClear = () => {
     if (document) {
@@ -47,7 +66,7 @@ export default function SearchPopup({ isSearchOpen, setIsSearchOpen }: props) {
       <Container className="py-10 md:py-12 lg:py-14">
         <p className="text-center text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
           Search by <br />
-          Collections,Products
+          Collections, Products
         </p>
 
         <form className="mt-14">
@@ -96,8 +115,12 @@ export default function SearchPopup({ isSearchOpen, setIsSearchOpen }: props) {
           {renderMostSearchedTerms()}
         </ul>
 
-        <p className="mt-14 text-lg uppercase">products</p>
-        <HorizontalFeedBasic productsData={[]} />
+        {data?.predictiveSearch && (
+          <>
+            <p className="mt-14 text-lg uppercase">products</p>
+            <HorizontalFeedBasic productsData={data?.predictiveSearch} />
+          </>
+        )}
       </Container>
     </RadixDialog>
   )

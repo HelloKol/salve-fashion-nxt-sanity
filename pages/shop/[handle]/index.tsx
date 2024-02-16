@@ -31,21 +31,100 @@ export interface ProductProps {
   }
 }
 
+const ACCORDION = [
+  {
+    _key: "0b4708ddb716",
+    _type: "group",
+    body: [
+      {
+        _key: "5cc8801bb10b",
+        _type: "block",
+        children: [
+          {
+            _key: "cc58529ed59d0",
+            _type: "span",
+            marks: [],
+            text: "RETURN ONLINE & IN-STORE",
+          },
+        ],
+        markDefs: [],
+        style: "normal",
+      },
+      {
+        _key: "8c22774816ef",
+        _type: "block",
+        children: [
+          {
+            _key: "d47e089d76b70",
+            _type: "span",
+            marks: [],
+            text: "We're committed to making sure you love everything you buy from us. If you're not completely happy with your product, you can return your item within 45 days for a full refund. Please see our terms and conditions.",
+          },
+        ],
+        markDefs: [],
+        style: "normal",
+      },
+    ],
+    title: "Delivery and Returns",
+  },
+  {
+    _key: "0b4708ddb216",
+    _type: "group",
+    body: [
+      {
+        _key: "5f56a686f338",
+        _type: "block",
+        children: [
+          {
+            _key: "7ebe3a76c5230",
+            _type: "span",
+            marks: [],
+            text: "Free Wellness gift of your choice when you spend £39. Use code: WELLNESS. Valid 15 Feb 2024 - 29 Feb 2024.",
+          },
+        ],
+        markDefs: [],
+        style: "normal",
+      },
+    ],
+    title: "Offers & Promotions",
+  },
+  {
+    _key: "0b47083db716",
+    _type: "group",
+    body: [
+      {
+        _key: "5ac93d9b259c",
+        _type: "block",
+        children: [
+          {
+            _key: "7ea8b36471330",
+            _type: "span",
+            marks: [],
+            text: "You can pay for purchases using a major credit card, including Visa, MasterCard, American Express, PayPal and Klarna",
+          },
+        ],
+        markDefs: [],
+        style: "normal",
+      },
+    ],
+    title: "Payment Methods",
+  },
+]
+
 export default function Page({ page }: ProductProps): JSX.Element | null {
   if (!page) return null
   const { productByHandle, predictiveProducts } = page
-  const [index, setIndex] = useState(0)
-  const [selectedSize, setSelectedSize] = useState(null)
-  const [selectedVariant, setSelectedVariant] = useState(null) as any
+  if (!productByHandle) return null
 
-  if (!productByHandle) return <div>Product not found</div>
+  const [index, setIndex] = useState(0)
+  // const [selectedSize, setSelectedSize] = useState(null)
+  // const [selectedVariant, setSelectedVariant] = useState(null) as any
   const { predictiveSearch } = predictiveProducts
   const { product } = productByHandle
   const { title, description, descriptionHtml, images, variants } = product
   const { edges } = variants
 
   const sizes = [
-    // @ts-expect-error
     ...new Set(
       edges.map(
         (variant: any) =>
@@ -56,6 +135,47 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
     ),
   ]
 
+  const colors = [
+    ...new Set(
+      edges.map(
+        (variant: any) =>
+          variant.node.selectedOptions.find(
+            (opt: { name: string }) => opt.name === "Color"
+          ).value
+      )
+    ),
+  ]
+
+  const [selectedVariant, setSelectedVariant] = useState({
+    size: sizes[0] || null,
+    color: colors[0] || null,
+  })
+
+  const [variantAvailability, setVariantAvailability] = useState({}) as any
+  const selectedVariantAvailable = variantAvailability[selectedVariant?.size]
+
+  useEffect(() => {
+    // Update variant availability when the selected size or color changes
+    if (selectedVariant.size && selectedVariant.color) {
+      const availability: any = {}
+      edges.forEach((variant: any) => {
+        const isAvailable =
+          variant.node.selectedOptions.some(
+            (opt: any) =>
+              opt.name === "Size" && opt.value === selectedVariant.size
+          ) &&
+          variant.node.selectedOptions.some(
+            (opt: any) =>
+              opt.name === "Color" && opt.value === selectedVariant.color
+          ) &&
+          variant.node.availableForSale
+
+        availability[variant.node.id] = isAvailable
+      })
+      setVariantAvailability(availability)
+    }
+  }, [selectedVariant.size, selectedVariant.color, edges])
+
   const {
     carouselFragment,
     thumbsFragment,
@@ -64,12 +184,12 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
   } = useSpringCarousel({
     withLoop: true,
     withThumbs: true,
-    items: edges.map((item: any, i: React.Key) => {
+    items: edges.map((item: any, i: number) => {
       const { node } = item
       const { image } = node
       const { transformedSrc } = image
       const id = i
-      const isActive = index === i
+      const isActive = selectedVariant.size === sizes[i]
 
       return {
         id,
@@ -94,76 +214,72 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
     }),
   })
 
-  const [variantAvailability, setVariantAvailability] = useState({})
-  // @ts-expect-error
-  const selectedVariantAvailable = variantAvailability[selectedVariant?.id]
-
-  useEffect(() => {
-    // Update variant availability when the selected size changes
-    if (selectedSize) {
-      const availability = {}
-      edges.forEach((variant: any) => {
-        const sizeValue = variant.node.selectedOptions.find(
-          (opt: any) => opt.name === "Size"
-        ).value
-        const isAvailable = sizeValue === selectedSize
-        // @ts-expect-error
-        availability[variant.node.id] = isAvailable
-      })
-      setVariantAvailability(availability)
-    }
-  }, [selectedSize, edges])
-
   useListenToCustomEvent((data: any) => {
     if (data.eventName === "onSlideStartChange") {
       setIndex(data.nextItem.index)
     }
   })
 
-  const handleClickVariant = (index: any, variant: any) => {
-    setSelectedVariant(variant.node)
-    setIndex(index)
-    slideToItem(index)
-  }
-
   const renderSize = () =>
     sizes.map((size, index) => {
+      const isAvailable = edges.some(
+        (variant: any) =>
+          variant.node.selectedOptions.find(
+            (opt: { name: string }) => opt.name === "Size"
+          ).value === size &&
+          variant.node.selectedOptions.find(
+            (opt: { name: string }) => opt.name === "Color"
+          ).value === selectedVariant.color &&
+          variant.node.availableForSale
+      )
+
       return (
         <Button
           key={index}
-          onClick={() => setSelectedSize(size)}
-          isActive={selectedSize === size}
+          onClick={() =>
+            isAvailable && setSelectedVariant({ ...selectedVariant, size })
+          }
+          isActive={selectedVariant.size === size}
+          disabled={!isAvailable}
         >
           {size}
         </Button>
       )
     })
 
-  const renderVariants = () =>
-    edges &&
-    edges.map((variant: any, index: any) => {
-      const isActive = variant.node.id === selectedVariant?.id
+  const renderColor = () =>
+    colors.map((color: string, index: number) => {
+      const isAvailable = edges.some(
+        (variant) =>
+          variant.node.selectedOptions.find(
+            (opt: { name: string }) => opt.name === "Color"
+          ).value === color &&
+          variant.node.selectedOptions.find(
+            (opt: { name: string }) => opt.name === "Size"
+          ).value === selectedVariant.size &&
+          variant.node.availableForSale
+      )
 
       return (
-        <>
-          <div
-            key={variant.node.id}
-            className={`${
-              isActive
-                ? "border-2 border-solid border-black"
-                : "border-2 border-solid border-transparent"
-            } h-14 w-14 cursor-pointer overflow-hidden rounded`}
-            onClick={() => handleClickVariant(index, variant)}
-          >
-            <ImageTag
-              src={variant.node.image.transformedSrc}
-              alt={variant.node.title}
-              layout="fill"
-              objectFit="cover"
-              priority={false}
-            />
-          </div>
-        </>
+        <Button
+          key={index}
+          onClick={() => {
+            if (isAvailable) {
+              setSelectedVariant({ ...selectedVariant, color })
+              const variantIndex = edges.findIndex(
+                (variant) =>
+                  variant.node.selectedOptions.find(
+                    (opt: { name: string }) => opt.name === "Color"
+                  ).value === color
+              )
+              slideToItem(variantIndex)
+            }
+          }}
+          isActive={selectedVariant.color === color}
+          disabled={!isAvailable}
+        >
+          {color}
+        </Button>
       )
     })
 
@@ -200,7 +316,7 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
                   <div className="flex gap-2">{renderSize()}</div>
                 </div>
 
-                <div className="mt-6 flex gap-2">{renderVariants()}</div>
+                <div className="mt-6 flex gap-2">{renderColor()}</div>
 
                 <div>
                   {!selectedVariantAvailable && (
@@ -233,7 +349,7 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
                 </div>
 
                 <div className="mt-8 lg:mt-10">
-                  <RadixAccordion />
+                  <RadixAccordion data={ACCORDION} />
                 </div>
               </div>
 

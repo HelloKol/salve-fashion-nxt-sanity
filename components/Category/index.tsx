@@ -2,9 +2,38 @@ import React from "react"
 import Link from "next/link"
 import { Container, Grid, ImageTag, Section } from "@/components"
 // Props
-interface Props {}
+interface Props {
+  data: any
+}
 
-export default function Category({}: Props) {
+export default function Category({ data }: Props) {
+  if (!data) return null
+  const { blockImages } = data
+
+  const renderCategory = () =>
+    blockImages.modules.map((item: any) => {
+      const { callToAction, image } = item
+      const { asset } = image
+      const { links } = callToAction
+      const isMen = links[0].url.current === "shop/men"
+
+      return (
+        <Link
+          href={links[0].url.current}
+          className="relative h-[300px] w-full overflow-hidden sm:h-[400px] md:h-[480px] lg:h-[550px] lg:w-1/2 xl:h-[700px]"
+        >
+          <ImageTag src={asset.url} />
+          <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full bg-black opacity-50" />
+          <p className="absolute bottom-0 left-0 z-10 p-10 text-2xl text-white">
+            {isMen ? `For Men` : `For Women`}
+          </p>
+          <p className="absolute bottom-0 left-0 z-10 p-10 pb-5 text-sm text-white">
+            View all products
+          </p>
+        </Link>
+      )
+    })
+
   return (
     <Section>
       <Container>
@@ -13,32 +42,7 @@ export default function Category({}: Props) {
             Categories
           </h1>
           <div className="col-span-full flex flex-col lg:flex-row">
-            <Link
-              href={`/shop/men`}
-              className="relative h-[300px] w-full overflow-hidden sm:h-[400px] md:h-[480px] lg:h-[550px] lg:w-1/2 xl:h-[700px]"
-            >
-              <ImageTag src="/static/mock_product_images/men.avif" />
-              <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full bg-black opacity-50" />
-              <p className="absolute bottom-0 left-0 z-10 p-10 text-2xl text-white">
-                For Men
-              </p>
-              <p className="absolute bottom-0 left-0 z-10 p-10 pb-5 text-sm text-white">
-                View all products
-              </p>
-            </Link>
-            <Link
-              href={`/shop/women`}
-              className="relative h-[300px] w-full overflow-hidden sm:h-[400px] md:h-[480px] lg:h-[550px] lg:w-1/2 xl:h-[700px]"
-            >
-              <ImageTag src="/static/mock_product_images/women.avif" />
-              <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full bg-black opacity-50" />
-              <p className="absolute bottom-0 left-0 z-10 p-10 text-2xl text-white">
-                For Women
-              </p>
-              <p className="absolute bottom-0 left-0 z-10 p-10 pb-5 text-sm text-white">
-                View all products
-              </p>
-            </Link>
+            {renderCategory()}
           </div>
         </Grid>
       </Container>

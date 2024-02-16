@@ -1,9 +1,9 @@
 import { graphqlClient } from "@/utils"
 
 const fetchProducts = async (
-  cursor: any,
-  LIMIT: number,
-  query: string,
+  cursor?: any,
+  LIMIT?: number,
+  query?: string,
   sortKey?: string
 ) => {
   const productsQuery = `

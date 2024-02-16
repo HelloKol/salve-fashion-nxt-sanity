@@ -1,85 +1,38 @@
 import React from "react"
 import { Root, Trigger, Header, Content, Item } from "@radix-ui/react-accordion"
 import classNames from "classnames"
+import { PortableText } from "@portabletext/react"
 import ChevronDown from "@/components/svg/ChevronDown"
 import styles from "./styles.module.scss"
 
-const RadixAccordion = () => (
-  <Root
-    className={styles.AccordionRoot}
-    type={"single"}
-    defaultValue={"item-1"}
-    collapsible
-  >
-    <Item className={styles.AccordionItem} value={"item-1"}>
-      <AccordionTrigger>
-        <p className="text-lg font-semibold">How is bjorn eco friendly?</p>
-        <ChevronDown className="h-4 fill-black" />
-      </AccordionTrigger>
-      <AccordionContent>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-          expedita totam laboriosam, labore a libero tenetur eius impedit est,
-          ea laudantium sapiente illum asperiores? Consequatur reprehenderit
-          tenetur, vero velit mollitia eaque repudiandae voluptas cum nostrum
-          dolorem, tempora repellat, suscipit quaerat tempore minima quisquam
-          esse fugit! Laudantium harum earum adipisci? Vitae!
-        </p>
-      </AccordionContent>
-    </Item>
+const RadixAccordion = ({ data }: any) => {
+  const renderAccordion = () =>
+    data.map((item: any) => {
+      const { _key, title, body } = item
+      return (
+        <Item className={styles.AccordionItem} value={_key}>
+          <AccordionTrigger>
+            <p className="text-lg font-semibold">{title}</p>
+            <ChevronDown className="h-4 fill-black" />
+          </AccordionTrigger>
+          <AccordionContent>
+            <PortableText value={body} />
+          </AccordionContent>
+        </Item>
+      )
+    })
 
-    <Item className={styles.AccordionItem} value={"item-2"}>
-      <AccordionTrigger>
-        <p className="text-lg font-semibold">How is bjorn eco friendly?</p>
-        <ChevronDown className="h-4 fill-black" />
-      </AccordionTrigger>
-      <AccordionContent>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-          expedita totam laboriosam, labore a libero tenetur eius impedit est,
-          ea laudantium sapiente illum asperiores? Consequatur reprehenderit
-          tenetur, vero velit mollitia eaque repudiandae voluptas cum nostrum
-          dolorem, tempora repellat, suscipit quaerat tempore minima quisquam
-          esse fugit! Laudantium harum earum adipisci? Vitae!
-        </p>
-      </AccordionContent>
-    </Item>
-
-    <Item className={styles.AccordionItem} value={"item-3"}>
-      <AccordionTrigger>
-        <p className="text-lg font-semibold">How is bjorn eco friendly?</p>
-        <ChevronDown className="h-4 fill-black" />
-      </AccordionTrigger>
-      <AccordionContent>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-          expedita totam laboriosam, labore a libero tenetur eius impedit est,
-          ea laudantium sapiente illum asperiores? Consequatur reprehenderit
-          tenetur, vero velit mollitia eaque repudiandae voluptas cum nostrum
-          dolorem, tempora repellat, suscipit quaerat tempore minima quisquam
-          esse fugit! Laudantium harum earum adipisci? Vitae!
-        </p>
-      </AccordionContent>
-    </Item>
-
-    <Item className={styles.AccordionItem} value={"item-4"}>
-      <AccordionTrigger>
-        <p className="text-lg font-semibold">How is bjorn eco friendly?</p>
-        <ChevronDown className="h-4 fill-black" />
-      </AccordionTrigger>
-      <AccordionContent>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-          expedita totam laboriosam, labore a libero tenetur eius impedit est,
-          ea laudantium sapiente illum asperiores? Consequatur reprehenderit
-          tenetur, vero velit mollitia eaque repudiandae voluptas cum nostrum
-          dolorem, tempora repellat, suscipit quaerat tempore minima quisquam
-          esse fugit! Laudantium harum earum adipisci? Vitae!
-        </p>
-      </AccordionContent>
-    </Item>
-  </Root>
-)
+  return (
+    <Root
+      className={styles.AccordionRoot}
+      type={"single"}
+      defaultValue={"item-1"}
+      collapsible
+    >
+      {renderAccordion()}
+    </Root>
+  )
+}
 
 const AccordionTrigger = React.forwardRef(
   (

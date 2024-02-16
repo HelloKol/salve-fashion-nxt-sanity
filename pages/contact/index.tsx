@@ -21,7 +21,7 @@ interface props {
 
 export default function Page({ page }: props): JSX.Element | null {
   if (!page) return null
-  const { title, slug, seo } = page
+  const { title, slug, blockAccordion, seo } = page
 
   return (
     <>
@@ -89,7 +89,7 @@ export default function Page({ page }: props): JSX.Element | null {
                 Frequently asked questions
               </h1>
               <div className="col-span-full lg:col-start-3 lg:col-end-11 xl:col-start-4 xl:col-end-10">
-                <RadixAccordion />
+                <RadixAccordion data={blockAccordion.groups} />
               </div>
             </Grid>
           </Container>
@@ -103,9 +103,7 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
   try {
     const page: any = await sanityClient.fetch(
       groq`*[_type == "contact" && !(_id in path('drafts.**'))][0] {
-      title,
-      slug,
-      seo
+      ...
     }
     `
     )

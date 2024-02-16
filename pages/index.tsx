@@ -31,19 +31,38 @@ export default function Page({
   instagramPosts,
 }: props): JSX.Element | null {
   if (!page) return null
-  const { seo, collections } = page
+  const {
+    seo,
+    hero,
+    categories,
+    newArrivalFeed,
+    productFeedMen,
+    productFeedWomen,
+    videoUrl,
+  } = page
+  const { collections } = hero
+  console.log(page)
 
   return (
     <>
       <MetaTags seo={seo} />
       <Main withPadding={false}>
         <Carousel collections={collections} />
-        <HorizontalFeed title={"New In Men"} data={[]} href={`/shop/men`} />
+        <HorizontalFeed
+          title={"New In Men"}
+          productsData={productFeedMen}
+          href={`/shop/men`}
+        />
         <AboutUs />
-        <NewArrivals />
-        <Category />
-        <VideoPlayer videoSrc={"/static/video/y2.mp4"} />
-        <HorizontalFeed title={"New In Women"} data={[]} href={`/shop/women`} />
+        <NewArrivals data={newArrivalFeed} />
+        <Category data={categories} />
+        <VideoPlayer videoSrc={videoUrl} />
+        {/* <VideoPlayer videoSrc={"/static/video/y2.mp4"} /> */}
+        <HorizontalFeed
+          title={"New In Women"}
+          productsData={productFeedWomen}
+          href={`/shop/women`}
+        />
         <FollowUs
           title={"Follow us on instagram"}
           instagramAccount={instagramAccount}
@@ -58,26 +77,83 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
   try {
     const page: any = await sanityClient.fetch(
       groq`*[_type == "home" && !(_id in path('drafts.**'))][0] {
-      body,
-      hero,
-      seo,
-      modules[] {
-        ...
-      },
-      collections[]-> {
-          ...,
-          modules[] {
+        ...,
+        hero {
+          collections[]-> {
             ...,
-            image{
-              _type,
-              asset->{
-                _id,
-                url
+            modules[] {
+              ...,
+              image{
+                _type,
+                asset->{
+                  _id,
+                  url
+                }
               }
             }
+          }
+        },
+        categories {
+          blockImages {
+            _type,
+            variant,
+            modules[] {
+              _type,
+              variant,
+              callToAction {
+                links[] {
+                  _key,
+                  "url": *[_id == ^.reference._ref][0].slug,
+                  _type
+                },
+              },
+              image{
+                _type,
+                asset->{
+                  _id,
+                  url
+                }
+              },
+            }
+          }
+        },
+        newArrivalFeed {
+          title,
+          text,
+          productWithVariant[] {
+            "product": *[_id == ^.product._ref][0],
+            "variant": *[_id == ^.variant._ref][0]
           },
-      },
-    }
+        },
+        productFeedMen {
+          title,
+          text,
+          links[] {
+            _key,
+            title,
+            "url": *[_id == ^.reference._ref][0].slug,
+            _type
+          },
+          productWithVariant[] {
+            "product": *[_id == ^.product._ref][0],
+            "variant": *[_id == ^.variant._ref][0]
+          },
+        },
+        productFeedWomen {
+          title,
+          text,
+          links[] {
+            _key,
+            title,
+            "url": *[_id == ^.reference._ref][0].slug,
+            _type
+          },
+          productWithVariant[] {
+            "product": *[_id == ^.product._ref][0],
+            "variant": *[_id == ^.variant._ref][0]
+          },
+        }
+      }
     `
     )
 
