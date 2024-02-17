@@ -5,15 +5,34 @@ export const PRODUCT_CART = `
   title
   quantity
   variant {
+    availableForSale
+    barcode
+    currentlyNotInStock
     id
-    title
-    priceV2 {
+    image {
+      transformedSrc
+      originalSrc
+      url
+    }
+    price {
       amount
       currencyCode
     }
-    image {
-      originalSrc
+    quantityAvailable
+    requiresShipping
+    selectedOptions {
+      name
+      value
     }
+    sku
+    taxable
+    title
+    unitPrice {
+      amount
+      currencyCode
+    }
+    weight
+    weightUnit
   }
 `
 
@@ -112,7 +131,7 @@ export const GET_CHECKOUT_QUERY = gql`
         id
         webUrl
         completedAt
-        totalPriceV2 {
+        totalPrice {
           amount
           currencyCode
         }

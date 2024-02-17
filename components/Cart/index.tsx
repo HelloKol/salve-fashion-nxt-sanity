@@ -1,11 +1,5 @@
 import { useShoppingCart } from "@/context/Cart"
-import {
-  Button,
-  ClickOut,
-  ImageTag,
-  QuantityControl,
-  RemoveCartItem,
-} from "@/components"
+import { Button, ClickOut, ImageTag } from "@/components"
 import Close from "@/components/svg/Close"
 import Bag from "@/components/svg/Bag"
 import styles from "./styles.module.scss"
@@ -17,6 +11,8 @@ export default function Cart() {
     cartItems,
     totalCheckoutPrice,
     checkoutUrl,
+    lineItemRemove,
+    lineItemUpdateQuantity,
   } = useShoppingCart()
 
   const renderCartItems = () =>
@@ -37,12 +33,25 @@ export default function Cart() {
               <p>{title.slice(0, 25)}...</p>
               <div className="flex items-center gap-2">
                 Quantity:{" "}
-                <QuantityControl lineItemId={id} quantity={quantity} />
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={() => lineItemUpdateQuantity(id, quantity - 1)}
+                    disabled={quantity <= 1}
+                  >
+                    -
+                  </button>{" "}
+                  <span>{quantity}</span>{" "}
+                  <button
+                    onClick={() => lineItemUpdateQuantity(id, quantity + 1)}
+                  >
+                    +
+                  </button>
+                </div>
               </div>
             </div>
             <div className={styles.priceWrap}>
               <strong>£{variant?.priceV2?.amount}</strong>
-              <RemoveCartItem lineItemId={id} />
+              <button onClick={() => lineItemRemove(id)}>Remove</button>
             </div>
           </div>
           <div className={styles.divider} />

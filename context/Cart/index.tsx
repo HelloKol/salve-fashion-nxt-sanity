@@ -14,6 +14,7 @@ import {
   GET_CHECKOUT_QUERY,
   GET_CUSTOMER_QUERY,
 } from "@/services/queries/cart"
+import { UPDATE_QUANTITY, REMOVE_FROM_CART } from "@/services/queries"
 
 type ProviderProps = {
   children: ReactNode | ReactNode[]
@@ -35,6 +36,8 @@ type ShoppingCartContextProps = {
   totalCheckoutPrice: number
   checkoutUrl: string
   fetchCartItems: () => void
+  lineItemUpdateQuantity: (id: string, quantity: number) => void
+  lineItemRemove: (id: string) => void
 }
 
 const ShoppingCartContext = createContext<ShoppingCartContextProps | undefined>(
@@ -81,6 +84,7 @@ function ShoppingCartHooks() {
       GET_CHECKOUT_QUERY,
       variables
     )
+    console.log(response, "<<<GET_CHECKOUT_QUERY")
     return response.node
   }
 
@@ -88,7 +92,7 @@ function ShoppingCartHooks() {
     const checkout = await fetchCheckout(currentCheckoutId)
     updateCartItems(checkout)
     setCheckoutUrl(checkout?.webUrl)
-    setTotalCheckoutPrice(parseFloat(checkout?.totalPriceV2.amount))
+    setTotalCheckoutPrice(parseFloat(checkout?.totalPrice.amount))
   }
 
   const createCheckout = async () => {
@@ -171,6 +175,64 @@ function ShoppingCartHooks() {
     setCartItems(items)
   }
 
+  const lineItemUpdateQuantity = async (
+    lineItemId: string,
+    newQuantity: number
+  ) => {
+    const variables = {
+      checkoutId: currentCheckoutId,
+      lineItems: [{ id: lineItemId, quantity: newQuantity }],
+    }
+
+    console.log(variables, "<<<<<<<<<<<<<<<<<<<<<<")
+
+    try {
+      const response: any = await graphqlClient.request(
+        UPDATE_QUANTITY,
+        variables
+      )
+      console.log(
+        "Updated checkout IN HANDLE:",
+        response?.checkoutLineItemsUpdate
+      )
+      const items =
+        response?.checkoutLineItemsUpdate?.checkout?.lineItems?.edges.map(
+          ({ node }: any) => node
+        )
+      setCartItems(items)
+      fetchCartItems()
+      return response?.checkoutLineItemsUpdate?.checkout
+    } catch (error) {
+      console.error("Error updating quantity:", error)
+    }
+  }
+
+  const lineItemRemove = async (lineItemId: string) => {
+    const variables = {
+      checkoutId: currentCheckoutId,
+      lineItemIds: [lineItemId],
+    }
+    try {
+      const response: any = await graphqlClient.request(
+        REMOVE_FROM_CART,
+        variables
+      )
+      console.log(
+        "Updated checkout IN HANDLE TO REMOVE:",
+        response?.checkoutLineItemsRemove
+      )
+      const items =
+        response?.checkoutLineItemsRemove?.checkout?.lineItems?.edges.map(
+          ({ node }: any) => node
+        )
+      setCartItems(items)
+      fetchCartItems()
+      return response?.checkoutLineItemsRemove?.checkout
+    } catch (error) {
+      console.error("Error removing from cart:", error)
+    }
+  }
+
   return {
     toggleProductView,
     setToggleProductView,
@@ -181,6 +243,8 @@ function ShoppingCartHooks() {
     totalCheckoutPrice,
     checkoutUrl,
     fetchCartItems,
+    lineItemUpdateQuantity,
+    lineItemRemove,
   }
 }
 
