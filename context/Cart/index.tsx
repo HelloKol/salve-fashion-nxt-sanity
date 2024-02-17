@@ -167,12 +167,7 @@ function ShoppingCartHooks() {
   }
 
   const updateCartItems = (checkout: any) => {
-    const items = checkout.lineItems.edges.map(({ node }: any) => ({
-      id: node.id,
-      title: node.title,
-      quantity: node.quantity,
-      variant: node.variant,
-    }))
+    const items = checkout.lineItems.edges.map(({ node }: any) => node)
     setCartItems(items)
   }
 

@@ -117,14 +117,13 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
   if (!productByHandle) return null
 
   const [index, setIndex] = useState(0)
-  // const [selectedSize, setSelectedSize] = useState(null)
-  // const [selectedVariant, setSelectedVariant] = useState(null) as any
   const { predictiveSearch } = predictiveProducts
   const { product } = productByHandle
   const { title, description, descriptionHtml, images, variants } = product
   const { edges } = variants
 
   const sizes = [
+    // @ts-expect-error
     ...new Set(
       edges.map(
         (variant: any) =>
@@ -136,6 +135,7 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
   ]
 
   const colors = [
+    // @ts-expect-error
     ...new Set(
       edges.map(
         (variant: any) =>
@@ -152,29 +152,52 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
   })
 
   const [variantAvailability, setVariantAvailability] = useState({}) as any
-  const selectedVariantAvailable = variantAvailability[selectedVariant?.size]
+  const sanitizedSize = selectedVariant?.node?.selectedOptions[1]?.value
+    ?.replace(/\s+/g, "")
+    .toLowerCase()
+  const selectedVariantAvailable =
+    variantAvailability[
+      `${sanitizedSize}-${selectedVariant?.node?.selectedOptions[0]?.value?.toLowerCase()}`
+    ]
 
   useEffect(() => {
     // Update variant availability when the selected size or color changes
-    if (selectedVariant.size && selectedVariant.color) {
-      const availability: any = {}
-      edges.forEach((variant: any) => {
-        const isAvailable =
-          variant.node.selectedOptions.some(
-            (opt: any) =>
-              opt.name === "Size" && opt.value === selectedVariant.size
-          ) &&
-          variant.node.selectedOptions.some(
-            (opt: any) =>
-              opt.name === "Color" && opt.value === selectedVariant.color
-          ) &&
-          variant.node.availableForSale
+    const sanitizedSize = selectedVariant?.node?.selectedOptions[1]?.value
+      .replace(/\s+/g, "")
+      .toLowerCase()
+    const availability = {}
 
-        availability[variant.node.id] = isAvailable
-      })
-      setVariantAvailability(availability)
-    }
-  }, [selectedVariant.size, selectedVariant.color, edges])
+    let isValidVariant = false
+    edges.forEach((variant: any) => {
+      const isAvailable =
+        variant.node.selectedOptions.some(
+          (opt: any) =>
+            opt.name === "Size" &&
+            opt.value === selectedVariant?.node?.selectedOptions[1]?.value
+        ) &&
+        variant.node.selectedOptions.some(
+          (opt: any) =>
+            opt.name === "Color" &&
+            opt.value === selectedVariant?.node?.selectedOptions[0]?.value
+        ) &&
+        variant.node.availableForSale
+
+      if (isAvailable) {
+        isValidVariant = true
+      }
+
+      availability[
+        `${sanitizedSize}-${selectedVariant?.node?.selectedOptions[0]?.value?.toLowerCase()}`
+      ] = isValidVariant
+
+      // Break out of the loop early if a valid variant is found
+      if (isValidVariant) {
+        return
+      }
+    })
+
+    setVariantAvailability(availability)
+  }, [selectedVariant?.node, edges])
 
   const {
     carouselFragment,
@@ -189,7 +212,8 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
       const { image } = node
       const { transformedSrc } = image
       const id = i
-      const isActive = selectedVariant.size === sizes[i]
+      const isActive =
+        selectedVariant?.node?.selectedOptions[1]?.value === sizes[i]
 
       return {
         id,
@@ -222,24 +246,29 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
 
   const renderSize = () =>
     sizes.map((size, index) => {
-      const isAvailable = edges.some(
-        (variant: any) =>
-          variant.node.selectedOptions.find(
-            (opt: { name: string }) => opt.name === "Size"
-          ).value === size &&
-          variant.node.selectedOptions.find(
-            (opt: { name: string }) => opt.name === "Color"
-          ).value === selectedVariant.color &&
-          variant.node.availableForSale
-      )
+      const variantObject = edges.find((variant: any) => {
+        const selectedSize = variant.node.selectedOptions.find(
+          (opt: { name: string }) => opt.name === "Size"
+        ).value
+        const selectedColor = variant.node.selectedOptions.find(
+          (opt: { name: string }) => opt.name === "Color"
+        ).value
+
+        return (
+          selectedSize === size &&
+          selectedColor === selectedVariant?.node?.selectedOptions[0]?.value
+        )
+      })
+
+      const isAvailable = variantObject?.node.availableForSale
 
       return (
         <Button
           key={index}
-          onClick={() =>
-            isAvailable && setSelectedVariant({ ...selectedVariant, size })
-          }
-          isActive={selectedVariant.size === size}
+          onClick={() => {
+            isAvailable && setSelectedVariant(variantObject)
+          }}
+          isActive={selectedVariant?.node?.selectedOptions[1]?.value === size}
           disabled={!isAvailable}
         >
           {size}
@@ -249,25 +278,27 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
 
   const renderColor = () =>
     colors.map((color: string, index: number) => {
-      const isAvailable = edges.some(
-        (variant) =>
-          variant.node.selectedOptions.find(
-            (opt: { name: string }) => opt.name === "Color"
-          ).value === color &&
-          variant.node.selectedOptions.find(
-            (opt: { name: string }) => opt.name === "Size"
-          ).value === selectedVariant.size &&
-          variant.node.availableForSale
-      )
+      const variantObject = edges.find((variant: any) => {
+        const selectedSize = variant.node.selectedOptions.find(
+          (opt: { name: string }) => opt.name === "Size"
+        ).value
+        const selectedColor = variant.node.selectedOptions.find(
+          (opt: { name: string }) => opt.name === "Color"
+        ).value
+
+        return variant
+      })
+
+      const isAvailable = variantObject?.node.availableForSale
 
       return (
         <Button
           key={index}
           onClick={() => {
             if (isAvailable) {
-              setSelectedVariant({ ...selectedVariant, color })
+              setSelectedVariant(variantObject)
               const variantIndex = edges.findIndex(
-                (variant) =>
+                (variant: any) =>
                   variant.node.selectedOptions.find(
                     (opt: { name: string }) => opt.name === "Color"
                   ).value === color
@@ -275,7 +306,7 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
               slideToItem(variantIndex)
             }
           }}
-          isActive={selectedVariant.color === color}
+          isActive={selectedVariant?.node?.selectedOptions[0]?.value === color}
           disabled={!isAvailable}
         >
           {color}
@@ -306,10 +337,10 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
                   {edges[0].node.priceV2.amount}
                 </h3>
 
-                <article
+                {/* <article
                   className="mt-6"
                   dangerouslySetInnerHTML={{ __html: descriptionHtml }}
-                />
+                /> */}
 
                 <div className="mt-6 flex items-center gap-4">
                   <span className="uppercase">Size</span>
@@ -318,31 +349,15 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
 
                 <div className="mt-6 flex gap-2">{renderColor()}</div>
 
-                <div>
-                  {!selectedVariantAvailable && (
-                    <span className="mt-2 text-xs text-red-500">
-                      The select product is not available
-                    </span>
-                  )}
-                </div>
-
                 <div className={`mt-6 flex flex-wrap gap-4 xl:flex-nowrap`}>
                   <AddToCart
                     productTitle={product.title}
-                    selectedVariant={selectedVariant}
-                    disabled={
-                      !selectedVariant?.id ||
-                      !selectedSize ||
-                      !selectedVariantAvailable
-                    }
+                    selectedVariant={selectedVariant?.node}
+                    disabled={!selectedVariantAvailable}
                   />
                   <Button
                     variant={"primary"}
-                    disabled={
-                      !selectedVariant?.id ||
-                      !selectedSize ||
-                      !selectedVariantAvailable
-                    }
+                    disabled={!selectedVariantAvailable}
                   >
                     Add to wishlist
                   </Button>

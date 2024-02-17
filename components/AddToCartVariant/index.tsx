@@ -37,13 +37,7 @@ export default function AddToCartVariant({
       const response: any = await graphqlClient.request(ADD_TO_CART, variables)
       const items =
         response?.checkoutLineItemsAdd?.checkout?.lineItems?.edges.map(
-          ({ node }: any) => ({
-            id: node.id,
-            title: node.title,
-            quantity: node.quantity,
-            variant: node.variant,
-            imageUrl: node.variant.image?.originalSrc,
-          })
+          ({ node }: any) => node
         )
       setCartItems(items)
       fetchCartItems()

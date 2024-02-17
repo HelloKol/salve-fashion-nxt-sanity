@@ -35,7 +35,10 @@ export default function Cart() {
             </div>
             <div className={styles.titleWrap}>
               <p>{title.slice(0, 25)}...</p>
-              <QuantityControl lineItemId={id} quantity={quantity} />
+              <div className="flex items-center gap-2">
+                Quantity:{" "}
+                <QuantityControl lineItemId={id} quantity={quantity} />
+              </div>
             </div>
             <div className={styles.priceWrap}>
               <strong>£{variant?.priceV2?.amount}</strong>
