@@ -27,6 +27,7 @@ type CartItem = {
 }
 
 type ShoppingCartContextProps = {
+  checkoutId: string
   toggleProductView: string
   setToggleProductView: (isOpen: string) => void
   isCartOpen: boolean
@@ -84,13 +85,12 @@ function ShoppingCartHooks() {
       GET_CHECKOUT_QUERY,
       variables
     )
-    console.log(response, "<<<GET_CHECKOUT_QUERY")
     return response.node
   }
 
   const fetchCartItems = async () => {
     const checkout = await fetchCheckout(currentCheckoutId)
-    updateCartItems(checkout)
+    setCartItems(checkout)
     setCheckoutUrl(checkout?.webUrl)
     setTotalCheckoutPrice(parseFloat(checkout?.totalPrice.amount))
   }
@@ -170,11 +170,6 @@ function ShoppingCartHooks() {
     }
   }
 
-  const updateCartItems = (checkout: any) => {
-    const items = checkout.lineItems.edges.map(({ node }: any) => node)
-    setCartItems(items)
-  }
-
   const lineItemUpdateQuantity = async (
     lineItemId: string,
     newQuantity: number
@@ -183,8 +178,6 @@ function ShoppingCartHooks() {
       checkoutId: currentCheckoutId,
       lineItems: [{ id: lineItemId, quantity: newQuantity }],
     }
-
-    console.log(variables, "<<<<<<<<<<<<<<<<<<<<<<")
 
     try {
       const response: any = await graphqlClient.request(
@@ -234,6 +227,7 @@ function ShoppingCartHooks() {
   }
 
   return {
+    checkoutId: currentCheckoutId,
     toggleProductView,
     setToggleProductView,
     isCartOpen,

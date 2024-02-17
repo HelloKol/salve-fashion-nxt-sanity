@@ -89,7 +89,7 @@ const SiteHeader = () => {
                     setIsSearchOpen={setIsOpen}
                   />
                   <Button variant="primary" onClick={handleCartOpen}>
-                    Bag ({`${cartItems?.length}`})
+                    Bag ({`${cartItems?.lineItems?.edges?.length}`})
                   </Button>
                 </div>
               </div>

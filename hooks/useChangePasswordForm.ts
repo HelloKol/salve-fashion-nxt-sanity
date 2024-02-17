@@ -60,8 +60,6 @@ const useChangePasswordForm = () => {
       )
 
       console.log(response)
-
-      // }
     } catch (err: any) {
       setGlobalError("An error occurred while changing password")
       setIsLoading(false)

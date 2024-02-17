@@ -98,7 +98,7 @@ export default function AddToCart({
       </div>
 
       <Button className={`mt-8 w-full`} variant={"quaternary"}>
-        View cart ({cartItems?.length})
+        View cart ({cartItems?.lineItems?.edges?.length})
       </Button>
       <Button className={`mt-2 w-full`} variant={"primary"}>
         Checkout

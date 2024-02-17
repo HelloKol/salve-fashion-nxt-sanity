@@ -128,9 +128,25 @@ export const GET_CHECKOUT_QUERY = gql`
   query getCheckout($checkoutId: ID!) {
     node(id: $checkoutId) {
       ... on Checkout {
+        createdAt
+        currencyCode
+        discountApplications (first:1) {
+          nodes {
+            allocationMethod
+            targetSelection
+            targetType
+            value {
+              ... on MoneyV2 {
+                __typename
+                amount
+                currencyCode
+              }
+            }
+          }
+        }
+        email
         id
         webUrl
-        completedAt
         totalPrice {
           amount
           currencyCode
@@ -199,6 +215,35 @@ export const GET_CHECKOUT_CUSTOMER_ASSOCIATE_V2 = gql`
         code
         field
         message
+      }
+    }
+  }
+`
+
+export const ADD_CHECKOUT_DISCOUNT = gql`
+  mutation applyDiscountCodeToCheckout(
+    $checkoutId: ID!
+    $discountCode: String!
+  ) {
+    checkoutDiscountCodeApplyV2(
+      checkoutId: $checkoutId
+      discountCode: $discountCode
+    ) {
+      checkout {
+        discountApplications(first: 10) {
+          edges {
+            node {
+              allocationMethod
+              targetSelection
+              targetType
+            }
+          }
+        }
+      }
+      checkoutUserErrors {
+        message
+        code
+        field
       }
     }
   }

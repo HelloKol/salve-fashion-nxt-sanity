@@ -59,7 +59,7 @@ const MobileDraw = () => {
             <div className={styles.iconRight}>
               <button className={styles.bagBtn} onClick={handleCart}>
                 <Bag />
-                <span>({`${cartItems?.length}`})</span>
+                <span>({`${cartItems?.lineItems?.edges?.length}`})</span>
               </button>
               <input
                 id="active"

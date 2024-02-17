@@ -15,12 +15,24 @@ export default function Cart() {
     lineItemUpdateQuantity,
   } = useShoppingCart()
 
-  const renderCartItems = () =>
-    cartItems &&
-    cartItems.map((item: any, index: number) => {
-      const { id, title, quantity, variant } = item
+  const renderVariantOptions = (options: any) =>
+    options.map((item: any) => {
+      const { name, value } = item
       return (
-        <li key={index} className={styles.product}>
+        <p className="text-sm">
+          <strong>{name}</strong>: {value}
+        </p>
+      )
+    })
+
+  const renderCartItem = () =>
+    cartItems?.lineItems?.edges.map((item: any) => {
+      const { node } = item
+      const { id, title, quantity, variant } = node
+      const { selectedOptions } = variant
+
+      return (
+        <li key={id} className={styles.product}>
           <div className={styles.productContent}>
             <div className={styles.featureImage}>
               <ImageTag
@@ -30,8 +42,9 @@ export default function Cart() {
               />
             </div>
             <div className={styles.titleWrap}>
-              <p>{title.slice(0, 25)}...</p>
-              <div className="flex items-center gap-2">
+              <p className="text-lg">{title.slice(0, 25)}...</p>
+              {renderVariantOptions(selectedOptions)}
+              <div className="flex items-center gap-2 text-sm">
                 Quantity:{" "}
                 <div className="flex items-center gap-4">
                   <button
@@ -54,7 +67,7 @@ export default function Cart() {
               <button onClick={() => lineItemRemove(id)}>Remove</button>
             </div>
           </div>
-          <div className={styles.divider} />
+          <div className="border-b-[1px] border-black" />
         </li>
       )
     })
@@ -76,11 +89,13 @@ export default function Cart() {
               <Close />
             </button>
 
-            <h1 className="mb-16 text-center text-3xl">Your bag</h1>
+            <h1 className="mb-8 border-b-[1px] border-black pb-4 text-3xl">
+              Your Bag
+            </h1>
 
-            {cartItems?.length ? (
+            {cartItems?.lineItems?.edges?.length ? (
               <>
-                <ul className={styles.productList}>{renderCartItems()}</ul>
+                <ul className={styles.productList}>{renderCartItem()}</ul>
                 <div className={styles.checkout}>
                   <p className={styles.subTotalPrice}>
                     Subtotal: <span>£{totalCheckoutPrice.toFixed(2)}</span>
