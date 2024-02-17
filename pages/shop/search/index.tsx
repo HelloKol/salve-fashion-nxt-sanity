@@ -92,7 +92,7 @@ export default function Page() {
             ref={ref}
             className="col-span-6 mb-8 lg:mb-12 xl:col-span-4 xl:mb-14"
           >
-            <Link href={`/shop/${product.handle}`} className="block">
+            <Link href={`/shop/product/${product.handle}`} className="block">
               <div
                 className={`group relative h-60 w-full overflow-hidden rounded-2xl sm:h-80 md:h-[500px] lg:h-[700px] xl:h-[800px] ${styles.imageWrapper}`}
               >
@@ -126,7 +126,7 @@ export default function Page() {
           key={index}
           className="col-span-6 mb-8 lg:mb-12 xl:col-span-4 xl:mb-14"
         >
-          <Link href={`/shop/${product.handle}`} className="block">
+          <Link href={`/shop/product/${product.handle}`} className="block">
             <div
               className={`group relative h-60 w-full overflow-hidden rounded-2xl sm:h-80 md:h-[500px] lg:h-[700px] xl:h-[800px] ${styles.imageWrapper}`}
             >

@@ -54,7 +54,7 @@ export default function HorizontalFeed({ title, productsData, href }: Props) {
                 />
                 <Button
                   variant={"secondary"}
-                  href={`/shop/${product.store.slug.current}`}
+                  href={`/shop/product/${product.store.slug.current}`}
                 >
                   Learn more
                 </Button>

@@ -39,7 +39,10 @@ export default function HorizontalFeedBasic({ title, productsData }: Props) {
                     selectedVariant={firstVariant}
                     disabled={false}
                   />
-                  <Button variant={"secondary"} href={`/shop/${handle}`}>
+                  <Button
+                    variant={"secondary"}
+                    href={`/shop/product/${handle}`}
+                  >
                     Learn more
                   </Button>
                 </div>

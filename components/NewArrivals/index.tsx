@@ -36,7 +36,7 @@ export default function index({ data }: Props) {
 
           <Link
             className={`col-span-full md:col-start-1 md:col-end-7 lg:col-start-4 lg:col-end-8 xl:col-start-4 xl:col-end-7`}
-            href={`/shop/${firstProduct.slug.current}`}
+            href={`/shop/product/${firstProduct.slug.current}`}
           >
             <div
               className={`h-[500px] w-full overflow-hidden rounded-2xl md:h-[470px] lg:h-[550px] xl:h-[650px]`}
@@ -49,7 +49,7 @@ export default function index({ data }: Props) {
 
           <Link
             className={`col-span-full md:col-start-7 md:col-end-13 lg:col-start-1 lg:col-end-5 xl:col-start-1 xl:col-end-4`}
-            href={`/shop/${secondProduct.slug.current}`}
+            href={`/shop/product/${secondProduct.slug.current}`}
           >
             <div
               className={`h-[500px] w-full overflow-hidden rounded-2xl md:h-[470px] lg:h-[550px] xl:h-[650px]`}
@@ -62,7 +62,7 @@ export default function index({ data }: Props) {
 
           <Link
             className={`col-start-1 col-end-13 h-full lg:col-start-8 lg:col-end-13 lg:row-start-1 lg:row-end-3 xl:col-start-7 xl:col-end-13 xl:row-start-1 xl:row-end-3`}
-            href={`/shop/${thirdProduct.slug.current}`}
+            href={`/shop/product/${thirdProduct.slug.current}`}
           >
             <div
               className={`h-[500px] w-full overflow-hidden rounded-2xl md:h-[800px] lg:h-full`}

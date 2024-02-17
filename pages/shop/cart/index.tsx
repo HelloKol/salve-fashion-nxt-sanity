@@ -68,7 +68,7 @@ export default function Page() {
               </button>
             </div>
           </div>
-          <div className="cell">£{price.amount}</div>
+          <div className="cell">£{(quantity * price.amount).toFixed(2)}</div>
         </div>
       )
     })

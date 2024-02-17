@@ -50,7 +50,7 @@ export default function Cart() {
               </div>
             </div>
             <div className={styles.priceWrap}>
-              <strong>£{variant?.priceV2?.amount}</strong>
+              <strong>£{(quantity * variant?.price?.amount).toFixed(2)}</strong>
               <button onClick={() => lineItemRemove(id)}>Remove</button>
             </div>
           </div>
@@ -92,6 +92,7 @@ export default function Cart() {
                     className={`w-full`}
                     variant={"tertiary"}
                     href={`/shop/cart`}
+                    onClick={() => setIsCartOpen(false)}
                   >
                     Go to bag
                   </Button>
@@ -99,6 +100,7 @@ export default function Cart() {
                     className={`mt-2 w-full`}
                     variant={"quaternary"}
                     href={checkoutUrl}
+                    onClick={() => setIsCartOpen(false)}
                   >
                     Checkout
                   </Button>

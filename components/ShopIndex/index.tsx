@@ -44,7 +44,7 @@ export default function ShopIndex({
             ref={ref}
             className="col-span-6 mb-8 lg:mb-12 xl:col-span-4 xl:mb-14"
           >
-            <Link href={`/shop/${product.handle}`} className="block">
+            <Link href={`/shop/product/${product.handle}`} className="block">
               <div
                 className={`group relative h-60 w-full overflow-hidden rounded-2xl sm:h-80 md:h-[500px] lg:h-[600px] ${styles.imageWrapper}`}
               >
@@ -60,7 +60,7 @@ export default function ShopIndex({
                       <Button variant={"quaternary"}>Add to cart</Button>
                       <Button
                         variant={"secondary"}
-                        href={`/shop/${product.handle}`}
+                        href={`/shop/product/${product.handle}`}
                       >
                         Learn more
                       </Button>
@@ -83,7 +83,7 @@ export default function ShopIndex({
           key={index}
           className="col-span-6 mb-8 lg:mb-12 xl:col-span-4 xl:mb-14"
         >
-          <Link href={`/shop/${product.handle}`} className="block">
+          <Link href={`/shop/product/${product.handle}`} className="block">
             <div
               className={`group relative h-60 w-full overflow-hidden rounded-2xl sm:h-80 md:h-[500px] lg:h-[600px] ${styles.imageWrapper}`}
             >
@@ -99,7 +99,7 @@ export default function ShopIndex({
                     <Button variant={"quaternary"}>Add to cart</Button>
                     <Button
                       variant={"secondary"}
-                      href={`/shop/${product.handle}`}
+                      href={`/shop/product/${product.handle}`}
                     >
                       Learn more
                     </Button>

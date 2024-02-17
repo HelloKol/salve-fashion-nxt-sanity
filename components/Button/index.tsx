@@ -14,7 +14,9 @@ interface Props {
   href?: string
   isActive?: boolean
   disabled?: boolean
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
+  onClick?: (
+    event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
+  ) => void
 }
 
 export default function index({
@@ -64,7 +66,7 @@ export default function index({
       <Link
         className={`${buttonVariant} ${disabledVariant} ${className} ${variant} ${isActive ? `active` : ``}`}
         href={href}
-        style={{}}
+        onClick={onClick}
       >
         {children}
       </Link>
