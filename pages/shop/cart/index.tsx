@@ -1,11 +1,6 @@
-import Link from "next/link"
-import React, { useEffect, useState } from "react"
-import { useInfiniteQuery } from "@tanstack/react-query"
-import { useInView } from "react-intersection-observer"
+import React from "react"
 import {
-  Button,
   Container,
-  FilterProduct,
   Grid,
   ImageTag,
   Main,
@@ -13,19 +8,13 @@ import {
   RemoveCartItem,
   Section,
 } from "@/components"
-import { fetchProducts } from "@/lib"
-import { useWindowDimension } from "@/hooks"
-import styles from "./styles.module.scss"
-import { useRouter } from "next/router"
 import { useShoppingCart } from "@/context/Cart"
 
 export default function Page() {
-  const { isMobile, isMobileLarge, isTablet, isDesktop, isWidescreen } =
-    useWindowDimension()
   const { cartItems } = useShoppingCart()
 
   const renderProduct = () =>
-    cartItems.map((item) => {
+    cartItems.map((item: any) => {
       const { id, title, quantity, variant } = item
       const { image, priceV2 } = variant
 

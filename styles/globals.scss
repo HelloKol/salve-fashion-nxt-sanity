@@ -14,20 +14,20 @@ a.secondary,
 a.tertiary {
   position: relative;
   padding-left: 30px;
-}
-
-a.primary::before,
-a.secondary::before,
-a.tertiary::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 18px;
-  width: 5px;
-  height: 5px;
-  background: black;
-  border-radius: 100%;
-  transform: translateY(-50%);
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 18px;
+    width: 5px;
+    height: 5px;
+    background: black;
+    border-radius: 100%;
+    transform: translateY(-50%);
+  }
+  &.active::before {
+    background: white;
+  }
 }
 
 a.secondary::before {

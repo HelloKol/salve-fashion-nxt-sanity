@@ -1,4 +1,3 @@
-import Head from "next/head"
 import { GetStaticPropsResult } from "next/types"
 import groq from "groq"
 import {

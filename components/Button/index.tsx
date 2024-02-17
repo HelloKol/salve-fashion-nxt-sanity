@@ -62,7 +62,7 @@ export default function index({
   if (href)
     return (
       <Link
-        className={`${buttonVariant} ${disabledVariant} ${className} ${variant}`}
+        className={`${buttonVariant} ${disabledVariant} ${className} ${variant} ${isActive ? `active` : ``}`}
         href={href}
         style={{}}
       >

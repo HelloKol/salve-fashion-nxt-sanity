@@ -81,10 +81,17 @@ export default function Cart() {
                   </p>
                   <Button
                     className={`w-full`}
+                    variant={"tertiary"}
+                    href={`/shop/cart`}
+                  >
+                    Go to bag
+                  </Button>
+                  <Button
+                    className={`mt-2 w-full`}
                     variant={"quaternary"}
                     href={checkoutUrl}
                   >
-                    Go to bag
+                    Checkout
                   </Button>
                 </div>
               </>

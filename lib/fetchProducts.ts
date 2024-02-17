@@ -4,11 +4,12 @@ const fetchProducts = async (
   cursor?: any,
   LIMIT?: number,
   query?: string,
+  reverse?: boolean,
   sortKey?: string
 ) => {
   const productsQuery = `
     query($cursor: String) {
-      products(first: ${LIMIT}, after: $cursor, query:"${query}", sortKey: ${sortKey || "CREATED_AT"}) {
+      products(first: ${LIMIT}, after: $cursor, query:"${query}", reverse: ${reverse}, sortKey: ${sortKey || "CREATED_AT"}) {
         pageInfo {
           hasNextPage
         }
