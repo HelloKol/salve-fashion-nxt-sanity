@@ -1,7 +1,7 @@
 import { useCookies } from "react-cookie"
 import Button from "../Button"
 import {
-  ADD_TO_CART,
+  ADD_PRODUCT_TO_CART,
   SINGLE_PRODUCT_BY_HANDLE,
   SINGLE_PRODUCT_BY_ID,
 } from "@/services/queries"
@@ -22,19 +22,22 @@ export default function AddToCartVariant({
 }) {
   if (!selectedVariant) return null
   const { setCartItems, fetchCartItems, cartItems } = useShoppingCart()
-  const [cookies] = useCookies(["checkoutId"])
-  let checkoutId: string = cookies["checkoutId"]
+  const [cookies] = useCookies(["cartId"])
+  let cartId: string = cookies["cartId"]
   const { gid, previewImageUrl, selectedOptions } = selectedVariant
 
   const handleAddToCart = async () => {
     const quantity = 1
     const variables = {
-      checkoutId,
+      cartId,
       lineItems: [{ variantId: gid, quantity }],
     }
 
     try {
-      const response: any = await graphqlClient.request(ADD_TO_CART, variables)
+      const response: any = await graphqlClient.request(
+        ADD_PRODUCT_TO_CART,
+        variables
+      )
       const items =
         response?.checkoutLineItemsAdd?.checkout?.lineItems?.edges.map(
           ({ node }: any) => node

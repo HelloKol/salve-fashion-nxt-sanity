@@ -9,7 +9,8 @@ export default function Cart() {
     isCartOpen,
     setIsCartOpen,
     cartItems,
-    totalCheckoutPrice,
+    cart,
+    // totalCheckoutPrice,
     checkoutUrl,
     lineItemRemove,
     lineItemUpdateQuantity,
@@ -25,18 +26,19 @@ export default function Cart() {
       )
     })
 
-  const renderCartItem = () =>
-    cartItems?.lineItems?.edges.map((item: any) => {
-      const { node } = item
-      const { id, title, quantity, variant } = node
-      const { selectedOptions } = variant
+  const renderCart = () =>
+    cart?.cart?.lines?.nodes?.map((item: any) => {
+      const { id, cost, quantity, merchandise } = item
+      const { subtotalAmount } = cost
+      const { product, selectedOptions, image } = merchandise
+      const { title } = product
 
       return (
         <li key={id} className={styles.product}>
           <div className={styles.productContent}>
             <div className={styles.featureImage}>
               <ImageTag
-                src={variant?.image?.originalSrc}
+                src={image?.transformedSrc}
                 layout="fill"
                 objectFit="cover"
               />
@@ -48,6 +50,7 @@ export default function Cart() {
                 Quantity:{" "}
                 <div className="flex items-center gap-4">
                   <button
+                    className="disabled:text-slate-400"
                     onClick={() => lineItemUpdateQuantity(id, quantity - 1)}
                     disabled={quantity <= 1}
                   >
@@ -55,6 +58,7 @@ export default function Cart() {
                   </button>{" "}
                   <span>{quantity}</span>{" "}
                   <button
+                    className="disabled:text-slate-400"
                     onClick={() => lineItemUpdateQuantity(id, quantity + 1)}
                   >
                     +
@@ -63,7 +67,7 @@ export default function Cart() {
               </div>
             </div>
             <div className={styles.priceWrap}>
-              <strong>£{(quantity * variant?.price?.amount).toFixed(2)}</strong>
+              <strong>£{subtotalAmount.amount}</strong>
               <button onClick={() => lineItemRemove(id)}>Remove</button>
             </div>
           </div>
@@ -93,12 +97,13 @@ export default function Cart() {
               Your Bag
             </h1>
 
-            {cartItems?.lineItems?.edges?.length ? (
+            {cart?.cart?.totalQuantity ? (
               <>
-                <ul className={styles.productList}>{renderCartItem()}</ul>
+                <ul className={styles.productList}>{renderCart()}</ul>
                 <div className={styles.checkout}>
                   <p className={styles.subTotalPrice}>
-                    Subtotal: <span>£{totalCheckoutPrice.toFixed(2)}</span>
+                    Subtotal:{" "}
+                    <span>£{cart?.cart?.cost?.subtotalAmount?.amount}</span>
                   </p>
                   <p className={styles.deliveryPrice}>
                     Delivery: <span>Free</span>
@@ -114,7 +119,7 @@ export default function Cart() {
                   <Button
                     className={`mt-2 w-full`}
                     variant={"quaternary"}
-                    href={checkoutUrl}
+                    // href={checkoutUrl}
                     onClick={() => setIsCartOpen(false)}
                   >
                     Checkout

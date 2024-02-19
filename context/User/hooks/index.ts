@@ -15,7 +15,7 @@ export const authHooks = (
   token: string,
   setToken: (token: string, expiresAt: string) => void,
   removeToken: () => void,
-  removeCheckoutId: () => void,
+  removeCartId: () => void,
   setIsLoggedIn: (isLoggedIn: boolean) => void
 ) => {
   // USER REGISTER
@@ -90,7 +90,7 @@ export const authHooks = (
       })
       if (result?.customerAccessTokenDelete?.deletedAccessToken) {
         removeToken()
-        removeCheckoutId()
+        removeCartId()
         setIsLoggedIn(false)
         return {
           status: "OK",

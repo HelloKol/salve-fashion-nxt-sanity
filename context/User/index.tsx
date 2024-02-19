@@ -27,13 +27,13 @@ export const AuthProvider = ({ children }: ProviderProps) => {
 }
 
 function AuthFuncHooks() {
-  const [cookies, setCookie, removeCookie] = useCookies(["accessToken"])
+  const [cookies, setCookie, removeCookie] = useCookies([
+    "accessToken",
+    "cartId",
+  ])
   const [isAuthenticated, setIsAuthenticated] = useState(
     !!cookies["accessToken"]
   )
-  const [checkoutIdCookie, setCheckoutId, removeCheckoutId] = useCookies([
-    "checkoutId",
-  ])
   const token: string = cookies["accessToken"]
 
   const { loading, error, data } = useQuery(USER_DETAILS, {
@@ -52,14 +52,13 @@ function AuthFuncHooks() {
 
   const removeTokenCallback = () => removeCookie("accessToken", { path: "/" })
   const isLoggedInCallback = (callback: boolean) => setIsAuthenticated(callback)
-  const removeCheckoutIdCallback = () =>
-    removeCheckoutId("checkoutId", { path: "/" })
+  const removeCartIDCallback = () => removeCookie("cartId", { path: "/" })
 
   const authFuncs = authHooks(
     token,
     setToken,
     removeTokenCallback,
-    removeCheckoutIdCallback,
+    removeCartIDCallback,
     isLoggedInCallback
   )
 

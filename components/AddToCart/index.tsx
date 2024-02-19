@@ -1,7 +1,9 @@
+import { useState } from "react"
 import { useCookies } from "react-cookie"
-import Button from "../Button"
+import { useMutation } from "@apollo/client"
+import { Button } from "@/components"
 import {
-  ADD_TO_CART,
+  ADD_PRODUCT_TO_CART,
   SINGLE_PRODUCT_BY_HANDLE,
   SINGLE_PRODUCT_BY_ID,
 } from "@/services/queries"
@@ -9,42 +11,45 @@ import { graphqlClient } from "@/utils"
 import { useShoppingCart } from "@/context/Cart"
 import { ImageTag, RadixPopoverCart } from "@/components"
 import { ShopifySingleProduct } from "@/types"
-import { useState } from "react"
+import { GET_CART } from "@/services/queries/cart"
 
 export default function AddToCart({
   productTitle,
   selectedVariant,
+  quantity,
   disabled,
 }: {
   productTitle: string
   selectedVariant: any
+  quantity: number
   disabled?: boolean
 }) {
   if (!selectedVariant) return null
-  const { setCartItems, fetchCartItems, cartItems } = useShoppingCart()
-  const [cookies] = useCookies(["checkoutId"])
-  let checkoutId: string = cookies["checkoutId"]
+  const { cartId } = useShoppingCart()
   const { id, image, selectedOptions } = selectedVariant
 
+  const [addProductToCart, { data, loading, error, reset }] = useMutation(
+    ADD_PRODUCT_TO_CART,
+    {
+      refetchQueries: [
+        {
+          query: GET_CART,
+          variables: {
+            cartId,
+          },
+        },
+      ],
+    }
+  )
+
   const handleAddToCart = async () => {
-    const quantity = 1
+    if (!cartId) return
     const variables = {
-      checkoutId,
-      lineItems: [{ variantId: id, quantity }],
+      cartId,
+      lines: [{ merchandiseId: id, quantity }],
     }
 
-    try {
-      const response: any = await graphqlClient.request(ADD_TO_CART, variables)
-      const items =
-        response?.checkoutLineItemsAdd?.checkout?.lineItems?.edges.map(
-          ({ node }: any) => node
-        )
-      setCartItems(items)
-      fetchCartItems()
-      return response?.checkoutLineItemsAdd?.checkout
-    } catch (error) {
-      console.error("Error adding to cart:", error)
-    }
+    return addProductToCart({ variables })
   }
 
   const renderVariantOptions = () =>
@@ -97,9 +102,9 @@ export default function AddToCart({
         </div>
       </div>
 
-      <Button className={`mt-8 w-full`} variant={"quaternary"}>
+      {/* <Button className={`mt-8 w-full`} variant={"quaternary"}>
         View cart ({cartItems?.lineItems?.edges?.length})
-      </Button>
+      </Button> */}
       <Button className={`mt-2 w-full`} variant={"primary"}>
         Checkout
       </Button>

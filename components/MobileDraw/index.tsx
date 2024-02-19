@@ -16,7 +16,7 @@ const MobileDraw = () => {
   const router = useRouter()
   const { isOpen, setIsOpen } = useDialogBox()
   const isHeaderCollapsed = useHeaderCollapse()
-  const { isCartOpen, setIsCartOpen, cartItems } = useShoppingCart()
+  const { isCartOpen, setIsCartOpen, cart } = useShoppingCart()
   const [isMobileDrawActive, setIsMobileDrawActive] = useState(false)
   const isLandingPage = router?.asPath === "/"
   const headerClasses = `${styles.mobileDrawHeader} ${
@@ -59,7 +59,7 @@ const MobileDraw = () => {
             <div className={styles.iconRight}>
               <button className={styles.bagBtn} onClick={handleCart}>
                 <Bag />
-                <span>({`${cartItems?.lineItems?.edges?.length}`})</span>
+                <span>({`${cart?.cart?.totalQuantity || 0}`})</span>
               </button>
               <input
                 id="active"

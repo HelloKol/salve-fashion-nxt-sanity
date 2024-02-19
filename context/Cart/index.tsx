@@ -6,13 +6,14 @@ import {
   useState,
 } from "react"
 import { useCookies } from "react-cookie"
+import { useMutation, useQuery } from "@apollo/client"
 import { graphqlClient } from "@/utils"
 import { AuthContext } from "@/context/User"
 import {
-  GET_CHECKOUT_CREATE_MUTATION,
+  CREATE_CART,
   GET_CHECKOUT_CUSTOMER_ASSOCIATE_V2,
-  GET_CHECKOUT_QUERY,
-  GET_CUSTOMER_QUERY,
+  GET_CART,
+  GET_LAST_CHECKOUT_ID,
 } from "@/services/queries/cart"
 import { UPDATE_QUANTITY, REMOVE_FROM_CART } from "@/services/queries"
 
@@ -27,16 +28,17 @@ type CartItem = {
 }
 
 type ShoppingCartContextProps = {
-  checkoutId: string
+  cart: any
+  cartId: string
   toggleProductView: string
   setToggleProductView: (isOpen: string) => void
   isCartOpen: boolean
   setIsCartOpen: (isOpen: boolean) => void
   cartItems: CartItem[]
   setCartItems: (items: CartItem[]) => void
-  totalCheckoutPrice: number
+  totalCartPrice: number
   checkoutUrl: string
-  fetchCartItems: () => void
+  // fetchCartItems: () => void
   lineItemUpdateQuantity: (id: string, quantity: number) => void
   lineItemRemove: (id: string) => void
 }
@@ -60,95 +62,139 @@ function ShoppingCartHooks() {
   const [toggleProductView, setToggleProductView] = useState("big")
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [cartItems, setCartItems] = useState<CartItem[]>([])
-  const [totalCheckoutPrice, setTotalCheckoutPrice] = useState(0)
-  const [checkoutUrl, setCheckoutUrl] = useState<string>("")
-  const [cookies, setCookie, removeCookie] = useCookies(["checkoutId"])
-  let currentCheckoutId: string = cookies["checkoutId"]
+  const [totalCartPrice, setTotalCartPrice] = useState(0)
+  const [checkoutUrl, setCartUrl] = useState<string>("")
+  const [cookies, setCookie, removeCookie] = useCookies(["cartId"])
+  const currentCartID: string = cookies["cartId"]
+
+  const {
+    loading,
+    error,
+    data: cart,
+    refetch,
+  } = useQuery(GET_CART, {
+    variables: { cartId: currentCartID },
+    skip: !currentCartID,
+  })
+
+  const [updateQuantity, {}] = useMutation(UPDATE_QUANTITY, {
+    refetchQueries: [
+      {
+        query: GET_CART,
+        variables: {
+          cartId: currentCartID,
+        },
+      },
+    ],
+  })
+
+  const [removeFromCart, {}] = useMutation(REMOVE_FROM_CART, {
+    refetchQueries: [
+      {
+        query: GET_CART,
+        variables: {
+          cartId: currentCartID,
+        },
+      },
+    ],
+  })
+
+  console.log(loading, error, cart)
 
   useEffect(() => {
-    handleCheckout(userToken)
-    if (userToken && currentCheckoutId) fetchCartItems()
-  }, [userToken, currentCheckoutId])
+    refetch()
+  }, [currentCartID])
 
-  const handleCheckout = async (userToken: string | undefined) => {
-    if (!currentCheckoutId) {
-      const newCheckout = await createCheckout()
-      setCurrentCheckoutId(newCheckout.id)
-    }
-    if (userToken) handleLoggedInUserCheckout(userToken)
-    else handleAnonymousUserCheckout()
+  useEffect(() => {
+    if (!loading) handleCart()
+    // if (userToken && currentCartID) fetchCartItems()
+  }, [loading, userToken])
+
+  const handleCart = async () => {
+    // if (!currentCartID) {
+    //   // const cart = await getCartID()
+    //   // setCurrentCartID(cart.id)
+    //   setCurrentCartID(
+    //     `gid://shopify/Cart/Z2NwLWV1cm9wZS13ZXN0NDowMUhRMTRWQVpCRFAzREQzTlQ5RkpTS05UUw`
+    //   )
+    // }
+
+    if (userToken) handleLoggedInUserCart(userToken)
+    else handleAnonymousUserCart()
   }
 
-  const fetchCheckout = async (checkoutId: string) => {
-    const variables = { checkoutId }
-    const response: any = await graphqlClient.request(
-      GET_CHECKOUT_QUERY,
-      variables
-    )
-    return response.node
+  // const fetchCart = async (cartId: string) => {
+  //   const variables = { cartId }
+  //   const response: any = await graphqlClient.request(GET_CART, variables)
+  //   return response.cart
+  // }
+
+  // const fetchCartItems = async () => {
+  //   const checkout = await fetchCart(currentCartID)
+  //   setCartItems(checkout)
+  //   setCartUrl(checkout?.webUrl)
+  //   setTotalCartPrice(parseFloat(checkout?.totalPrice.amount))
+  // }
+
+  // const getCartID = async () => {
+  //   const cartId = await fetchUserCartID(userToken)
+  //   return cartId ? { id: cartId } : await createNewCart()
+  // }
+
+  // const fetchUserCartID = async (userToken: string | undefined) => {
+  //   if (!userToken) return null
+  //   const variables = { customerAccessToken: userToken }
+  //   const response: any = await graphqlClient.request(
+  //     GET_LAST_CHECKOUT_ID,
+  //     variables
+  //   )
+  //   return response.customer?.lastIncompleteCart?.id
+  // }
+
+  // const setCurrentCartID = (cartId: string) => {
+  //   currentCartID = cartId
+  //   setCookie("cartId", currentCartID, { path: "/" })
+  // }
+
+  const createNewCart = async () => {
+    const response: any = await graphqlClient.request(CREATE_CART)
+    setCookie("cartId", response.cartCreate.cart.id, { path: "/" })
+    return response
   }
 
-  const fetchCartItems = async () => {
-    const checkout = await fetchCheckout(currentCheckoutId)
-    setCartItems(checkout)
-    setCheckoutUrl(checkout?.webUrl)
-    setTotalCheckoutPrice(parseFloat(checkout?.totalPrice.amount))
-  }
-
-  const createCheckout = async () => {
-    const checkoutId = await fetchUserCheckoutId(userToken)
-    return checkoutId ? { id: checkoutId } : await createNewCheckout()
-  }
-
-  const fetchUserCheckoutId = async (userToken: string | undefined) => {
-    if (!userToken) return null
-    const variables = { customerAccessToken: userToken }
-    const response: any = await graphqlClient.request(
-      GET_CUSTOMER_QUERY,
-      variables
-    )
-    return response.customer?.lastIncompleteCheckout?.id
-  }
-
-  const setCurrentCheckoutId = (checkoutId: string) => {
-    currentCheckoutId = checkoutId
-    setCookie("checkoutId", currentCheckoutId, { path: "/" })
-  }
-
-  const createNewCheckout = async () => {
-    const response: any = await graphqlClient.request(
-      GET_CHECKOUT_CREATE_MUTATION
-    )
-    return response.checkoutCreate.checkout
-  }
-
-  const handleLoggedInUserCheckout = async (userToken: string) => {
+  const handleLoggedInUserCart = async (userToken: string) => {
     const customer = await getCustomer(userToken)
-    if (customer && customer?.lastIncompleteCheckout) {
-      setCurrentCheckoutId(customer.lastIncompleteCheckout.id)
+    if (customer && customer?.lastIncompleteCart) {
+      return setCookie("cartId", customer.lastIncompleteCart.id, { path: "/" })
     } else {
-      await associateCheckoutWithCustomer(userToken)
-      handleAnonymousUserCheckout()
+      handleAnonymousUserCart()
+      return await associateCartWithCustomer(userToken)
     }
+  }
+
+  const handleAnonymousUserCart = async () => {
+    const existingCheckout = cart?.cart?.id
+    if (!existingCheckout) removeCookie("cartId", { path: "/" })
+    if (!userToken && !currentCartID) createNewCart()
   }
 
   const getCustomer = async (userToken: string) => {
     const variables = { customerAccessToken: userToken }
     const response: any = await graphqlClient.request(
-      GET_CUSTOMER_QUERY,
+      GET_LAST_CHECKOUT_ID,
       variables
     )
     return response.customer
   }
 
-  const associateCheckoutWithCustomer = async (userToken: string) => {
+  const associateCartWithCustomer = async (userToken: string) => {
     let response: any = {
       checkoutCustomerAssociateV2: {
         checkout: {},
       },
     }
     const variables = {
-      checkoutId: currentCheckoutId,
+      cartId: currentCartID,
       customerAccessToken: userToken,
     }
     try {
@@ -158,16 +204,7 @@ function ShoppingCartHooks() {
       )
     } catch {}
     const checkout = response.checkoutCustomerAssociateV2.checkout
-    if (!checkout) removeCookie("checkoutId")
-  }
-
-  const handleAnonymousUserCheckout = async () => {
-    const checkout = await fetchCheckout(currentCheckoutId)
-    if (checkout) {
-      fetchCartItems()
-    } else {
-      removeCookie("checkoutId")
-    }
+    if (!checkout) removeCookie("cartId", { path: "/" })
   }
 
   const lineItemUpdateQuantity = async (
@@ -175,68 +212,34 @@ function ShoppingCartHooks() {
     newQuantity: number
   ) => {
     const variables = {
-      checkoutId: currentCheckoutId,
-      lineItems: [{ id: lineItemId, quantity: newQuantity }],
+      cartId: currentCartID,
+      lines: { id: lineItemId, quantity: newQuantity },
     }
 
-    try {
-      const response: any = await graphqlClient.request(
-        UPDATE_QUANTITY,
-        variables
-      )
-      console.log(
-        "Updated checkout IN HANDLE:",
-        response?.checkoutLineItemsUpdate
-      )
-      const items =
-        response?.checkoutLineItemsUpdate?.checkout?.lineItems?.edges.map(
-          ({ node }: any) => node
-        )
-      setCartItems(items)
-      fetchCartItems()
-      return response?.checkoutLineItemsUpdate?.checkout
-    } catch (error) {
-      console.error("Error updating quantity:", error)
-    }
+    return updateQuantity({ variables })
   }
 
   const lineItemRemove = async (lineItemId: string) => {
     const variables = {
-      checkoutId: currentCheckoutId,
-      lineItemIds: [lineItemId],
+      cartId: currentCartID,
+      lineIds: [lineItemId],
     }
-    try {
-      const response: any = await graphqlClient.request(
-        REMOVE_FROM_CART,
-        variables
-      )
-      console.log(
-        "Updated checkout IN HANDLE TO REMOVE:",
-        response?.checkoutLineItemsRemove
-      )
-      const items =
-        response?.checkoutLineItemsRemove?.checkout?.lineItems?.edges.map(
-          ({ node }: any) => node
-        )
-      setCartItems(items)
-      fetchCartItems()
-      return response?.checkoutLineItemsRemove?.checkout
-    } catch (error) {
-      console.error("Error removing from cart:", error)
-    }
+
+    return removeFromCart({ variables })
   }
 
   return {
-    checkoutId: currentCheckoutId,
+    cart,
+    cartId: currentCartID,
     toggleProductView,
     setToggleProductView,
     isCartOpen,
     setIsCartOpen,
     cartItems,
     setCartItems,
-    totalCheckoutPrice,
+    totalCartPrice,
     checkoutUrl,
-    fetchCartItems,
+    // fetchCartItems,
     lineItemUpdateQuantity,
     lineItemRemove,
   }

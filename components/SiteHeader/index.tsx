@@ -11,11 +11,11 @@ import { useWindowDimension } from "@/hooks"
 const SiteHeader = () => {
   const router = useRouter()
   const { isAuthenticated } = useAuth()
-  const { isMobile, isMobileLarge, isTablet, isDesktop, isWidescreen } =
-    useWindowDimension()
+  const { isCartOpen, setIsCartOpen, cart } = useShoppingCart()
   const isHeaderCollapsed = useHeaderCollapse()
   const { isOpen, setIsOpen } = useDialogBox()
-  const { isCartOpen, setIsCartOpen, cartItems } = useShoppingCart()
+  const { isMobile, isMobileLarge, isTablet, isDesktop, isWidescreen } =
+    useWindowDimension()
   const isLandingPage = router?.asPath === "/"
   const headerClasses = `fixed w-full top-0 left-0 z-50 transition-all duration-500 ${
     isHeaderCollapsed || !isLandingPage ? "bg-[#E9EBE0] text-black" : ""
@@ -27,7 +27,7 @@ const SiteHeader = () => {
 
   return (
     <>
-      {(isDesktop || isWidescreen) && (
+      {isDesktop || isWidescreen ? (
         <header className={headerClasses}>
           <nav className="relative py-6">
             <Container>
@@ -89,16 +89,18 @@ const SiteHeader = () => {
                     setIsSearchOpen={setIsOpen}
                   />
                   <Button variant="primary" onClick={handleCartOpen}>
-                    Bag ({`${cartItems?.lineItems?.edges?.length}`})
+                    Bag ({`${cart?.cart?.totalQuantity || 0}`})
                   </Button>
                 </div>
               </div>
             </Container>
           </nav>
         </header>
+      ) : (
+        <MobileDraw />
       )}
 
-      {(isMobile || isMobileLarge || isTablet) && <MobileDraw />}
+      {/* {(isMobile || isMobileLarge || isTablet) && <MobileDraw />} */}
     </>
   )
 }

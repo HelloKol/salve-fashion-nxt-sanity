@@ -1,8 +1,8 @@
 export {
-  ADD_TO_CART,
+  ADD_PRODUCT_TO_CART,
   REMOVE_FROM_CART,
   UPDATE_QUANTITY,
-  CREATE_CHECKOUT,
+  CREATE_CART,
   PRODUCT_CART,
 } from "./cart"
 export { COLLECTIONS_QUERY } from "./collections"

@@ -36,21 +36,15 @@ export const PRODUCT_CART = `
   }
 `
 
-export const ADD_TO_CART = gql`
-  mutation addToCart($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!) {
-    checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
-      checkout {
+export const CREATE_CART = gql`
+  mutation cartCreate {
+    cartCreate {
+      cart {
         id
-        webUrl
-        lineItems(first: 250) {
-          edges {
-            node {
-              ${PRODUCT_CART}
-            }
-          }
-        }
+        checkoutUrl
       }
       userErrors {
+        code
         field
         message
       }
@@ -58,22 +52,52 @@ export const ADD_TO_CART = gql`
   }
 `
 
-export const REMOVE_FROM_CART = gql`
-  mutation removeFromCart($checkoutId: ID!, $lineItemIds: [ID!]!) {
-    checkoutLineItemsRemove(
-      checkoutId: $checkoutId
-      lineItemIds: $lineItemIds
-    ) {
-      checkout {
+export const ADD_PRODUCT_TO_CART = gql`
+  mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
+    cartLinesAdd(cartId: $cartId, lines: $lines) {
+      cart {
         id
-        webUrl
-        lineItems(first: 250) {
+        lines(first: 10) {
           edges {
             node {
-              ${PRODUCT_CART}
+              id
+              quantity
+              merchandise {
+                ... on ProductVariant {
+                  id
+                }
+              }
             }
           }
         }
+        cost {
+          totalAmount {
+            amount
+            currencyCode
+          }
+          subtotalAmount {
+            amount
+            currencyCode
+          }
+          totalTaxAmount {
+            amount
+            currencyCode
+          }
+          totalDutyAmount {
+            amount
+            currencyCode
+          }
+        }
+      }
+    }
+  }
+`
+
+export const ADD_DISCOUNT_TO_CART = gql`
+  mutation cartDiscountCodesUpdate($cartId: ID!, $discountCodes: [String!]) {
+    cartDiscountCodesUpdate(cartId: $cartId, discountCodes: $discountCodes) {
+      cart {
+        id
       }
       userErrors {
         field
@@ -84,21 +108,52 @@ export const REMOVE_FROM_CART = gql`
 `
 
 export const UPDATE_QUANTITY = gql`
-  mutation updateQuantity(
-    $checkoutId: ID!
-    $lineItems: [CheckoutLineItemUpdateInput!]!
-  ) {
-    checkoutLineItemsUpdate(checkoutId: $checkoutId, lineItems: $lineItems) {
-      checkout {
+  mutation cartLinesUpdate($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
+    cartLinesUpdate(cartId: $cartId, lines: $lines) {
+      cart {
         id
-        webUrl
-        lineItems(first: 250) {
+        lines(first: 10) {
           edges {
             node {
-              ${PRODUCT_CART}
+              id
+              quantity
+              merchandise {
+                ... on ProductVariant {
+                  id
+                }
+              }
             }
           }
         }
+        cost {
+          totalAmount {
+            amount
+            currencyCode
+          }
+          subtotalAmount {
+            amount
+            currencyCode
+          }
+          totalTaxAmount {
+            amount
+            currencyCode
+          }
+          totalDutyAmount {
+            amount
+            currencyCode
+          }
+        }
+      }
+    }
+  }
+`
+
+export const REMOVE_FROM_CART = gql`
+  mutation cartLinesRemove($cartId: ID!, $lineIds: [ID!]!) {
+    cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+      cart {
+        id
+        checkoutUrl
       }
       userErrors {
         field
@@ -108,84 +163,140 @@ export const UPDATE_QUANTITY = gql`
   }
 `
 
-export const CREATE_CHECKOUT = gql`
-  mutation checkoutCreate($input: CheckoutCreateInput!) {
-    checkoutCreate(input: $input) {
-      checkout {
-        id
-        webUrl
-      }
-      checkoutUserErrors {
-        code
-        field
-        message
-      }
-    }
-  }
-`
-
-export const GET_CHECKOUT_QUERY = gql`
-  query getCheckout($checkoutId: ID!) {
-    node(id: $checkoutId) {
-      ... on Checkout {
-        createdAt
-        currencyCode
-        discountApplications (first:1) {
-          nodes {
-            allocationMethod
-            targetSelection
-            targetType
-            value {
-              ... on MoneyV2 {
-                __typename
-                amount
-                currencyCode
-              }
-            }
-          }
-        }
-        email
-        id
-        webUrl
-        totalPrice {
+export const GET_CART = gql`
+  query getCart($cartId: ID!) {
+    cart(id: $cartId) {
+      id
+      checkoutUrl
+      cost {
+        checkoutChargeAmount {
           amount
           currencyCode
         }
-        lineItems(first: 250) {
-          edges {
-            node {
-              ${PRODUCT_CART}
-            }
+        subtotalAmount {
+          amount
+          currencyCode
+        }
+        totalAmount {
+          amount
+          currencyCode
+        }
+        totalDutyAmount {
+          amount
+          currencyCode
+        }
+        totalTaxAmount {
+          amount
+          currencyCode
+        }
+      }
+      createdAt
+      discountAllocations {
+        discountedAmount {
+          amount
+          currencyCode
+        }
+        ... on CartCodeDiscountAllocation {
+          __typename
+          code
+          discountedAmount {
+            amount
+            currencyCode
           }
         }
       }
+      discountCodes {
+        applicable
+        code
+      }
+      lines(first: 100) {
+        nodes {
+          cost {
+            amountPerQuantity {
+              amount
+              currencyCode
+            }
+            compareAtAmountPerQuantity {
+              amount
+              currencyCode
+            }
+            subtotalAmount {
+              amount
+              currencyCode
+            }
+            totalAmount {
+              amount
+              currencyCode
+            }
+          }
+          discountAllocations {
+            discountedAmount {
+              amount
+              currencyCode
+            }
+          }
+          id
+          merchandise {
+            ... on ProductVariant {
+              availableForSale
+              barcode
+              compareAtPrice {
+                amount
+                currencyCode
+              }
+              compareAtPriceV2 {
+                amount
+                currencyCode
+              }
+              currentlyNotInStock
+              id
+              image {
+                altText
+                height
+                id
+                originalSrc
+                src
+                transformedSrc
+                url
+                width
+              }
+              price {
+                amount
+                currencyCode
+              }
+              priceV2 {
+                amount
+                currencyCode
+              }
+              product {
+                title
+              }
+              quantityAvailable
+              requiresShipping
+              selectedOptions {
+                name
+                value
+              }
+              sku
+              taxable
+              title
+            }
+          }
+          quantity
+        }
+      }
+      totalQuantity
     }
   }
 `
 
-export const GET_CUSTOMER_QUERY = gql`
+export const GET_LAST_CHECKOUT_ID = gql`
   query ($customerAccessToken: String!) {
     customer(customerAccessToken: $customerAccessToken) {
       id
       email
       lastIncompleteCheckout {
         id
-      }
-    }
-  }
-`
-
-export const GET_CHECKOUT_CREATE_MUTATION = gql`
-  mutation {
-    checkoutCreate(input: {}) {
-      checkout {
-        id
-        webUrl
-      }
-      checkoutUserErrors {
-        code
-        field
-        message
       }
     }
   }
@@ -215,35 +326,6 @@ export const GET_CHECKOUT_CUSTOMER_ASSOCIATE_V2 = gql`
         code
         field
         message
-      }
-    }
-  }
-`
-
-export const ADD_CHECKOUT_DISCOUNT = gql`
-  mutation applyDiscountCodeToCheckout(
-    $checkoutId: ID!
-    $discountCode: String!
-  ) {
-    checkoutDiscountCodeApplyV2(
-      checkoutId: $checkoutId
-      discountCode: $discountCode
-    ) {
-      checkout {
-        discountApplications(first: 10) {
-          edges {
-            node {
-              allocationMethod
-              targetSelection
-              targetType
-            }
-          }
-        }
-      }
-      checkoutUserErrors {
-        message
-        code
-        field
       }
     }
   }

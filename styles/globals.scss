@@ -42,6 +42,11 @@ a.tertiary:hover::before {
   background: white;
 }
 
+button:disabled,
+button[disabled] {
+  cursor: not-allowed;
+}
+
 .SelectItem[data-disabled] {
   color: red;
   pointer-events: none;

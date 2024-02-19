@@ -117,6 +117,7 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
   if (!productByHandle) return null
 
   const [index, setIndex] = useState(0)
+  const [quantity, setQuanity] = useState(1)
   const { predictiveSearch } = predictiveProducts
   const { product } = productByHandle
   const { title, description, descriptionHtml, images, variants } = product
@@ -344,15 +345,38 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
 
                 <div className="mt-6 flex items-center gap-4">
                   <span className="uppercase">Size</span>
-                  <div className="flex gap-2">{renderSize()}</div>
+                  <div className="flex flex-wrap gap-2">{renderSize()}</div>
                 </div>
 
-                <div className="mt-6 flex gap-2">{renderColor()}</div>
+                <div className="mt-6 flex items-center gap-4">
+                  <span className="uppercase">Size</span>
+                  <div className="flex flex-wrap gap-2">{renderColor()}</div>
+                </div>
+
+                <div className="mt-6 flex items-center gap-4">
+                  <span className="uppercase">Quanitity</span>
+                  <div className="flex items-center gap-4">
+                    <button
+                      onClick={() => setQuanity(quantity - 1)}
+                      disabled={quantity <= 1}
+                    >
+                      -
+                    </button>
+                    <span>{quantity}</span>
+                    <button
+                      onClick={() => setQuanity(quantity + 1)}
+                      disabled={quantity >= 100}
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
 
                 <div className={`mt-6 flex flex-wrap gap-4 xl:flex-nowrap`}>
                   <AddToCart
                     productTitle={product.title}
                     selectedVariant={selectedVariant?.node}
+                    quantity={quantity}
                     disabled={!selectedVariantAvailable}
                   />
                   <Button

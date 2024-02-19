@@ -1,8 +1,8 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useState } from "react"
 import Link from "next/link"
 import { useForm } from "react-hook-form"
-import { gql } from "@apollo/client"
+import { gql, useMutation } from "@apollo/client"
 // @ts-ignore
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
@@ -17,7 +17,11 @@ import {
 } from "@/components"
 import { useShoppingCart } from "@/context/Cart"
 import { graphqlClient } from "@/utils"
-import { ADD_CHECKOUT_DISCOUNT } from "@/services/queries/cart"
+import {
+  ADD_DISCOUNT_TO_CART,
+  GET_CART,
+  REMOVE_FROM_CART,
+} from "@/services/queries/cart"
 
 const schema = yup.object().shape({
   discountCode: yup.string().required("Enter a discount code"),
@@ -27,29 +31,64 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(false)
   const [isSucess, setIsSuccess] = useState(false)
   const [globalError, setGlobalError] = useState("")
-  const { checkoutId, cartItems, lineItemRemove, lineItemUpdateQuantity } =
+  const { cart, cartId, lineItemRemove, lineItemUpdateQuantity } =
     useShoppingCart()
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<any>({
     resolver: yupResolver(schema),
   })
 
+  const [addDiscount, {}] = useMutation(ADD_DISCOUNT_TO_CART, {
+    refetchQueries: [
+      {
+        query: GET_CART,
+        variables: {
+          cartId,
+        },
+      },
+    ],
+  })
+
+  const [removeDiscount, {}] = useMutation(ADD_DISCOUNT_TO_CART, {
+    refetchQueries: [
+      {
+        query: GET_CART,
+        variables: {
+          cartId,
+        },
+      },
+    ],
+  })
+
   const onSubmit = async ({ discountCode }: any) => {
     try {
-      const response = graphqlClient.request(ADD_CHECKOUT_DISCOUNT, {
-        checkoutId: checkoutId,
-        discountCode: discountCode,
-      })
+      const variables = {
+        cartId,
+        discountCodes: [`${discountCode}`],
+      }
 
-      console.log(response)
+      addDiscount({ variables })
+      setValue("discountCode", ``)
     } catch (err: any) {
       setGlobalError("An error occurred while changing password")
       setIsLoading(false)
       return setIsSuccess(false)
     }
+  }
+
+  const handleRemoveDiscount = () => {
+    try {
+      const variables = {
+        cartId,
+        discountCodes: [``],
+      }
+
+      removeDiscount({ variables })
+    } catch (err: any) {}
   }
 
   const renderVariantOptions = (options: any) =>
@@ -62,13 +101,40 @@ export default function Page() {
       )
     })
 
-  console.log(cartItems)
+  const renderDiscountCode = () =>
+    cart?.cart?.discountCodes.map((discount: any) => {
+      const { applicable, code } = discount
+      if (!applicable) return null
+      return (
+        <div className="flex items-center rounded-full border-[1px] border-black p-1">
+          {code}
+          <button type="button" onClick={handleRemoveDiscount}>
+            <svg
+              className="h-4 w-4 text-gray-800"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1"
+                d="M6 18 18 6m0 12L6 6"
+              />
+            </svg>
+          </button>
+        </div>
+      )
+    })
 
-  const renderProduct = () =>
-    cartItems?.lineItems?.edges.map((item: any) => {
-      const { node } = item
-      const { id, title, quantity, variant } = node
-      const { image, price, selectedOptions } = variant
+  const renderCart = () =>
+    cart?.cart?.lines?.nodes?.map((item: any) => {
+      const { id, cost, quantity, merchandise } = item
+      const { subtotalAmount } = cost
+      const { product, selectedOptions, image } = merchandise
+      const { title } = product
 
       return (
         <div className="contents p-2" key={id}>
@@ -103,18 +169,22 @@ export default function Page() {
           <div className="cell flex	h-max items-center gap-3">
             <div className="flex items-center gap-4">
               <button
+                className="disabled:text-slate-400"
                 onClick={() => lineItemUpdateQuantity(id, quantity - 1)}
                 disabled={quantity <= 1}
               >
                 -
               </button>
               <span>{quantity}</span>
-              <button onClick={() => lineItemUpdateQuantity(id, quantity + 1)}>
+              <button
+                className="disabled:text-slate-400"
+                onClick={() => lineItemUpdateQuantity(id, quantity + 1)}
+              >
                 +
               </button>
             </div>
           </div>
-          <div className="cell">£{(quantity * price.amount).toFixed(2)}</div>
+          <div className="cell">£{subtotalAmount.amount}</div>
         </div>
       )
     })
@@ -156,7 +226,7 @@ export default function Page() {
                     <div className="cell">Price</div>
                   </div>
                   {/* Content */}
-                  {renderProduct()}
+                  {renderCart()}
                 </div>
               </div>
 
@@ -173,6 +243,10 @@ export default function Page() {
                       error={errors.discountCode}
                     />
 
+                    <div className="flex items-center">
+                      {renderDiscountCode()}
+                    </div>
+
                     <button
                       className="mt-2 flex h-fit w-full shrink-0 items-center justify-center rounded-xl bg-[#171717] py-4 text-sm uppercase text-white"
                       type="submit"
@@ -182,16 +256,24 @@ export default function Page() {
                   </form>
 
                   <p className="mt-6 flex justify-between uppercase">
-                    <span>bag total</span> ${cartItems?.totalPrice?.amount}{" "}
+                    <span>bag total</span> $
+                    {cart?.cart?.cost?.subtotalAmount?.amount}{" "}
                   </p>
                   <p className="flex justify-between uppercase">
-                    <span>Shipping</span> $0.00
+                    <span>Tax</span> $
+                    {cart?.cart?.cost?.totalTaxAmount?.amount || `0.00`}{" "}
                   </p>
                   <p className="flex justify-between uppercase">
-                    <span>Delivery</span> $0.00
+                    <span>Shipping</span>$
+                    {cart?.cart?.cost?.totalDutyAmount?.amount || `0.00`}{" "}
+                  </p>
+                  <p className="flex justify-between uppercase">
+                    <span>Delivery</span> $
+                    {cart?.cart?.cost?.totalDutyAmount?.amount || `0.00`}{" "}
                   </p>
                   <p className="mt-4 flex justify-between border-t-[1px] border-black pt-4 text-lg uppercase">
-                    <span>total</span> ${cartItems?.totalPrice?.amount}{" "}
+                    <span>total</span> $
+                    {cart?.cart?.cost?.checkoutChargeAmount?.amount}{" "}
                   </p>
 
                   <Button className={`mt-2 w-full`} variant={"quaternary"}>
