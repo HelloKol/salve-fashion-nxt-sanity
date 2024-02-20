@@ -82,6 +82,30 @@ const UPDATE_USER_PASSWORD = gql`
   }
 `
 
+const UPDATE_USER_PHONE_NUMBER = gql`
+  mutation customerUpdate(
+    $customer: CustomerUpdateInput!
+    $customerAccessToken: String!
+  ) {
+    customerUpdate(
+      customer: $customer
+      customerAccessToken: $customerAccessToken
+    ) {
+      customer {
+        phone
+      }
+      customerAccessToken {
+        accessToken
+        expiresAt
+      }
+      customerUserErrors {
+        field
+        message
+      }
+    }
+  }
+`
+
 const UPDATE_USER_ADDRESS = gql`
   mutation customerAddressUpdate(
     $address: MailingAddressInput!
@@ -112,37 +136,6 @@ const UPDATE_USER_ADDRESS = gql`
     }
   }
 `
-const USER_DETAILS = gql`
-  query ($customerAccessToken: String!) {
-    customer(customerAccessToken: $customerAccessToken) {
-      acceptsMarketing
-      createdAt
-      defaultAddress {
-        id
-        address1
-        address2
-        city
-        company
-        country
-        countryCodeV2
-        name
-        firstName
-        lastName
-        phone
-        province
-        zip
-      }
-      email
-      id
-      firstName
-      lastName
-      numberOfOrders
-      phone
-      updatedAt
-    }
-  }
-`
-
 const ORDER_HISTORY = gql`
   query ($customerAccessToken: String!, $first: Int!) {
     customer(customerAccessToken: $customerAccessToken) {
@@ -170,10 +163,10 @@ const ORDER_HISTORY = gql`
 `
 
 export {
-  USER_DETAILS,
   ORDER_HISTORY,
   ADD_USER_ADDRESS,
   UPDATE_USER_ADDRESS,
   UPDATE_USER_EMAIL,
   UPDATE_USER_PASSWORD,
+  UPDATE_USER_PHONE_NUMBER,
 }

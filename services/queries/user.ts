@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from "@apollo/client"
 
 const REGISTER_CUSTOMER = gql`
   mutation customerCreate($input: CustomerCreateInput!) {
@@ -13,7 +13,7 @@ const REGISTER_CUSTOMER = gql`
       }
     }
   }
-`;
+`
 
 const LOGIN_CUSTOMER = gql`
   mutation LoginCustomer($email: String!, $password: String!) {
@@ -29,7 +29,7 @@ const LOGIN_CUSTOMER = gql`
       }
     }
   }
-`;
+`
 
 const LOGOUT_CUSTOMER = gql`
   mutation customerAccessTokenDelete($customerAccessToken: String!) {
@@ -42,7 +42,7 @@ const LOGOUT_CUSTOMER = gql`
       }
     }
   }
-`;
+`
 
 const VERIFY_TOKEN = `
   query VerifyToken($accessToken: String!) {
@@ -50,7 +50,43 @@ const VERIFY_TOKEN = `
       id
     }
   }
-`;
+`
 
+const USER_DETAILS = gql`
+  query ($customerAccessToken: String!) {
+    customer(customerAccessToken: $customerAccessToken) {
+      acceptsMarketing
+      createdAt
+      defaultAddress {
+        id
+        address1
+        address2
+        city
+        company
+        country
+        countryCodeV2
+        name
+        firstName
+        lastName
+        phone
+        province
+        zip
+      }
+      email
+      id
+      firstName
+      lastName
+      numberOfOrders
+      phone
+      updatedAt
+    }
+  }
+`
 
-export { REGISTER_CUSTOMER, LOGIN_CUSTOMER, LOGOUT_CUSTOMER, VERIFY_TOKEN,  };
+export {
+  REGISTER_CUSTOMER,
+  LOGIN_CUSTOMER,
+  LOGOUT_CUSTOMER,
+  VERIFY_TOKEN,
+  USER_DETAILS,
+}

@@ -95,15 +95,16 @@ export default function Page({}: PageProps): JSX.Element | null {
                   </div>
                   <SvgRight />
                 </Link>
-                {userDetails?.defaultAddress?.phone && (
-                  <li className="flex cursor-pointer items-center justify-between pb-4 pl-8 pr-8 pt-4 hover:bg-[#d5d6c8]">
-                    <div>
-                      <p className="uppercase">Phone</p>
-                      <p>{userDetails?.defaultAddress?.phone}</p>
-                    </div>
-                    <SvgRight />
-                  </li>
-                )}
+                <Link
+                  href={"/account/profile/change-phone"}
+                  className="flex cursor-pointer items-center justify-between pb-4 pl-8 pr-8 pt-4 hover:bg-[#d5d6c8]"
+                >
+                  <div>
+                    <p className="uppercase">Phone</p>
+                    <p>{userDetails?.phone}</p>
+                  </div>
+                  <SvgRight />
+                </Link>
                 <Link
                   href={"/account/profile/change-password"}
                   className="flex cursor-pointer items-center justify-between pb-4 pl-8 pr-8 pt-4 hover:bg-[#d5d6c8]"

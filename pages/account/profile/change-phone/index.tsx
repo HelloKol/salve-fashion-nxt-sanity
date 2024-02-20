@@ -21,7 +21,7 @@ import styles from "./styles.module.scss"
 import {
   UPDATE_USER_ADDRESS,
   UPDATE_USER_EMAIL,
-  UPDATE_USER_PASSWORD,
+  UPDATE_USER_PHONE_NUMBER,
   USER_DETAILS,
 } from "@/services/queries"
 import { useEffect, useState } from "react"
@@ -37,14 +37,7 @@ const navigationLinks = [
 ]
 
 const schema = yup.object().shape({
-  password: yup
-    .string()
-    .min(6, "Password must be at least 6 characters")
-    .required("Enter your password"),
-  confirmPassword: yup
-    .string()
-    .min(6, "Password must be at least 6 characters")
-    .required("Enter your confirm password"),
+  phone: yup.string().required("Enter your new phone number"),
 })
 
 interface PageProps {}
@@ -59,11 +52,11 @@ export default function Page({}: PageProps): JSX.Element | null {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<any>({
     resolver: yupResolver(schema),
   })
 
-  const [updatePassword, {}] = useMutation(UPDATE_USER_PASSWORD, {
+  const [updatePhoneNumber, {}] = useMutation(UPDATE_USER_PHONE_NUMBER, {
     refetchQueries: [
       {
         query: USER_DETAILS,
@@ -74,17 +67,14 @@ export default function Page({}: PageProps): JSX.Element | null {
     ],
   })
 
-  const onSubmit = async (data: FormData) => {
-    const { password, confirmPassword } = data
-    if (password !== confirmPassword) return
+  const onSubmit = async (data: any) => {
     if (!accessToken) return
-
     const variables = {
-      customer: { password: password },
+      customer: data,
       customerAccessToken: accessToken,
     }
 
-    updatePassword({ variables })
+    updatePhoneNumber({ variables })
   }
 
   return (
@@ -110,7 +100,8 @@ export default function Page({}: PageProps): JSX.Element | null {
               </ul>
 
               <div className="col-span-5 mb-4">
-                <p>CHANGE PASSWORD</p>
+                <p>CHANGE PHONE NUMBER</p>
+                <p>A verification code will be sent to the new number</p>
               </div>
 
               <form
@@ -119,20 +110,11 @@ export default function Page({}: PageProps): JSX.Element | null {
               >
                 <div className="mb-6">
                   <FormInputText
-                    type="password"
-                    placeholder="New password"
-                    label="New Password"
-                    {...register("password")}
-                    error={errors.password}
-                  />
-                </div>
-                <div className="mb-6">
-                  <FormInputText
-                    type="password"
-                    placeholder="Confirm password"
-                    label="Confirm Password"
-                    {...register("confirmPassword")}
-                    error={errors.confirmPassword}
+                    type="text"
+                    label="Phone number"
+                    placeholder="NEW PHONE NUMBER"
+                    {...register("phone")}
+                    error={errors.phone}
                   />
                 </div>
 
@@ -140,7 +122,7 @@ export default function Page({}: PageProps): JSX.Element | null {
                   className="col-span-12 mt-6 flex h-fit w-full shrink-0 items-center justify-center rounded-xl bg-[#171717] py-4 text-sm uppercase text-white"
                   type="submit"
                 >
-                  {isLoading ? "Loading...." : "Save"}
+                  {isLoading ? "Loading...." : "Update Phone number"}
                 </button>
 
                 {globalError && (

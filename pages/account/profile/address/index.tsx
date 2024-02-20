@@ -67,8 +67,9 @@ export default function Page({}: PageProps): JSX.Element | null {
               <div className="col-span-5 row-start-3">
                 <p>{userDetails?.defaultAddress?.name}</p>
                 <p>
-                  {userDetails?.defaultAddress?.address1},{" "}
-                  {userDetails?.defaultAddress?.address2}
+                  {userDetails?.defaultAddress?.address1}
+                  {userDetails?.defaultAddress?.address2 &&
+                    `, ${userDetails?.defaultAddress?.address2}`}
                 </p>
                 <p>{userDetails?.defaultAddress?.city}</p>
                 <p>{userDetails?.defaultAddress?.province}</p>

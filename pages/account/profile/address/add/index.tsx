@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 // @ts-ignore
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
-import { useQuery } from "@apollo/client"
+import { useMutation, useQuery } from "@apollo/client"
 import { gql } from "@apollo/client"
 import {
   Main,
@@ -60,13 +60,25 @@ export default function Page({}: PageProps): JSX.Element | null {
     resolver: yupResolver(schema),
   })
 
+  const [addNewAddress, {}] = useMutation(ADD_USER_ADDRESS, {
+    refetchQueries: [
+      {
+        query: USER_DETAILS,
+        variables: {
+          customerAccessToken: accessToken,
+        },
+      },
+    ],
+  })
+
   const onSubmit = async (data: AddressFormData) => {
     if (!accessToken) return
-
-    const response = await graphqlClient.request(ADD_USER_ADDRESS, {
+    const variables = {
       address: data,
       customerAccessToken: accessToken,
-    })
+    }
+
+    addNewAddress({ variables })
   }
 
   return (

@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 // @ts-ignore
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
-import { useQuery } from "@apollo/client"
+import { useMutation, useQuery } from "@apollo/client"
 import { gql } from "@apollo/client"
 import {
   Main,
@@ -18,7 +18,7 @@ import {
 } from "@/components"
 import { sanityClient } from "@/utils"
 import styles from "./styles.module.scss"
-import { UPDATE_USER_ADDRESS } from "@/services/queries"
+import { UPDATE_USER_ADDRESS, USER_DETAILS } from "@/services/queries"
 import { useEffect, useState } from "react"
 import { graphqlClient } from "@/utils"
 import { useAuth } from "@/context/User"
@@ -61,6 +61,17 @@ export default function Page({}: PageProps): JSX.Element | null {
     resolver: yupResolver(schema),
   })
 
+  const [updateAddress, {}] = useMutation(UPDATE_USER_ADDRESS, {
+    refetchQueries: [
+      {
+        query: USER_DETAILS,
+        variables: {
+          customerAccessToken: accessToken,
+        },
+      },
+    ],
+  })
+
   useEffect(() => {
     if (!userDetails?.defaultAddress) return
     const { defaultAddress } = userDetails
@@ -78,14 +89,13 @@ export default function Page({}: PageProps): JSX.Element | null {
 
   const onSubmit = async (data: AddressFormData) => {
     if (!accessToken || !userDetails?.defaultAddress?.id) return
-
-    const response = await graphqlClient.request(UPDATE_USER_ADDRESS, {
+    const variables = {
       address: data,
       customerAccessToken: accessToken,
       id: userDetails?.defaultAddress?.id,
-    })
+    }
 
-    console.log(response)
+    updateAddress({ variables })
   }
 
   return (
@@ -111,7 +121,7 @@ export default function Page({}: PageProps): JSX.Element | null {
               </ul>
 
               <div className="col-span-5 mb-4">
-                <p>New address</p>
+                <p>Update address</p>
               </div>
 
               <form

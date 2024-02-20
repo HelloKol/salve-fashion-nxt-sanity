@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 // @ts-ignore
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
-import { useQuery } from "@apollo/client"
+import { useMutation, useQuery } from "@apollo/client"
 import { gql } from "@apollo/client"
 import {
   Main,
@@ -18,7 +18,11 @@ import {
 } from "@/components"
 import { sanityClient } from "@/utils"
 import styles from "./styles.module.scss"
-import { UPDATE_USER_ADDRESS, UPDATE_USER_EMAIL } from "@/services/queries"
+import {
+  UPDATE_USER_ADDRESS,
+  UPDATE_USER_EMAIL,
+  USER_DETAILS,
+} from "@/services/queries"
 import { useEffect, useState } from "react"
 import { graphqlClient } from "@/utils"
 import { useAuth } from "@/context/User"
@@ -59,13 +63,25 @@ export default function Page({}: PageProps): JSX.Element | null {
     resolver: yupResolver(schema),
   })
 
+  const [updateEmailAddress, {}] = useMutation(UPDATE_USER_EMAIL, {
+    refetchQueries: [
+      {
+        query: USER_DETAILS,
+        variables: {
+          customerAccessToken: accessToken,
+        },
+      },
+    ],
+  })
+
   const onSubmit = async (data: FormData) => {
     if (!accessToken) return
-
-    const response = await graphqlClient.request(UPDATE_USER_EMAIL, {
+    const variables = {
       customer: data,
       customerAccessToken: accessToken,
-    })
+    }
+
+    updateEmailAddress({ variables })
   }
 
   return (
