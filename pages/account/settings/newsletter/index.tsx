@@ -15,12 +15,14 @@ import {
   Button,
   Logout,
   FormInputText,
+  FormInputCheckbox,
 } from "@/components"
 import { sanityClient } from "@/utils"
 import styles from "./styles.module.scss"
 import {
   UPDATE_USER_ADDRESS,
   UPDATE_USER_EMAIL,
+  UPDATE_USER_NEWSLETTER,
   UPDATE_USER_PHONE_NUMBER,
   USER_DETAILS,
 } from "@/services/queries"
@@ -29,6 +31,7 @@ import { graphqlClient } from "@/utils"
 import { useAuth } from "@/context/User"
 import { useLoginForm } from "@/hooks"
 import { FormData } from "@/types"
+import Link from "next/link"
 
 const navigationLinks = [
   { href: "/account/order", text: "Order history" },
@@ -36,8 +39,26 @@ const navigationLinks = [
   { href: "/account/settings", text: "Settings" },
 ]
 
+const SvgRight = () => (
+  <svg
+    className="h-4 w-4 text-gray-800"
+    aria-hidden="true"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+  >
+    <path
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="m9 5 7 7-7 7"
+    />
+  </svg>
+)
+
 const schema = yup.object().shape({
-  phone: yup.string().required("Enter your new phone number"),
+  acceptsMarketing: yup.boolean(),
 })
 
 interface PageProps {}
@@ -57,7 +78,7 @@ export default function Page({}: PageProps): JSX.Element | null {
     resolver: yupResolver(schema),
   })
 
-  const [updatePhoneNumber, {}] = useMutation(UPDATE_USER_PHONE_NUMBER, {
+  const [updateNewsletter, {}] = useMutation(UPDATE_USER_NEWSLETTER, {
     refetchQueries: [
       {
         query: USER_DETAILS,
@@ -69,8 +90,8 @@ export default function Page({}: PageProps): JSX.Element | null {
   })
 
   useEffect(() => {
-    if (!userDetails?.phone) return
-    setValue("phone", userDetails?.phone)
+    if (!userDetails?.acceptsMarketing) return
+    setValue("acceptsMarketing", userDetails?.acceptsMarketing)
   }, [userDetails])
 
   const onSubmit = async (data: any) => {
@@ -80,7 +101,7 @@ export default function Page({}: PageProps): JSX.Element | null {
       customerAccessToken: accessToken,
     }
 
-    updatePhoneNumber({ variables })
+    updateNewsletter({ variables })
   }
 
   return (
@@ -105,36 +126,53 @@ export default function Page({}: PageProps): JSX.Element | null {
                 ))}
               </ul>
 
-              <div className="col-span-5 mb-4">
-                <p>CHANGE PHONE NUMBER</p>
-                <p>A verification code will be sent to the new number</p>
-              </div>
-
-              <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="col-span-6 row-start-3"
-              >
-                <div className="mb-6">
-                  <FormInputText
-                    type="text"
-                    label="Phone number"
-                    placeholder="NEW PHONE NUMBER"
-                    {...register("phone")}
-                    error={errors.phone}
-                  />
-                </div>
-
-                <button
-                  className="col-span-12 mt-6 flex h-fit w-full shrink-0 items-center justify-center rounded-xl bg-[#171717] py-4 text-sm uppercase text-white"
-                  type="submit"
+              <div className="col-span-5 border border-black">
+                <Link
+                  href={"/account/settings/newsletter"}
+                  className="flex cursor-pointer items-center justify-between pb-4 pl-8 pr-8 pt-4 hover:bg-[#d5d6c8]"
                 >
-                  {isLoading ? "Loading...." : "Update Phone number"}
-                </button>
+                  <div>
+                    <span className="uppercase">NEWSLETTER</span>
+                    <p>
+                      Select your interests and receive the latest news and
+                      trends each week.
+                    </p>
+                  </div>
+                  <SvgRight />
+                </Link>
 
-                {globalError && (
-                  <p className="mt-2 text-red-500">{globalError}</p>
-                )}
-              </form>
+                <p>NEWSLETTER</p>
+                <p>
+                  Select your interests and receive the latest news and trends
+                  each week.
+                </p>
+
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className="col-span-6 row-start-3"
+                >
+                  <div className="mb-6">
+                    <FormInputCheckbox
+                      label={
+                        "I have read and understand the Privacy and Cookies Policy and agree to receive personalised commercial communications from Zara by email."
+                      }
+                      {...register("acceptsMarketing")}
+                      error={errors.acceptsMarketing}
+                    />
+                  </div>
+
+                  <button
+                    className="col-span-12 mt-6 flex h-fit w-full shrink-0 items-center justify-center rounded-xl bg-[#171717] py-4 text-sm uppercase text-white"
+                    type="submit"
+                  >
+                    {isLoading ? "Loading...." : "Save"}
+                  </button>
+
+                  {globalError && (
+                    <p className="mt-2 text-red-500">{globalError}</p>
+                  )}
+                </form>
+              </div>
             </Grid>
           </Container>
         </Section>

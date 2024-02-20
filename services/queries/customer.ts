@@ -68,7 +68,7 @@ const UPDATE_USER_PASSWORD = gql`
       customerAccessToken: $customerAccessToken
     ) {
       customer {
-        password
+        email
       }
       customerAccessToken {
         accessToken
@@ -93,6 +93,30 @@ const UPDATE_USER_PHONE_NUMBER = gql`
     ) {
       customer {
         phone
+      }
+      customerAccessToken {
+        accessToken
+        expiresAt
+      }
+      customerUserErrors {
+        field
+        message
+      }
+    }
+  }
+`
+
+const UPDATE_USER_NEWSLETTER = gql`
+  mutation customerUpdate(
+    $customer: CustomerUpdateInput!
+    $customerAccessToken: String!
+  ) {
+    customerUpdate(
+      customer: $customer
+      customerAccessToken: $customerAccessToken
+    ) {
+      customer {
+        acceptsMarketing
       }
       customerAccessToken {
         accessToken
@@ -136,6 +160,7 @@ const UPDATE_USER_ADDRESS = gql`
     }
   }
 `
+
 const ORDER_HISTORY = gql`
   query ($customerAccessToken: String!, $first: Int!) {
     customer(customerAccessToken: $customerAccessToken) {
@@ -169,4 +194,5 @@ export {
   UPDATE_USER_EMAIL,
   UPDATE_USER_PASSWORD,
   UPDATE_USER_PHONE_NUMBER,
+  UPDATE_USER_NEWSLETTER,
 }

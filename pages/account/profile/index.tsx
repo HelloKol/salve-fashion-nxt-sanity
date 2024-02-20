@@ -42,8 +42,6 @@ export default function Page({}: PageProps): JSX.Element | null {
   const router = useRouter()
   const { userDetails } = useAuth()
 
-  console.log(userDetails)
-
   return (
     <>
       <Head>
@@ -73,14 +71,21 @@ export default function Page({}: PageProps): JSX.Element | null {
               <div className="col-span-5 border border-black">
                 <Link
                   href={"/account/profile/address"}
-                  className="flex cursor-pointer items-center justify-between pb-4 pl-8 pr-8 pt-4 uppercase hover:bg-[#d5d6c8]"
+                  className="flex cursor-pointer items-center justify-between pb-4 pl-8 pr-8 pt-4 hover:bg-[#d5d6c8]"
                 >
-                  <span className="uppercase">Addresses</span>
+                  <div>
+                    <span className="uppercase">Addresses</span>
+                    <p>
+                      {userDetails?.defaultAddress?.address1}
+                      {userDetails?.defaultAddress?.address2 &&
+                        `, ${userDetails?.defaultAddress?.address2}`}
+                    </p>
+                  </div>
                   <SvgRight />
                 </Link>
                 <Link
                   href={"/account/profile"}
-                  className="flex cursor-pointer items-center justify-between pb-4 pl-8 pr-8 pt-4 uppercase hover:bg-[#d5d6c8]"
+                  className="flex cursor-pointer items-center justify-between pb-4 pl-8 pr-8 pt-4 hover:bg-[#d5d6c8]"
                 >
                   <span className="uppercase">Wallet</span>
                   <SvgRight />

@@ -41,6 +41,8 @@ function AuthFuncHooks() {
     skip: !isAuthenticated,
   })
 
+  console.log(data?.customer)
+
   const setToken = (accessToken: string, expiresAt: string) =>
     setCookie("accessToken", accessToken, {
       path: "/",

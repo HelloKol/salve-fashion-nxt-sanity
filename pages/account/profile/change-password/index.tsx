@@ -29,6 +29,7 @@ import { graphqlClient } from "@/utils"
 import { useAuth } from "@/context/User"
 import { useLoginForm } from "@/hooks"
 import { FormData } from "@/types"
+import { useCookies } from "react-cookie"
 
 const navigationLinks = [
   { href: "/account/order", text: "Order history" },
@@ -52,6 +53,7 @@ interface PageProps {}
 export default function Page({}: PageProps): JSX.Element | null {
   const router = useRouter()
   const { accessToken, userDetails } = useAuth()
+  const [cookies, setCookie, removeCookie] = useCookies(["accessToken"])
   const [isLoading, setIsLoading] = useState(false)
   const [isSucess, setIsSuccess] = useState(false)
   const [globalError, setGlobalError] = useState("")
@@ -85,6 +87,7 @@ export default function Page({}: PageProps): JSX.Element | null {
     }
 
     updatePassword({ variables })
+    removeCookie("accessToken", { path: "/" })
   }
 
   return (
