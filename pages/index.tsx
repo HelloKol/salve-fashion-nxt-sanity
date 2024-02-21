@@ -40,7 +40,7 @@ export default function Page({
     videoUrl,
   } = page
   const { collections } = hero
-  console.log(page)
+  console.log(collections)
 
   return (
     <>

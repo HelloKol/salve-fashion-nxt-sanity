@@ -21,6 +21,7 @@ export default function Carousel({ collections }: any) {
   const renderCollections = () =>
     collections &&
     collections.map((item: any, index: number) => {
+      if (!item?.modules?.length) return null
       const { modules, store } = item
       const { title, slug, imageUrl } = store
       const newTitle = title.split(" ")

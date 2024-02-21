@@ -5,7 +5,7 @@ export {
   CREATE_CART,
   PRODUCT_CART,
 } from "./cart"
-export { COLLECTIONS_QUERY } from "./collections"
+export { COLLECTION_PRODUCTS } from "./collections"
 export {
   ALL_PRODUCTS,
   PRODUCT_BASE,

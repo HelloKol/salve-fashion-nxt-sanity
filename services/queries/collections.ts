@@ -1,22 +1,39 @@
-import { gql } from "@apollo/client";
+import { gql } from "@apollo/client"
 
-const COLLECTIONS_QUERY = gql`
-  query {
-    collections(first: 10) {
-      edges {
-        node {
-          id
-          title
-          description
-          handle
-          image {
-            transformedSrc(maxWidth: 2000, maxHeight: 2000)
-            altText
+const COLLECTION_PRODUCTS = gql`
+  query collection($handle: String!) {
+    collection(handle: $handle) {
+      handle
+      id
+      products(first: 10) {
+        edges {
+          node {
+            handle
+            id
+            title
+            variants(first: 1) {
+              nodes {
+                id
+                image {
+                  altText
+                  height
+                  originalSrc
+                  src
+                  transformedSrc
+                  url
+                  width
+                }
+                price {
+                  amount
+                  currencyCode
+                }
+              }
+            }
           }
         }
       }
     }
   }
-`;
+`
 
-export { COLLECTIONS_QUERY };
+export { COLLECTION_PRODUCTS }
