@@ -35,6 +35,12 @@ const SiteHeader = () => {
                 <div className="flex space-x-8">
                   <Link
                     className="text-black hover:text-gray-700"
+                    href="/about"
+                  >
+                    Brand
+                  </Link>
+                  <Link
+                    className="text-black hover:text-gray-700"
                     href="/collections"
                   >
                     Collections
@@ -75,12 +81,6 @@ const SiteHeader = () => {
                       Login
                     </Link>
                   )}
-                  <Link
-                    className="text-black hover:text-gray-700"
-                    href="/about"
-                  >
-                    Brand
-                  </Link>
                   <Link
                     className="text-black hover:text-gray-700"
                     href="/contact"

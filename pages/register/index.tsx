@@ -64,37 +64,17 @@ export default function Page({ page }: props): JSX.Element | null {
     <>
       <MetaTags seo={seo} />
       <Main withPadding>
-        <Section className="py-24 lg:py-14">
+        <Section className="py-0">
           <Container>
             <Grid className="lg:min-h-screen">
-              <div className="col-span-full row-start-2	mt-8 flex flex-col justify-between lg:col-span-6 lg:row-start-1 lg:mt-24">
-                <div className="text-center">
-                  <p className="hidden text-xl uppercase lg:block">
-                    Largest Image Source
-                  </p>
-                  <h1 className="mt-8 hidden text-xl uppercase lg:block lg:text-7xl xl:text-8xl">
-                    Powered by creators aroudn the world
-                  </h1>
-                  <p className="lg:mt-14 xl:mt-28">
-                    Do you already have an account?
-                  </p>
-                  <Link
-                    className="inline-block border-b-2 border-black"
-                    href={`/login`}
-                  >
-                    Log in
-                  </Link>
-                </div>
-                <div className="mt-44  hidden w-full overflow-hidden rounded-2xl lg:block lg:h-56 xl:h-72">
-                  <ImageTag src="/static/images/product1.jpg" />
-                </div>
+              <div className="col-span-full h-full w-full lg:col-end-8">
+                <ImageTag src="/static/images/product1.jpg" />
               </div>
 
-              <div className="relative col-span-full md:col-start-4 md:col-end-10 lg:col-span-6">
-                <div className="z-10 w-8/12 w-full rounded-2xl lg:absolute lg:left-1/2 lg:top-1/2 lg:w-9/12 lg:max-w-[520px] lg:-translate-x-1/2 lg:-translate-y-1/2 lg:bg-[#ffffff] lg:p-4">
-                  <p className="text-center text-3xl uppercase">
-                    Register account
-                  </p>
+              <div className="relative col-span-full md:col-start-4 md:col-end-10 lg:col-start-8 lg:col-end-13">
+                <div className="z-10 w-8/12 w-full rounded-2xl lg:absolute lg:left-1/2 lg:top-1/2 lg:w-9/12 lg:max-w-[500px] lg:-translate-x-1/2 lg:-translate-y-1/2 lg:p-4">
+                  <p className="mb-6 text-3xl uppercase">Register account</p>
+
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="mb-6">
                       <FormInputText
@@ -171,22 +151,14 @@ export default function Page({ page }: props): JSX.Element | null {
                       />
                     </div>
 
-                    <button className="mt-6 flex h-fit w-full shrink-0 items-center justify-center rounded-xl bg-[#171717] py-4 text-sm uppercase text-white">
+                    <button className="mt-6 flex h-fit w-full shrink-0 items-center justify-center rounded-md bg-[#171717] py-4 text-sm uppercase text-white">
                       {isLoading ? "Loading...." : "Create account"}
                     </button>
 
                     {globalError && (
                       <p className="mt-2 text-red-500">{globalError}</p>
                     )}
-
-                    <div className="mt-6 hidden h-28 w-full overflow-hidden rounded-2xl lg:block">
-                      <ImageTag src="/static/images/product1.jpg" />
-                    </div>
                   </form>
-                </div>
-
-                <div className="hidden h-full w-full overflow-hidden rounded-2xl lg:block">
-                  <ImageTag src="/static/images/product1.jpg" />
                 </div>
               </div>
             </Grid>

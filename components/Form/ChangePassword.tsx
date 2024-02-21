@@ -59,49 +59,5 @@ export default function ChangePassword({ title }: props): JSX.Element | null {
     onClose: () => null,
   })
 
-  return (
-    <div className="relative col-span-full md:col-start-4 md:col-end-10 lg:col-span-6">
-      <div className="z-10 w-8/12 w-full rounded-2xl lg:absolute lg:left-1/2 lg:top-1/2 lg:w-9/12 lg:max-w-[520px] lg:-translate-x-1/2 lg:-translate-y-1/2 lg:bg-[#ffffff] lg:p-4">
-        <p className="text-center text-3xl uppercase">{title}</p>
-
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-6">
-            <FormInputText
-              type="password"
-              placeholder="******"
-              label="New Password"
-              {...register("password")}
-              error={errors.password}
-            />
-          </div>
-          <div className="mb-6">
-            <FormInputText
-              type="password"
-              placeholder="******"
-              label="Confirm Password"
-              {...register("password")}
-              error={errors.password}
-            />
-          </div>
-
-          <button
-            className="mt-6 flex h-fit w-full shrink-0 items-center justify-center rounded-xl bg-[#171717] py-4 text-sm uppercase text-white"
-            type="submit"
-          >
-            {isLoading ? "Loading...." : "Continue"}
-          </button>
-
-          {globalError && <p className="mt-2 text-red-500">{globalError}</p>}
-
-          <div className="mt-6 hidden h-28 w-full overflow-hidden rounded-2xl lg:block">
-            <ImageTag src="/static/images/product1.jpg" />
-          </div>
-        </form>
-      </div>
-
-      <div className="hidden h-full w-full overflow-hidden rounded-2xl lg:block">
-        <ImageTag src="/static/images/product1.jpg" />
-      </div>
-    </div>
-  )
+  return null
 }

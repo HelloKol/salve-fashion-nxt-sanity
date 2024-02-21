@@ -28,7 +28,7 @@ const FormInputText = forwardRef<HTMLInputElement, FormInputTextProps>(
         )}
         <input
           type={switchPasswordInput ? "text" : type}
-          className="block w-full border-b-[1px] border-black p-2 pl-0 text-sm text-gray-900 outline-none"
+          className="block w-full border-b-[1px] border-black bg-transparent p-2 pl-0 text-sm text-gray-900 outline-none"
           placeholder={placeholder}
           ref={ref}
           {...rest}

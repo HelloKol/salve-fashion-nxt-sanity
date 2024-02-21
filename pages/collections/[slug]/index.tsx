@@ -104,7 +104,7 @@ export default function Page({ page, collectionByHandle }: props) {
             withRowGap={false}
           >
             <p className="col-span-full mb-4 text-sm font-bold lg:mb-6 xl:mb-8">
-              {products.edges.length} items
+              {products.edges.length} products
             </p>
             {renderProducts()}
           </Grid>
