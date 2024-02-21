@@ -3,7 +3,15 @@ import Head from "next/head"
 import { useRouter } from "next/router"
 import { useQuery } from "@apollo/client"
 import { gql } from "@apollo/client"
-import { Main, Section, Container, Grid, Button, Logout } from "@/components"
+import {
+  Main,
+  Section,
+  Container,
+  Grid,
+  Button,
+  Logout,
+  BreadCrumb,
+} from "@/components"
 import { sanityClient } from "@/utils"
 import styles from "./styles.module.scss"
 import { USER_DETAILS } from "@/services/queries"
@@ -45,6 +53,10 @@ export default function Page({}: PageProps): JSX.Element | null {
                 ))}
               </ul>
 
+              <div className="col-span-full">
+                <BreadCrumb />
+              </div>
+
               <div className="col-span-5 mb-4 flex items-center justify-between">
                 <p>Addresses</p>
                 {userDetails?.defaultAddress ? (
@@ -64,7 +76,7 @@ export default function Page({}: PageProps): JSX.Element | null {
                 )}
               </div>
 
-              <div className="col-span-5 row-start-3">
+              <div className="col-span-5 row-start-4">
                 <p>{userDetails?.defaultAddress?.name}</p>
                 <p>
                   {userDetails?.defaultAddress?.address1}

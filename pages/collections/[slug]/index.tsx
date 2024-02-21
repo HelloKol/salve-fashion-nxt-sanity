@@ -46,7 +46,7 @@ export default function Page({ page, collectionByHandle }: props) {
         >
           <Link href={`/shop/product/${handle}`} className="block">
             <div
-              className={`group relative h-60 w-full overflow-hidden rounded-2xl sm:h-80 md:h-[500px] lg:h-[700px] xl:h-[800px] ${styles.imageWrapper}`}
+              className={`group relative h-60 w-full overflow-hidden rounded-2xl sm:h-80 md:h-[500px] lg:h-[600px] ${styles.imageWrapper}`}
             >
               {renderImage(variants?.nodes)}
 

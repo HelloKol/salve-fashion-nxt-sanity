@@ -15,6 +15,7 @@ import {
   Button,
   Logout,
   FormInputText,
+  BreadCrumb,
 } from "@/components"
 import { sanityClient } from "@/utils"
 import styles from "./styles.module.scss"
@@ -106,6 +107,10 @@ export default function Page({}: PageProps): JSX.Element | null {
                 ))}
               </ul>
 
+              <div className="col-span-full">
+                <BreadCrumb />
+              </div>
+
               <div className="col-span-5 mb-4">
                 <p>CHANGE E-MAIL</p>
                 <p>Your current email address is: {userDetails?.email}</p>
@@ -113,7 +118,7 @@ export default function Page({}: PageProps): JSX.Element | null {
 
               <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="col-span-6 row-start-3"
+                className="col-span-6 row-start-4"
               >
                 {/* <div className="mb-6">
                   <FormInputText

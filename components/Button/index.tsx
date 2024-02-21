@@ -42,7 +42,7 @@ export default function index({
           : "w-fit h-fit shrink-0 border border-white rounded-full px-5 py-2 flex items-center justify-center text-white text-sm uppercase ease-in-out duration-300 hover:border-white hover:bg-white hover:text-black"
         : variant === "tertiary"
           ? isActive
-            ? "w-fit h-fit shrink-0 bg-[#171717] rounded-full px-5 py-2 flex items-center justify-center text-white text-sm uppercase"
+            ? "w-fit h-fit shrink-0 bg-[#171717] border border-black rounded-full px-5 py-2 flex items-center justify-center text-white text-sm uppercase"
             : "w-fit h-fit shrink-0 border border-black rounded-full px-5 py-2 flex items-center justify-center text-sm uppercase ease-in-out duration-300 hover:border-black hover:bg-black hover:text-white"
           : variant === "quaternary"
             ? isActive

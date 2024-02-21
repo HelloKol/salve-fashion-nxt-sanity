@@ -19,7 +19,7 @@ export default function Category({ data }: Props) {
 
       return (
         <Link
-          href={links[0].url.current}
+          href={`/shop/${links[0].url.current}`}
           className="relative h-[300px] w-full overflow-hidden sm:h-[400px] md:h-[480px] lg:h-[550px] lg:w-1/2 xl:h-[700px]"
         >
           <ImageTag src={asset.url} />
