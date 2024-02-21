@@ -2,77 +2,79 @@
 // Global
 // ==========================================================================
 .AccordionItem {
-    overflow: hidden;
-    margin-top: 1px;
-    border-bottom: 2px solid black;
+  overflow: hidden;
+  margin-top: 1px;
+  border-bottom: 2px solid black;
 
-    &:first-child {
-        margin-top: 0;
-    }
-    &:focus-within {
-        color: black;
-        position: relative;
-        z-index: 1;
-    }
+  &:first-child {
+    margin-top: 0;
+  }
+  &:focus-within {
+    color: black;
+    position: relative;
+    z-index: 1;
+  }
 }
 
 .AccordionHeader {
-    display: flex;
+  display: flex;
 }
 
 .AccordionTrigger {
-    height: 45px;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: black;
+  height: 45px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: black;
 
-    &:hover {
-        color: black;
-    }
+  &:hover {
+    color: black;
+  }
 }
 
 .AccordionTrigger[data-state="open"] {
-    color: black;
+  color: black;
 }
 
 .AccordionContent {
-    overflow: hidden;
-    font-size: 15px;
-    color: var(--mauve-11);
-    max-width: 1000px;
-    p {
-        margin: 0;
-    }
+  overflow: hidden;
+  overflow-y: scroll;
+  font-size: 15px;
+  color: var(--mauve-11);
+  max-width: 1000px;
+  max-height: 500px;
+  p {
+    margin: 0;
+  }
 }
 
 .AccordionContent[data-state="open"] {
-    animation: slideDown 300ms cubic-bezier(0.87, 0, 0.13, 1);
+  animation: slideDown 300ms cubic-bezier(0.87, 0, 0.13, 1);
 }
 
 .AccordionContent[data-state="closed"] {
-    animation: slideUp 300ms cubic-bezier(0.87, 0, 0.13, 1);
+  animation: slideUp 300ms cubic-bezier(0.87, 0, 0.13, 1);
 }
 
 .AccordionTrigger {
-    text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 @keyframes slideDown {
-    from {
-        height: 0;
-    }
-    to {
-        height: var(--radix-accordion-content-height);
-    }
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
 }
 
 @keyframes slideUp {
-    from {
-        height: var(--radix-accordion-content-height);
-    }
-    to {
-        height: 0;
-    }
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
 }

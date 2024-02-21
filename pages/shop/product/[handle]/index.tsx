@@ -31,86 +31,6 @@ export interface ProductProps {
   }
 }
 
-const ACCORDION = [
-  {
-    _key: "0b4708ddb716",
-    _type: "group",
-    body: [
-      {
-        _key: "5cc8801bb10b",
-        _type: "block",
-        children: [
-          {
-            _key: "cc58529ed59d0",
-            _type: "span",
-            marks: [],
-            text: "RETURN ONLINE & IN-STORE",
-          },
-        ],
-        markDefs: [],
-        style: "normal",
-      },
-      {
-        _key: "8c22774816ef",
-        _type: "block",
-        children: [
-          {
-            _key: "d47e089d76b70",
-            _type: "span",
-            marks: [],
-            text: "We're committed to making sure you love everything you buy from us. If you're not completely happy with your product, you can return your item within 45 days for a full refund. Please see our terms and conditions.",
-          },
-        ],
-        markDefs: [],
-        style: "normal",
-      },
-    ],
-    title: "Delivery and Returns",
-  },
-  {
-    _key: "0b4708ddb216",
-    _type: "group",
-    body: [
-      {
-        _key: "5f56a686f338",
-        _type: "block",
-        children: [
-          {
-            _key: "7ebe3a76c5230",
-            _type: "span",
-            marks: [],
-            text: "Free Wellness gift of your choice when you spend £39. Use code: WELLNESS. Valid 15 Feb 2024 - 29 Feb 2024.",
-          },
-        ],
-        markDefs: [],
-        style: "normal",
-      },
-    ],
-    title: "Offers & Promotions",
-  },
-  {
-    _key: "0b47083db716",
-    _type: "group",
-    body: [
-      {
-        _key: "5ac93d9b259c",
-        _type: "block",
-        children: [
-          {
-            _key: "7ea8b36471330",
-            _type: "span",
-            marks: [],
-            text: "You can pay for purchases using a major credit card, including Visa, MasterCard, American Express, PayPal and Klarna",
-          },
-        ],
-        markDefs: [],
-        style: "normal",
-      },
-    ],
-    title: "Payment Methods",
-  },
-]
-
 export default function Page({ page }: ProductProps): JSX.Element | null {
   if (!page) return null
   const { productByHandle, predictiveProducts } = page
@@ -120,8 +40,73 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
   const [quantity, setQuanity] = useState(1)
   const { predictiveSearch } = predictiveProducts
   const { product } = productByHandle
-  const { title, description, descriptionHtml, images, variants } = product
+  const { title, descriptionHtml, images, variants } = product
   const { edges } = variants
+
+  const ACCORDION = [
+    {
+      _key: "0b4708ddb216",
+      _type: "group",
+      htmlText: descriptionHtml,
+      title: "Description",
+    },
+    {
+      _key: "0b4708ddb716",
+      _type: "group",
+      body: [
+        {
+          _key: "5cc8801bb10b",
+          _type: "block",
+          children: [
+            {
+              _key: "cc58529ed59d0",
+              _type: "span",
+              marks: [],
+              text: "RETURN ONLINE & IN-STORE",
+            },
+          ],
+          markDefs: [],
+          style: "normal",
+        },
+        {
+          _key: "8c22774816ef",
+          _type: "block",
+          children: [
+            {
+              _key: "d47e089d76b70",
+              _type: "span",
+              marks: [],
+              text: "We're committed to making sure you love everything you buy from us. If you're not completely happy with your product, you can return your item within 45 days for a full refund. Please see our terms and conditions.",
+            },
+          ],
+          markDefs: [],
+          style: "normal",
+        },
+      ],
+      title: "Delivery and Returns",
+    },
+    {
+      _key: "0b47083db716",
+      _type: "group",
+      body: [
+        {
+          _key: "5ac93d9b259c",
+          _type: "block",
+          children: [
+            {
+              _key: "7ea8b36471330",
+              _type: "span",
+              marks: [],
+              text: "You can pay for purchases using a major credit card, including Visa, MasterCard, American Express, PayPal and Klarna",
+            },
+          ],
+          markDefs: [],
+          style: "normal",
+        },
+      ],
+      title: "Payment Methods",
+    },
+  ]
 
   const sizes = [
     // @ts-expect-error
@@ -338,23 +323,19 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
                   {edges[0].node.priceV2.amount}
                 </h3>
 
-                {/* <article
-                  className="mt-6"
-                  dangerouslySetInnerHTML={{ __html: descriptionHtml }}
-                /> */}
-
                 <div className="mt-6 flex items-center gap-4">
                   <span className="uppercase">Size</span>
                   <div className="flex flex-wrap gap-2">{renderSize()}</div>
                 </div>
 
                 <div className="mt-6 flex items-center gap-4">
-                  <span className="uppercase">Size</span>
+                  <span className="uppercase">Color</span>
                   <div className="flex flex-wrap gap-2">{renderColor()}</div>
                 </div>
 
-                <div className="mt-6 flex items-center gap-4">
-                  <span className="uppercase">Quanitity</span>
+                <div
+                  className={`mt-6 flex flex-wrap items-center gap-4 xl:flex-nowrap`}
+                >
                   <div className="flex items-center gap-4">
                     <button
                       onClick={() => setQuanity(quantity - 1)}
@@ -370,21 +351,13 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
                       +
                     </button>
                   </div>
-                </div>
-
-                <div className={`mt-6 flex flex-wrap gap-4 xl:flex-nowrap`}>
                   <AddToCart
                     productTitle={product.title}
                     selectedVariant={selectedVariant?.node}
                     quantity={quantity}
                     disabled={!selectedVariantAvailable}
+                    className={"w-full"}
                   />
-                  <Button
-                    variant={"primary"}
-                    disabled={!selectedVariantAvailable}
-                  >
-                    Add to wishlist
-                  </Button>
                 </div>
 
                 <div className="mt-8 lg:mt-10">

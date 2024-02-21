@@ -18,11 +18,13 @@ export default function AddToCart({
   selectedVariant,
   quantity,
   disabled,
+  className,
 }: {
   productTitle: string
   selectedVariant: any
   quantity: number
   disabled?: boolean
+  className?: string
 }) {
   if (!selectedVariant) return null
   const { cartId } = useShoppingCart()
@@ -67,7 +69,14 @@ export default function AddToCart({
   return (
     <RadixPopoverCart
       trigger={
-        <button onClick={handleAddToCart} disabled={disabled}>
+        <button
+          onClick={handleAddToCart}
+          disabled={disabled}
+          className={
+            "flex h-fit w-fit shrink-0 items-center justify-center rounded-full bg-[#171717] px-5 py-2 text-sm uppercase text-white duration-300 ease-in-out hover:border-[#474747] hover:bg-[#474747] " +
+              className || ""
+          }
+        >
           {disabled ? `Sold out` : `Add to cart`}
         </button>
       }

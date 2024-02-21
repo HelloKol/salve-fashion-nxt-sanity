@@ -8,7 +8,7 @@ import styles from "./styles.module.scss"
 const RadixAccordion = ({ data }: any) => {
   const renderAccordion = () =>
     data.map((item: any) => {
-      const { _key, title, body } = item
+      const { _key, title, body, htmlText } = item
       return (
         <Item className={styles.AccordionItem} value={_key}>
           <AccordionTrigger>
@@ -16,7 +16,13 @@ const RadixAccordion = ({ data }: any) => {
             <ChevronDown className="h-4 fill-black" />
           </AccordionTrigger>
           <AccordionContent>
-            <PortableText value={body} />
+            {body ? (
+              <PortableText value={body} />
+            ) : htmlText ? (
+              <article dangerouslySetInnerHTML={{ __html: htmlText }} />
+            ) : (
+              ``
+            )}
           </AccordionContent>
         </Item>
       )
