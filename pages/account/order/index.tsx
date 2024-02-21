@@ -1,8 +1,18 @@
 import Head from "next/head"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { Main, Section, Container, Grid, Button, ImageTag } from "@/components"
+import {
+  Main,
+  Section,
+  Container,
+  Grid,
+  Button,
+  ImageTag,
+  RadixDialog,
+} from "@/components"
 import { useAuth } from "@/context/User"
+import { useEffect, useState } from "react"
+import { useCookies } from "react-cookie"
 
 const navigationLinks = [
   { href: "/account/order", text: "Order history" },
@@ -12,8 +22,10 @@ const navigationLinks = [
 interface PageProps {}
 
 export default function Page({}: PageProps): JSX.Element | null {
-  const { accessToken } = useAuth()
   const router = useRouter()
+  const [cookies, setCookie, removeCookie] = useCookies(["exampleOrderPage"])
+  const [isDialogOpen, setIsDialogOpen] = useState(true)
+  const cookieValid: string = cookies["exampleOrderPage"]
   const orders = [
     {
       image: `/static/mock_product_images/men_1.webp`,
@@ -31,6 +43,16 @@ export default function Page({}: PageProps): JSX.Element | null {
       image: `/static/mock_product_images/hoodie_2.webp`,
     },
   ]
+
+  useEffect(() => {
+    if (cookieValid) return setIsDialogOpen(false)
+    return setIsDialogOpen(true)
+  }, [])
+
+  const handleCloseDialog = () => {
+    setCookie("exampleOrderPage", true)
+    setIsDialogOpen(false)
+  }
 
   const renderOrders = () =>
     orders &&
@@ -77,12 +99,26 @@ export default function Page({}: PageProps): JSX.Element | null {
                   </Button>
                 ))}
               </ul>
-
               {renderOrders()}
             </Grid>
           </Container>
         </Section>
       </Main>
+
+      <RadixDialog
+        variant={"subscribeNewsLetter"}
+        isOpen={isDialogOpen}
+        setIsOpen={() => {}}
+      >
+        <div>
+          <p className="text-center text-2xl">
+            This page is an example of product orders.
+          </p>
+          <Button variant="tertiary" onClick={handleCloseDialog}>
+            Understood
+          </Button>
+        </div>
+      </RadixDialog>
     </>
   )
 }

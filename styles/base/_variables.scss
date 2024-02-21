@@ -14,7 +14,7 @@ $red: red;
 // Breakpoint Variables
 $breakMobile: 0; //320px
 $breakMobileLarge: 500px;
-$breakTablet: 740px;
+$breakTablet: 768px;
 $breakDesktop: 1020px;
 $breakDesktopLarge: 1460px;
 
@@ -62,9 +62,12 @@ $rowGutterDesktopLarge: 30px;
 
 // Fonts
 $CormorantGaramondLight: "CormorantGaramondLight", Helvetica, Arial, sans-serif;
-$CormorantGaramondRegular: "CormorantGaramondRegular", Helvetica, Arial, sans-serif;
-$CormorantGaramondMedium: "CormorantGaramondMedium", Helvetica, Arial, sans-serif;
-$CormorantGaramondSemiBold: "CormorantGaramondSemiBold", Helvetica, Arial, sans-serif;
+$CormorantGaramondRegular: "CormorantGaramondRegular", Helvetica, Arial,
+  sans-serif;
+$CormorantGaramondMedium: "CormorantGaramondMedium", Helvetica, Arial,
+  sans-serif;
+$CormorantGaramondSemiBold: "CormorantGaramondSemiBold", Helvetica, Arial,
+  sans-serif;
 $CormorantGaramondBold: "CormorantGaramondBold", Helvetica, Arial, sans-serif;
 
 // Global Vars

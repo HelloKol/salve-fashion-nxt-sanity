@@ -126,21 +126,7 @@ export default function Page({}: PageProps): JSX.Element | null {
                 ))}
               </ul>
 
-              <div className="col-span-5 border border-black">
-                <Link
-                  href={"/account/settings/newsletter"}
-                  className="flex cursor-pointer items-center justify-between pb-4 pl-8 pr-8 pt-4 hover:bg-[#d5d6c8]"
-                >
-                  <div>
-                    <span className="uppercase">NEWSLETTER</span>
-                    <p>
-                      Select your interests and receive the latest news and
-                      trends each week.
-                    </p>
-                  </div>
-                  <SvgRight />
-                </Link>
-
+              <div className="col-span-5">
                 <p>NEWSLETTER</p>
                 <p>
                   Select your interests and receive the latest news and trends

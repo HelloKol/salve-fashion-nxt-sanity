@@ -1,7 +1,15 @@
 import Head from "next/head"
 import { useRouter } from "next/router"
-import { Main, Section, Container, Grid, Button } from "@/components"
+import {
+  Main,
+  Section,
+  Container,
+  Grid,
+  Button,
+  CookiesSettingModal,
+} from "@/components"
 import Link from "next/link"
+import { useState } from "react"
 
 const navigationLinks = [
   { href: "/account/order", text: "Order history" },
@@ -31,6 +39,7 @@ interface PageProps {}
 
 export default function Page({}: PageProps): JSX.Element | null {
   const router = useRouter()
+  const [isCookieSettingsOpen, setIsCookieSettingsOpen] = useState(false)
 
   return (
     <>
@@ -69,21 +78,26 @@ export default function Page({}: PageProps): JSX.Element | null {
                   <SvgRight />
                 </Link>
 
-                <Link
-                  href={"/account/settings/newsletter"}
+                <div
                   className="flex cursor-pointer items-center justify-between pb-4 pl-8 pr-8 pt-4 hover:bg-[#d5d6c8]"
+                  onClick={() => setIsCookieSettingsOpen(true)}
                 >
                   <div>
                     <span className="uppercase">Cookie settings</span>
                     <p>Configure your privacy preferences and cookies.</p>
                   </div>
                   <SvgRight />
-                </Link>
+                </div>
               </div>
             </Grid>
           </Container>
         </Section>
       </Main>
+
+      <CookiesSettingModal
+        isCookieSettingsOpen={isCookieSettingsOpen}
+        setIsCookieSettingsOpen={setIsCookieSettingsOpen}
+      />
     </>
   )
 }
