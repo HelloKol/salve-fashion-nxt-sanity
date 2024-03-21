@@ -15,7 +15,7 @@ export default function Category({ data }: Props) {
       const { callToAction, image } = item
       const { asset } = image
       const { links } = callToAction
-      const isMen = links[0].url.current === "shop/men"
+      const isMen = links[0].url.current === "men"
 
       return (
         <Link

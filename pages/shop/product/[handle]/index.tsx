@@ -204,7 +204,7 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
       return {
         id,
         renderItem: (
-          <div className="pointer-events-none h-[500px] w-full select-none overflow-hidden rounded-2xl sm:h-[700px] md:h-[500px] lg:h-[800px] xl:h-[900px]">
+          <div className="pointer-events-none h-[500px] w-full select-none overflow-hidden rounded-2xl sm:h-[700px] md:h-[500px] lg:h-[800px]">
             <ImageTag src={transformedSrc} />
           </div>
         ),
@@ -307,7 +307,7 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
           <Container>
             <Grid>
               <div className="col-span-full md:col-end-7 lg:col-start-1 lg:col-end-8 lg:px-4 xl:col-start-2 xl:col-end-7 xl:px-6">
-                <div className="h-[500px] w-full overflow-hidden sm:h-[700px] md:h-[500px] lg:h-[800px] xl:h-[900px]">
+                <div className="h-[500px] w-full overflow-hidden sm:h-[700px] md:h-[500px] lg:h-[800px]">
                   {carouselFragment}
                 </div>
                 {images && (
@@ -316,9 +316,9 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
               </div>
 
               <div className="col-span-full md:col-start-7 lg:col-start-8 lg:col-end-13 xl:col-start-7 xl:col-end-11">
-                <h1 className="text-3xl lg:text-4xl">{title}</h1>
+                <h1 className="text-3xl">{title}</h1>
 
-                <h3 className="mt-2 text-xl lg:text-2xl">
+                <h3 className="mt-2 text-xl">
                   {edges[0].node.priceV2.currencyCode}{" "}
                   {edges[0].node.priceV2.amount}
                 </h3>
@@ -333,22 +333,48 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
                   <div className="flex flex-wrap gap-2">{renderColor()}</div>
                 </div>
 
-                <div
-                  className={`mt-6 flex flex-wrap items-center gap-4 xl:flex-nowrap`}
-                >
-                  <div className="flex items-center gap-4">
+                <div className={`mt-6 flex flex-wrap items-center gap-4`}>
+                  <div className="flex items-center gap-5 rounded-full border-[1px] border-black px-3 py-1">
                     <button
                       onClick={() => setQuanity(quantity - 1)}
                       disabled={quantity <= 1}
                     >
-                      -
+                      <svg
+                        className="h-4 w-4 text-gray-800"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M5 12h14"
+                        />
+                      </svg>
                     </button>
                     <span>{quantity}</span>
                     <button
                       onClick={() => setQuanity(quantity + 1)}
                       disabled={quantity >= 100}
                     >
-                      +
+                      <svg
+                        className="h-4 w-4 text-gray-800"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M5 12h14m-7 7V5"
+                        />
+                      </svg>
                     </button>
                   </div>
                   <AddToCart
@@ -356,7 +382,7 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
                     selectedVariant={selectedVariant?.node}
                     quantity={quantity}
                     disabled={!selectedVariantAvailable}
-                    className={"w-full"}
+                    className={"w-full flex-1"}
                   />
                 </div>
 

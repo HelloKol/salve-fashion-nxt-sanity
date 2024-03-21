@@ -18,7 +18,8 @@ const SiteHeader = () => {
     useWindowDimension()
   const isLandingPage = router?.asPath === "/"
   const headerClasses = `fixed w-full top-0 left-0 z-50 transition-all duration-500 ${
-    isHeaderCollapsed || !isLandingPage ? "bg-[#E9EBE0] text-black" : ""
+    isHeaderCollapsed || !isLandingPage ? "text-black" : ""
+    // isHeaderCollapsed || !isLandingPage ? "bg-[#E9EBE0] text-black" : ""
   }`
 
   const handleCartOpen = () => {

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react"
-import { Section } from "@/components"
+import { ImageTag, Section } from "@/components"
 
 interface VideoPlayerProps {
   videoSrc: string
@@ -23,10 +23,10 @@ const VideoPlayer = ({ videoSrc }: VideoPlayerProps) => {
     <Section className="relative">
       {showThumbnail && (
         <div
-          className="aspect-w-16 aspect-h-9 w-full cursor-pointer"
+          className="aspect-w-16 aspect-h-9 h-screen w-screen cursor-pointer"
           onClick={handleVideoClick}
         >
-          <img src={thumbnailSrc} />
+          <ImageTag src={thumbnailSrc} />
         </div>
       )}
 

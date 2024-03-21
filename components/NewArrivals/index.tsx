@@ -43,8 +43,10 @@ export default function index({ data }: Props) {
             >
               <ImageTag src={firstProductVariant.previewImageUrl} />
             </div>
-            <p>{firstProduct.title}</p>
-            <p>£{firstProductVariant.price}</p>
+            <p className="mt-4 text-sm uppercase">{firstProduct.title}</p>
+            <p className="mt-2 text-sm uppercase">
+              £{firstProductVariant.price}
+            </p>
           </Link>
 
           <Link
@@ -56,8 +58,10 @@ export default function index({ data }: Props) {
             >
               <ImageTag src={secondProductVariant.previewImageUrl} />
             </div>
-            <p>{secondProduct.title}</p>
-            <p>£{secondProductVariant.price}</p>
+            <p className="mt-4 text-sm uppercase">{secondProduct.title}</p>
+            <p className="mt-2 text-sm uppercase">
+              £{secondProductVariant.price}
+            </p>
           </Link>
 
           <Link
@@ -69,8 +73,10 @@ export default function index({ data }: Props) {
             >
               <ImageTag src={thirdProductVariant.previewImageUrl} />
             </div>
-            <p>{thirdProduct.title}</p>
-            <p>£{thirdProductVariant.price}</p>
+            <p className="mt-4 text-sm uppercase">{thirdProduct.title}</p>
+            <p className="mt-2 text-sm uppercase">
+              £{thirdProductVariant.price}
+            </p>
           </Link>
         </Grid>
       </Container>

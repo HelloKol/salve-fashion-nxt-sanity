@@ -20,16 +20,15 @@ export default function Page({ page, collectionByHandle }: props) {
   const { collection } = collectionByHandle
   const { products } = collection
   const { title, descriptionHtml, slug, imageUrl } = store
-  console.log(products, "products")
 
-  const renderImage = (variant) =>
-    variant.map((product) => {
+  const renderImage = (variant: any) =>
+    variant.map((product: any) => {
       const { image } = product
       return <ImageTag src={image.transformedSrc} />
     })
 
-  const renderPrice = (variant) =>
-    variant.map((product) => {
+  const renderPrice = (variant: any) =>
+    variant.map((product: any) => {
       const { price } = product
       return price.amount
     })
@@ -46,7 +45,7 @@ export default function Page({ page, collectionByHandle }: props) {
         >
           <Link href={`/shop/product/${handle}`} className="block">
             <div
-              className={`group relative h-60 w-full overflow-hidden rounded-2xl sm:h-80 md:h-[500px] lg:h-[600px] ${styles.imageWrapper}`}
+              className={`group relative h-60 w-full overflow-hidden rounded-2xl sm:h-80 md:h-[500px] lg:h-[600px] xl:h-[700px] ${styles.imageWrapper}`}
             >
               {renderImage(variants?.nodes)}
 
@@ -63,10 +62,10 @@ export default function Page({ page, collectionByHandle }: props) {
                 </div>
               </div>
             </div>
-            <p className="mt-4 text-sm font-bold uppercase text-gray-600 lg:text-lg">
+            <p className="mt-4 text-sm font-bold uppercase text-black">
               {title}
             </p>
-            <p className="mt-2 text-sm font-bold uppercase lg:text-lg">
+            <p className="mt-2 text-sm font-bold uppercase">
               £{renderPrice(variants?.nodes)}
             </p>
           </Link>
@@ -104,7 +103,7 @@ export default function Page({ page, collectionByHandle }: props) {
             withRowGap={false}
           >
             <p className="col-span-full mb-4 text-sm font-bold lg:mb-6 xl:mb-8">
-              {products.edges.length} products
+              {products.edges.length} Products
             </p>
             {renderProducts()}
           </Grid>

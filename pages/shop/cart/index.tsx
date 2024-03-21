@@ -22,12 +22,14 @@ import {
   GET_CART,
   REMOVE_FROM_CART,
 } from "@/services/queries/cart"
+import { useRouter } from "next/router"
 
 const schema = yup.object().shape({
   discountCode: yup.string().required("Enter a discount code"),
 })
 
 export default function Page() {
+  const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [isSucess, setIsSuccess] = useState(false)
   const [globalError, setGlobalError] = useState("")
@@ -64,6 +66,19 @@ export default function Page() {
     ],
   })
 
+  const goBack = () => router.back()
+
+  const handleRemoveDiscount = () => {
+    try {
+      const variables = {
+        cartId,
+        discountCodes: [``],
+      }
+
+      removeDiscount({ variables })
+    } catch (err: any) {}
+  }
+
   const onSubmit = async ({ discountCode }: any) => {
     try {
       const variables = {
@@ -78,17 +93,6 @@ export default function Page() {
       setIsLoading(false)
       return setIsSuccess(false)
     }
-  }
-
-  const handleRemoveDiscount = () => {
-    try {
-      const variables = {
-        cartId,
-        discountCodes: [``],
-      }
-
-      removeDiscount({ variables })
-    } catch (err: any) {}
   }
 
   const renderVariantOptions = (options: any) =>
@@ -195,26 +199,27 @@ export default function Page() {
         <Section>
           <Container>
             <Grid>
-              <div className="col-span-full flex items-center gap-4">
-                <Link href={"/shop/search"}>
-                  <svg
-                    className="h-14 w-14 text-gray-800"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="1"
-                      d="M5 12h14M5 12l4-4m-4 4 4 4"
-                    />
-                  </svg>
-                </Link>
+              <button
+                className="col-span-full flex items-center gap-4"
+                onClick={goBack}
+              >
+                <svg
+                  className="h-14 w-14 text-gray-800"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1"
+                    d="M5 12h14M5 12l4-4m-4 4 4 4"
+                  />
+                </svg>
                 <h1 className="text-3xl md:text-5xl">Shopping Bag</h1>
-              </div>
+              </button>
 
               <div className="col-start-1 col-end-10 mt-14">
                 <div className="grid grid-cols-4 gap-4 p-2">

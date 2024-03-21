@@ -48,9 +48,9 @@ export default function HorizontalFeedBasic({ title, productsData }: Props) {
                 </div>
               </div>
             </div>
-            <div className="flex justify-between">
-              <p className="text-lg uppercase">{title}</p>
-              <p className="text-lg uppercase">£{firstVariant.price.amount}</p>
+            <div className="mt-4 flex justify-between gap-4">
+              <p className="text-sm uppercase">{title}</p>
+              <p className="text-sm uppercase">£{firstVariant.price.amount}</p>
             </div>
           </li>
         )
@@ -65,7 +65,7 @@ export default function HorizontalFeedBasic({ title, productsData }: Props) {
         </h1>
 
         <ul
-          className="grid-cols-[auto auto] col-start-1 col-end-13 grid cursor-grab snap-x grid-flow-col gap-4 overflow-x-auto overflow-y-auto overscroll-contain scroll-smooth"
+          className="grid-cols-[auto auto] col-start-1 col-end-13 mt-5 grid cursor-grab snap-x grid-flow-col gap-4 overflow-x-auto overflow-y-auto overscroll-contain scroll-smooth"
           ref={feedRef}
         >
           {renderProduct()}

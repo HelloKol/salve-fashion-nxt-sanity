@@ -68,10 +68,10 @@ export default function ShopIndex({
                   </div>
                 </div>
               </div>
-              <p className="mt-4 text-sm font-bold uppercase lg:text-lg">
+              <p className="mt-4 text-sm font-bold uppercase">
                 {product.title}
               </p>
-              <p className="mt-2 text-sm font-bold uppercase lg:text-lg">
+              <p className="mt-2 text-sm font-bold uppercase">
                 {product.price}
               </p>
             </Link>
@@ -107,12 +107,8 @@ export default function ShopIndex({
                 </div>
               </div>
             </div>
-            <p className="mt-4 text-sm font-bold uppercase lg:text-lg">
-              {product.title}
-            </p>
-            <p className="mt-2 text-sm font-bold uppercase lg:text-lg">
-              {product.price}
-            </p>
+            <p className="mt-4 text-sm font-bold uppercase">{product.title}</p>
+            <p className="mt-2 text-sm font-bold uppercase">{product.price}</p>
           </Link>
         </li>
       )

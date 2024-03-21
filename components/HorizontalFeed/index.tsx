@@ -61,9 +61,9 @@ export default function HorizontalFeed({ title, productsData, href }: Props) {
               </div>
             </div>
           </div>
-          <div className="flex justify-between">
-            <p className="text-lg uppercase">{product.store.title}</p>
-            <p className="text-lg uppercase">£{price}</p>
+          <div className="mt-4 flex justify-between">
+            <p className="text-sm uppercase">{product.store.title}</p>
+            <p className="text-sm uppercase">£{price}</p>
           </div>
         </li>
       )
