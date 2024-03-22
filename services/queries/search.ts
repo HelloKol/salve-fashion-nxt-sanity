@@ -7,6 +7,7 @@ const SEARCH_QUERY = gql`
       edges {
         node {
          ${PRODUCT_BASE}
+         ${PRODUCT_VARIANT}
         }
       }
     }

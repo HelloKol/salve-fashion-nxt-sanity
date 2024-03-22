@@ -4,7 +4,7 @@ import React from "react"
 import { PortableText } from "@portabletext/react"
 import { useInView } from "react-intersection-observer"
 import { Button, FilterProduct, Grid, ImageTag } from "@/components"
-import { useFetchShopProducts } from "@/hooks"
+import { useFetchShopProducts, useTruncateString } from "@/hooks"
 import styles from "./styles.module.scss"
 
 // Props
@@ -27,15 +27,12 @@ export default function ShopIndex({
 
   const renderProducts = () =>
     products &&
-    products.map((edge: any, index: number) => {
-      const product = {
-        id: edge.node.id,
-        handle: edge.node.handle,
-        title: edge.node.title,
-        image: edge.node.featuredImage.originalSrc,
-        price: `${edge.node.priceRange.maxVariantPrice.amount} ${edge.node.priceRange.maxVariantPrice.currencyCode}`,
-      }
+    products.map((product: any, index: number) => {
+      const { node } = product
+      const { handle, variants } = node
       const lastItem = index === products.length - 1
+      const title = useTruncateString(node.title, 45)
+      const firstVariant = variants?.edges?.[0]?.node
 
       if (lastItem)
         return (
@@ -44,11 +41,11 @@ export default function ShopIndex({
             ref={ref}
             className="col-span-6 mb-8 lg:mb-12 xl:col-span-4 xl:mb-14"
           >
-            <Link href={`/shop/product/${product.handle}`} className="block">
+            <Link href={`/shop/product/${handle}`} className="block">
               <div
                 className={`group relative h-60 w-full overflow-hidden rounded-2xl sm:h-80 md:h-[500px] lg:h-[600px] ${styles.imageWrapper}`}
               >
-                <ImageTag src={product.image} />
+                <ImageTag src={firstVariant.image.transformedSrc} />
 
                 <div
                   className={`duration-250 absolute bottom-0 left-0 right-0 top-0 bg-black bg-opacity-60 opacity-0 transition-opacity ease-in-out group-hover:opacity-100 ${styles.feedInner}`}
@@ -60,7 +57,7 @@ export default function ShopIndex({
                       <Button variant={"quaternary"}>Add to cart</Button>
                       <Button
                         variant={"secondary"}
-                        href={`/shop/product/${product.handle}`}
+                        href={`/shop/product/${handle}`}
                       >
                         Learn more
                       </Button>
@@ -68,12 +65,12 @@ export default function ShopIndex({
                   </div>
                 </div>
               </div>
-              <p className="mt-4 text-sm font-bold uppercase">
-                {product.title}
-              </p>
-              <p className="mt-2 text-sm font-bold uppercase">
-                {product.price}
-              </p>
+              <div className="mt-4 flex justify-between">
+                <p className="text-sm uppercase">{title}</p>
+                <p className="text-sm uppercase">
+                  £{firstVariant.price.amount}
+                </p>
+              </div>
             </Link>
           </li>
         )
@@ -83,11 +80,11 @@ export default function ShopIndex({
           key={index}
           className="col-span-6 mb-8 lg:mb-12 xl:col-span-4 xl:mb-14"
         >
-          <Link href={`/shop/product/${product.handle}`} className="block">
+          <Link href={`/shop/product/${handle}`} className="block">
             <div
               className={`group relative h-60 w-full overflow-hidden rounded-2xl sm:h-80 md:h-[500px] lg:h-[600px] ${styles.imageWrapper}`}
             >
-              <ImageTag src={product.image} />
+              <ImageTag src={firstVariant.image.transformedSrc} />
 
               <div
                 className={`duration-250 absolute bottom-0 left-0 right-0 top-0 bg-black bg-opacity-60 opacity-0 transition-opacity ease-in-out group-hover:opacity-100 ${styles.feedInner}`}
@@ -99,7 +96,7 @@ export default function ShopIndex({
                     <Button variant={"quaternary"}>Add to cart</Button>
                     <Button
                       variant={"secondary"}
-                      href={`/shop/product/${product.handle}`}
+                      href={`/shop/product/${handle}`}
                     >
                       Learn more
                     </Button>
@@ -107,8 +104,10 @@ export default function ShopIndex({
                 </div>
               </div>
             </div>
-            <p className="mt-4 text-sm font-bold uppercase">{product.title}</p>
-            <p className="mt-2 text-sm font-bold uppercase">{product.price}</p>
+            <div className="mt-4 flex justify-between">
+              <p className="text-sm uppercase">{title}</p>
+              <p className="text-sm uppercase">£{firstVariant.price.amount}</p>
+            </div>
           </Link>
         </li>
       )

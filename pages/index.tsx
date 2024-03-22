@@ -48,18 +48,17 @@ export default function Page({
         <Carousel collections={collections} />
         <HorizontalFeed
           title={"New In Men"}
-          productsData={productFeedMen}
           href={`/shop/men`}
+          productsData={productFeedMen}
         />
         <AboutUs />
         <NewArrivals data={newArrivalFeed} />
         <Category data={categories} />
         <VideoPlayer videoSrc={videoUrl} />
-        {/* <VideoPlayer videoSrc={"/static/video/y2.mp4"} /> */}
         <HorizontalFeed
           title={"New In Women"}
-          productsData={productFeedWomen}
           href={`/shop/women`}
+          productsData={productFeedWomen}
         />
         <FollowUs
           title={"Follow us on instagram"}

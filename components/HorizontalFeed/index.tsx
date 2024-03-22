@@ -10,7 +10,7 @@ import {
   Section,
 } from "@/components"
 // Utils
-import { useDragScroll, useHorizontalScroll } from "@/hooks"
+import { useDragScroll, useHorizontalScroll, useTruncateString } from "@/hooks"
 import styles from "./styles.module.scss"
 
 // Props
@@ -36,11 +36,15 @@ export default function HorizontalFeed({ title, productsData, href }: Props) {
       const { product, variant } = item
       const { store } = variant
       const { price, previewImageUrl } = store
+      const title = useTruncateString(product.store.title, 45)
 
       return (
-        <li key={index}>
+        <li
+          key={index}
+          className={`w-[220px] sm:w-[250px] md:w-[340px] lg:w-[400px] xl:w-[500px]`}
+        >
           <div
-            className={`h-[300px] w-[220px] overflow-hidden rounded-2xl sm:h-[360px] sm:w-[250px] md:h-[450px] md:w-[340px] lg:h-[550px] lg:w-[400px] xl:h-[650px] xl:w-[500px] ${styles.imageWrapper}`}
+            className={`h-[300px] overflow-hidden rounded-2xl sm:h-[360px] md:h-[450px] lg:h-[550px] xl:h-[650px] ${styles.imageWrapper}`}
           >
             <ImageTag src={previewImageUrl} />
             <div
@@ -62,7 +66,7 @@ export default function HorizontalFeed({ title, productsData, href }: Props) {
             </div>
           </div>
           <div className="mt-4 flex justify-between">
-            <p className="text-sm uppercase">{product.store.title}</p>
+            <p className="break-all text-sm uppercase">{title}</p>
             <p className="text-sm uppercase">£{price}</p>
           </div>
         </li>

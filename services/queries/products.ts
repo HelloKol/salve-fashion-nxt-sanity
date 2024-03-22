@@ -103,7 +103,6 @@ const PRODUCT_VARIANT = `
           amount
           currencyCode
         }
-        quantityAvailable
         requiresShipping
         sku
         taxable
@@ -129,6 +128,7 @@ const ALL_PRODUCTS = gql`
       edges {
         node {
           ${PRODUCT_BASE}
+          ${PRODUCT_VARIANT}
         }
       }
     }

@@ -2,7 +2,7 @@ import React, { useRef } from "react"
 // Components
 import { AddToCart, Button, Grid, ImageTag, Section } from "@/components"
 // Utils
-import { useDragScroll } from "@/hooks"
+import { useDragScroll, useTruncateString } from "@/hooks"
 import styles from "./styles.module.scss"
 
 // Props
@@ -18,24 +18,29 @@ export default function HorizontalFeedBasic({ title, productsData }: Props) {
   useDragScroll(feedRef)
 
   const renderProduct = () =>
-    products.map((item: any) => {
-      const { id, title, handle, variants } = item
+    products.map((product: any) => {
+      const { id, handle, variants } = product
       const { edges } = variants
+      const title = useTruncateString(product.title, 45)
       const firstVariant = edges?.[0]?.node
 
       return (
         firstVariant && (
-          <li key={id}>
+          <li
+            key={id}
+            className={`w-[220px] sm:w-[250px] md:w-[340px] lg:w-[400px] xl:w-[500px]`}
+          >
             <div
-              className={`h-[300px] w-[220px] overflow-hidden rounded-2xl sm:h-[360px] sm:w-[250px] md:h-[450px] md:w-[340px] lg:h-[550px] lg:w-[400px] xl:h-[650px] xl:w-[500px] ${styles.imageWrapper}`}
+              className={`h-[300px] overflow-hidden rounded-2xl sm:h-[360px] md:h-[450px] lg:h-[550px] xl:h-[650px] ${styles.imageWrapper}`}
             >
               <ImageTag src={firstVariant.image.transformedSrc} />
               <div
                 className={`flex items-center justify-center ${styles.feedInner}`}
               >
                 <div className={`flex flex-col gap-4`}>
+                  {/* @ts-ignore */}
                   <AddToCart
-                    productTitle={title}
+                    productTitle={product.title}
                     selectedVariant={firstVariant}
                     disabled={false}
                   />
@@ -49,7 +54,7 @@ export default function HorizontalFeedBasic({ title, productsData }: Props) {
               </div>
             </div>
             <div className="mt-4 flex justify-between gap-4">
-              <p className="text-sm uppercase">{title}</p>
+              <p className="break-all text-sm uppercase">{title}</p>
               <p className="text-sm uppercase">£{firstVariant.price.amount}</p>
             </div>
           </li>

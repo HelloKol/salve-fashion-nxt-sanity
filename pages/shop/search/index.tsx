@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { useInView } from "react-intersection-observer"
 import {
+  AddToCart,
   Button,
   Container,
   FilterProduct,
@@ -16,16 +17,14 @@ import {
 import { fetchProductsSearch } from "@/lib"
 import styles from "./styles.module.scss"
 import { useRouter } from "next/router"
+import { useTruncateString } from "@/hooks"
 
 export default function Page() {
   const router = useRouter()
-
-  // ==================================================================
-  // FETCH SHOPIFY DATA
-  // ==================================================================
   const { ref, inView } = useInView({ threshold: 0 })
   const PRODUCT_LIMIT = 20
 
+  // FETCH SHOPIFY DATA
   const { data, hasNextPage, fetchNextPage } = useInfiniteQuery(
     ["productsMen", router.query],
     ({ pageParam }) => {
@@ -59,7 +58,6 @@ export default function Page() {
       },
     }
   )
-
   const products = data?.pages?.[0]?.edges
 
   useEffect(() => {
@@ -68,22 +66,15 @@ export default function Page() {
     }
   }, [inView, fetchNextPage, hasNextPage, data?.pages])
 
-  // ==================================================================
   // RENDER ALL PRODUCTS
-  // ==================================================================
   const renderProducts = () =>
     products &&
-    products.map((edge: any, index: number) => {
-      if (!edge?.node) return
-
-      const product = {
-        id: edge.node.id,
-        handle: edge.node.handle,
-        title: edge.node.title,
-        image: edge.node.featuredImage?.originalSrc,
-        price: `${edge.node.priceRange?.maxVariantPrice.amount} ${edge.node.priceRange?.maxVariantPrice.currencyCode}`,
-      }
+    products.map((product: any, index: number) => {
+      const { node } = product
+      const { handle, variants } = node
       const lastItem = index === products.length - 1
+      const title = useTruncateString(node.title, 45)
+      const firstVariant = variants?.edges?.[0]?.node
 
       if (lastItem)
         return (
@@ -92,12 +83,11 @@ export default function Page() {
             ref={ref}
             className="col-span-6 mb-8 lg:mb-12 xl:col-span-4 xl:mb-14"
           >
-            <Link href={`/shop/product/${product.handle}`} className="block">
+            <Link href={`/shop/product/${handle}`} className="block">
               <div
                 className={`group relative h-60 w-full overflow-hidden rounded-2xl sm:h-80 md:h-[500px] lg:h-[700px] xl:h-[800px] ${styles.imageWrapper}`}
               >
-                <ImageTag src={product.image} />
-
+                <ImageTag src={firstVariant.image.transformedSrc} />
                 <div
                   className={`duration-250 absolute bottom-0 left-0 right-0 top-0 bg-black bg-opacity-60 opacity-0 transition-opacity ease-in-out group-hover:opacity-100 ${styles.feedInner}`}
                 >
@@ -105,18 +95,23 @@ export default function Page() {
                     className={`flex items-center justify-center ${styles.feedInner}`}
                   >
                     <div className={`flex flex-col gap-4`}>
-                      <Button variant={"quaternary"}>Add to cart</Button>
+                      {/* @ts-ignore */}
+                      <AddToCart
+                        productTitle={node.title}
+                        selectedVariant={firstVariant}
+                        disabled={false}
+                      />
                       <Button variant={"secondary"}>Learn more</Button>
                     </div>
                   </div>
                 </div>
               </div>
-              <p className="mt-4 text-sm font-bold uppercase">
-                {product.title}
-              </p>
-              <p className="mt-2 text-sm font-bold uppercase">
-                {product.price}
-              </p>
+              <div className="mt-4 flex justify-between">
+                <p className="text-sm uppercase">{title}</p>
+                <p className="text-sm uppercase">
+                  £{firstVariant.price.amount}
+                </p>
+              </div>
             </Link>
           </li>
         )
@@ -126,12 +121,11 @@ export default function Page() {
           key={index}
           className="col-span-6 mb-8 lg:mb-12 xl:col-span-4 xl:mb-14"
         >
-          <Link href={`/shop/product/${product.handle}`} className="block">
+          <Link href={`/shop/product/${handle}`} className="block">
             <div
               className={`group relative h-60 w-full overflow-hidden rounded-2xl sm:h-80 md:h-[500px] lg:h-[700px] xl:h-[800px] ${styles.imageWrapper}`}
             >
-              <ImageTag src={product.image} />
-
+              <ImageTag src={firstVariant.image.transformedSrc} />
               <div
                 className={`duration-250 absolute bottom-0 left-0 right-0 top-0 bg-black bg-opacity-60 opacity-0 transition-opacity ease-in-out group-hover:opacity-100 ${styles.feedInner}`}
               >
@@ -145,12 +139,16 @@ export default function Page() {
                 </div>
               </div>
             </div>
-            <p className="mt-4 text-sm font-bold uppercase">{product.title}</p>
-            <p className="mt-2 text-sm font-bold uppercase">{product.price}</p>
+            <div className="mt-4 flex justify-between">
+              <p className="text-sm uppercase">{title}</p>
+              <p className="text-sm uppercase">£{firstVariant.price.amount}</p>
+            </div>
           </Link>
         </li>
       )
     })
+
+  console.log(data?.pages, "data?.pages")
 
   return (
     <>

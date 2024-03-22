@@ -1,4 +1,5 @@
 import { graphqlClient } from "@/utils"
+import { PRODUCT_BASE, PRODUCT_VARIANT } from "@/services/queries"
 
 const fetchProducts = async (
   cursor?: any,
@@ -16,19 +17,8 @@ const fetchProducts = async (
         edges {
           cursor
           node {
-            id
-            title
-            handle
-            tags
-            featuredImage {
-              originalSrc
-            }
-            priceRange {
-              maxVariantPrice {
-                amount
-                currencyCode
-              }
-            }
+            ${PRODUCT_BASE}
+            ${PRODUCT_VARIANT}
           }
         }
       }
