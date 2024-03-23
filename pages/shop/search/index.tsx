@@ -1,23 +1,18 @@
-import Link from "next/link"
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { useInView } from "react-intersection-observer"
 import {
-  AddToCart,
-  Button,
   Container,
   FilterProduct,
   Grid,
-  ImageTag,
   Main,
+  ProductItem,
   RadixPopover,
   RadixSlider,
   Section,
 } from "@/components"
 import { fetchProductsSearch } from "@/lib"
-import styles from "./styles.module.scss"
 import { useRouter } from "next/router"
-import { useTruncateString } from "@/hooks"
 
 export default function Page() {
   const router = useRouter()
@@ -71,9 +66,8 @@ export default function Page() {
     products &&
     products.map((product: any, index: number) => {
       const { node } = product
-      const { handle, variants } = node
+      const { variants } = node
       const lastItem = index === products.length - 1
-      const title = useTruncateString(node.title, 45)
       const firstVariant = variants?.edges?.[0]?.node
 
       if (lastItem)
@@ -83,36 +77,7 @@ export default function Page() {
             ref={ref}
             className="col-span-6 mb-8 lg:mb-12 xl:col-span-4 xl:mb-14"
           >
-            <Link href={`/shop/product/${handle}`} className="block">
-              <div
-                className={`group relative h-60 w-full overflow-hidden rounded-2xl sm:h-80 md:h-[500px] lg:h-[700px] xl:h-[800px] ${styles.imageWrapper}`}
-              >
-                <ImageTag src={firstVariant.image.transformedSrc} />
-                <div
-                  className={`duration-250 absolute bottom-0 left-0 right-0 top-0 bg-black bg-opacity-60 opacity-0 transition-opacity ease-in-out group-hover:opacity-100 ${styles.feedInner}`}
-                >
-                  <div
-                    className={`flex items-center justify-center ${styles.feedInner}`}
-                  >
-                    <div className={`flex flex-col gap-4`}>
-                      {/* @ts-ignore */}
-                      <AddToCart
-                        productTitle={node.title}
-                        selectedVariant={firstVariant}
-                        disabled={false}
-                      />
-                      <Button variant={"secondary"}>Learn more</Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 flex justify-between">
-                <p className="text-sm uppercase">{title}</p>
-                <p className="text-sm uppercase">
-                  £{firstVariant.price.amount}
-                </p>
-              </div>
-            </Link>
+            <ProductItem product={firstVariant} node={node} />
           </li>
         )
 
@@ -121,34 +86,10 @@ export default function Page() {
           key={index}
           className="col-span-6 mb-8 lg:mb-12 xl:col-span-4 xl:mb-14"
         >
-          <Link href={`/shop/product/${handle}`} className="block">
-            <div
-              className={`group relative h-60 w-full overflow-hidden rounded-2xl sm:h-80 md:h-[500px] lg:h-[700px] xl:h-[800px] ${styles.imageWrapper}`}
-            >
-              <ImageTag src={firstVariant.image.transformedSrc} />
-              <div
-                className={`duration-250 absolute bottom-0 left-0 right-0 top-0 bg-black bg-opacity-60 opacity-0 transition-opacity ease-in-out group-hover:opacity-100 ${styles.feedInner}`}
-              >
-                <div
-                  className={`flex items-center justify-center ${styles.feedInner}`}
-                >
-                  <div className={`flex flex-col gap-4`}>
-                    <Button variant={"quaternary"}>Add to cart</Button>
-                    <Button variant={"secondary"}>Learn more</Button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="mt-4 flex justify-between">
-              <p className="text-sm uppercase">{title}</p>
-              <p className="text-sm uppercase">£{firstVariant.price.amount}</p>
-            </div>
-          </Link>
+          <ProductItem product={firstVariant} node={node} />
         </li>
       )
     })
-
-  console.log(data?.pages, "data?.pages")
 
   return (
     <>

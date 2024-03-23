@@ -1,10 +1,7 @@
 import React from "react"
-import Link from "next/link"
 import Head from "next/head"
 import groq from "groq"
 import {
-  AddToCart,
-  Button,
   Container,
   Grid,
   ImageTag,
@@ -15,7 +12,6 @@ import {
 import { graphqlClient, sanityClient } from "@/utils"
 import { GetStaticPropsResult } from "next/types"
 import { COLLECTION_PRODUCTS } from "@/services/queries"
-import { useTruncateString } from "@/hooks"
 
 interface props {
   page: any
@@ -32,8 +28,7 @@ export default function Page({ page, collectionByHandle }: props) {
   const renderProducts = () =>
     products.edges.map((product: any, index: any) => {
       const { node } = product
-      const { handle, variants } = node
-      const title = useTruncateString(node.title, 45)
+      const { variants } = node
       const firstVariant = variants?.edges?.[0]?.node
 
       return (
@@ -41,34 +36,7 @@ export default function Page({ page, collectionByHandle }: props) {
           key={index}
           className="col-span-6 mb-8 lg:mb-12 xl:col-span-4 xl:mb-14"
         >
-          <Link href={`/shop/product/${handle}`} className="block">
-            <div
-              className={`group relative h-60 w-full overflow-hidden rounded-2xl sm:h-80 md:h-[500px] lg:h-[600px] xl:h-[700px]`}
-            >
-              <ImageTag src={firstVariant.image.transformedSrc} />
-              <div
-                className={`duration-250 absolute bottom-0 left-0 right-0 top-0 z-0 bg-black bg-opacity-60 opacity-0 transition-opacity ease-in-out group-hover:opacity-100`}
-              >
-                <div
-                  className={`absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 transform items-center justify-center`}
-                >
-                  <div className={`flex flex-col gap-4 `}>
-                    {/* @ts-ignore */}
-                    <AddToCart
-                      productTitle={node.title}
-                      selectedVariant={firstVariant}
-                      disabled={false}
-                    />
-                    <Button variant={"secondary"}>Learn more</Button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="mt-4 flex justify-between">
-              <p className="text-sm uppercase">{title}</p>
-              <p className="text-sm uppercase">£{firstVariant.price.amount}</p>
-            </div>
-          </Link>
+          <ProductItem product={firstVariant} node={node} />
         </li>
       )
     })

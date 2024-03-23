@@ -41,25 +41,19 @@ export default function Page({
   } = page
   const { collections } = hero
 
+  console.log("page", page)
+
   return (
     <>
       <MetaTags seo={seo} />
       <Main withPadding={false}>
         <Carousel collections={collections} />
-        <HorizontalFeed
-          title={"New In Men"}
-          href={`/shop/men`}
-          productsData={productFeedMen}
-        />
+        <HorizontalFeed productsData={productFeedMen} />
         <AboutUs />
-        <NewArrivals data={newArrivalFeed} />
+        {/* <NewArrivals data={newArrivalFeed} /> */}
         <Category data={categories} />
         <VideoPlayer videoSrc={videoUrl} />
-        <HorizontalFeed
-          title={"New In Women"}
-          href={`/shop/women`}
-          productsData={productFeedWomen}
-        />
+        <HorizontalFeed productsData={productFeedWomen} />
         <FollowUs
           title={"Follow us on instagram"}
           instagramAccount={instagramAccount}
@@ -118,8 +112,15 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
           title,
           text,
           productWithVariant[] {
-            "product": *[_id == ^.product._ref][0],
-            "variant": *[_id == ^.variant._ref][0]
+            "product": *[_id == ^.product._ref][0] {
+              ...,
+              store {
+                ...,
+                variants[]-> {
+                  ...,
+                },
+              }
+            },
           },
         },
         productFeedMen {
@@ -132,8 +133,15 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
             _type
           },
           productWithVariant[] {
-            "product": *[_id == ^.product._ref][0],
-            "variant": *[_id == ^.variant._ref][0]
+            "product": *[_id == ^.product._ref][0] {
+              ...,
+              store {
+                ...,
+                variants[]-> {
+                  ...,
+                },
+              }
+            },
           },
         },
         productFeedWomen {
@@ -146,8 +154,15 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
             _type
           },
           productWithVariant[] {
-            "product": *[_id == ^.product._ref][0],
-            "variant": *[_id == ^.variant._ref][0]
+            "product": *[_id == ^.product._ref][0] {
+              ...,
+              store {
+                ...,
+                variants[]-> {
+                  ...,
+                },
+              }
+            },
           },
         }
       }

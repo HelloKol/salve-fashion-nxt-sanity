@@ -1,9 +1,8 @@
 import React, { useRef } from "react"
 // Components
-import { AddToCart, Button, Grid, ImageTag, Section } from "@/components"
+import { Grid, ProductItem, Section } from "@/components"
 // Utils
-import { useDragScroll, useTruncateString } from "@/hooks"
-import styles from "./styles.module.scss"
+import { useDragScroll } from "@/hooks"
 
 // Props
 interface Props {
@@ -19,9 +18,8 @@ export default function HorizontalFeedBasic({ title, productsData }: Props) {
 
   const renderProduct = () =>
     products.map((product: any) => {
-      const { id, handle, variants } = product
+      const { id, variants } = product
       const { edges } = variants
-      const title = useTruncateString(product.title, 45)
       const firstVariant = edges?.[0]?.node
 
       return (
@@ -30,33 +28,7 @@ export default function HorizontalFeedBasic({ title, productsData }: Props) {
             key={id}
             className={`w-[220px] sm:w-[250px] md:w-[340px] lg:w-[400px] xl:w-[500px]`}
           >
-            <div
-              className={`h-[300px] overflow-hidden rounded-2xl sm:h-[360px] md:h-[450px] lg:h-[550px] xl:h-[650px] ${styles.imageWrapper}`}
-            >
-              <ImageTag src={firstVariant.image.transformedSrc} />
-              <div
-                className={`flex items-center justify-center ${styles.feedInner}`}
-              >
-                <div className={`flex flex-col gap-4`}>
-                  {/* @ts-ignore */}
-                  <AddToCart
-                    productTitle={product.title}
-                    selectedVariant={firstVariant}
-                    disabled={false}
-                  />
-                  <Button
-                    variant={"secondary"}
-                    href={`/shop/product/${handle}`}
-                  >
-                    Learn more
-                  </Button>
-                </div>
-              </div>
-            </div>
-            <div className="mt-4 flex justify-between gap-4">
-              <p className="break-all text-sm uppercase">{title}</p>
-              <p className="text-sm uppercase">£{firstVariant.price.amount}</p>
-            </div>
+            <ProductItem product={firstVariant} node={product} />
           </li>
         )
       )

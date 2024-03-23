@@ -7,6 +7,7 @@ import {
   Container,
   Grid,
   ImageTag,
+  ProductItem,
   Section,
 } from "@/components"
 // Utils
@@ -15,14 +16,10 @@ import styles from "./styles.module.scss"
 
 // Props
 interface Props {
-  title: string
   productsData: any
-  href: string
 }
 
-export default function HorizontalFeed({ title, productsData, href }: Props) {
-  if (!productsData) return null
-  const { productWithVariant } = productsData
+export default function HorizontalFeed({ productsData }: Props) {
   const feedRef = useRef<HTMLUListElement | null>(null)
   const prevBtnRef = useRef<HTMLButtonElement>(null)
   const nextBtnRef = useRef<HTMLButtonElement>(null)
@@ -30,45 +27,35 @@ export default function HorizontalFeed({ title, productsData, href }: Props) {
   const scrollRight = useHorizontalScroll(feedRef, nextBtnRef, 200, 1000)
   useDragScroll(feedRef)
 
+  if (!productsData) return null
+  const { title, text, links, productWithVariant } = productsData
+
   const renderProduct = () =>
     productWithVariant &&
     productWithVariant.map((item: any, index: any) => {
-      const { product, variant } = item
-      const { store } = variant
-      const { price, previewImageUrl } = store
-      const title = useTruncateString(product.store.title, 45)
+      const { product } = item
+      const { store } = product
+      const firstVariant = store.variants?.[0]?.store
+      const productDetails = {
+        id: firstVariant.gid,
+        price: {
+          amount: firstVariant.price,
+        },
+        image: {
+          transformedSrc: firstVariant.previewImageUrl,
+        },
+      }
+      const nodeDetails = {
+        title: product.store.title,
+        handle: product.store.slug.current,
+      }
 
       return (
         <li
           key={index}
           className={`w-[220px] sm:w-[250px] md:w-[340px] lg:w-[400px] xl:w-[500px]`}
         >
-          <div
-            className={`h-[300px] overflow-hidden rounded-2xl sm:h-[360px] md:h-[450px] lg:h-[550px] xl:h-[650px] ${styles.imageWrapper}`}
-          >
-            <ImageTag src={previewImageUrl} />
-            <div
-              className={`flex items-center justify-center ${styles.feedInner}`}
-            >
-              <div className={`flex flex-col gap-4`}>
-                <AddToCartVariant
-                  productTitle={title}
-                  selectedVariant={store}
-                  disabled={false}
-                />
-                <Button
-                  variant={"secondary"}
-                  href={`/shop/product/${product.store.slug.current}`}
-                >
-                  Learn more
-                </Button>
-              </div>
-            </div>
-          </div>
-          <div className="mt-4 flex justify-between">
-            <p className="break-all text-sm uppercase">{title}</p>
-            <p className="text-sm uppercase">£{price}</p>
-          </div>
+          <ProductItem product={productDetails} node={nodeDetails} />
         </li>
       )
     })
@@ -101,14 +88,13 @@ export default function HorizontalFeed({ title, productsData, href }: Props) {
 
             <div className="lg:absolute lg:bottom-0">
               <article className="py-6">
-                <p>
-                  Introducing our latest arrivals in men&apos;s fashion! Elevate
-                  your style with our handpicked selection of the season&apos;s
-                  hottest trends. From classic essentials to statement pieces,
-                  our &apos;New In&apos; collection has everything you need.
-                </p>
+                <p>{text}</p>
               </article>
-              <Button className="mt-auto" variant={"primary"} href={href}>
+              <Button
+                className="mt-auto"
+                variant={"primary"}
+                href={`/shop/${links[0].url.current}`}
+              >
                 Shop all
               </Button>
             </div>
