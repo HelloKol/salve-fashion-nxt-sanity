@@ -7,10 +7,9 @@ import {
   SINGLE_PRODUCT_BY_HANDLE,
   SINGLE_PRODUCT_BY_ID,
 } from "@/services/queries"
-import { graphqlClient } from "@/utils"
+import { cn } from "@/utils"
 import { useShoppingCart } from "@/context/Cart"
 import { ImageTag, RadixPopoverCart } from "@/components"
-import { ShopifySingleProduct } from "@/types"
 import { GET_CART } from "@/services/queries/cart"
 
 export default function AddToCart({
@@ -71,13 +70,18 @@ export default function AddToCart({
       trigger={
         <button
           onClick={handleAddToCart}
-          disabled={disabled}
-          className={
-            "flex h-fit w-fit shrink-0 items-center justify-center rounded-full bg-[#171717] px-5 py-2 text-sm uppercase text-white duration-300 ease-in-out hover:border-[#474747] hover:bg-[#474747] " +
-              className || ""
-          }
+          disabled={disabled || loading}
+          className={cn(
+            "flex h-fit w-fit shrink-0 items-center justify-center rounded-full bg-[#171717] px-5 py-2 text-sm uppercase text-white duration-300 ease-in-out hover:border-[#474747] hover:bg-[#474747]",
+            disabled && "cursor-no-drop bg-[#474747]",
+            className
+          )}
         >
-          {disabled ? `Sold out` : `Add to cart`}
+          {disabled
+            ? `Sold out`
+            : loading
+              ? `Adding to cart...`
+              : `Add to cart`}
         </button>
       }
     >

@@ -40,7 +40,7 @@ const useLoginForm = () => {
       if (response.status === "OK") {
         setGlobalError("")
         setIsLoading(false)
-        router.push("/account/profile")
+        router.push("/")
         return setIsSuccess(true)
       } else {
         setGlobalError(response.message)
