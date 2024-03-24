@@ -38,7 +38,7 @@ const PRODUCT_BASE = `
   trackingParameters
   updatedAt
   vendor
-  images(first: 100) {
+  images(first: 10) {
     edges {
       node {
         altText

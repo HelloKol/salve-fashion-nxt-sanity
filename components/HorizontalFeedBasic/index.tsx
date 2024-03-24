@@ -20,7 +20,12 @@ export default function HorizontalFeedBasic({ title, productsData }: Props) {
     products.map((product: any) => {
       const { id, variants } = product
       const { edges } = variants
-      const firstVariant = edges?.[0]?.node
+      // Find the first available variant
+      const availableVariant = edges.find(
+        (variant: any) => variant.node.availableForSale
+      )
+      if (!availableVariant) return null
+      const { node: firstVariant } = availableVariant
 
       return (
         firstVariant && (

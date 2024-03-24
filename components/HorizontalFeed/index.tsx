@@ -35,7 +35,13 @@ export default function HorizontalFeed({ productsData }: Props) {
     productWithVariant.map((item: any, index: any) => {
       const { product } = item
       const { store } = product
-      const firstVariant = store.variants?.[0]?.store
+      // Find the first available variant
+      const availableVariant = store.variants.find(
+        (variant: any) => variant.store.inventory.isAvailable
+      )
+      if (!availableVariant) return null
+      const { store: firstVariant } = availableVariant
+
       const productDetails = {
         id: firstVariant.gid,
         price: {
