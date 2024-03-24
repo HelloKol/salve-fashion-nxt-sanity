@@ -29,7 +29,12 @@ export default function Page({ page, collectionByHandle }: props) {
     products.edges.map((product: any, index: any) => {
       const { node } = product
       const { variants } = node
-      const firstVariant = variants?.edges?.[0]?.node
+      // Find the first available variant
+      const availableVariant = variants?.edges.find(
+        (variant: any) => variant.node.availableForSale
+      )
+      if (!availableVariant) return null
+      const { node: firstVariant } = availableVariant
 
       return (
         <li

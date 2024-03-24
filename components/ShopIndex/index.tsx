@@ -29,7 +29,12 @@ export default function ShopIndex({
       const { node } = product
       const { variants } = node
       const lastItem = index === products.length - 1
-      const firstVariant = variants?.edges?.[0]?.node
+      // Find the first available variant
+      const availableVariant = variants?.edges.find(
+        (variant: any) => variant.node.availableForSale
+      )
+      if (!availableVariant) return null
+      const { node: firstVariant } = availableVariant
 
       if (lastItem)
         return (

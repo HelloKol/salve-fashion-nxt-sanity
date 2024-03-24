@@ -68,7 +68,12 @@ export default function Page() {
       const { node } = product
       const { variants } = node
       const lastItem = index === products.length - 1
-      const firstVariant = variants?.edges?.[0]?.node
+      // Find the first available variant
+      const availableVariant = variants?.edges.find(
+        (variant: any) => variant.node.availableForSale
+      )
+      if (!availableVariant) return null
+      const { node: firstVariant } = availableVariant
 
       if (lastItem)
         return (
@@ -104,37 +109,6 @@ export default function Page() {
               <p className="col-span-full mb-4 text-sm font-bold lg:mb-6 xl:mb-8">
                 {products?.length} products
               </p>
-
-              <div className="col-start-1 col-end-8 mt-2 md:col-start-1 md:col-end-8 xl:mt-4">
-                <RadixPopover
-                  trigger={
-                    <button className="flex items-center gap-3">
-                      Price
-                      <svg
-                        className="h-4 w-4 text-gray-800"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="m19 9-7 7-7-7"
-                        />
-                      </svg>
-                    </button>
-                  }
-                >
-                  <div className="flex items-center justify-between">
-                    <p>The highest price is £1000</p>
-                    <button>reset</button>
-                  </div>
-                  <RadixSlider />
-                </RadixPopover>
-              </div>
 
               <div className="col-start-8 col-end-13 ml-auto mt-2 md:col-start-10 md:col-end-13 xl:mt-4">
                 <FilterProduct isSearchPage={true} />
