@@ -12,9 +12,7 @@ import {
   RadixAccordion,
   Section,
 } from "@/components"
-import { useWindowDimension } from "@/hooks"
 import styles from "./styles.module.scss"
-import { ShopifySingleProduct } from "@/types"
 import { GetStaticPaths, GetStaticProps } from "next/types"
 import { ParsedUrlQuery } from "querystring"
 import {
@@ -23,6 +21,7 @@ import {
   SINGLE_PRODUCT_BY_HANDLE,
 } from "@/services/queries"
 import { graphqlClient } from "@/utils"
+import PRODUCT_ACCORDION from "../../../../utils/productAccordion"
 
 export interface ProductProps {
   page: {
@@ -35,14 +34,10 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
   if (!page) return null
   const { productByHandle, predictiveProducts } = page
   if (!productByHandle) return null
-
-  const [index, setIndex] = useState(0)
-  const [quantity, setQuanity] = useState(1)
   const { predictiveSearch } = predictiveProducts
   const { product } = productByHandle
   const { title, descriptionHtml, images, variants } = product
   const { edges } = variants
-
   const ACCORDION = [
     {
       _key: "0b4708ddb216",
@@ -50,140 +45,121 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
       htmlText: descriptionHtml,
       title: "Description",
     },
-    {
-      _key: "0b4708ddb716",
-      _type: "group",
-      body: [
-        {
-          _key: "5cc8801bb10b",
-          _type: "block",
-          children: [
-            {
-              _key: "cc58529ed59d0",
-              _type: "span",
-              marks: [],
-              text: "RETURN ONLINE & IN-STORE",
-            },
-          ],
-          markDefs: [],
-          style: "normal",
-        },
-        {
-          _key: "8c22774816ef",
-          _type: "block",
-          children: [
-            {
-              _key: "d47e089d76b70",
-              _type: "span",
-              marks: [],
-              text: "We're committed to making sure you love everything you buy from us. If you're not completely happy with your product, you can return your item within 45 days for a full refund. Please see our terms and conditions.",
-            },
-          ],
-          markDefs: [],
-          style: "normal",
-        },
-      ],
-      title: "Delivery and Returns",
-    },
-    {
-      _key: "0b47083db716",
-      _type: "group",
-      body: [
-        {
-          _key: "5ac93d9b259c",
-          _type: "block",
-          children: [
-            {
-              _key: "7ea8b36471330",
-              _type: "span",
-              marks: [],
-              text: "You can pay for purchases using a major credit card, including Visa, MasterCard, American Express, PayPal and Klarna",
-            },
-          ],
-          markDefs: [],
-          style: "normal",
-        },
-      ],
-      title: "Payment Methods",
-    },
+    ...PRODUCT_ACCORDION,
   ]
 
-  const sizes = [
-    // @ts-expect-error
-    ...new Set(
-      edges.map(
-        (variant: any) =>
-          variant.node.selectedOptions.find(
-            (opt: { name: string }) => opt.name === "Size"
-          ).value
-      )
-    ),
-  ]
+  // State variables
+  const [index, setIndex] = useState(0)
+  const [quantity, setQuanity] = useState(1)
+  const [selectedSize, setSelectedSize] = useState(null)
+  const [selectedColor, setSelectedColor] = useState(null)
+  const [selectedVariant, setSelectedVariant] = useState(null)
 
+  // // Create a list of unique colors and sizes
   const colors = [
-    // @ts-expect-error
     ...new Set(
-      edges.map(
-        (variant: any) =>
-          variant.node.selectedOptions.find(
-            (opt: { name: string }) => opt.name === "Color"
-          ).value
+      product.variants.edges.map(
+        (variant) => variant.node.selectedOptions[0].value
       )
     ),
   ]
-
-  const [selectedVariant, setSelectedVariant] = useState({
-    size: sizes[0] || null,
-    color: colors[0] || null,
-  })
-
-  const [variantAvailability, setVariantAvailability] = useState({}) as any
-  const sanitizedSize = selectedVariant?.node?.selectedOptions[1]?.value
-    ?.replace(/\s+/g, "")
-    .toLowerCase()
-  const selectedVariantAvailable =
-    variantAvailability[
-      `${sanitizedSize}-${selectedVariant?.node?.selectedOptions[0]?.value?.toLowerCase()}`
-    ]
+  const sizes = [
+    ...new Set(
+      product.variants.edges.map(
+        (variant) => variant.node.selectedOptions[1].value
+      )
+    ),
+  ]
 
   useEffect(() => {
-    // Update variant availability when the selected size or color changes
-    const sanitizedSize = selectedVariant?.node?.selectedOptions[1]?.value
-      .replace(/\s+/g, "")
-      .toLowerCase()
-    const availability = {}
+    // Update selectedSize if sizes array changes
+    if (!sizes.includes(selectedSize)) {
+      setSelectedSize(sizes[0] || null)
+    }
+  }, [sizes])
 
-    let isValidVariant = false
-    edges.forEach((variant: any) => {
-      const isAvailable =
-        variant.node.selectedOptions.some(
-          (opt: any) =>
-            opt.name === "Size" &&
-            opt.value === selectedVariant?.node?.selectedOptions[1]?.value
-        ) &&
-        variant.node.selectedOptions.some(
-          (opt: any) =>
-            opt.name === "Color" &&
-            opt.value === selectedVariant?.node?.selectedOptions[0]?.value
-        ) &&
-        variant.node.availableForSale
+  useEffect(() => {
+    // Update selectedColor if colors array changes
+    if (!colors.includes(selectedColor)) {
+      setSelectedColor(colors[0] || null)
+    }
+  }, [colors])
 
-      if (isAvailable) {
-        isValidVariant = true
-      }
+  useEffect(() => {
+    // Find the index of the selected variant
+    const selectedIndex = variants.edges.findIndex((variant) =>
+      variant.node.selectedOptions.every(
+        (option) =>
+          (option.name === "Color" && option.value === selectedColor) ||
+          (option.name === "Size" && option.value === selectedSize)
+      )
+    )
 
-      availability[
-        `${sanitizedSize}-${selectedVariant?.node?.selectedOptions[0]?.value?.toLowerCase()}`
-      ] = isValidVariant
+    // Set the index state variable
+    slideToItem(selectedIndex >= 0 ? selectedIndex : 0)
+    updateSelectedVariant()
+  }, [selectedSize, selectedColor, variants])
 
-      // Break out of the loop early if a valid variant is found
-      if (isValidVariant) {
-        return
-      }
-    })
+  const handleSizeSelect = (size) => {
+    setSelectedSize(size)
+    updateSelectedVariant()
+  }
 
-    setVariantAvailability(availability)
-  }, [selectedVariant?.node, edges])
+  const handleColorSelect = (color) => {
+    setSelectedColor(color)
+    updateSelectedVariant()
+  }
+
+  const updateSelectedVariant = () => {
+    if (selectedSize && selectedColor) {
+      const variant = variants.edges.find(
+        (variant) =>
+          variant.node.selectedOptions.find((option) => option.name === "Color")
+            .value === selectedColor &&
+          variant.node.selectedOptions.find((option) => option.name === "Size")
+            .value === selectedSize
+      )
+      setSelectedVariant(variant)
+    }
+  }
+
+  const renderSizes = () =>
+    sizes &&
+    sizes.map((size) => (
+      <Button
+        key={size}
+        onClick={() => handleSizeSelect(size)}
+        isActive={selectedSize === size}
+      >
+        {size}
+      </Button>
+    ))
+
+  const renderColors = () =>
+    colors &&
+    colors.map((color) => (
+      <Button
+        key={color}
+        onClick={() => handleColorSelect(color)}
+        isActive={selectedColor === color}
+      >
+        {color}
+      </Button>
+    ))
+
+  const isVariantAvailable = () => {
+    if (!selectedSize || !selectedColor) return false
+
+    const variant = variants.edges.find(
+      (variant) =>
+        variant.node.selectedOptions.find((option) => option.name === "Color")
+          .value === selectedColor &&
+        variant.node.selectedOptions.find((option) => option.name === "Size")
+          .value === selectedSize
+    )
+
+    return variant ? variant.node.availableForSale : false
+  }
 
   const {
     carouselFragment,
@@ -198,8 +174,6 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
       const { image } = node
       const { transformedSrc } = image
       const id = i
-      const isActive =
-        selectedVariant?.node?.selectedOptions[1]?.value === sizes[i]
 
       return {
         id,
@@ -209,12 +183,7 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
           </div>
         ),
         renderThumb: (
-          <div
-            className={`cursor-pointer ${
-              isActive ? `opacity-100` : `opacity-50`
-            }`}
-            onClick={() => slideToItem(i)}
-          >
+          <div className={`cursor-pointer`} onClick={() => slideToItem(i)}>
             <div className="pointer-events-none h-24 w-24 select-none overflow-hidden rounded-lg">
               <ImageTag src={transformedSrc} />
             </div>
@@ -229,76 +198,6 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
       setIndex(data.nextItem.index)
     }
   })
-
-  const renderSize = () =>
-    sizes.map((size, index) => {
-      const variantObject = edges.find((variant: any) => {
-        const selectedSize = variant.node.selectedOptions.find(
-          (opt: { name: string }) => opt.name === "Size"
-        ).value
-        const selectedColor = variant.node.selectedOptions.find(
-          (opt: { name: string }) => opt.name === "Color"
-        ).value
-
-        return (
-          selectedSize === size &&
-          selectedColor === selectedVariant?.node?.selectedOptions[0]?.value
-        )
-      })
-
-      const isAvailable = variantObject?.node.availableForSale
-
-      return (
-        <Button
-          key={index}
-          onClick={() => {
-            isAvailable && setSelectedVariant(variantObject)
-          }}
-          isActive={selectedVariant?.node?.selectedOptions[1]?.value === size}
-          disabled={!isAvailable}
-        >
-          {size}
-        </Button>
-      )
-    })
-
-  const renderColor = () =>
-    colors.map((color: string, index: number) => {
-      const variantObject = edges.find((variant: any) => {
-        const selectedSize = variant.node.selectedOptions.find(
-          (opt: { name: string }) => opt.name === "Size"
-        ).value
-        const selectedColor = variant.node.selectedOptions.find(
-          (opt: { name: string }) => opt.name === "Color"
-        ).value
-
-        return variant
-      })
-
-      const isAvailable = variantObject?.node.availableForSale
-
-      return (
-        <Button
-          key={index}
-          onClick={() => {
-            if (isAvailable) {
-              setSelectedVariant(variantObject)
-              const variantIndex = edges.findIndex(
-                (variant: any) =>
-                  variant.node.selectedOptions.find(
-                    (opt: { name: string }) => opt.name === "Color"
-                  ).value === color
-              )
-              slideToItem(variantIndex)
-            }
-          }}
-          isActive={selectedVariant?.node?.selectedOptions[0]?.value === color}
-          disabled={!isAvailable}
-        >
-          {color}
-        </Button>
-      )
-    })
 
   return (
     <>
@@ -323,14 +222,12 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
                   {edges[0].node.priceV2.amount}
                 </h3>
 
-                <div className="mt-6 flex items-center gap-4">
-                  <span className="uppercase">Size</span>
-                  <div className="flex flex-wrap gap-2">{renderSize()}</div>
+                <div className={`mt-6 flex flex-wrap items-center gap-4`}>
+                  {renderSizes()}
                 </div>
 
-                <div className="mt-6 flex items-center gap-4">
-                  <span className="uppercase">Color</span>
-                  <div className="flex flex-wrap gap-2">{renderColor()}</div>
+                <div className={`mt-6 flex flex-wrap items-center gap-4`}>
+                  {renderColors()}
                 </div>
 
                 <div className={`mt-6 flex flex-wrap items-center gap-4`}>
@@ -381,7 +278,7 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
                     productTitle={product.title}
                     selectedVariant={selectedVariant?.node}
                     quantity={quantity}
-                    disabled={!selectedVariantAvailable}
+                    disabled={!isVariantAvailable()}
                     className={"w-full flex-1"}
                   />
                 </div>

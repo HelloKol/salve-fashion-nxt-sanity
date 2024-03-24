@@ -4,14 +4,8 @@ import { Container, HorizontalFeedBasic, RadixDialog } from "@/components"
 import { useSearchForm } from "@/hooks"
 import settings from "../../data/settings.json"
 import { useQuery } from "@tanstack/react-query"
-import { fetchProducts } from "@/lib"
 import { graphqlClient } from "@/utils"
-import { gql } from "@apollo/client"
-import {
-  PRODUCT_BASE,
-  PRODUCT_VARIANT,
-  SEARCH_QUERY_PREDICTIVE,
-} from "@/services/queries"
+import { SEARCH_QUERY_PREDICTIVE } from "@/services/queries"
 
 interface props {
   isSearchOpen: boolean
@@ -34,15 +28,6 @@ export default function SearchPopup({ isSearchOpen, setIsSearchOpen }: props) {
     enabled: !!predictiveSearchQuery,
   })
 
-  const handleClear = () => {
-    if (document) {
-      const search = document?.getElementById(
-        "search"
-      ) as HTMLInputElement | null
-      if (search) search.value = ""
-    }
-  }
-
   const renderMostSearchedTerms = () =>
     mostSearchedProducts.map((term: string) => {
       return (
@@ -64,12 +49,34 @@ export default function SearchPopup({ isSearchOpen, setIsSearchOpen }: props) {
       setIsOpen={setIsSearchOpen}
     >
       <Container className="py-10 md:py-12 lg:py-14">
+        <button
+          className="ml-auto block cursor-pointer"
+          onClick={() => setIsSearchOpen(false)}
+        >
+          <svg
+            className="h-8 w-8 text-black"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18 17.94 6M18 18 6.06 6"
+            />
+          </svg>
+        </button>
         <p className="text-center text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
           Search by <br />
           Collections, Products
         </p>
 
-        <form className="mt-14">
+        <form className="mt-14" onSubmit={handleSubmit(onSubmit)}>
           <label
             htmlFor="search"
             className="sr-only mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -95,11 +102,12 @@ export default function SearchPopup({ isSearchOpen, setIsSearchOpen }: props) {
               </svg>
             </div>
             <input
-              type="search"
+              type="text"
               id="search"
               className="block w-full border-b-[1px] border-black p-4 pl-10 text-sm text-black"
               placeholder="Search product or collection"
               required
+              {...register("search")}
             />
             <button
               type="submit"

@@ -22,7 +22,7 @@ const useSearchForm = (setIsOpen: Function) => {
 
   const onSubmit = async ({ search }: { search: string }) => {
     try {
-      router.push(`/search?term=${encodeURIComponent(search)}`)
+      router.push(`/shop/search?title=${encodeURIComponent(search)}`)
     } catch (err: any) {
       setGlobalError("An error occurred while searching for products.")
     }
