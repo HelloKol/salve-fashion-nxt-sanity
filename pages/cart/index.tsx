@@ -1,6 +1,5 @@
 import React, { useEffect } from "react"
 import { useState } from "react"
-import Link from "next/link"
 import { useForm } from "react-hook-form"
 import { gql, useMutation } from "@apollo/client"
 // @ts-ignore
@@ -141,36 +140,14 @@ export default function Page() {
       const { title } = product
 
       return (
-        <div className="contents p-2" key={id}>
-          <div className="cell">
-            <button onClick={() => lineItemRemove(id)}>
-              <svg
-                className="h-6 w-6 text-gray-800 "
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 18 18 6m0 12L6 6"
-                />
-              </svg>
-            </button>
+        <div key={id} className="space-between mb-4 flex gap-6">
+          <div className="h-44 w-36 flex-none">
+            <ImageTag src={image?.originalSrc} />
           </div>
-          <div className="cell flex gap-4">
-            <div className="h-24 w-24 flex-none">
-              <ImageTag src={image?.originalSrc} />
-            </div>
-            <div>
-              <p className="mb-6">{title}</p>
-              {renderVariantOptions(selectedOptions)}
-            </div>
-          </div>
-          <div className="cell flex	h-max items-center gap-3">
+
+          <div>
+            <p className="mb-2 w-10/12">{title}</p>
+            {renderVariantOptions(selectedOptions)}
             <div className="flex items-center gap-4">
               <button
                 className="disabled:text-slate-400"
@@ -187,8 +164,28 @@ export default function Page() {
                 +
               </button>
             </div>
+            <button onClick={() => lineItemRemove(id)}>
+              <svg
+                className="h-6 w-6 text-gray-800"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1"
+                  d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+                />
+              </svg>
+            </button>
           </div>
-          <div className="cell">£{subtotalAmount.amount}</div>
+
+          <p className="ml-auto">£{subtotalAmount.amount}</p>
         </div>
       )
     })
@@ -200,7 +197,7 @@ export default function Page() {
           <Container>
             <Grid>
               <button
-                className="col-span-full flex items-center gap-4"
+                className="col-span-full flex w-fit items-center gap-4"
                 onClick={goBack}
               >
                 <svg
@@ -218,24 +215,14 @@ export default function Page() {
                     d="M5 12h14M5 12l4-4m-4 4 4 4"
                   />
                 </svg>
-                <h1 className="text-3xl md:text-5xl">Shopping Bag</h1>
+                <h1 className="text-3xl lg:text-5xl">Shopping Bag</h1>
               </button>
 
-              <div className="col-start-1 col-end-10 mt-14">
-                <div className="grid grid-cols-4 gap-4 p-2">
-                  {/* Header */}
-                  <div className="contents p-2">
-                    <div className="cell"></div>
-                    <div className="cell">Product</div>
-                    <div className="cell">Quantity</div>
-                    <div className="cell">Price</div>
-                  </div>
-                  {/* Content */}
-                  {renderCart()}
-                </div>
+              <div className="col-span-full mt-14 lg:col-start-1 lg:col-end-10">
+                {renderCart()}
               </div>
 
-              <div className="col-start-10 col-end-13 mt-14">
+              <div className="col-span-full mt-14 md:col-start-3 md:col-end-11 lg:col-start-10 lg:col-end-13">
                 <div className="bg-red-200">
                   <h2 className="text-2xl">Order Summary</h2>
 

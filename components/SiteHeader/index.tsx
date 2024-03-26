@@ -96,7 +96,7 @@ const SiteHeader = () => {
                     setIsSearchOpen={setIsOpen}
                   />
                   <Button variant="primary" onClick={handleCartOpen}>
-                    Bag ({`${cart?.cart?.totalQuantity || 0}`})
+                    Bag ({`${cart?.cart?.lines?.nodes?.length || 0}`})
                   </Button>
                 </div>
               </div>
@@ -106,8 +106,6 @@ const SiteHeader = () => {
       ) : (
         <MobileDraw />
       )}
-
-      {/* {(isMobile || isMobileLarge || isTablet) && <MobileDraw />} */}
     </>
   )
 }

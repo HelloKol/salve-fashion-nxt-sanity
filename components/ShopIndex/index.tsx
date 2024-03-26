@@ -21,7 +21,7 @@ export default function ShopIndex({
 }: Props) {
   const router = useRouter()
   const { ref, inView } = useInView({ threshold: 0 })
-  const { products } = useFetchShopProducts(type, inView)
+  const { products, isLoading } = useFetchShopProducts(type, inView)
 
   const renderProducts = () =>
     products &&
@@ -96,9 +96,18 @@ export default function ShopIndex({
 
       <Grid as={"ul"} className="col-span-full mt-4 xl:mt-8" withRowGap={false}>
         <p className="col-span-full mb-4 text-sm font-bold lg:mb-6 xl:mb-8">
-          {products?.length} Products
+          {!!products?.length ? `${products.length} products` : ``}
         </p>
-        {renderProducts()}
+        {isLoading ? (
+          <h3 className="col-span-full text-center text-xl">Loading...</h3>
+        ) : !products.length ? (
+          <h3 className="col-span-full text-center text-xl">
+            <b className="mb-2 block">We're sorry,</b>
+            We can't seem to find any results for {`"${type}"`}
+          </h3>
+        ) : (
+          renderProducts()
+        )}
       </Grid>
     </Grid>
   )

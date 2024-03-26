@@ -55,6 +55,8 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
   const [selectedColor, setSelectedColor] = useState(null)
   const [selectedVariant, setSelectedVariant] = useState(null)
 
+  console.log("productByHandle", productByHandle)
+
   // // Create a list of unique colors and sizes
   const colors = [
     ...new Set(
@@ -86,6 +88,7 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
   }, [colors])
 
   useEffect(() => {
+    if (!variants.edges.length) return
     // Find the index of the selected variant
     const selectedIndex = variants.edges.findIndex((variant) =>
       variant.node.selectedOptions.every(
@@ -148,6 +151,7 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
     ))
 
   const isVariantAvailable = () => {
+    if (!variants.edges.length) return false
     if (!selectedSize || !selectedColor) return false
 
     const variant = variants.edges.find(

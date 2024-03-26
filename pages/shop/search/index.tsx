@@ -20,7 +20,7 @@ export default function Page() {
   const PRODUCT_LIMIT = 20
 
   // FETCH SHOPIFY DATA
-  const { data, hasNextPage, fetchNextPage } = useInfiniteQuery(
+  const { data, hasNextPage, fetchNextPage, isLoading } = useInfiniteQuery(
     ["productsMen", router.query],
     ({ pageParam }) => {
       const title = router.query?.title as string
@@ -103,14 +103,16 @@ export default function Page() {
           <Container>
             <Grid>
               <h1 className="col-span-full mt-10 text-3xl md:text-5xl xl:mt-20">
-                All Products
+                {router.query.title
+                  ? `Search results for "${router.query.title}"`
+                  : `All Products`}
               </h1>
 
-              <p className="col-span-full mb-4 text-sm font-bold lg:mb-6 xl:mb-8">
-                {products?.length} products
-              </p>
+              <div className="col-span-full flex items-center justify-between">
+                <h2 className="text-sm font-bold">
+                  {!!products?.length ? `${products.length} products` : ``}
+                </h2>
 
-              <div className="col-start-8 col-end-13 ml-auto mt-2 md:col-start-10 md:col-end-13 xl:mt-4">
                 <FilterProduct isSearchPage={true} />
               </div>
 
@@ -119,7 +121,19 @@ export default function Page() {
                 className="col-span-full mt-4 xl:mt-8"
                 withRowGap={false}
               >
-                {renderProducts()}
+                {isLoading ? (
+                  <h3 className="col-span-full text-center text-xl">
+                    Loading...
+                  </h3>
+                ) : !products.length ? (
+                  <h3 className="col-span-full text-center text-xl">
+                    <b className="mb-2 block">We're sorry,</b>
+                    We can't seem to find any results for{" "}
+                    {`"${router.query.title}"`}
+                  </h3>
+                ) : (
+                  renderProducts()
+                )}
               </Grid>
             </Grid>
           </Container>

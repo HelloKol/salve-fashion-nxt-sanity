@@ -77,9 +77,18 @@ export default function Page({ page, collectionByHandle }: props) {
               withRowGap={false}
             >
               <p className="col-span-full mb-4 text-sm font-bold lg:mb-6 xl:mb-8">
-                {products.edges.length} Products
+                {!!products?.edges.length
+                  ? `${products.edges.length} products`
+                  : ``}
               </p>
-              {renderProducts()}
+              {!products?.edges.length ? (
+                <h3 className="col-span-full text-center text-xl">
+                  <b className="mb-2 block">We're sorry,</b>
+                  We can't seem to find any results
+                </h3>
+              ) : (
+                renderProducts()
+              )}
             </Grid>
           </Container>
         </Section>

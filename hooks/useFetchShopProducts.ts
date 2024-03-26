@@ -7,8 +7,8 @@ const useFetchShopProducts = (type: string, inView: any) => {
   const router = useRouter()
   const PRODUCT_LIMIT = 20
 
-  const { data, hasNextPage, fetchNextPage } = useInfiniteQuery(
-    ["type", router.query],
+  const { data, isLoading, hasNextPage, fetchNextPage } = useInfiniteQuery(
+    ["type", router.query, type],
     ({ pageParam }) => {
       const q = router.query?.q as string
       const sort = router.query?.sort as string
@@ -46,6 +46,7 @@ const useFetchShopProducts = (type: string, inView: any) => {
 
   return {
     products,
+    isLoading,
   }
 }
 
