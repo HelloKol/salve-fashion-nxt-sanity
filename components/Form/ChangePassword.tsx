@@ -54,7 +54,7 @@ export default function ChangePassword({ title }: props): JSX.Element | null {
 
   useToastOpen(isLoading, !!globalError, isSucess, changePasswordToast.close, {
     description: message,
-    duration: 50000,
+    duration: 5000,
     type: "foreground",
     onClose: () => null,
   })

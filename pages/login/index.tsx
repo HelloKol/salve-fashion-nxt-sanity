@@ -10,7 +10,7 @@ import {
   Grid,
   ImageTag,
   Main,
-  MetaTags,
+  Seo,
   Section,
 } from "@/components"
 import { useDialogBox, useLoginForm } from "@/hooks"
@@ -56,14 +56,14 @@ export default function Page({ page }: props): JSX.Element | null {
 
   useToastOpen(isLoading, !!globalError, isSucess, loginToast.close, {
     description: message,
-    duration: 50000,
+    duration: 5000,
     type: "foreground",
     onClose: () => null,
   })
 
   return (
     <>
-      <MetaTags seo={seo} />
+      <Seo seo={seo} />
       <Main withPadding={false}>
         <Section className="py-0">
           <Container>

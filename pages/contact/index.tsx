@@ -7,7 +7,7 @@ import {
   Container,
   Grid,
   RadixAccordion,
-  MetaTags,
+  Seo,
 } from "@/components"
 import { sanityClient } from "@/utils"
 import MessageChat from "@/components/svg/MessageChat"
@@ -25,7 +25,7 @@ export default function Page({ page }: props): JSX.Element | null {
 
   return (
     <>
-      <MetaTags seo={seo} />
+      <Seo seo={seo} />
       <Main withPadding>
         <Section>
           <Container>

@@ -111,7 +111,7 @@ export default function Cart() {
                   <Button
                     className={`w-full`}
                     variant={"tertiary"}
-                    href={`/shop/cart`}
+                    href={`/cart`}
                     onClick={() => setIsCartOpen(false)}
                   >
                     Go to bag

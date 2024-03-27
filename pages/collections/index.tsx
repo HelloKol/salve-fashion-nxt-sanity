@@ -24,13 +24,13 @@ export default function Page({ page }: props) {
     page.map((collection) => {
       const { store } = collection
       const { title, slug, imageUrl } = store
-      console.log(collection, "collection")
 
       return (
         <Link
           href={`/collections/${slug}`}
-          className="max-w-screen m-4 block h-screen overflow-hidden rounded-3xl"
+          className="max-w-screen relative m-4 block h-screen overflow-hidden rounded-3xl"
         >
+          <h1 className="absolute z-10">{title}</h1>
           <ImageTag src={imageUrl} />
         </Link>
       )

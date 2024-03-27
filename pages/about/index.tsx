@@ -1,14 +1,7 @@
 import { GetStaticPropsResult } from "next"
 import React from "react"
 import groq from "groq"
-import {
-  Container,
-  Grid,
-  ImageTag,
-  Main,
-  MetaTags,
-  Section,
-} from "@/components"
+import { Container, Grid, ImageTag, Main, Seo, Section } from "@/components"
 import { sanityClient } from "@/utils"
 
 interface props {
@@ -21,7 +14,7 @@ export default function Page({ page }: props): JSX.Element | null {
 
   return (
     <>
-      <MetaTags seo={seo} />
+      <Seo seo={seo} />
       <Main>
         <Section>
           <Container>
@@ -34,7 +27,7 @@ export default function Page({ page }: props): JSX.Element | null {
                 <ImageTag src="/static/images/aboutBg.jpg" />
               </div>
 
-              <article className="col-span-full mt-10 text-2xl md:col-start-1 md:col-end-12 md:text-3xl md:text-4xl lg:col-start-2 lg:col-end-13 lg:mt-24 lg:text-5xl xl:col-start-3 xl:col-end-10">
+              <article className="col-span-full mt-10 text-2xl md:col-start-1 md:col-end-12 md:text-3xl lg:col-start-2 lg:col-end-13 lg:mt-24 lg:text-5xl xl:col-start-3 xl:col-end-10">
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                   Voluptatem excepturi placeat ducimus similiquer placeat

@@ -269,6 +269,8 @@ export const GET_CART = gql`
                 currencyCode
               }
               product {
+                id
+                handle
                 title
               }
               quantityAvailable

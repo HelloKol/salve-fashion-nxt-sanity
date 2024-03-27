@@ -115,11 +115,7 @@ export default function AddToCart({
         </div>
       </div>
 
-      <Button
-        href="/shop/cart"
-        className={`mt-2 w-full`}
-        variant={"quaternary"}
-      >
+      <Button href="/cart" className={`mt-2 w-full`} variant={"quaternary"}>
         Checkout
       </Button>
       <Button className={`mt-2 w-full`} variant={"primary"}>

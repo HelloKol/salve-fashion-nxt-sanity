@@ -7,7 +7,7 @@ import {
   FollowUs,
   HorizontalFeed,
   Main,
-  MetaTags,
+  Seo,
   NewArrivals,
   VideoPlayer,
 } from "@/components"
@@ -41,11 +41,9 @@ export default function Page({
   } = page
   const { collections } = hero
 
-  console.log("page", page)
-
   return (
     <>
-      <MetaTags seo={seo} />
+      <Seo seo={seo} />
       <Main withPadding={false}>
         <Carousel collections={collections} />
         <HorizontalFeed productsData={productFeedMen} />
