@@ -10,7 +10,6 @@ export default function Cart() {
     setIsCartOpen,
     cartItems,
     cart,
-    // totalCheckoutPrice,
     checkoutUrl,
     lineItemRemove,
     lineItemUpdateQuantity,
@@ -21,7 +20,7 @@ export default function Cart() {
       const { name, value } = item
       return (
         <p className="text-sm">
-          <strong>{name}</strong>: {value}
+          {name}: {value}
         </p>
       )
     })
@@ -43,9 +42,14 @@ export default function Cart() {
                 objectFit="cover"
               />
             </div>
-            <div className={styles.titleWrap}>
-              <p className="text-lg">{title.slice(0, 25)}...</p>
-              {renderVariantOptions(selectedOptions)}
+            <div className={`flex flex-col justify-between`}>
+              <div>
+                <p className="mb-2 text-sm font-semibold uppercase">
+                  {title.slice(0, 30)}...
+                </p>
+                {renderVariantOptions(selectedOptions)}
+              </div>
+
               <div className="flex items-center gap-2 text-sm">
                 Quantity:{" "}
                 <div className="flex items-center gap-4">
@@ -67,7 +71,7 @@ export default function Cart() {
               </div>
             </div>
             <div className={styles.priceWrap}>
-              <strong>£{subtotalAmount.amount}</strong>
+              <p className="text-sm font-semibold">£{subtotalAmount.amount}</p>
               <button onClick={() => lineItemRemove(id)}>Remove</button>
             </div>
           </div>
@@ -106,7 +110,10 @@ export default function Cart() {
                     <span>£{cart?.cart?.cost?.subtotalAmount?.amount}</span>
                   </p>
                   <p className={styles.deliveryPrice}>
-                    Delivery: <span>Free</span>
+                    Delivery:{" "}
+                    <span>
+                      ${cart?.cart?.cost?.totalDutyAmount?.amount || `0.00`}{" "}
+                    </span>
                   </p>
                   <Button
                     className={`w-full`}
@@ -117,11 +124,25 @@ export default function Cart() {
                     Go to bag
                   </Button>
                   <Button
-                    className={`mt-2 w-full`}
+                    className={`mt-2 w-full gap-2`}
                     variant={"quaternary"}
-                    // href={checkoutUrl}
                     onClick={() => setIsCartOpen(false)}
                   >
+                    <svg
+                      className="h-6 w-6 text-white"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1"
+                        d="M12 14v3m-3-6V7a3 3 0 1 1 6 0v4m-8 0h10c.6 0 1 .4 1 1v7c0 .6-.4 1-1 1H7a1 1 0 0 1-1-1v-7c0-.6.4-1 1-1Z"
+                      />
+                    </svg>
                     Checkout
                   </Button>
                 </div>

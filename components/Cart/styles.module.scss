@@ -49,17 +49,15 @@
   .productContent {
     display: flex;
     gap: 20px;
-    align-items: center;
-    height: 100px;
+    height: 120px;
     margin-bottom: 20px; /* Add margin to create space between each <li> and border */
   }
   .featureImage {
-    height: 100px;
+    height: 120px;
     width: 80px; /* Use a fixed width for the image container */
     flex-shrink: 0; /* Prevent the image from shrinking */
     position: relative; /* Set position to relative for the image container */
   }
-  .titleWrap,
   .priceWrap {
     height: 100%;
     display: flex;
@@ -70,9 +68,6 @@
   }
   .priceWrap {
     align-items: flex-end;
-  }
-  p:first-child {
-    margin-bottom: 0; /* Remove the margin from the first paragraph element */
   }
   button {
     margin-top: auto; /* Align the remove button to the bottom of the list item */
@@ -121,20 +116,20 @@
 // ==========================================================================
 @media (min-width: $breakDesktop) {
   .cart {
-    right: -500px;
-    width: 500px;
-    padding: 25px 50px 50px 50px;
+    right: -600px;
+    width: 600px;
+    padding: 25px 40px 40px 40px;
     .closeBtn {
       top: 25px;
-      right: 50px;
+      right: 40px;
     }
     .checkout {
-      bottom: 50px;
-      left: 50px;
+      bottom: 40px;
+      left: 40px;
       padding-right: 100px;
     }
     &.cartOpen {
-      transform: translateX(-500px);
+      transform: translateX(-600px);
     }
   }
 }

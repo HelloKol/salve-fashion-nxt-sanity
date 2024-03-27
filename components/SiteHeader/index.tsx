@@ -16,10 +16,15 @@ const SiteHeader = () => {
   const { isOpen, setIsOpen } = useDialogBox()
   const { isMobile, isMobileLarge, isTablet, isDesktop, isWidescreen } =
     useWindowDimension()
+
   const isLandingPage = router?.asPath === "/"
+  const isCollectionPage = router?.asPath === "/collections"
   const headerClasses = `fixed w-full top-0 left-0 z-50 transition-all duration-500 ${
-    isHeaderCollapsed || !isLandingPage ? "text-black" : ""
-    // isHeaderCollapsed || !isLandingPage ? "bg-[#E9EBE0] text-black" : ""
+    isCollectionPage
+      ? ``
+      : isHeaderCollapsed || !isLandingPage
+        ? "bg-[#E9EBE0] text-black"
+        : ``
   }`
 
   const handleCartOpen = () => {

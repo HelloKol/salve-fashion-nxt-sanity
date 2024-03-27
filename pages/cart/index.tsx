@@ -186,12 +186,13 @@ export default function Page() {
             <ImageTag src={image?.originalSrc} />
           </div>
 
-          <div>
-            <p className="lg:text-md mb-2 max-w-[700px] text-sm font-semibold uppercase">
-              {title}
-            </p>
-
-            {renderVariantOptions(selectedOptions)}
+          <div className={`flex flex-col justify-between`}>
+            <div>
+              <p className="lg:text-md mb-2 max-w-[700px] text-sm font-semibold uppercase">
+                {title}
+              </p>
+              {renderVariantOptions(selectedOptions)}
+            </div>
 
             <div className="flex items-center justify-between">
               <div className="lg:text-md mb-2 flex items-center gap-4 text-sm">
@@ -213,12 +214,12 @@ export default function Page() {
             </div>
           </div>
 
-          <div className="ml-auto">
+          <div className={`ml-auto flex flex-col justify-between`}>
             <p className="lg:text-md text-sm font-semibold">
               £{subtotalAmount.amount}
             </p>
 
-            <div className="">
+            <div>
               <button onClick={() => handleClipboard(handle)}>
                 <svg
                   className="h-6 w-6 text-gray-800"
@@ -232,7 +233,7 @@ export default function Page() {
                   <path
                     stroke="currentColor"
                     strokeLinecap="round"
-                    strokeWidth="2"
+                    strokeWidth="1"
                     d="M7.926 10.898 15 7.727m-7.074 5.39L15 16.29M8 12a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm12 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm0-11a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
                   />
                 </svg>
@@ -250,9 +251,9 @@ export default function Page() {
                 >
                   <path
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="1"
                     d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
                   />
                 </svg>
@@ -298,12 +299,12 @@ export default function Page() {
               </div>
 
               <div className="col-span-full mt-14 md:col-start-3 md:col-end-11 lg:col-start-10 lg:col-end-13">
-                <h2 className="text-2xl">Order Summary</h2>
+                <h2 className="mb-4 text-2xl lg:mb-6 xl:mb-8">Order Summary</h2>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <FormInputText
                     type="text"
-                    placeholder="Enter a code"
+                    placeholder="Enter your discount code"
                     label="Add a discount code"
                     {...register("discountCode")}
                     error={errors.discountCode}
@@ -313,36 +314,37 @@ export default function Page() {
                     {renderDiscountCode()}
                   </div>
 
-                  <button
-                    className="lg:text-md mt-2 flex h-fit w-full shrink-0 items-center justify-center rounded-xl bg-[#171717] py-4 text-sm uppercase text-white"
+                  <Button
+                    className={`mb-4 mt-2 w-full`}
+                    variant={"quaternary"}
                     type="submit"
                   >
                     {isLoading ? "Loading...." : "Apply"}
-                  </button>
+                  </Button>
                 </form>
 
-                <p className="mt-6 flex justify-between uppercase">
+                <p className="mb-2 mt-6 flex justify-between uppercase">
                   <span>bag total</span> $
                   {cart?.cart?.cost?.subtotalAmount?.amount}{" "}
                 </p>
-                <p className="flex justify-between uppercase">
+                <p className="mb-2 flex justify-between uppercase">
                   <span>Tax</span> $
                   {cart?.cart?.cost?.totalTaxAmount?.amount || `0.00`}{" "}
                 </p>
-                <p className="flex justify-between uppercase">
+                <p className="mb-2 flex justify-between uppercase">
                   <span>Shipping</span>$
                   {cart?.cart?.cost?.totalDutyAmount?.amount || `0.00`}{" "}
                 </p>
-                <p className="flex justify-between uppercase">
+                <p className="mb-2 flex justify-between uppercase">
                   <span>Delivery</span> $
                   {cart?.cart?.cost?.totalDutyAmount?.amount || `0.00`}{" "}
                 </p>
-                <p className="mt-4 flex justify-between border-t-[1px] border-black pt-4 text-lg uppercase">
+                <p className="mt-4 flex justify-between border-t-[1px] border-black pt-4 text-lg font-semibold uppercase">
                   <span>total</span> $
                   {cart?.cart?.cost?.checkoutChargeAmount?.amount}{" "}
                 </p>
 
-                <Button className={`mt-2 w-full`} variant={"quaternary"}>
+                <Button className={`my-2 w-full gap-2`} variant={"quaternary"}>
                   <svg
                     className="h-6 w-6 text-white"
                     aria-hidden="true"
@@ -359,6 +361,14 @@ export default function Page() {
                     />
                   </svg>
                   Checkout
+                </Button>
+
+                <Button
+                  className={`w-full`}
+                  variant={"tertiary"}
+                  href={`/cart`}
+                >
+                  Continue Shopping
                 </Button>
               </div>
             </Grid>
