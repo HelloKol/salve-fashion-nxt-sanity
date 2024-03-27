@@ -65,7 +65,7 @@ export default function Page({ page }: props): JSX.Element | null {
     <>
       <Seo seo={seo} />
       <Main withPadding={false}>
-        <Section className="py-0">
+        <Section withPadding={false}>
           <Container>
             <Grid className="lg:min-h-screen">
               <div className="col-span-full h-full w-full lg:col-end-8">

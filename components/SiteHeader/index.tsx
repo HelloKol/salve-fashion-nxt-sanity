@@ -17,14 +17,11 @@ const SiteHeader = () => {
   const { isMobile, isMobileLarge, isTablet, isDesktop, isWidescreen } =
     useWindowDimension()
 
-  const isLandingPage = router?.asPath === "/"
+  const isLandingPage =
+    router?.asPath === "/" || router?.asPath.includes("/collections")
   const isCollectionPage = router?.asPath === "/collections"
   const headerClasses = `fixed w-full top-0 left-0 z-50 transition-all duration-500 ${
-    isCollectionPage
-      ? ``
-      : isHeaderCollapsed || !isLandingPage
-        ? "bg-[#E9EBE0] text-black"
-        : ``
+    isCollectionPage ? `` : isHeaderCollapsed ? "bg-[#E9EBE0] text-black" : ``
   }`
 
   const handleCartOpen = () => {

@@ -145,7 +145,7 @@ export default function Page({}: PageProps): JSX.Element | null {
                   <div className="mb-6">
                     <FormInputCheckbox
                       label={
-                        "I have read and understand the Privacy and Cookies Policy and agree to receive personalised commercial communications from Zara by email."
+                        "I have read and understand the Privacy and Cookies Policy and agree to receive personalised commercial communications from Salve Fashion by email."
                       }
                       {...register("acceptsMarketing")}
                       error={errors.acceptsMarketing}

@@ -63,8 +63,8 @@ export default function Page({ page }: props): JSX.Element | null {
   return (
     <>
       <Seo seo={seo} />
-      <Main withPadding>
-        <Section className="py-0">
+      <Main withPadding={false}>
+        <Section withPadding={false}>
           <Container>
             <Grid className="lg:min-h-screen">
               <div className="col-span-full h-full w-full lg:col-end-8">
@@ -128,7 +128,7 @@ export default function Page({ page }: props): JSX.Element | null {
                         className="ml-2 text-sm font-medium"
                       >
                         I want to receive personalised commercial communications
-                        from ZARA by email.
+                        from Salve Fashion by email.
                       </label>
                     </div>
 

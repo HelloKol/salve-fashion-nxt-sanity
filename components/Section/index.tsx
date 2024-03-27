@@ -6,7 +6,7 @@ interface Props {
   withPadding?: boolean
 }
 
-export default function index({
+export default function Section({
   children,
   className,
   withPadding = true,

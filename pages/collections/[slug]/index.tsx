@@ -51,10 +51,10 @@ export default function Page({ page, collectionByHandle }: props) {
       <Head>
         <title>Collection</title>
       </Head>
-      <Main>
-        <Section>
+      <Main withPadding={false}>
+        <Section withPadding={false}>
           <Container>
-            <div className="relative col-span-full h-[330px] w-full sm:h-[250px] md:h-[350px] lg:h-[500px] xl:h-[600px]">
+            <div className="relative col-span-full my-4 h-[330px] w-full overflow-hidden rounded-3xl sm:h-[250px] md:h-[350px] lg:h-[500px] xl:h-[600px]">
               <ImageTag src={imageUrl} />
 
               <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full bg-black bg-opacity-60 ">

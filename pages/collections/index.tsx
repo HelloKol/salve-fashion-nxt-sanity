@@ -57,8 +57,8 @@ export default function Page({ page }: Props) {
       <Head>
         <title>Collection</title>
       </Head>
-      <Main className="pb-0 pt-0">
-        <Section className="pb-0 pt-0">{renderCollection()}</Section>
+      <Main withPadding={false}>
+        <Section withPadding={false}>{renderCollection()}</Section>
       </Main>
     </>
   )
