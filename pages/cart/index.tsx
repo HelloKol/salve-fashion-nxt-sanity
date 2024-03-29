@@ -1,7 +1,8 @@
-import React, { useEffect } from "react"
+import Link from "next/link"
+import React from "react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { gql, useMutation } from "@apollo/client"
+import { useMutation } from "@apollo/client"
 // @ts-ignore
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
@@ -15,7 +16,6 @@ import {
   Section,
 } from "@/components"
 import { useShoppingCart } from "@/context/Cart"
-import { graphqlClient } from "@/utils"
 import {
   ADD_DISCOUNT_TO_CART,
   GET_CART,
@@ -182,33 +182,68 @@ export default function Page() {
 
       return (
         <div key={id} className="mb-8 flex gap-6 lg:mb-10">
-          <div className="mb-0 h-44 w-36 flex-none lg:h-56 lg:w-44">
+          <Link
+            className="mb-0 h-44 w-36 flex-none lg:h-56 lg:w-44"
+            href={`/shop/product/${handle}`}
+          >
             <ImageTag src={image?.originalSrc} />
-          </div>
+          </Link>
 
           <div className={`flex flex-col justify-between`}>
             <div>
-              <p className="lg:text-md mb-2 max-w-[700px] text-sm font-semibold uppercase">
+              <Link
+                className="lg:text-md max-w-[700px] text-sm font-semibold uppercase"
+                href={`/shop/product/${handle}`}
+              >
                 {title}
-              </p>
-              {renderVariantOptions(selectedOptions)}
+              </Link>
+              <div className="mt-2">
+                {renderVariantOptions(selectedOptions)}
+              </div>
             </div>
 
             <div className="flex items-center justify-between">
-              <div className="lg:text-md mb-2 flex items-center gap-4 text-sm">
+              <div className="flex items-center gap-5 rounded-full border-[1px] border-black px-3 py-1">
                 <button
-                  className="disabled:text-slate-400"
                   onClick={() => lineItemUpdateQuantity(id, quantity - 1)}
                   disabled={quantity <= 1}
                 >
-                  -
+                  <svg
+                    className="h-4 w-4 text-gray-800"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 12h14"
+                    />
+                  </svg>
                 </button>
                 <span>{quantity}</span>
                 <button
-                  className="disabled:text-slate-400"
                   onClick={() => lineItemUpdateQuantity(id, quantity + 1)}
+                  disabled={quantity >= 100}
                 >
-                  +
+                  <svg
+                    className="h-4 w-4 text-gray-800"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 12h14m-7 7V5"
+                    />
+                  </svg>
                 </button>
               </div>
             </div>
@@ -233,7 +268,7 @@ export default function Page() {
                   <path
                     stroke="currentColor"
                     strokeLinecap="round"
-                    strokeWidth="1"
+                    strokeWidth="1.5"
                     d="M7.926 10.898 15 7.727m-7.074 5.39L15 16.29M8 12a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm12 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm0-11a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
                   />
                 </svg>
@@ -253,7 +288,7 @@ export default function Page() {
                     stroke="currentColor"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth="1"
+                    strokeWidth="1.5"
                     d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
                   />
                 </svg>

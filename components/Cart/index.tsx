@@ -1,8 +1,10 @@
+import Link from "next/link"
 import { useShoppingCart } from "@/context/Cart"
 import { Button, ClickOut, ImageTag } from "@/components"
 import Close from "@/components/svg/Close"
 import Bag from "@/components/svg/Bag"
 import styles from "./styles.module.scss"
+import { useTruncateString } from "@/hooks"
 
 export default function Cart() {
   const {
@@ -30,24 +32,33 @@ export default function Cart() {
       const { id, cost, quantity, merchandise } = item
       const { subtotalAmount } = cost
       const { product, selectedOptions, image } = merchandise
-      const { title } = product
+      const { handle } = product
+      const title = useTruncateString(product.title, 30)
 
       return (
         <li key={id} className={styles.product}>
           <div className={styles.productContent}>
-            <div className={styles.featureImage}>
+            <Link
+              className={styles.featureImage}
+              href={`/shop/product/${handle}`}
+            >
               <ImageTag
                 src={image?.transformedSrc}
                 layout="fill"
                 objectFit="cover"
               />
-            </div>
+            </Link>
             <div className={`flex flex-col justify-between`}>
               <div>
-                <p className="mb-2 text-sm font-semibold uppercase">
-                  {title.slice(0, 30)}...
-                </p>
-                {renderVariantOptions(selectedOptions)}
+                <Link
+                  className="text-sm font-semibold uppercase"
+                  href={`/shop/product/${handle}`}
+                >
+                  {title}
+                </Link>
+                <div className="mt-2">
+                  {renderVariantOptions(selectedOptions)}
+                </div>
               </div>
 
               <div className="flex items-center gap-2 text-sm">
@@ -64,6 +75,7 @@ export default function Cart() {
                   <button
                     className="disabled:text-slate-400"
                     onClick={() => lineItemUpdateQuantity(id, quantity + 1)}
+                    disabled={quantity >= 100}
                   >
                     +
                   </button>

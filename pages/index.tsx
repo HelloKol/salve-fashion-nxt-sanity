@@ -8,7 +8,6 @@ import {
   HorizontalFeed,
   Main,
   Seo,
-  NewArrivals,
   VideoPlayer,
 } from "@/components"
 import { ShopifyProduct } from "@/types"
@@ -34,12 +33,13 @@ export default function Page({
     seo,
     hero,
     categories,
-    newArrivalFeed,
     productFeedMen,
     productFeedWomen,
-    videoUrl,
+    videoPlayer,
   } = page
   const { collections } = hero
+
+  console.log("page", page)
 
   return (
     <>
@@ -48,9 +48,8 @@ export default function Page({
         <Carousel collections={collections} />
         <HorizontalFeed productsData={productFeedMen} />
         <AboutUs />
-        {/* <NewArrivals data={newArrivalFeed} /> */}
         <Category data={categories} />
-        <VideoPlayer videoSrc={videoUrl} />
+        <VideoPlayer data={videoPlayer} />
         <HorizontalFeed productsData={productFeedWomen} />
         <FollowUs
           title={"Follow us on instagram"}
@@ -106,21 +105,6 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
             }
           }
         },
-        newArrivalFeed {
-          title,
-          text,
-          productWithVariant[] {
-            "product": *[_id == ^.product._ref][0] {
-              ...,
-              store {
-                ...,
-                variants[]-> {
-                  ...,
-                },
-              }
-            },
-          },
-        },
         productFeedMen {
           title,
           text,
@@ -162,7 +146,17 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
               }
             },
           },
-        }
+        },
+        videoPlayer {
+          videoUrl,
+          previewImage {
+            _type,
+            asset->{
+              _id,
+              url
+            }
+          }
+        },
       }
     `
     )

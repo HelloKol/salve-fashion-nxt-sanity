@@ -1,18 +1,8 @@
 import React, { useRef } from "react"
 // Components
-import {
-  AddToCart,
-  AddToCartVariant,
-  Button,
-  Container,
-  Grid,
-  ImageTag,
-  ProductItem,
-  Section,
-} from "@/components"
+import { Button, Container, Grid, ProductItem, Section } from "@/components"
 // Utils
-import { useDragScroll, useHorizontalScroll, useTruncateString } from "@/hooks"
-import styles from "./styles.module.scss"
+import { useDragScroll, useHorizontalScroll } from "@/hooks"
 
 // Props
 interface Props {

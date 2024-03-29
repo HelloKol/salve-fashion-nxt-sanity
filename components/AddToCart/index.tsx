@@ -1,13 +1,8 @@
-import { useState } from "react"
-import { useCookies } from "react-cookie"
 import { useMutation } from "@apollo/client"
 import { Button } from "@/components"
-import {
-  ADD_PRODUCT_TO_CART,
-  SINGLE_PRODUCT_BY_HANDLE,
-  SINGLE_PRODUCT_BY_ID,
-} from "@/services/queries"
+import { ADD_PRODUCT_TO_CART } from "@/services/queries"
 import { cn } from "@/utils"
+import { useTruncateString } from "@/hooks"
 import { useShoppingCart } from "@/context/Cart"
 import { ImageTag, RadixPopoverCart } from "@/components"
 import { GET_CART } from "@/services/queries/cart"
@@ -27,6 +22,7 @@ export default function AddToCart({
 }) {
   if (!selectedVariant) return null
   const { cartId } = useShoppingCart()
+  const title = useTruncateString(productTitle, 40)
   const { id, image, selectedOptions } = selectedVariant
 
   const [addProductToCart, { data, loading, error, reset }] = useMutation(
@@ -110,12 +106,12 @@ export default function AddToCart({
         </div>
 
         <div>
-          <h1>{productTitle}</h1>
-          <div className="mt-2">{renderVariantOptions()}</div>
+          <h1 className="text-sm font-semibold uppercase">{title}</h1>
+          <div className="mt-2 text-sm">{renderVariantOptions()}</div>
         </div>
       </div>
 
-      <Button href="/cart" className={`mt-2 w-full`} variant={"quaternary"}>
+      <Button href={"/cart"} className={`mt-2 w-full`} variant={"quaternary"}>
         Checkout
       </Button>
       <Button className={`mt-2 w-full`} variant={"primary"}>
