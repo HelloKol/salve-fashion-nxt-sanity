@@ -42,7 +42,11 @@ const VideoPlayer = ({ data }: VideoPlayerProps) => {
       {showThumbnail ? (
         <div className="relative" onClick={handleVideoClick}>
           <div className="aspect-w-16 aspect-h-9 h-screen w-screen cursor-pointer">
-            <ImageTag src={previewImage.asset.url} />
+            <ImageTag
+              src={previewImage.asset.url}
+              blurDataURL={previewImage.asset.metadata.lqip}
+              placeholder="blur"
+            />
           </div>
 
           <div className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 transform">

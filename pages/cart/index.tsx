@@ -15,12 +15,9 @@ import {
   Main,
   Section,
 } from "@/components"
+import Bag from "@/components/svg/Bag"
 import { useShoppingCart } from "@/context/Cart"
-import {
-  ADD_DISCOUNT_TO_CART,
-  GET_CART,
-  REMOVE_FROM_CART,
-} from "@/services/queries/cart"
+import { ADD_DISCOUNT_TO_CART, GET_CART } from "@/services/queries/cart"
 import { useRouter } from "next/router"
 import { useCopyToClipboard } from "@/hooks"
 import { useToastOpen } from "@/context/Toast"
@@ -329,8 +326,17 @@ export default function Page() {
                 </h1>
               </button>
 
-              <div className="col-span-full mt-14 lg:col-start-1 lg:col-end-10 xl:col-end-9">
-                {renderCart()}
+              <div className="col-span-full my-14 lg:col-start-1 lg:col-end-10 xl:col-end-9">
+                {cart?.cart?.lines?.nodes?.length ? (
+                  renderCart()
+                ) : (
+                  <div>
+                    <div className="flex h-10 w-full justify-center">
+                      <Bag />
+                    </div>
+                    <p className="mt-4 text-center">No products in the cart.</p>
+                  </div>
+                )}
               </div>
 
               <div className="col-span-full mt-14 md:col-start-3 md:col-end-11 lg:col-start-10 lg:col-end-13">

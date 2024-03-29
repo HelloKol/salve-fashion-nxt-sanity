@@ -12,7 +12,9 @@ export default function index({
   withPadding = true,
 }: Props) {
   return (
-    <main className={`${withPadding ? `py-24` : ``} ${className || ""}`}>
+    <main
+      className={`${withPadding ? `py-24` : ``} ${className || ""} min-h-screen`}
+    >
       {children}
     </main>
   )

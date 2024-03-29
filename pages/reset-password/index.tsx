@@ -17,13 +17,9 @@ import { useToastOpen } from "@/context/Toast"
 import { graphqlClient, sanityClient } from "@/utils"
 import { gql } from "@apollo/client"
 
-interface props {
-  page: any
-}
+interface props {}
 
-export default function Page({ page }: props): JSX.Element | null {
-  if (!page) return null
-  const { seo } = page
+export default function Page({}: props): JSX.Element | null {
   const resetPasswordToast = useDialogBox()
   const {
     register,
@@ -63,7 +59,6 @@ export default function Page({ page }: props): JSX.Element | null {
 
   return (
     <>
-      <Seo seo={seo} />
       <Main withPadding={false}>
         <Section withPadding={false}>
           <Container>
@@ -106,34 +101,4 @@ export default function Page({ page }: props): JSX.Element | null {
       </Main>
     </>
   )
-}
-
-export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
-  try {
-    const page: any = await sanityClient.fetch(
-      groq`*[_type == "login" && !(_id in path('drafts.**'))][0] {
-        title,
-        subtitle,
-        contentTitle,
-        seo
-      }
-    `
-    )
-
-    if (!page)
-      return {
-        notFound: true,
-      }
-
-    return {
-      props: {
-        page,
-      },
-      revalidate: 30,
-    }
-  } catch (err) {
-    return {
-      notFound: true,
-    }
-  }
 }

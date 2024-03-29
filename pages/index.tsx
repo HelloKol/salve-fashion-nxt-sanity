@@ -39,8 +39,6 @@ export default function Page({
   } = page
   const { collections } = hero
 
-  console.log("page", page)
-
   return (
     <>
       <Seo seo={seo} />
@@ -150,10 +148,10 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
         videoPlayer {
           videoUrl,
           previewImage {
-            _type,
+            ...,
             asset->{
-              _id,
-              url
+              url,
+              ...
             }
           }
         },

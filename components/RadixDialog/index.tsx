@@ -8,13 +8,11 @@ export default function Dialog({
   variant,
   isOpen,
   setIsOpen,
-  checkIsClosed,
 }: {
   children: React.ReactNode | React.ReactNode[]
   variant: "consentCookie" | "cookieSettings" | "subscribeNewsLetter" | "search"
   isOpen: boolean
   setIsOpen: any
-  checkIsClosed?: any
 }) {
   const [isMounted, setIsMounted] = useState(false)
 
@@ -33,14 +31,6 @@ export default function Dialog({
         <DialogRadix.Content
           className={`${styles.dialogContent} ${styles[variant]}`}
         >
-          {/* <DialogRadix.Close asChild>
-            <button
-              className={`${styles[variant]} ${styles.closeBtn}`}
-              onClick={checkIsClosed}
-            >
-              <Close />
-            </button>
-          </DialogRadix.Close> */}
           {children}
         </DialogRadix.Content>
       </DialogRadix.Portal>

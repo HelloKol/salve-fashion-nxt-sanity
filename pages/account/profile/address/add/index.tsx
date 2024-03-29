@@ -1,30 +1,23 @@
+import { useState } from "react"
 import Head from "next/head"
 import { useRouter } from "next/router"
-import { GetStaticPropsResult } from "next"
 import { useForm } from "react-hook-form"
+import * as yup from "yup"
 // @ts-ignore
 import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
-import { useMutation, useQuery } from "@apollo/client"
-import { gql } from "@apollo/client"
+import { useMutation } from "@apollo/client"
 import {
   Main,
   Section,
   Container,
   Grid,
   Button,
-  Logout,
   FormInputText,
   BreadCrumb,
 } from "@/components"
-import { sanityClient } from "@/utils"
-import styles from "./styles.module.scss"
 import { ADD_USER_ADDRESS, USER_DETAILS } from "@/services/queries"
-import { useEffect, useState } from "react"
-import { graphqlClient } from "@/utils"
 import { useAuth } from "@/context/User"
-import { useLoginForm } from "@/hooks"
-import { AddressFormData } from "@/types"
+import { AddressFormRecord } from "@/types"
 
 const navigationLinks = [
   { href: "/account/order", text: "Order history" },
@@ -57,7 +50,7 @@ export default function Page({}: PageProps): JSX.Element | null {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<AddressFormData>({
+  } = useForm<AddressFormRecord>({
     resolver: yupResolver(schema),
   })
 
@@ -72,7 +65,7 @@ export default function Page({}: PageProps): JSX.Element | null {
     ],
   })
 
-  const onSubmit = async (data: AddressFormData) => {
+  const onSubmit = async (data: AddressFormRecord) => {
     if (!accessToken) return
     const variables = {
       address: data,

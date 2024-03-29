@@ -69,7 +69,7 @@ export default function Page({ page }: props): JSX.Element | null {
                 <ImageTag src="/static/images/product1.jpg" />
               </div>
 
-              <article className="col-span-full mt-10 text-2xl md:col-start-1 md:col-end-12 md:text-3xl md:text-4xl lg:col-start-2 lg:col-end-13 lg:mt-24 lg:text-5xl xl:col-start-3 xl:col-end-12">
+              <article className="col-span-full mt-10 text-2xl md:col-start-1 md:col-end-12 md:text-3xl lg:col-start-2 lg:col-end-13 lg:mt-24 lg:text-5xl xl:col-start-3 xl:col-end-12">
                 <p>
                   Lorem ipsum dolor, sit amet consectetur adipisicing elit. Hic
                   ea similique vitae, illum facilis quaerat distinctio harum

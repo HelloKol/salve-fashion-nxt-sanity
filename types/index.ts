@@ -57,29 +57,34 @@ export interface ShopifySingleProduct {
   }
 }
 
+type CommonFormField =
+  | "email"
+  | "password"
+  | "confirmPassword"
+  | "firstName"
+  | "lastName"
+
+type CommonFormFieldRecord = Record<CommonFormField, string>
+
 // USER TYPES - LOGIN/REGISTER
 export type FormData = {
-  email: string
-  password: string
-  confirmPassword?: string
-  firstName?: string
-  lastName?: string
   rememberMeCheckbox?: boolean
   acceptPrivacy?: boolean
-}
+} & CommonFormFieldRecord
 
-export type AddressFormData = {
-  address1: string
-  address2: string
-  city: string
-  company: string
-  country: string
-  firstName: string
-  lastName: string
-  phone: string
-  province: string
-  zip: string
-}
+type AddressForm =
+  | "address1"
+  | "address2"
+  | "city"
+  | "company"
+  | "country"
+  | "firstName"
+  | "lastName"
+  | "phone"
+  | "province"
+  | "zip"
+
+export type AddressFormRecord = Record<AddressForm, string>
 
 export type CustomerAccessTokenCreateResult = {
   customerAccessTokenCreate: {

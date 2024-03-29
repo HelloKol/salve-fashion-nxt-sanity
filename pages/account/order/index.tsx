@@ -10,7 +10,6 @@ import {
   ImageTag,
   RadixDialog,
 } from "@/components"
-import { useAuth } from "@/context/User"
 import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 
@@ -110,8 +109,8 @@ export default function Page({}: PageProps): JSX.Element | null {
         isOpen={isDialogOpen}
         setIsOpen={() => {}}
       >
-        <div>
-          <p className="text-center text-2xl">
+        <div className="p-5">
+          <p className="mb-4 text-xl md:text-2xl lg:text-3xl">
             This page is an example of product orders.
           </p>
           <Button variant="tertiary" onClick={handleCloseDialog}>

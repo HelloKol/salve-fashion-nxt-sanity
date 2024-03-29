@@ -8,6 +8,8 @@ export default function ImageTag({
   objectFit = "cover",
   quality,
   priority,
+  blurDataURL,
+  placeholder,
 }: {
   src: string
   alt?: string
@@ -15,6 +17,8 @@ export default function ImageTag({
   objectFit?: string
   quality?: number
   priority?: boolean
+  blurDataURL?: string
+  placeholder?: string
 }) {
   return (
     <div className="relative h-full w-full">
@@ -26,6 +30,8 @@ export default function ImageTag({
         fill={true}
         quality={quality}
         priority={priority}
+        placeholder={placeholder || "empty"}
+        blurDataURL={blurDataURL}
       />
     </div>
   )
