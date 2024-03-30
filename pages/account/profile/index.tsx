@@ -1,14 +1,15 @@
 import Link from "next/link"
-import Head from "next/head"
 import { useRouter } from "next/router"
-import { Main, Section, Container, Grid, Button, Logout } from "@/components"
+import {
+  AccountNavigation,
+  Container,
+  Grid,
+  Logout,
+  Main,
+  Section,
+  Seo,
+} from "@/components"
 import { useAuth } from "@/context/User"
-
-const navigationLinks = [
-  { href: "/account/order", text: "Order history" },
-  { href: "/account/profile", text: "Account" },
-  { href: "/account/settings", text: "Settings" },
-]
 
 interface PageProps {}
 
@@ -36,25 +37,16 @@ export default function Page({}: PageProps): JSX.Element | null {
 
   return (
     <>
-      <Head>
-        <title>Profile</title>
-      </Head>
+      <Seo
+        seo={{
+          title: "Profile -",
+        }}
+      />
       <Main>
         <Section withPadding={false}>
           <Container>
             <Grid>
-              <ul className="col-span-12 flex gap-4">
-                {navigationLinks.map((link, index) => (
-                  <Button
-                    key={index}
-                    href={link.href}
-                    variant="tertiary"
-                    isActive={router.pathname === link.href}
-                  >
-                    {link.text}
-                  </Button>
-                ))}
-              </ul>
+              <AccountNavigation />
 
               <p className="col-span-12 mb-4">
                 {userDetails?.firstName} {userDetails?.lastName}

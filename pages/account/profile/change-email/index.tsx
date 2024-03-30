@@ -1,4 +1,3 @@
-import Head from "next/head"
 import { useRouter } from "next/router"
 import { useForm } from "react-hook-form"
 // @ts-ignore
@@ -6,24 +5,19 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import { useMutation } from "@apollo/client"
 import {
+  AccountNavigation,
+  BreadCrumb,
+  Container,
+  FormInputText,
+  Grid,
   Main,
   Section,
-  Container,
-  Grid,
-  Button,
-  FormInputText,
-  BreadCrumb,
+  Seo,
 } from "@/components"
 import { UPDATE_USER_EMAIL, USER_DETAILS } from "@/services/queries"
 import { useAuth } from "@/context/User"
 import { FormData } from "@/types"
 import { useToastOpen } from "@/context/Toast"
-
-const navigationLinks = [
-  { href: "/account/order", text: "Order history" },
-  { href: "/account/profile", text: "Account" },
-  { href: "/account/settings", text: "Settings" },
-]
 
 const schema = yup.object().shape({
   email: yup
@@ -96,29 +90,18 @@ export default function Page({}: PageProps): JSX.Element | null {
 
   return (
     <>
-      <Head>
-        <title>Change email</title>
-      </Head>
+      <Seo
+        seo={{
+          title: "Change Email -",
+        }}
+      />
       <Main>
         <Section withPadding={false}>
           <Container>
             <Grid>
-              <ul className="col-span-12 flex gap-4">
-                {navigationLinks.map((link, index) => (
-                  <Button
-                    key={index}
-                    href={link.href}
-                    variant="tertiary"
-                    isActive={router.pathname === link.href}
-                  >
-                    {link.text}
-                  </Button>
-                ))}
-              </ul>
+              <AccountNavigation />
 
-              <div className="col-span-full">
-                <BreadCrumb />
-              </div>
+              <BreadCrumb />
 
               <div className="col-span-5 mb-4">
                 <p>CHANGE E-MAIL</p>

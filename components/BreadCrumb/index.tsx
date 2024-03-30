@@ -22,7 +22,7 @@ export default function BreadCrumb({}) {
   const breadcrumbs = useBreadcrumbs()
 
   return (
-    <nav>
+    <nav className="col-span-full">
       {breadcrumbs.map((breadcrumb, index) => (
         <span key={index} className="capitalize">
           {index < breadcrumbs.length - 1 ? (

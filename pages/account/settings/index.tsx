@@ -1,21 +1,15 @@
-import Head from "next/head"
+import { useState } from "react"
+import Link from "next/link"
 import { useRouter } from "next/router"
 import {
+  AccountNavigation,
+  Container,
+  CookiesSettingModal,
+  Grid,
   Main,
   Section,
-  Container,
-  Grid,
-  Button,
-  CookiesSettingModal,
+  Seo,
 } from "@/components"
-import Link from "next/link"
-import { useState } from "react"
-
-const navigationLinks = [
-  { href: "/account/order", text: "Order history" },
-  { href: "/account/profile", text: "Account" },
-  { href: "/account/settings", text: "Settings" },
-]
 
 const SvgRight = () => (
   <svg
@@ -43,25 +37,16 @@ export default function Page({}: PageProps): JSX.Element | null {
 
   return (
     <>
-      <Head>
-        <title>Change email</title>
-      </Head>
+      <Seo
+        seo={{
+          title: "Settings -",
+        }}
+      />
       <Main>
         <Section withPadding={false}>
           <Container>
             <Grid>
-              <ul className="col-span-12 flex gap-4">
-                {navigationLinks.map((link, index) => (
-                  <Button
-                    key={index}
-                    href={link.href}
-                    variant="tertiary"
-                    isActive={router.pathname === link.href}
-                  >
-                    {link.text}
-                  </Button>
-                ))}
-              </ul>
+              <AccountNavigation />
 
               <div className="col-span-5 border border-black">
                 <Link
