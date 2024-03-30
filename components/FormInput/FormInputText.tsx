@@ -77,7 +77,7 @@ const FormInputText = forwardRef<HTMLInputElement, FormInputTextProps>(
         {error && (
           <div className="mt-1 flex items-center gap-2">
             <svg
-              className=" h-4 w-4"
+              className=" h-3.5 w-3.5"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -103,8 +103,7 @@ const FormInputText = forwardRef<HTMLInputElement, FormInputTextProps>(
                 className="stroke-red-500"
               />
             </svg>
-
-            <p className="text-red-500">{error.message}</p>
+            <p className="text-sm text-red-500">{error.message}</p>
           </div>
         )}
       </div>

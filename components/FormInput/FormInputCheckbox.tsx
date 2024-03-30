@@ -23,14 +23,43 @@ const FormInputCheckbox = forwardRef<HTMLInputElement, FormInputCheckboxProps>(
           ref={ref}
           {...rest}
         />
-
         {label && (
           <label htmlFor="link-checkbox" className="ml-2 text-sm font-medium">
             {label}
           </label>
         )}
-
-        {error && <p>{error.message}</p>}
+        {error && (
+          <div className="mt-1 flex items-center gap-2">
+            <svg
+              className=" h-3.5 w-3.5"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+                stroke-width="1.5"
+                className="stroke-red-500"
+              />
+              <path
+                d="M12 17V11"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                className="stroke-red-500"
+              />
+              <circle
+                cx="1"
+                cy="1"
+                r="1"
+                transform="matrix(1 0 0 -1 11 9)"
+                className="stroke-red-500"
+              />
+            </svg>
+            <p className="text-sm text-red-500">{error.message}</p>
+          </div>
+        )}{" "}
       </div>
     )
   }

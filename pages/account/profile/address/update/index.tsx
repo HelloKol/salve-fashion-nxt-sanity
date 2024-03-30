@@ -152,7 +152,6 @@ export default function Page({}: PageProps): JSX.Element | null {
                 onSubmit={handleSubmit(onSubmit)}
                 className="col-span-6 row-start-4"
               >
-                {/* <Grid> */}
                 <div className="mb-6">
                   <FormInputText
                     type="text"
@@ -248,6 +247,7 @@ export default function Page({}: PageProps): JSX.Element | null {
                 <button
                   className="col-span-12 mt-6 flex h-fit w-full shrink-0 items-center justify-center rounded-xl bg-[#171717] py-4 text-sm uppercase text-white"
                   type="submit"
+                  disabled={loading}
                 >
                   Save
                 </button>

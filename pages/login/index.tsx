@@ -114,6 +114,7 @@ export default function Page({ page }: props): JSX.Element | null {
                     <button
                       className="mt-6 flex h-fit w-full shrink-0 items-center justify-center rounded-md bg-[#171717] py-4 text-sm uppercase text-white"
                       type="submit"
+                      disabled={isLoading}
                     >
                       {isLoading ? "Loading...." : "LogIn"}
                     </button>
@@ -130,7 +131,7 @@ export default function Page({ page }: props): JSX.Element | null {
                     </Link>
 
                     {globalError && (
-                      <p className="mt-2 text-red-500">{globalError}</p>
+                      <p className="mt-2 text-sm text-red-500">{globalError}</p>
                     )}
                   </form>
                 </div>

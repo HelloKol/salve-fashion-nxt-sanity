@@ -359,6 +359,7 @@ export default function Page() {
                     className={`mb-4 mt-2 w-full`}
                     variant={"quaternary"}
                     type="submit"
+                    disabled={isLoading}
                   >
                     {isLoading ? "Loading...." : "Apply"}
                   </Button>

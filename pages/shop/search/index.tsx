@@ -7,6 +7,7 @@ import {
   Grid,
   Main,
   ProductItem,
+  ProductSkeleton,
   Section,
 } from "@/components"
 import { fetchProductsSearch } from "@/lib"
@@ -120,9 +121,7 @@ export default function Page() {
                 withRowGap={false}
               >
                 {isLoading ? (
-                  <h3 className="col-span-full text-center text-xl">
-                    Loading...
-                  </h3>
+                  <ProductSkeleton />
                 ) : !products.length ? (
                   <h3 className="col-span-full text-center text-xl">
                     <b className="mb-2 block">We're sorry,</b>

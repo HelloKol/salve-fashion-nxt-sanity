@@ -18,6 +18,7 @@ import {
 import { ADD_USER_ADDRESS, USER_DETAILS } from "@/services/queries"
 import { useAuth } from "@/context/User"
 import { AddressFormRecord } from "@/types"
+import { useToastOpen } from "@/context/Toast"
 
 const navigationLinks = [
   { href: "/account/order", text: "Order history" },
@@ -43,9 +44,6 @@ interface PageProps {}
 export default function Page({}: PageProps): JSX.Element | null {
   const router = useRouter()
   const { accessToken } = useAuth()
-  const [isLoading, setIsLoading] = useState(false)
-  const [isSucess, setIsSuccess] = useState(false)
-  const [globalError, setGlobalError] = useState("")
   const {
     register,
     handleSubmit,
@@ -54,16 +52,19 @@ export default function Page({}: PageProps): JSX.Element | null {
     resolver: yupResolver(schema),
   })
 
-  const [addNewAddress, {}] = useMutation(ADD_USER_ADDRESS, {
-    refetchQueries: [
-      {
-        query: USER_DETAILS,
-        variables: {
-          customerAccessToken: accessToken,
+  const [addNewAddress, { loading, error, data }] = useMutation(
+    ADD_USER_ADDRESS,
+    {
+      refetchQueries: [
+        {
+          query: USER_DETAILS,
+          variables: {
+            customerAccessToken: accessToken,
+          },
         },
-      },
-    ],
-  })
+      ],
+    }
+  )
 
   const onSubmit = async (data: AddressFormRecord) => {
     if (!accessToken) return
@@ -71,9 +72,34 @@ export default function Page({}: PageProps): JSX.Element | null {
       address: data,
       customerAccessToken: accessToken,
     }
-
     addNewAddress({ variables })
   }
+
+  const message = loading ? (
+    <>
+      <h4>Loading</h4>
+      <p>Updating details...</p>
+    </>
+  ) : error ? (
+    <>
+      <h4>Error</h4>
+      <p>{error?.message}</p>
+    </>
+  ) : (
+    !!data && (
+      <>
+        <h4>Success</h4>
+        <p>Details updated</p>
+      </>
+    )
+  )
+
+  useToastOpen(loading, !!error, !!data, () => null, {
+    description: message,
+    duration: 5000,
+    type: "foreground",
+    onClose: () => null,
+  })
 
   return (
     <>
@@ -205,14 +231,10 @@ export default function Page({}: PageProps): JSX.Element | null {
                 <button
                   className="col-span-12 mt-6 flex h-fit w-full shrink-0 items-center justify-center rounded-xl bg-[#171717] py-4 text-sm uppercase text-white"
                   type="submit"
+                  disabled={loading}
                 >
-                  {isLoading ? "Loading...." : "Save"}
+                  Save
                 </button>
-
-                {globalError && (
-                  <p className="mt-2 text-red-500">{globalError}</p>
-                )}
-                {/* </Grid> */}
               </form>
             </Grid>
           </Container>
