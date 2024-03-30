@@ -9,7 +9,7 @@ const ProductItem = ({ product, node }: any) => {
   return (
     <>
       <div
-        className={`group relative h-60 w-full overflow-hidden rounded-2xl sm:h-80 md:h-[500px] lg:h-[600px] xl:h-[700px]`}
+        className={`group relative h-60 w-full overflow-hidden rounded-md sm:h-80 md:h-[500px] lg:h-[600px] xl:h-[700px]`}
       >
         <ImageTag src={image.transformedSrc} />
         <div

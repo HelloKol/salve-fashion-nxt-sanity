@@ -3,7 +3,6 @@ import { GetStaticPropsResult } from "next/types"
 import Link from "next/link"
 import groq from "groq"
 import {
-  Button,
   Container,
   FormInputCheckbox,
   FormInputText,
@@ -76,8 +75,8 @@ export default function Page({ page }: props): JSX.Element | null {
                 />
               </div>
 
-              <div className="relative col-span-full md:col-start-4 md:col-end-10 lg:col-start-8 lg:col-end-13">
-                <div className="z-10 w-full rounded-2xl lg:absolute lg:left-1/2 lg:top-1/2 lg:w-9/12 lg:max-w-[500px] lg:-translate-x-1/2 lg:-translate-y-1/2 lg:p-4">
+              <div className="relative col-span-full mt-24 md:col-start-4 md:col-end-10 md:mt-28 lg:col-start-8 lg:col-end-13 lg:mt-0">
+                <div className="z-10 w-full lg:absolute lg:left-1/2 lg:top-1/2 lg:w-9/12 lg:max-w-[500px] lg:-translate-x-1/2 lg:-translate-y-1/2 ">
                   <p className="mb-6 text-3xl uppercase">
                     Login to your account
                   </p>

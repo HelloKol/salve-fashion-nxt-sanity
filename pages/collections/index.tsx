@@ -45,7 +45,7 @@ export default function Page({ page, collections }: Props) {
         <Link
           href={`/collections/${slug}`}
           key={slug}
-          className="max-w-screen relative m-4 block h-screen overflow-hidden rounded-3xl"
+          className="max-w-screen relative m-4 block h-screen overflow-hidden rounded-md"
           onMouseMove={handleMouseMove}
         >
           <h1

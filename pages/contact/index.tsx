@@ -30,11 +30,11 @@ export default function Page({ page }: props): JSX.Element | null {
         <Section withPadding={false}>
           <Container>
             <Grid>
-              <h1 className="col-span-full text-center text-5xl lg:text-6xl">
+              <h1 className="col-span-full text-center text-4xl md:text-5xl lg:text-6xl">
                 Contact our friendly team
               </h1>
 
-              <h3 className="col-span-full mt-4 text-center text-xl">
+              <h3 className="col-span-full mb-8 text-center text-xl lg:mb-10">
                 Let us know how we can help.
               </h3>
 
@@ -42,9 +42,11 @@ export default function Page({ page }: props): JSX.Element | null {
                 <span className="block w-min rounded-2xl border border-gray-400 p-2">
                   <MessageSmile className="h-8 rounded-2xl fill-[#E9EBE0]" />
                 </span>
-                <p className="mt-16 text-xl font-semibold">Chat to sales</p>
+                <p className="mt-10 text-xl font-semibold lg:mt-16">
+                  Chat to sales
+                </p>
                 <p className="mt-3 text-sm">Speak to our friendly team.</p>
-                <Link href={`/`} className="mt-5 block">
+                <Link href={`/`} className="text-deepPurple mt-5 block">
                   sales@example.com
                 </Link>
               </div>
@@ -52,9 +54,11 @@ export default function Page({ page }: props): JSX.Element | null {
                 <span className="block w-min rounded-2xl border border-gray-400 p-2">
                   <MessageChat className="h-8 rounded-2xl fill-[#E9EBE0]" />
                 </span>
-                <p className="mt-16 text-xl font-semibold">Chat to support</p>
+                <p className="mt-10 text-xl font-semibold lg:mt-16">
+                  Chat to support
+                </p>
                 <p className="mt-3 text-sm">We`re here to help.</p>
-                <Link href={`/`} className="mt-5 block">
+                <Link href={`/`} className="text-deepPurple mt-5 block">
                   sales@example.com
                 </Link>
               </div>
@@ -62,9 +66,9 @@ export default function Page({ page }: props): JSX.Element | null {
                 <span className="block w-min rounded-2xl border border-gray-400 p-2">
                   <Location className="h-8 rounded-2xl fill-[#E9EBE0]" />
                 </span>
-                <p className="mt-16 text-xl font-semibold">Visit us</p>
+                <p className="mt-10 text-xl font-semibold lg:mt-16">Visit us</p>
                 <p className="mt-3 text-sm">Visit our office HQ.</p>
-                <Link href={`/`} className="mt-5 block">
+                <Link href={`/`} className="text-deepPurple mt-5 block">
                   sales@example.com
                 </Link>
               </div>
@@ -72,9 +76,9 @@ export default function Page({ page }: props): JSX.Element | null {
                 <span className="block w-min rounded-2xl border border-gray-400 p-2">
                   <Phone className="h-8 rounded-2xl fill-[#E9EBE0]" />
                 </span>
-                <p className="mt-16 text-xl font-semibold">Call us</p>
+                <p className="mt-10 text-xl font-semibold lg:mt-16">Call us</p>
                 <p className="mt-3 text-sm">Mon-Fri from 9am to 5am</p>
-                <Link href={`/`} className="mt-5 block">
+                <Link href={`/`} className="text-deepPurple mt-5 block">
                   sales@example.com
                 </Link>
               </div>
@@ -82,10 +86,10 @@ export default function Page({ page }: props): JSX.Element | null {
           </Container>
         </Section>
 
-        <Section withPadding={false}>
+        <Section>
           <Container>
             <Grid>
-              <h1 className="md:text-md col-span-full text-center text-3xl lg:mt-14">
+              <h1 className="md:text-md col-span-full text-center text-3xl">
                 Frequently asked questions
               </h1>
               <div className="col-span-full lg:col-start-3 lg:col-end-11 xl:col-start-4 xl:col-end-10">

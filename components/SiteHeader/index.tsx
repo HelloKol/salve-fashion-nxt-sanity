@@ -11,11 +11,15 @@ import { useWindowDimension } from "@/hooks"
 const SiteHeader = () => {
   const router = useRouter()
   const { isAuthenticated } = useAuth()
-  const { isCartOpen, setIsCartOpen, cart } = useShoppingCart()
+  const {
+    cart,
+    isCartOpen,
+    isSearchModalOpen,
+    setIsCartOpen,
+    setIsSearchModalOpen,
+  } = useShoppingCart()
   const isHeaderCollapsed = useHeaderCollapse()
-  const { isOpen, setIsOpen } = useDialogBox()
-  const { isMobile, isMobileLarge, isTablet, isDesktop, isWidescreen } =
-    useWindowDimension()
+  const { isDesktop, isWidescreen } = useWindowDimension()
 
   const isLandingPage =
     router?.asPath === "/" || router?.asPath.includes("/collections")
@@ -90,13 +94,12 @@ const SiteHeader = () => {
                   >
                     Contact
                   </Link>
-                  <Button variant="primary" onClick={() => setIsOpen(true)}>
+                  <Button
+                    variant="primary"
+                    onClick={() => setIsSearchModalOpen(true)}
+                  >
                     Search
                   </Button>
-                  <SearchPopup
-                    isSearchOpen={isOpen}
-                    setIsSearchOpen={setIsOpen}
-                  />
                   <Button variant="primary" onClick={handleCartOpen}>
                     Bag ({`${cart?.cart?.lines?.nodes?.length || 0}`})
                   </Button>
@@ -106,8 +109,13 @@ const SiteHeader = () => {
           </nav>
         </header>
       ) : (
-        <MobileDraw />
+        <MobileDraw setIsSearchModalOpen={setIsSearchModalOpen} />
       )}
+
+      <SearchPopup
+        isSearchModalOpen={isSearchModalOpen}
+        setIsSearchModalOpen={setIsSearchModalOpen}
+      />
     </>
   )
 }

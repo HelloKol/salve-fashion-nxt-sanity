@@ -8,13 +8,16 @@ import { graphqlClient } from "@/utils"
 import { SEARCH_QUERY_PREDICTIVE } from "@/services/queries"
 
 interface props {
-  isSearchOpen: boolean
-  setIsSearchOpen: (isOpen: boolean) => void
+  isSearchModalOpen: boolean
+  setIsSearchModalOpen: (isOpen: boolean) => void
 }
 
-export default function SearchPopup({ isSearchOpen, setIsSearchOpen }: props) {
+export default function SearchPopup({
+  isSearchModalOpen,
+  setIsSearchModalOpen,
+}: props) {
   const { register, handleSubmit, globalError, onSubmit } =
-    useSearchForm(setIsSearchOpen)
+    useSearchForm(setIsSearchModalOpen)
   const { searchModal } = settings
   const { mostSearchedProducts, predictiveSearchQuery } = searchModal
 
@@ -31,7 +34,7 @@ export default function SearchPopup({ isSearchOpen, setIsSearchOpen }: props) {
   const renderMostSearchedTerms = () =>
     mostSearchedProducts.map((term: string) => {
       return (
-        <li onClick={() => setIsSearchOpen(false)}>
+        <li onClick={() => setIsSearchModalOpen(false)}>
           <Link
             className="md:text-md col-span-full uppercase sm:text-sm"
             href={`/shop/search?title=${term}`}
@@ -45,13 +48,13 @@ export default function SearchPopup({ isSearchOpen, setIsSearchOpen }: props) {
   return (
     <RadixDialog
       variant={"search"}
-      isOpen={isSearchOpen}
-      setIsOpen={setIsSearchOpen}
+      isOpen={isSearchModalOpen}
+      setIsOpen={setIsSearchModalOpen}
     >
       <Container className="py-10 md:py-12 lg:py-14">
         <button
           className="ml-auto block cursor-pointer"
-          onClick={() => setIsSearchOpen(false)}
+          onClick={() => setIsSearchModalOpen(false)}
         >
           <svg
             className="h-8 w-8 text-black"

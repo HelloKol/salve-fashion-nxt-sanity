@@ -1,10 +1,8 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { GetStaticPropsResult } from "next/types"
-import Link from "next/link"
 import groq from "groq"
 import {
   Container,
-  ResetPassword,
   Grid,
   ImageTag,
   Main,
@@ -14,12 +12,15 @@ import {
 } from "@/components"
 import { useDialogBox, useResetPasswordForm } from "@/hooks"
 import { useToastOpen } from "@/context/Toast"
-import { graphqlClient, sanityClient } from "@/utils"
-import { gql } from "@apollo/client"
+import { sanityClient } from "@/utils"
 
-interface props {}
+interface props {
+  page: any
+}
 
-export default function Page({}: props): JSX.Element | null {
+export default function Page({ page }: props): JSX.Element | null {
+  if (!page) return null
+  const { image, seo } = page
   const resetPasswordToast = useDialogBox()
   const {
     register,
@@ -59,16 +60,21 @@ export default function Page({}: props): JSX.Element | null {
 
   return (
     <>
+      <Seo seo={seo} />
       <Main withPadding={false}>
         <Section withPadding={false}>
           <Container>
             <Grid className="lg:min-h-screen">
               <div className="col-span-full h-full w-full lg:col-end-8">
-                <ImageTag src="/static/images/product1.jpg" />
+                <ImageTag
+                  src={image.asset.url}
+                  blurDataURL={image.asset.metadata.lqip}
+                  placeholder="blur"
+                />
               </div>
 
-              <div className="relative col-span-full md:col-start-4 md:col-end-10 lg:col-start-8 lg:col-end-13">
-                <div className="z-10 w-full rounded-2xl lg:absolute lg:left-1/2 lg:top-1/2 lg:w-9/12 lg:max-w-[500px] lg:-translate-x-1/2 lg:-translate-y-1/2 lg:p-4">
+              <div className="relative col-span-full mt-24 md:col-start-4 md:col-end-10 md:mt-28 lg:col-start-8 lg:col-end-13 lg:mt-0">
+                <div className="z-10 w-full lg:absolute lg:left-1/2 lg:top-1/2 lg:w-9/12 lg:max-w-[500px] lg:-translate-x-1/2 lg:-translate-y-1/2 ">
                   <p className="mb-6 text-3xl uppercase">Reset your password</p>
 
                   <form onSubmit={handleSubmit(onSubmit)}>
@@ -102,4 +108,44 @@ export default function Page({}: props): JSX.Element | null {
       </Main>
     </>
   )
+}
+
+export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
+  try {
+    const page: any = await sanityClient.fetch(
+      groq`*[_type == "resetPassword" && !(_id in path('drafts.**'))][0] {
+        title,
+        subtitle,
+        contentTitle,
+        image {
+          _type,
+          asset->{
+            _id,
+            url,
+            metadata{
+              lqip
+            }
+          }
+        },
+        seo
+      }
+    `
+    )
+
+    if (!page)
+      return {
+        notFound: true,
+      }
+
+    return {
+      props: {
+        page,
+      },
+      revalidate: 30,
+    }
+  } catch (err) {
+    return {
+      notFound: true,
+    }
+  }
 }

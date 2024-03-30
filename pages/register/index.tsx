@@ -75,8 +75,8 @@ export default function Page({ page }: props): JSX.Element | null {
                 />
               </div>
 
-              <div className="relative col-span-full md:col-start-4 md:col-end-10 lg:col-start-8 lg:col-end-13">
-                <div className="z-10 w-full rounded-2xl lg:absolute lg:left-1/2 lg:top-1/2 lg:w-9/12 lg:max-w-[500px] lg:-translate-x-1/2 lg:-translate-y-1/2 lg:p-4">
+              <div className="relative col-span-full mt-24 md:col-start-4 md:col-end-10 md:mt-28 lg:col-start-8 lg:col-end-13 lg:mt-0">
+                <div className="z-10 w-full rounded-2xl lg:absolute lg:left-1/2 lg:top-1/2 lg:w-9/12 lg:max-w-[500px] lg:-translate-x-1/2 lg:-translate-y-1/2 ">
                   <p className="mb-6 text-3xl uppercase">Register account</p>
 
                   <form onSubmit={handleSubmit(onSubmit)}>
@@ -139,16 +139,18 @@ export default function Page({ page }: props): JSX.Element | null {
                     <div className="mt-6 flex items-center">
                       <FormInputCheckbox
                         label={
-                          <div>
-                            I have read and agree to the{" "}
-                            <Link href={"/pages/terms-of-service"}>
-                              Terms Of Service
-                            </Link>{" "}
-                            and{" "}
-                            <Link href={"/pages/privacy-policy"}>
-                              Privacy Policy
-                            </Link>
-                          </div>
+                          <article>
+                            <p className="mb-0">
+                              I have read and agree to the{" "}
+                              <Link href={"/pages/terms-of-service"}>
+                                Terms Of Service
+                              </Link>{" "}
+                              and{" "}
+                              <Link href={"/pages/privacy-policy"}>
+                                Privacy Policy
+                              </Link>
+                            </p>
+                          </article>
                         }
                         {...register("acceptPrivacy")}
                         error={errors.acceptPrivacy}

@@ -9,6 +9,16 @@ body {
   background-color: #e9ebe0;
 }
 
+article {
+  a {
+    color: #1147e0;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
 a.primary,
 a.secondary,
 a.tertiary {

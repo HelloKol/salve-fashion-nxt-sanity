@@ -75,7 +75,7 @@ const FormInputText = forwardRef<HTMLInputElement, FormInputTextProps>(
         ) : null}
 
         {error && (
-          <div className="mt-1 flex items-center gap-2">
+          <div className="mt-1 flex items-center gap-2 text-red-500">
             <svg
               className=" h-3.5 w-3.5"
               viewBox="0 0 24 24"

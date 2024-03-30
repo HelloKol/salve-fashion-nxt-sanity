@@ -70,7 +70,7 @@ export default function Page({}: PageProps): JSX.Element | null {
             </Link>
           </div>
 
-          <div className="h-[600px] overflow-hidden rounded-2xl">
+          <div className="h-[600px] overflow-hidden rounded-md">
             <ImageTag src={image} />
           </div>
         </div>

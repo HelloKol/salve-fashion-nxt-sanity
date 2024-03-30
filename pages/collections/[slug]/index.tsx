@@ -49,44 +49,38 @@ export default function Page({ page, collectionByHandle }: props) {
   return (
     <>
       <Seo seo={seo} />
-      <Main withPadding={false}>
+      <Main>
         <Section withPadding={false}>
           <Container>
-            <div className="relative col-span-full my-4 h-[330px] w-full overflow-hidden rounded-3xl sm:h-[250px] md:h-[350px] lg:h-[500px] xl:h-[600px]">
-              <ImageTag src={imageUrl} />
+            <Grid withRowGap={false}>
+              <h1 className="text-deepPurple col-span-full mb-7 text-center text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
+                {title}
+              </h1>
 
-              <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full bg-black bg-opacity-60 ">
-                <div className="absolute bottom-0 top-1/2 flex max-w-4xl -translate-y-1/2 flex-col justify-center px-4 bg-blend-overlay sm:px-14 md:px-36 lg:left-1/2 lg:max-w-2xl lg:-translate-x-1/2 lg:px-0">
-                  <h1 className="text-center text-3xl uppercase text-white sm:text-4xl md:text-5xl lg:text-6xl">
-                    {title}
-                  </h1>
-
-                  <article
-                    className="text-center text-sm text-white md:mt-2 md:text-lg lg:mt-4 lg:text-xl"
-                    dangerouslySetInnerHTML={{ __html: descriptionHtml }}
-                  />
-                </div>
+              <div className="text-md col-span-full mb-8 text-center">
+                <article
+                  dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+                />
               </div>
-            </div>
 
-            <Grid
-              as={"ul"}
-              className="col-span-full mt-4 xl:mt-8"
-              withRowGap={false}
-            >
-              <p className="col-span-full mb-4 text-sm font-bold lg:mb-6 xl:mb-8">
-                {!!products?.edges.length
-                  ? `${products.edges.length} products`
-                  : ``}
-              </p>
-              {!products?.edges.length ? (
-                <h3 className="col-span-full text-center text-xl">
-                  <b className="mb-2 block">We're sorry,</b>
-                  We can't seem to find any results
-                </h3>
-              ) : (
-                renderProducts()
-              )}
+              <div className="col-span-full mb-8 h-screen w-full overflow-hidden rounded-md xl:mb-14">
+                <ImageTag src={imageUrl} />
+              </div>
+
+              <Grid
+                as={"ul"}
+                className="col-span-full mt-4 xl:mt-8"
+                withRowGap={false}
+              >
+                {!products?.edges.length ? (
+                  <h3 className="col-span-full text-center text-xl">
+                    <b className="mb-2 block">We're sorry,</b>
+                    We can't seem to find any results
+                  </h3>
+                ) : (
+                  renderProducts()
+                )}
+              </Grid>
             </Grid>
           </Container>
         </Section>

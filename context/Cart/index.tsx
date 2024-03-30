@@ -16,6 +16,7 @@ import {
   GET_LAST_CHECKOUT_ID,
 } from "@/services/queries/cart"
 import { UPDATE_QUANTITY, REMOVE_FROM_CART } from "@/services/queries"
+import { useDialogBox } from "@/hooks"
 
 type ProviderProps = {
   children: ReactNode | ReactNode[]
@@ -30,6 +31,8 @@ type CartItem = {
 type ShoppingCartContextProps = {
   cart: any
   cartId: string
+  isSearchModalOpen: boolean
+  setIsSearchModalOpen: (isOpen: boolean) => void
   toggleProductView: string
   setToggleProductView: (isOpen: string) => void
   isCartOpen: boolean
@@ -59,6 +62,7 @@ export const ShoppingCartProvider = ({ children }: ProviderProps) => {
 
 function ShoppingCartHooks() {
   const userToken = useUserToken()
+  const { isOpen, setIsOpen } = useDialogBox()
   const [toggleProductView, setToggleProductView] = useState("big")
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [cartItems, setCartItems] = useState<CartItem[]>([])
@@ -98,8 +102,6 @@ function ShoppingCartHooks() {
       },
     ],
   })
-
-  console.log(loading, error, cart)
 
   useEffect(() => {
     refetch()
@@ -232,6 +234,8 @@ function ShoppingCartHooks() {
   return {
     cart,
     cartId: currentCartID,
+    isSearchModalOpen: isOpen,
+    setIsSearchModalOpen: setIsOpen,
     toggleProductView,
     setToggleProductView,
     isCartOpen,

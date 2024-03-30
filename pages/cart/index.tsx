@@ -1,6 +1,8 @@
+import { GetStaticPropsResult } from "next"
+import { useRouter } from "next/router"
 import Link from "next/link"
-import React from "react"
-import { useState } from "react"
+import React, { useState } from "react"
+import groq from "groq"
 import { useForm } from "react-hook-form"
 import { useMutation } from "@apollo/client"
 // @ts-ignore
@@ -14,19 +16,26 @@ import {
   ImageTag,
   Main,
   Section,
+  Seo,
 } from "@/components"
 import Bag from "@/components/svg/Bag"
 import { useShoppingCart } from "@/context/Cart"
 import { ADD_DISCOUNT_TO_CART, GET_CART } from "@/services/queries/cart"
-import { useRouter } from "next/router"
 import { useCopyToClipboard } from "@/hooks"
 import { useToastOpen } from "@/context/Toast"
+import { sanityClient } from "@/utils"
 
 const schema = yup.object().shape({
   discountCode: yup.string().required("Enter a discount code"),
 })
 
-export default function Page() {
+interface props {
+  page: any
+}
+
+export default function Page({ page }: props): JSX.Element | null {
+  if (!page) return null
+  const { seo } = page
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [isSucess, setIsSuccess] = useState(false)
@@ -180,7 +189,7 @@ export default function Page() {
       return (
         <div key={id} className="mb-8 flex gap-6 lg:mb-10">
           <Link
-            className="mb-0 h-44 w-36 flex-none lg:h-56 lg:w-44"
+            className="mb-0 h-44 w-36 flex-none overflow-hidden rounded-md lg:h-56 lg:w-44"
             href={`/shop/product/${handle}`}
           >
             <ImageTag src={image?.originalSrc} />
@@ -298,6 +307,7 @@ export default function Page() {
 
   return (
     <>
+      <Seo seo={seo} />
       <Main>
         <Section withPadding={false}>
           <Container>
@@ -415,4 +425,31 @@ export default function Page() {
       </Main>
     </>
   )
+}
+
+export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
+  try {
+    const page: any = await sanityClient.fetch(
+      groq`*[_type == "cart" && !(_id in path('drafts.**'))][0] {
+        seo
+      }
+    `
+    )
+
+    if (!page)
+      return {
+        notFound: true,
+      }
+
+    return {
+      props: {
+        page,
+      },
+      revalidate: 30,
+    }
+  } catch (err) {
+    return {
+      notFound: true,
+    }
+  }
 }

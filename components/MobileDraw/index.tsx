@@ -2,8 +2,8 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { useState, useEffect } from "react"
 import { useShoppingCart } from "@/context/Cart"
-import { Container, SearchPopup } from "@/components"
-import { useDialogBox, useHeaderCollapse } from "@/hooks"
+import { Container } from "@/components"
+import { useHeaderCollapse } from "@/hooks"
 import FullLogoStack from "@/components/svg/FullLogoStack"
 import User from "@/components/svg/User"
 import Close from "@/components/svg/Close"
@@ -12,13 +12,17 @@ import Search from "@/components/svg/Search"
 import Bag from "@/components/svg/Bag"
 import styles from "./styles.module.scss"
 
-const MobileDraw = () => {
+interface props {
+  setIsSearchModalOpen: (isOpen: boolean) => void
+}
+
+const MobileDraw = ({ setIsSearchModalOpen }: props) => {
   const router = useRouter()
-  const { isOpen, setIsOpen } = useDialogBox()
   const isHeaderCollapsed = useHeaderCollapse()
   const { isCartOpen, setIsCartOpen, cart } = useShoppingCart()
   const [isMobileDrawActive, setIsMobileDrawActive] = useState(false)
-  const isLandingPage = router?.asPath === "/"
+  const isLandingPage =
+    router?.asPath === "/" || router?.asPath.includes("/collections")
   const headerClasses = `${styles.mobileDrawHeader} ${
     isHeaderCollapsed || !isLandingPage ? styles.scrolled : ""
   }`
@@ -42,12 +46,11 @@ const MobileDraw = () => {
                 <User className="h-5 w-5 fill-black" />
               </Link>
               <button
-                onClick={() => setIsOpen(true)}
+                onClick={() => setIsSearchModalOpen(true)}
                 className={styles.searchBtn}
               >
                 <Search />
               </button>
-              <SearchPopup isSearchOpen={isOpen} setIsSearchOpen={setIsOpen} />
             </div>
 
             <div className={styles.iconMiddle}>
