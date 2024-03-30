@@ -26,8 +26,8 @@ export default function Page({ page }: props): JSX.Element | null {
   return (
     <>
       <Seo seo={seo} />
-      <Main withPadding>
-        <Section>
+      <Main>
+        <Section withPadding={false}>
           <Container>
             <Grid>
               <h1 className="col-span-full text-center text-5xl lg:text-6xl">

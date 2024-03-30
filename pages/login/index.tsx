@@ -23,7 +23,7 @@ interface props {
 
 export default function Page({ page }: props): JSX.Element | null {
   if (!page) return null
-  const { seo } = page
+  const { image, seo } = page
   const loginToast = useDialogBox()
   const {
     register,
@@ -69,11 +69,15 @@ export default function Page({ page }: props): JSX.Element | null {
           <Container>
             <Grid className="lg:min-h-screen">
               <div className="col-span-full h-full w-full lg:col-end-8">
-                <ImageTag src="/static/images/product1.jpg" />
+                <ImageTag
+                  src={image.asset.url}
+                  blurDataURL={image.asset.metadata.lqip}
+                  placeholder="blur"
+                />
               </div>
 
               <div className="relative col-span-full md:col-start-4 md:col-end-10 lg:col-start-8 lg:col-end-13">
-                <div className="z-10 w-8/12 w-full rounded-2xl lg:absolute lg:left-1/2 lg:top-1/2 lg:w-9/12 lg:max-w-[500px] lg:-translate-x-1/2 lg:-translate-y-1/2 lg:p-4">
+                <div className="z-10 w-full rounded-2xl lg:absolute lg:left-1/2 lg:top-1/2 lg:w-9/12 lg:max-w-[500px] lg:-translate-x-1/2 lg:-translate-y-1/2 lg:p-4">
                   <p className="mb-6 text-3xl uppercase">
                     Login to your account
                   </p>
@@ -146,6 +150,16 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
         title,
         subtitle,
         contentTitle,
+        image {
+          _type,
+          asset->{
+            _id,
+            url,
+            metadata{
+              lqip
+            }
+          }
+        },
         seo
       }
     `

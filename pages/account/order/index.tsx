@@ -82,8 +82,8 @@ export default function Page({}: PageProps): JSX.Element | null {
       <Head>
         <title>Orders</title>
       </Head>
-      <Main withPadding>
-        <Section>
+      <Main>
+        <Section withPadding={false}>
           <Container>
             <Grid>
               <ul className="col-span-full mb-20 flex gap-4 ">

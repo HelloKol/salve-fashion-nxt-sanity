@@ -80,8 +80,8 @@ export default function Page({}: PageProps): JSX.Element | null {
       <Head>
         <title>Add address</title>
       </Head>
-      <Main withPadding>
-        <Section>
+      <Main>
+        <Section withPadding={false}>
           <Container>
             <Grid>
               <ul className="col-span-12 flex gap-4">

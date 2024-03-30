@@ -208,8 +208,8 @@ export default function Page({
   return (
     <>
       <Seo seo={seo} />
-      <Main withPadding={false}>
-        <Section>
+      <Main>
+        <Section withPadding={false}>
           <Container>
             <Grid>
               <div className="col-span-full md:col-end-7 lg:col-start-1 lg:col-end-8 lg:px-4 xl:col-start-2 xl:col-end-7 xl:px-6">

@@ -100,7 +100,7 @@ export default function Page() {
         <Section withPadding={false}>
           <Container>
             <Grid>
-              <h1 className="col-span-full mt-10 text-3xl md:text-5xl xl:mt-20">
+              <h1 className="col-span-full text-3xl md:text-5xl">
                 {router.query.title
                   ? `Search results for "${router.query.title}"`
                   : `All Products`}

@@ -85,7 +85,7 @@ export default function ShopIndex({
   return (
     <>
       <Grid>
-        <h1 className="col-span-full mt-10 text-center text-3xl uppercase md:text-5xl xl:mt-20">
+        <h1 className="col-span-full text-center text-3xl uppercase md:text-5xl">
           {title}
         </h1>
 

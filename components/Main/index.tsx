@@ -13,7 +13,7 @@ export default function index({
 }: Props) {
   return (
     <main
-      className={`${withPadding ? `py-24` : ``} ${className || ""} min-h-screen`}
+      className={`${withPadding ? `pt-24 md:pt-28 lg:pt-36` : ``} ${className || ""} min-h-screen`}
     >
       {children}
     </main>

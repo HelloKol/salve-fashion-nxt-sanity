@@ -299,7 +299,7 @@ export default function Page() {
   return (
     <>
       <Main>
-        <Section>
+        <Section withPadding={false}>
           <Container>
             <Grid>
               <button

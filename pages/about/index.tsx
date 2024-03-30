@@ -16,7 +16,7 @@ export default function Page({ page }: props): JSX.Element | null {
     <>
       <Seo seo={seo} />
       <Main>
-        <Section>
+        <Section withPadding={false}>
           <Container>
             <Grid>
               <h1 className="col-span-full text-center text-5xl uppercase lg:text-6xl">
@@ -95,7 +95,7 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
       groq`*[_type == "about" && !(_id in path('drafts.**'))][0] {
       title,
       slug,
-      image{
+      image {
         _type,
         asset->{
           _id,

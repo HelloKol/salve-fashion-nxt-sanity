@@ -13,7 +13,7 @@ export default function Section({
 }: Props) {
   return (
     <section
-      className={`${withPadding ? `py-[120px]` : ``} ${className || ""}`}
+      className={`${withPadding ? `md:py-34 py-24` : ``} ${className || ""}`}
     >
       {children}
     </section>

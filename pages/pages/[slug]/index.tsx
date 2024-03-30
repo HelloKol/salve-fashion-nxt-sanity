@@ -24,7 +24,7 @@ export default function Page({ page }: props) {
         <title>Pages</title>
       </Head>
       <Main>
-        <Section>
+        <Section withPadding={false}>
           <Container>
             <Grid>
               <h1 className="col-span-full text-4xl md:col-start-3 md:col-end-11">

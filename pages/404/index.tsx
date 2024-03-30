@@ -17,7 +17,7 @@ export default function Page({ page }: { page: any }): JSX.Element | null {
       <Head>
         <title>{title}</title>
       </Head>
-      <Main withPadding={true}>
+      <Main>
         <Section>
           <Container>
             <h1>{title}</h1>

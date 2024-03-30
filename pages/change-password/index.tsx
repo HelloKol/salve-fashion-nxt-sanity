@@ -59,7 +59,7 @@ export default function Page({}: props): JSX.Element | null {
 
   return (
     <>
-      <Main withPadding={false}>
+      <Main>
         <Section withPadding={false}>
           <Container>
             <Grid className="lg:min-h-screen">
@@ -68,7 +68,7 @@ export default function Page({}: props): JSX.Element | null {
               </div>
 
               <div className="relative col-span-full md:col-start-4 md:col-end-10 lg:col-start-8 lg:col-end-13">
-                <div className="z-10 w-8/12 w-full rounded-2xl lg:absolute lg:left-1/2 lg:top-1/2 lg:w-9/12 lg:max-w-[500px] lg:-translate-x-1/2 lg:-translate-y-1/2 lg:p-4">
+                <div className="z-10 w-full rounded-2xl lg:absolute lg:left-1/2 lg:top-1/2 lg:w-9/12 lg:max-w-[500px] lg:-translate-x-1/2 lg:-translate-y-1/2 lg:p-4">
                   <p className="mb-6 text-3xl uppercase">Change password</p>
 
                   <form onSubmit={handleSubmit(onSubmit)}>
