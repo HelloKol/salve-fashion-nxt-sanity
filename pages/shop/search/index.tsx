@@ -7,8 +7,6 @@ import {
   Grid,
   Main,
   ProductItem,
-  RadixPopover,
-  RadixSlider,
   Section,
 } from "@/components"
 import { fetchProductsSearch } from "@/lib"

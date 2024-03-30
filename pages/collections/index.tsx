@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import Head from "next/head"
 import groq from "groq"
-import { ImageTag, Main, Section } from "@/components"
+import { ImageTag, Main, Section, Seo } from "@/components"
 import { sanityClient } from "@/utils"
 import { GetStaticPropsResult } from "next/types"
 import Link from "next/link"
@@ -15,19 +15,29 @@ interface Collection {
 }
 
 interface Props {
-  page: Collection[]
+  page: {
+    title: string
+    seo: {
+      title: string
+      description: string
+      image: string
+    }
+  }
+  collections: Collection[]
 }
 
-export default function Page({ page }: Props) {
+export default function Page({ page, collections }: Props) {
   const [titlePosition, setTitlePosition] = useState({ x: 0, y: 0 })
   if (!page) return null
+  const { seo } = page
 
   const handleMouseMove = (event: React.MouseEvent<HTMLAnchorElement>) => {
     setTitlePosition({ x: event.clientX, y: event.clientY })
   }
 
   const renderCollection = () =>
-    page.map((collection) => {
+    collections &&
+    collections.map((collection) => {
       const { store } = collection
       const { title, slug, imageUrl } = store
 
@@ -54,9 +64,7 @@ export default function Page({ page }: Props) {
 
   return (
     <>
-      <Head>
-        <title>Collection</title>
-      </Head>
+      <Seo seo={seo} />
       <Main withPadding={false}>
         <Section withPadding={false}>{renderCollection()}</Section>
       </Main>
@@ -67,18 +75,26 @@ export default function Page({ page }: Props) {
 export async function getStaticProps(): Promise<GetStaticPropsResult<Props>> {
   try {
     const page = await sanityClient.fetch(
+      groq`*[_type == "collectionIndex" && !(_id in path('drafts.**'))][0] {
+          title,
+          seo
+      }`
+    )
+
+    const collections = await sanityClient.fetch(
       groq`*[_type == "collection" && !(_id in path('drafts.**'))] {
          store {
           title,
           "slug": slug.current,
           imageUrl
-         }
+         },
       }`
     )
 
     return {
       props: {
         page,
+        collections,
       },
       revalidate: 30,
     }

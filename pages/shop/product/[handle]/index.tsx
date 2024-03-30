@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import groq from "groq"
 // @ts-ignore
 import { useSpringCarousel } from "react-spring-carousel"
 import {
@@ -11,6 +12,7 @@ import {
   Main,
   RadixAccordion,
   Section,
+  Seo,
 } from "@/components"
 import styles from "./styles.module.scss"
 import { GetStaticPaths, GetStaticProps } from "next/types"
@@ -20,20 +22,22 @@ import {
   SEARCH_QUERY_PREDICTIVE,
   SINGLE_PRODUCT_BY_HANDLE,
 } from "@/services/queries"
-import { graphqlClient } from "@/utils"
+import { graphqlClient, sanityClient } from "@/utils"
 import PRODUCT_ACCORDION from "../../../../utils/productAccordion"
 
 export interface ProductProps {
-  page: {
-    productByHandle: any
-    predictiveProducts: any
-  }
+  page: any
+  productByHandle: any
+  predictiveProducts: any
 }
 
-export default function Page({ page }: ProductProps): JSX.Element | null {
-  if (!page) return null
-  const { productByHandle, predictiveProducts } = page
-  if (!productByHandle) return null
+export default function Page({
+  page,
+  productByHandle,
+  predictiveProducts,
+}: ProductProps): JSX.Element | null {
+  if (!page || !productByHandle) return null
+  const { seo } = page
   const { predictiveSearch } = predictiveProducts
   const { product } = productByHandle
   const { title, descriptionHtml, images, variants } = product
@@ -54,8 +58,6 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
   const [selectedSize, setSelectedSize] = useState(null)
   const [selectedColor, setSelectedColor] = useState(null)
   const [selectedVariant, setSelectedVariant] = useState(null)
-
-  console.log("productByHandle", productByHandle)
 
   // // Create a list of unique colors and sizes
   const colors = [
@@ -205,6 +207,7 @@ export default function Page({ page }: ProductProps): JSX.Element | null {
 
   return (
     <>
+      <Seo seo={seo} />
       <Main withPadding={false}>
         <Section>
           <Container>
@@ -342,6 +345,17 @@ export const getStaticProps: GetStaticProps<
 
   try {
     const { handle } = params
+
+    const page = await sanityClient.fetch(
+      groq`*[_type == "product" && store.slug.current == $slug && !(_id in path('drafts.**'))][0] {
+        store {
+          title
+        },
+        seo
+      }`,
+      { slug: handle }
+    )
+
     const variables = {
       handle,
     }
@@ -351,22 +365,18 @@ export const getStaticProps: GetStaticProps<
       variables
     )
 
-    const firstVariantTitle =
-      productByHandle?.product?.variants?.edges?.[0]?.node?.title
-
     const predictiveProducts = await graphqlClient.request(
       SEARCH_QUERY_PREDICTIVE,
       {
-        query: firstVariantTitle || ``,
+        query: page.store.title || ``,
       }
     )
 
     return {
       props: {
-        page: {
-          productByHandle,
-          predictiveProducts,
-        },
+        page,
+        productByHandle,
+        predictiveProducts,
       },
     }
   } catch (error) {

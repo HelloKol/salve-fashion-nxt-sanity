@@ -8,6 +8,9 @@ interface VideoPlayerProps {
     previewImage: {
       asset: {
         url: string
+        metadata: {
+          lqip: string
+        }
       }
     }
   }

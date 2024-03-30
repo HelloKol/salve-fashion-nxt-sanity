@@ -1,5 +1,4 @@
 import React from "react"
-import Head from "next/head"
 import groq from "groq"
 import {
   Container,
@@ -8,6 +7,7 @@ import {
   Main,
   Section,
   ProductItem,
+  Seo,
 } from "@/components"
 import { graphqlClient, sanityClient } from "@/utils"
 import { GetStaticPropsResult } from "next/types"
@@ -20,7 +20,7 @@ interface props {
 
 export default function Page({ page, collectionByHandle }: props) {
   if (!page) return null
-  const { store } = page
+  const { store, seo } = page
   const { collection } = collectionByHandle
   const { products } = collection
   const { title, descriptionHtml, imageUrl } = store
@@ -48,9 +48,7 @@ export default function Page({ page, collectionByHandle }: props) {
 
   return (
     <>
-      <Head>
-        <title>Collection</title>
-      </Head>
+      <Seo seo={seo} />
       <Main withPadding={false}>
         <Section withPadding={false}>
           <Container>

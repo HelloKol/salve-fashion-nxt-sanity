@@ -1,5 +1,5 @@
 import React from "react"
-import { Container, Main, Section, ShopIndex } from "@/components"
+import { Container, Main, Section, Seo, ShopIndex } from "@/components"
 import { sanityClient } from "@/utils"
 import { GetStaticPropsResult } from "next/types"
 import groq from "groq"
@@ -10,11 +10,12 @@ interface props {
 
 export default function Page({ page }: props) {
   if (!page) return null
-  const { slug, title, body, suggestedSearch } = page
+  const { slug, title, body, suggestedSearch, seo } = page
   const { current } = slug
 
   return (
     <>
+      <Seo seo={seo} />
       <Main>
         <Section withPadding={false}>
           <Container>
@@ -63,7 +64,8 @@ export async function getStaticProps({
         slug,
         title,
         body,
-        suggestedSearch
+        suggestedSearch,
+        seo
       }`,
       { slug: slug }
     )

@@ -10,7 +10,7 @@ interface props {
 
 export default function Page({ page }: props): JSX.Element | null {
   if (!page) return null
-  const { title, slug, seo } = page
+  const { title, slug, image, seo } = page
 
   return (
     <>
@@ -24,7 +24,11 @@ export default function Page({ page }: props): JSX.Element | null {
               </h1>
 
               <div className="col-span-full h-[200px] w-full md:h-[300px] lg:h-[600px]">
-                <ImageTag src="/static/images/aboutBg.jpg" />
+                <ImageTag
+                  src={image.asset.url}
+                  blurDataURL={image.asset.metadata.lqip}
+                  placeholder="blur"
+                />
               </div>
 
               <article className="col-span-full mt-10 text-2xl md:col-start-1 md:col-end-12 md:text-3xl lg:col-start-2 lg:col-end-13 lg:mt-24 lg:text-5xl xl:col-start-3 xl:col-end-10">
@@ -91,6 +95,16 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
       groq`*[_type == "about" && !(_id in path('drafts.**'))][0] {
       title,
       slug,
+      image{
+        _type,
+        asset->{
+          _id,
+          url,
+          metadata{
+            lqip
+          }
+        }
+      },
       seo
     }
     `

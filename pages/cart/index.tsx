@@ -404,11 +404,7 @@ export default function Page() {
                   Checkout
                 </Button>
 
-                <Button
-                  className={`w-full`}
-                  variant={"tertiary"}
-                  href={`/cart`}
-                >
+                <Button className={`w-full`} variant={"tertiary"} href={`/`}>
                   Continue Shopping
                 </Button>
               </div>

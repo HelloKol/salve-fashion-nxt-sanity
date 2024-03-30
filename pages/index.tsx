@@ -73,7 +73,10 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
                 _type,
                 asset->{
                   _id,
-                  url
+                  url,
+                  metadata{
+                    lqip
+                  }
                 }
               }
             }
@@ -97,7 +100,10 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
                 _type,
                 asset->{
                   _id,
-                  url
+                  url,
+                  metadata{
+                    lqip
+                  }
                 }
               },
             }
@@ -150,8 +156,11 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
           previewImage {
             ...,
             asset->{
+              _id,
               url,
-              ...
+              metadata{
+                lqip
+              }
             }
           }
         },
