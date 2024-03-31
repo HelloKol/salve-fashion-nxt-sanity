@@ -1,4 +1,4 @@
-import { Button, RadixDialog } from "@/components"
+import { Button, RadixDialog, RadixSwitch } from "@/components"
 
 export default function CookiesSettingModal({
   isCookieSettingsOpen,
@@ -16,9 +16,9 @@ export default function CookiesSettingModal({
       <h1 className="mb-4 text-xl font-bold">Cookie setting</h1>
 
       <div>
-        <div className="flex items-center justify-between">
+        <div className="mb-2 flex items-center justify-between">
           <h2>PREFERENCE COOKIES</h2>
-          <button>cirlce</button>
+          <RadixSwitch />
         </div>
         <article>
           <p>
@@ -32,9 +32,9 @@ export default function CookiesSettingModal({
       </div>
 
       <div>
-        <div className="flex items-center justify-between">
+        <div className="mb-2 flex items-center justify-between">
           <h2>STATISTICS COOKIES</h2>
-          <button>cirlce</button>
+          <RadixSwitch />
         </div>
         <article>
           <p>
@@ -48,9 +48,9 @@ export default function CookiesSettingModal({
       </div>
 
       <div>
-        <div className="flex items-center justify-between">
+        <div className="mb-2 flex items-center justify-between">
           <h2>MARKETING COOKIES</h2>
-          <button>cirlce</button>
+          <RadixSwitch />
         </div>
         <article>
           <p>
