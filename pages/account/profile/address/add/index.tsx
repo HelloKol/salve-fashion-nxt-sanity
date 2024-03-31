@@ -210,7 +210,7 @@ export default function Page({}: PageProps): JSX.Element | null {
                 </div>
 
                 <button
-                  className="col-span-12 mt-6 flex h-fit w-full shrink-0 items-center justify-center rounded-xl bg-[#171717] py-4 text-sm uppercase text-white"
+                  className="col-span-full mt-6 flex h-fit w-full shrink-0 items-center justify-center rounded-xl bg-[#171717] py-4 text-sm uppercase text-white"
                   type="submit"
                   disabled={loading}
                 >

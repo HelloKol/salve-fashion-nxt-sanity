@@ -1,6 +1,5 @@
-import Head from "next/head"
 import { GetStaticPropsResult } from "next/types"
-import { Container, Main, Section } from "@/components"
+import { Container, Main, Seo, Section } from "@/components"
 import { sanityClient } from "@/utils"
 import groq from "groq"
 
@@ -14,9 +13,7 @@ export default function Page({ page }: { page: any }): JSX.Element | null {
 
   return (
     <>
-      <Head>
-        <title>{title}</title>
-      </Head>
+      <Seo seo={seo} />
       <Main>
         <Section>
           <Container>
@@ -32,7 +29,9 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
   try {
     const page: any = await sanityClient.fetch(
       groq`*[_type == "page404" && !(_id in path('drafts.**'))][0] {
-        ...,
+        title,
+        body,
+        seo
       }
     `
     )

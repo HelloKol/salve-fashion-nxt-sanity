@@ -48,7 +48,7 @@ export default function Page({}: PageProps): JSX.Element | null {
             <Grid>
               <AccountNavigation />
 
-              <p className="col-span-12 mb-4">
+              <p className="col-span-full mb-4">
                 {userDetails?.firstName} {userDetails?.lastName}
               </p>
 
@@ -106,7 +106,7 @@ export default function Page({}: PageProps): JSX.Element | null {
                 </Link>
               </div>
 
-              <div className="col-span-12">
+              <div className="col-span-full">
                 <Logout />
               </div>
             </Grid>
