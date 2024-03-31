@@ -67,18 +67,18 @@ export default function Page({}: PageProps): JSX.Element | null {
 
   const message = loading ? (
     <>
-      <h4>Loading</h4>
+      <h6 className={"text-deepPurple"}>Loading</h6>
       <p>Updating details...</p>
     </>
   ) : error ? (
     <>
-      <h4>Error</h4>
+      <h6 className={"text-deepOrange"}>Error</h6>
       <p>{error?.message}</p>
     </>
   ) : (
     !!data && (
       <>
-        <h4>Success</h4>
+        <h6 className={"text-deepGreen"}>Success</h6>
         <p>Details updated</p>
       </>
     )

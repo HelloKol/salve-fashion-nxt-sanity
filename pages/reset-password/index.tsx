@@ -34,18 +34,18 @@ export default function Page({ page }: props): JSX.Element | null {
 
   const message = isLoading ? (
     <>
-      <h4>Loading</h4>
+      <h6 className={"text-deepPurple"}>Loading</h6>
       <p>Your password being reset...</p>
     </>
   ) : !!globalError ? (
     <>
-      <h4>Error</h4>
+      <h6 className={"text-deepOrange"}>Error</h6>
       <p>{globalError}</p>
     </>
   ) : (
     isSucess && (
       <>
-        <h4>Success</h4>
+        <h6 className={"text-deepGreen"}>Success</h6>
         <p>Your password reset successfully</p>
       </>
     )

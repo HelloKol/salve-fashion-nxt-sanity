@@ -15,7 +15,7 @@ import {
   Seo,
 } from "@/components"
 import { graphqlClient } from "@/utils"
-import { ALL_PRODUCTS } from "@/services/queries"
+import { EXAMPLE_PRODUCTS } from "@/services/queries"
 import { useTruncateString } from "@/hooks"
 
 interface PageProps {}
@@ -45,7 +45,7 @@ export default function Page({}: PageProps): JSX.Element | null {
   const { data, isLoading }: { data: any; isLoading: boolean } = useQuery({
     queryKey: ["getPredictive"],
     queryFn: async () => {
-      return await graphqlClient.request(ALL_PRODUCTS)
+      return await graphqlClient.request(EXAMPLE_PRODUCTS)
     },
   })
 

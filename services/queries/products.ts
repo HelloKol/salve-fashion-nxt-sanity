@@ -134,6 +134,18 @@ const ALL_PRODUCTS = gql`
     }
   }
 `
+const EXAMPLE_PRODUCTS = gql`
+  query {
+    products(first: 5) {
+      edges {
+        node {
+          ${PRODUCT_BASE}
+          ${PRODUCT_VARIANT}
+        }
+      }
+    }
+  }
+`
 
 const SINGLE_PRODUCT_BY_HANDLE = `
 query getProductByHandle($handle: String!) {
@@ -155,6 +167,7 @@ const SINGLE_PRODUCT_BY_ID = `
 
 export {
   ALL_PRODUCTS,
+  EXAMPLE_PRODUCTS,
   PRODUCT_BASE,
   PRODUCT_VARIANT,
   SINGLE_PRODUCT_BY_HANDLE,

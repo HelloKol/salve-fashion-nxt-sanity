@@ -8,6 +8,7 @@ export {
 export { COLLECTION_PRODUCTS } from "./collections"
 export {
   ALL_PRODUCTS,
+  EXAMPLE_PRODUCTS,
   PRODUCT_BASE,
   PRODUCT_VARIANT,
   SINGLE_PRODUCT_BY_HANDLE,

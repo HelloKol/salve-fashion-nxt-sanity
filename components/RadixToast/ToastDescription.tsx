@@ -1,10 +1,10 @@
-import React from "react";
-import { ToastDescription } from "@radix-ui/react-toast";
-import styles from "./styles.module.scss";
+import React from "react"
+import { ToastDescription } from "@radix-ui/react-toast"
+import styles from "./styles.module.scss"
 
 // Poprs
 export interface DescriptionProps {
-  children: React.ReactNode | React.ReactNode[];
+  children: React.ReactNode | React.ReactNode[]
 }
 
 const Description = ({ children }: DescriptionProps) => {
@@ -12,7 +12,7 @@ const Description = ({ children }: DescriptionProps) => {
     <ToastDescription className={styles.toastDescription}>
       {children}
     </ToastDescription>
-  );
-};
+  )
+}
 
-export default Description;
+export default Description

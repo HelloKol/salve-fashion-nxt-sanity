@@ -117,18 +117,18 @@ export default function Page({ page }: props): JSX.Element | null {
 
   const message = isCopyFetching ? (
     <>
-      <h4>Loading</h4>
+      <h6 className={"text-deepPurple"}>Loading</h6>
       <p>Link is being copied...</p>
     </>
   ) : isCopyError ? (
     <>
-      <h4>Error</h4>
+      <h6 className={"text-deepOrange"}>Error</h6>
       <p>Could not copy link</p>
     </>
   ) : (
     isCopySuccess && (
       <>
-        <h4>Success</h4>
+        <h6 className={"text-deepGreen"}>Success</h6>
         <p>Link is copied</p>
       </>
     )

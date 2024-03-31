@@ -1,106 +1,109 @@
 $VIEWPORT_PADDING: 25;
 
 .toastRoot {
-    position: relative;
-    width: 220px;
-    height: 75px;
+  position: relative;
+  width: 220px;
+  height: 75px;
 
-    &[data-state="open"] {
-        animation: slideIn 200ms ease-in-out;
-    }
+  &[data-state="open"] {
+    animation: slideIn 200ms ease-in-out;
+  }
 
-    &[data-state="closed"] {
-        animation: hide 200ms ease-in forwards;
-    }
+  &[data-state="closed"] {
+    animation: hide 200ms ease-in forwards;
+  }
 
-    &[data-swipe="move"] {
-        transform: translateY(var(--radix-toast-swipe-move-y));
-    }
+  &[data-swipe="move"] {
+    transform: translateY(var(--radix-toast-swipe-move-y));
+  }
 
-    &[data-swipe="cancel"] {
-        transform: translateY(0);
-        transition: transform 200ms ease-out;
-    }
+  &[data-swipe="cancel"] {
+    transform: translateY(0);
+    transition: transform 200ms ease-out;
+  }
 
-    &[data-swipe="end"] {
-        animation: swipeOut 200ms ease-out forwards;
-    }
+  &[data-swipe="end"] {
+    animation: swipeOut 200ms ease-out forwards;
+  }
 }
 
 .toastList {
-    z-index: 999999;
-    position: fixed;
-    bottom: 0px;
-    right: 24px;
-    list-style: none;
+  z-index: 999999;
+  position: fixed;
+  bottom: 0px;
+  right: 24px;
+  list-style: none;
 }
 
 .toastContent {
-    overflow: hidden;
-    width: 100%;
-    position: absolute;
-    padding: 10px 10px 10px 10px;
-    background: white;
-    border-radius: 5px;
-    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.12);
-    p {
-        font-size: 14px;
-    }
+  overflow: hidden;
+  width: 100%;
+  position: absolute;
+  padding: 10px 10px 10px 10px;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.12);
+  p {
+    font-size: 14px;
+  }
+  h6 {
+    font-size: 16px;
+  }
 }
 
 .toastDescription {
-    height: 100%;
+  height: 100%;
 }
 
 .toastButton {
-    all: unset;
-    position: absolute;
-    top: 5px;
-    right: 5px;
+  all: unset;
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }
 
 .toastProgressOuter {
-    height: 3px;
-    overflow: hidden;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: white;
+  height: 3px;
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: white;
 }
 
 .toastProgressInner {
-    height: 100%;
-    width: 100%;
-    background: black;
+  height: 100%;
+  width: 100%;
+  background: black;
 }
 
 @keyframes hide {
-    0% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-        transform: translateY(-#{$VIEWPORT_PADDING}px);
-    }
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-#{$VIEWPORT_PADDING}px);
+  }
 }
 
 @keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(calc(100% + #{$VIEWPORT_PADDING}px));
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(calc(100% + #{$VIEWPORT_PADDING}px));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes swipeOut {
-    from {
-        transform: translateY(var(--radix-toast-swipe-end-y));
-    }
-    to {
-        transform: translateY(calc(100% + #{$VIEWPORT_PADDING}px));
-    }
+  from {
+    transform: translateY(var(--radix-toast-swipe-end-y));
+  }
+  to {
+    transform: translateY(calc(100% + #{$VIEWPORT_PADDING}px));
+  }
 }
