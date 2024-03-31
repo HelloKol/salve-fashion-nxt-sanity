@@ -1,11 +1,11 @@
 import Link from "next/link"
 import React from "react"
+import { useQuery } from "@tanstack/react-query"
 import { Container, HorizontalFeedBasic, RadixDialog } from "@/components"
 import { useSearchForm } from "@/hooks"
-import settings from "../../data/settings.json"
-import { useQuery } from "@tanstack/react-query"
 import { graphqlClient } from "@/utils"
 import { SEARCH_QUERY_PREDICTIVE } from "@/services/queries"
+import settings from "../../data/settings.json"
 
 interface props {
   isSearchModalOpen: boolean

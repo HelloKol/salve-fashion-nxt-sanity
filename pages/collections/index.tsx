@@ -49,7 +49,7 @@ export default function Page({ page, collections }: Props) {
           onMouseMove={handleMouseMove}
         >
           <h1
-            className="absolute z-10 text-3xl md:text-5xl lg:text-6xl xl:text-7xl"
+            className="absolute z-10 text-3xl text-deepPurple md:text-5xl lg:text-6xl xl:text-7xl"
             style={{
               top: `${titlePosition.y}px`,
               left: "20px",

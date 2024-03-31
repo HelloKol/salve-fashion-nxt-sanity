@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useCookies } from "react-cookie"
+import { useQuery } from "@tanstack/react-query"
 import {
   AccountNavigation,
   Button,
@@ -8,10 +9,14 @@ import {
   Grid,
   ImageTag,
   Main,
+  ProductSkeleton,
   RadixDialog,
   Section,
   Seo,
 } from "@/components"
+import { graphqlClient } from "@/utils"
+import { ALL_PRODUCTS } from "@/services/queries"
+import { useTruncateString } from "@/hooks"
 
 interface PageProps {}
 
@@ -37,6 +42,13 @@ export default function Page({}: PageProps): JSX.Element | null {
     },
   ]
 
+  const { data, isLoading }: { data: any; isLoading: boolean } = useQuery({
+    queryKey: ["getPredictive"],
+    queryFn: async () => {
+      return await graphqlClient.request(ALL_PRODUCTS)
+    },
+  })
+
   useEffect(() => {
     if (cookieValid) return setIsDialogOpen(false)
     return setIsDialogOpen(true)
@@ -47,25 +59,32 @@ export default function Page({}: PageProps): JSX.Element | null {
     setIsDialogOpen(false)
   }
 
-  const renderOrders = () =>
-    orders &&
-    orders.map((item: any, index: any) => {
-      const { image } = item
+  const renderProducts = () =>
+    data?.products?.edges &&
+    data.products.edges.map((item: any, index: any) => {
+      const { node } = item
+      const { featuredImage } = node
+      const title = useTruncateString(node.title, 50)
+      const firstVariant = node.variants.edges[0].node
 
       return (
-        <div key={index} className="col-span-3 mb-20">
+        <div
+          key={index}
+          className="col-span-full mb-8 md:col-span-6 lg:mb-12 xl:col-span-4 xl:mb-14"
+        >
+          <p className="text-sm">{title}</p>
           <p className="text-sm">Delivered: 219143</p>
           <p className="text-sm">01/04/26</p>
 
           <div className="my-6 flex gap-6">
-            <p className="text-sm">£20.33</p>
+            <p className="text-sm">£{firstVariant.price.amount}</p>
             <Link href={"/"} className="text-sm">
               View order
             </Link>
           </div>
 
-          <div className="h-[600px] overflow-hidden rounded-md">
-            <ImageTag src={image} />
+          <div className="relative h-[500px] w-full overflow-hidden rounded-md lg:h-[600px] xl:h-[700px]">
+            <ImageTag src={featuredImage?.transformedSrc} />
           </div>
         </div>
       )
@@ -83,7 +102,16 @@ export default function Page({}: PageProps): JSX.Element | null {
           <Container>
             <Grid>
               <AccountNavigation />
-              {renderOrders()}
+              {isLoading ? (
+                <ProductSkeleton />
+              ) : !data?.products?.edges?.length ? (
+                <h3 className="col-span-full text-center text-xl">
+                  <b className="mb-2 block">We're sorry,</b>
+                  We can't seem to find any results for
+                </h3>
+              ) : (
+                renderProducts()
+              )}
             </Grid>
           </Container>
         </Section>

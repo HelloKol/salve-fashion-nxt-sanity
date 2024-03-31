@@ -108,7 +108,7 @@ export default function Page({}: PageProps): JSX.Element | null {
 
               <div className="col-span-full sm:col-span-10 md:col-span-6 lg:col-span-5">
                 <p>NEWSLETTER</p>
-                <p>
+                <p className="mb-4">
                   Select your interests and receive the latest news and trends
                   each week.
                 </p>

@@ -1,5 +1,5 @@
-import React, { useEffect } from "react"
-import { useInfiniteQuery } from "@tanstack/react-query"
+import React from "react"
+import { useRouter } from "next/router"
 import { useInView } from "react-intersection-observer"
 import {
   Container,
@@ -10,55 +10,12 @@ import {
   ProductSkeleton,
   Section,
 } from "@/components"
-import { fetchProductsSearch } from "@/lib"
-import { useRouter } from "next/router"
+import { useFetchSearchProducts } from "@/hooks"
 
 export default function Page() {
   const router = useRouter()
   const { ref, inView } = useInView({ threshold: 0 })
-  const PRODUCT_LIMIT = 20
-
-  // FETCH SHOPIFY DATA
-  const { data, hasNextPage, fetchNextPage, isLoading } = useInfiniteQuery(
-    ["productsMen", router.query],
-    ({ pageParam }) => {
-      const title = router.query?.title as string
-      const sort = router.query?.sort as string
-      const minPrice = parseFloat(router.query?.min_price as string)
-      const maxPrice = parseFloat(router.query?.max_price as string)
-      const sortVal =
-        sort === "relevance"
-          ? "RELEVANCE"
-          : sort === "highest_price" || sort === "lowest_price"
-            ? "PRICE"
-            : ""
-      const reverse = sort === "highest_price"
-
-      return fetchProductsSearch(
-        pageParam,
-        PRODUCT_LIMIT,
-        title ? `"title:${title}"` : `""`,
-        reverse,
-        sortVal,
-        minPrice,
-        maxPrice
-      )
-    },
-    {
-      getNextPageParam: (lastPage) => {
-        return lastPage.pageInfo.hasNextPage
-          ? lastPage.edges[lastPage.edges.length - 1].cursor
-          : undefined
-      },
-    }
-  )
-  const products = data?.pages?.[0]?.edges
-
-  useEffect(() => {
-    if (inView && hasNextPage && products.length < PRODUCT_LIMIT) {
-      fetchNextPage()
-    }
-  }, [inView, fetchNextPage, hasNextPage, data?.pages])
+  const { products, isLoading } = useFetchSearchProducts(inView)
 
   // RENDER ALL PRODUCTS
   const renderProducts = () =>

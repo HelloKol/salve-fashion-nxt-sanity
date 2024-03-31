@@ -1,31 +1,36 @@
 import { useEffect } from "react"
 import { useRouter } from "next/router"
 import { useInfiniteQuery } from "@tanstack/react-query"
-import { fetchProducts } from "@/lib"
+import { fetchProductsSearch } from "@/lib"
 
-const useFetchShopProducts = (type: string, inView: boolean) => {
+const useFetchSearchProducts = (inView: any) => {
   const router = useRouter()
   const PRODUCT_LIMIT = 20
 
-  const { data, isLoading, hasNextPage, fetchNextPage } = useInfiniteQuery(
-    ["type", router.query, type],
+  // FETCH SHOPIFY DATA
+  const { data, hasNextPage, fetchNextPage, isLoading } = useInfiniteQuery(
+    ["productsMen", router.query],
     ({ pageParam }) => {
-      const q = router.query?.q as string
+      const title = router.query?.title as string
       const sort = router.query?.sort as string
+      const minPrice = parseFloat(router.query?.min_price as string)
+      const maxPrice = parseFloat(router.query?.max_price as string)
       const sortVal =
-        sort === "latest" || sort === "oldest"
-          ? "CREATED_AT"
+        sort === "relevance"
+          ? "RELEVANCE"
           : sort === "highest_price" || sort === "lowest_price"
             ? "PRICE"
             : ""
-      const reverse = sort === "highest_price" || sort === "latest"
+      const reverse = sort === "highest_price"
 
-      return fetchProducts(
+      return fetchProductsSearch(
         pageParam,
         PRODUCT_LIMIT,
-        `tag:${type}${q ? `, title:${q}` : ""}`,
+        title ? `"title:${title}"` : `""`,
         reverse,
-        sortVal
+        sortVal,
+        minPrice,
+        maxPrice
       )
     },
     {
@@ -50,4 +55,4 @@ const useFetchShopProducts = (type: string, inView: boolean) => {
   }
 }
 
-export default useFetchShopProducts
+export default useFetchSearchProducts

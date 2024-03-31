@@ -28,13 +28,9 @@ export default function Page({}: PageProps): JSX.Element | null {
         <Section withPadding={false}>
           <Container>
             <Grid>
-              <ul className="col-span-12 flex gap-4">
-                <AccountNavigation />
-              </ul>
+              <AccountNavigation />
 
-              <div className="col-span-full">
-                <BreadCrumb />
-              </div>
+              <BreadCrumb />
 
               <div className="col-span-full mb-4 flex items-center justify-between sm:col-span-10 md:col-span-6 lg:col-span-5">
                 <p>Addresses</p>
