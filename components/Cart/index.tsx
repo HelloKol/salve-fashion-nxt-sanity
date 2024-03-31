@@ -122,10 +122,7 @@ export default function Cart() {
                     <span>£{cart?.cart?.cost?.subtotalAmount?.amount}</span>
                   </p>
                   <p className={styles.deliveryPrice}>
-                    Delivery:{" "}
-                    <span>
-                      ${cart?.cart?.cost?.totalDutyAmount?.amount || `0.00`}{" "}
-                    </span>
+                    Delivery: <span>Calculated at checkout</span>
                   </p>
                   <Button
                     className={`w-full`}

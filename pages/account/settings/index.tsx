@@ -48,7 +48,7 @@ export default function Page({}: PageProps): JSX.Element | null {
             <Grid>
               <AccountNavigation />
 
-              <div className="col-span-5 border border-black">
+              <div className="col-span-full border border-black sm:col-span-10 md:col-span-6 lg:col-span-5">
                 <Link
                   href={"/account/settings/newsletter"}
                   className="flex cursor-pointer items-center justify-between pb-4 pl-8 pr-8 pt-4 hover:bg-[#d5d6c8]"

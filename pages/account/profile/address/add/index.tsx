@@ -109,15 +109,14 @@ export default function Page({}: PageProps): JSX.Element | null {
 
               <BreadCrumb />
 
-              <div className="col-span-5 mb-4">
+              <div className="col-span-full mb-4 sm:col-span-10 md:col-span-6 lg:col-span-5">
                 <p>New address</p>
               </div>
 
               <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="col-span-6 row-start-4"
+                className="col-span-full row-start-4 sm:col-span-10 md:col-span-6 lg:col-span-5"
               >
-                {/* <Grid> */}
                 <div className="mb-6">
                   <FormInputText
                     type="text"

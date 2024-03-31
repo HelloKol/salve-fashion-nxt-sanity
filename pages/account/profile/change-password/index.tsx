@@ -123,7 +123,7 @@ export default function Page({}: PageProps): JSX.Element | null {
 
               <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="col-span-6 row-start-4"
+                className="col-span-full row-start-4 sm:col-span-10 md:col-span-6 lg:col-span-5"
               >
                 <div className="mb-6">
                   <FormInputText

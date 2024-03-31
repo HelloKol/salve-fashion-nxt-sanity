@@ -36,7 +36,7 @@ export default function Page({}: PageProps): JSX.Element | null {
                 <BreadCrumb />
               </div>
 
-              <div className="col-span-5 mb-4 flex items-center justify-between">
+              <div className="col-span-full mb-4 flex items-center justify-between sm:col-span-10 md:col-span-6 lg:col-span-5">
                 <p>Addresses</p>
                 {userDetails?.defaultAddress ? (
                   <Button
@@ -55,7 +55,7 @@ export default function Page({}: PageProps): JSX.Element | null {
                 )}
               </div>
 
-              <div className="col-span-5 row-start-4">
+              <div className="col-span-full row-start-4 sm:col-span-10 md:col-span-6 lg:col-span-5">
                 <p>{userDetails?.defaultAddress?.name}</p>
                 <p>
                   {userDetails?.defaultAddress?.address1}

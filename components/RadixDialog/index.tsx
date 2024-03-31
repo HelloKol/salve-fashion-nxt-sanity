@@ -10,7 +10,7 @@ export default function Dialog({
   setIsOpen,
 }: {
   children: React.ReactNode | React.ReactNode[]
-  variant: "consentCookie" | "cookieSettings" | "subscribeNewsLetter" | "search"
+  variant: "consentCookie" | "cookieSettings" | "exampleOrder" | "search"
   isOpen: boolean
   setIsOpen: any
 }) {

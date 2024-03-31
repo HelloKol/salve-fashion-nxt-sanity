@@ -2,7 +2,7 @@ import { Button } from "@/components"
 import { useRouter } from "next/router"
 
 const navigationLinks = [
-  { href: "/account/order", text: "Order history" },
+  { href: "/account/order", text: "Orders" },
   { href: "/account/profile", text: "Account" },
   { href: "/account/settings", text: "Settings" },
 ]
@@ -11,7 +11,7 @@ export default function AccountNavigation() {
   const router = useRouter()
 
   return (
-    <ul className="col-span-12 flex gap-4">
+    <ul className="col-span-full flex gap-2 sm:gap-4">
       {navigationLinks.map((link, index) => (
         <li>
           <Button

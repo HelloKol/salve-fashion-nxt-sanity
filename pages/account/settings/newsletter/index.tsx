@@ -106,7 +106,7 @@ export default function Page({}: PageProps): JSX.Element | null {
 
               <BreadCrumb />
 
-              <div className="col-span-5">
+              <div className="col-span-full sm:col-span-10 md:col-span-6 lg:col-span-5">
                 <p>NEWSLETTER</p>
                 <p>
                   Select your interests and receive the latest news and trends

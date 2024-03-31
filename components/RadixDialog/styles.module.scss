@@ -46,7 +46,7 @@
     }
   }
 
-  &.subscribeNewsLetter {
+  &.exampleOrder {
     width: 95%;
     max-height: 500px;
     max-width: 600px;
@@ -90,7 +90,7 @@
       padding: 50px 25px 25px 25px;
     }
 
-    &.subscribeNewsLetter {
+    &.exampleOrder {
       .closeBtn {
         fill: white;
         svg {
@@ -138,7 +138,7 @@
 // ==========================================================================
 @media (min-width: $breakDesktop) {
   .dialogContent {
-    &.subscribeNewsLetter {
+    &.exampleOrder {
       .closeBtn {
         fill: black;
         svg {

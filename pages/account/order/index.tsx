@@ -1,27 +1,21 @@
-import Head from "next/head"
+import { useEffect, useState } from "react"
 import Link from "next/link"
-import { useRouter } from "next/router"
+import { useCookies } from "react-cookie"
 import {
-  Main,
-  Section,
+  AccountNavigation,
+  Button,
   Container,
   Grid,
-  Button,
   ImageTag,
+  Main,
   RadixDialog,
+  Section,
+  Seo,
 } from "@/components"
-import { useEffect, useState } from "react"
-import { useCookies } from "react-cookie"
 
-const navigationLinks = [
-  { href: "/account/order", text: "Order history" },
-  { href: "/account/profile", text: "Account" },
-  { href: "/account/settings", text: "Settings" },
-]
 interface PageProps {}
 
 export default function Page({}: PageProps): JSX.Element | null {
-  const router = useRouter()
   const [cookies, setCookie, removeCookie] = useCookies(["exampleOrderPage"])
   const [isDialogOpen, setIsDialogOpen] = useState(true)
   const cookieValid: string = cookies["exampleOrderPage"]
@@ -79,25 +73,16 @@ export default function Page({}: PageProps): JSX.Element | null {
 
   return (
     <>
-      <Head>
-        <title>Orders</title>
-      </Head>
+      <Seo
+        seo={{
+          title: "Orders -",
+        }}
+      />
       <Main>
         <Section withPadding={false}>
           <Container>
             <Grid>
-              <ul className="col-span-full mb-20 flex gap-4 ">
-                {navigationLinks.map((link, index) => (
-                  <Button
-                    key={index}
-                    href={link.href}
-                    variant="tertiary"
-                    isActive={router.pathname === link.href}
-                  >
-                    {link.text}
-                  </Button>
-                ))}
-              </ul>
+              <AccountNavigation />
               {renderOrders()}
             </Grid>
           </Container>
@@ -105,7 +90,7 @@ export default function Page({}: PageProps): JSX.Element | null {
       </Main>
 
       <RadixDialog
-        variant={"subscribeNewsLetter"}
+        variant={"exampleOrder"}
         isOpen={isDialogOpen}
         setIsOpen={() => {}}
       >

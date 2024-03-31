@@ -26,9 +26,11 @@ export default function BreadCrumb({}) {
       {breadcrumbs.map((breadcrumb, index) => (
         <span key={index} className="capitalize">
           {index < breadcrumbs.length - 1 ? (
-            <Link href={breadcrumb.route}>{breadcrumb.text} </Link>
+            <Link href={breadcrumb.route} className="text-deepPurple">
+              {breadcrumb.text}{" "}
+            </Link>
           ) : (
-            <span className="text-gray-600">{breadcrumb.text}</span>
+            <span className="text-black">{breadcrumb.text}</span>
           )}
           {index < breadcrumbs.length - 1 && " > "}
         </span>
