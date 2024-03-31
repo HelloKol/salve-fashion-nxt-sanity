@@ -89,7 +89,7 @@ export default function Page({ page }: props): JSX.Element | null {
         <Section>
           <Container>
             <Grid>
-              <h1 className="md:text-md col-span-full text-center text-3xl">
+              <h1 className="md:text-md col-span-full mb-4 text-center text-3xl md:mb-0">
                 Frequently asked questions
               </h1>
               <div className="col-span-full lg:col-start-3 lg:col-end-11 xl:col-start-4 xl:col-end-10">

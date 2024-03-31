@@ -12,7 +12,7 @@ const RadixAccordion = ({ data }: any) => {
       return (
         <Item className={styles.AccordionItem} value={_key}>
           <AccordionTrigger>
-            <p className="text-lg font-semibold">{title}</p>
+            <p className="text-md font-semibold capitalize">{title}</p>
             <ChevronDown className="h-4 fill-black" />
           </AccordionTrigger>
           <AccordionContent>

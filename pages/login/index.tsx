@@ -125,7 +125,10 @@ export default function Page({ page }: props): JSX.Element | null {
                       Create an account
                     </Link>
 
-                    <Link className="mt-2 text-sm" href={`/reset-password`}>
+                    <Link
+                      className="mt-2 text-sm text-deepPurple"
+                      href={`/reset-password`}
+                    >
                       Forgot your password?
                     </Link>
 

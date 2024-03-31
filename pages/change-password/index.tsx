@@ -1,10 +1,8 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { GetStaticPropsResult } from "next/types"
-import Link from "next/link"
 import groq from "groq"
 import {
   Container,
-  ChangePassword,
   FormInputText,
   Grid,
   ImageTag,
@@ -14,8 +12,7 @@ import {
 } from "@/components"
 import { useDialogBox, useChangePasswordForm } from "@/hooks"
 import { useToastOpen } from "@/context/Toast"
-import { graphqlClient, sanityClient } from "@/utils"
-import { gql } from "@apollo/client"
+import { sanityClient } from "@/utils"
 
 interface props {
   page: any

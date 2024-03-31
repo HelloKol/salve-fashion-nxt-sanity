@@ -24,7 +24,7 @@ export default function Category({ data }: Props) {
         >
           <ImageTag src={asset.url} />
           <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full bg-black opacity-50" />
-          <p className="absolute bottom-0 left-0 z-10 p-10 text-2xl text-white">
+          <p className="absolute bottom-0 left-0 z-10 p-10 text-2xl text-deepPurple">
             {isMen ? `For Men` : `For Women`}
           </p>
           <p className="absolute bottom-0 left-0 z-10 p-10 pb-5 text-sm text-white">

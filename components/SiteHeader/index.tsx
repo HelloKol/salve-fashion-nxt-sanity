@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "next/link"
+import { useRouter } from "next/router"
 import { Button, Container, MobileDraw, SearchPopup } from "@/components"
 import FullLogo from "@/components/svg/FullLogo"
 import { useHeaderCollapse } from "@/hooks"
@@ -9,6 +10,7 @@ import { useWindowDimension } from "@/hooks"
 import { cn } from "@/utils"
 
 const SiteHeader = () => {
+  const router = useRouter()
   const { isAuthenticated } = useAuth()
   const {
     cart,
@@ -45,25 +47,38 @@ const SiteHeader = () => {
               <div className="flex items-center justify-between">
                 <div className="flex space-x-8">
                   <Link
-                    className="text-black hover:text-gray-700"
+                    className={cn(
+                      "text-black hover:text-gray-700",
+                      router.pathname === "/about" && "text-deepPurple"
+                    )}
                     href="/about"
                   >
                     Brand
                   </Link>
                   <Link
-                    className="text-black hover:text-gray-700"
+                    className={cn(
+                      "text-black hover:text-gray-700",
+                      router.pathname.includes("/collections") &&
+                        "text-deepPurple"
+                    )}
                     href="/collections"
                   >
                     Collections
                   </Link>
                   <Link
-                    className="text-black hover:text-gray-700"
+                    className={cn(
+                      "text-black hover:text-gray-700",
+                      router.asPath.includes("/shop/men") && "text-deepPurple"
+                    )}
                     href="/shop/men"
                   >
                     Men
                   </Link>
                   <Link
-                    className="text-black hover:text-gray-700"
+                    className={cn(
+                      "text-black hover:text-gray-700",
+                      router.asPath.includes("/shop/women") && "text-deepPurple"
+                    )}
                     href="/shop/women"
                   >
                     Women
@@ -79,21 +94,31 @@ const SiteHeader = () => {
                 <div className="flex items-center space-x-4">
                   {isAuthenticated ? (
                     <Link
-                      className="text-black hover:text-gray-700"
+                      className={cn(
+                        "text-black hover:text-gray-700",
+                        router.pathname.includes("/account") &&
+                          "text-deepPurple"
+                      )}
                       href="/account/profile"
                     >
                       Account
                     </Link>
                   ) : (
                     <Link
-                      className="text-black hover:text-gray-700"
+                      className={cn(
+                        "text-black hover:text-gray-700",
+                        router.pathname === "/login" && "text-deepPurple"
+                      )}
                       href="/login"
                     >
                       Login
                     </Link>
                   )}
                   <Link
-                    className="text-black hover:text-gray-700"
+                    className={cn(
+                      "text-black hover:text-gray-700",
+                      router.pathname === "/contact" && "text-deepPurple"
+                    )}
                     href="/contact"
                   >
                     Contact

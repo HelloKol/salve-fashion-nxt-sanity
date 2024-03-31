@@ -4,7 +4,7 @@
 .AccordionItem {
   overflow: hidden;
   margin-top: 1px;
-  border-bottom: 2px solid black;
+  border-bottom: 1px solid black;
 
   &:first-child {
     margin-top: 0;
@@ -40,11 +40,11 @@
 .AccordionContent {
   overflow: hidden;
   overflow-y: scroll;
-  font-size: 15px;
   color: var(--mauve-11);
   max-width: 1000px;
   max-height: 500px;
   p {
+    font-size: 14px;
     margin: 0;
   }
 }

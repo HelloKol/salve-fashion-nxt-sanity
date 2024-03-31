@@ -22,7 +22,7 @@ const SiteFooter = () => {
             href={
               externalLink
                 ? externalLink
-                : `/${internalLink.dynamicRoute || ""}/${internalLink.slug}`
+                : `${internalLink.dynamicRoute ? "/" + internalLink.dynamicRoute : ""}/${internalLink.slug}`
             }
             target="_blank"
             className="mb-2 block text-gray-400 transition-colors duration-300 hover:text-white"

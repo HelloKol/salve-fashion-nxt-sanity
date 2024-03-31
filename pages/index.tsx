@@ -17,14 +17,12 @@ import { sanityClient } from "@/utils"
 
 interface props {
   page: any
-  products: ShopifyProduct[]
   instagramAccount: any
   instagramPosts: any
 }
 
 export default function Page({
   page,
-  products,
   instagramAccount,
   instagramPosts,
 }: props): JSX.Element | null {
@@ -168,8 +166,6 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
     `
     )
 
-    const products: any = await graphqlClient.request(ALL_PRODUCTS)
-
     const instagramAccountRes = await fetch(
       `https://salvefashion.com/api/instagramAccount?accessToken=${process.env.NEXT_PUBLIC_INSTAGRAM_ACCESS_TOKEN}`
     )
@@ -188,7 +184,6 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
     return {
       props: {
         page,
-        products: products.products.edges,
         instagramAccount,
         instagramPosts,
       },

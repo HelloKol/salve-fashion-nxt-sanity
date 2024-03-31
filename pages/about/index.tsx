@@ -18,19 +18,18 @@ export default function Page({ page }: props): JSX.Element | null {
       blockImages &&
       blockImages.modules.map((block: any, index: number) => {
         const { image, body } = block
-        console.log(block)
 
         if (index === 0)
           return (
             <React.Fragment key={index}>
-              <div className="col-span-full mt-14 h-[500px] w-full sm:col-end-10 md:col-end-7 lg:col-start-2 lg:col-end-7 lg:row-start-5 lg:mt-24 lg:h-[600px] xl:col-start-3 xl:col-end-7 xl:h-[850px]">
+              <div className="col-span-full mt-14 h-[500px] w-full sm:col-end-10 md:col-end-7 lg:col-start-2 lg:col-end-7 lg:row-start-1 lg:mt-24 lg:h-[600px] xl:col-start-3 xl:col-end-7 xl:h-[850px]">
                 <ImageTag
                   src={image.asset.url}
                   blurDataURL={image.asset.metadata.lqip}
                   placeholder="blur"
                 />
               </div>
-              <article className="col-start-2 col-end-13 mt-10 text-lg md:col-start-3 lg:col-start-8 lg:col-end-13 lg:row-start-5 lg:mt-24 lg:text-xl xl:col-start-8 xl:col-end-12">
+              <article className="prose col-start-2 col-end-13 mt-10 text-lg md:col-start-3 lg:col-start-8 lg:col-end-13 lg:row-start-1 lg:mt-24 lg:text-xl xl:col-start-8 xl:col-end-12">
                 <PortableText value={body} />
               </article>
             </React.Fragment>
@@ -38,7 +37,7 @@ export default function Page({ page }: props): JSX.Element | null {
 
         return (
           <React.Fragment key={index}>
-            <div className="col-span-full mt-6 h-[500px] w-full sm:col-start-4 md:col-start-7 lg:col-start-8 lg:col-end-13 lg:row-start-5 lg:mt-[400px] lg:h-[600px] xl:col-start-8 xl:col-end-12 xl:h-[850px]">
+            <div className="col-span-full mt-6 h-[500px] w-full sm:col-start-4 md:col-start-7 lg:col-start-8 lg:col-end-13 lg:row-start-1 lg:mt-[400px] lg:h-[600px] xl:col-start-8 xl:col-end-12 xl:h-[850px]">
               <ImageTag
                 src={image.asset.url}
                 blurDataURL={image.asset.metadata.lqip}
@@ -80,9 +79,13 @@ export default function Page({ page }: props): JSX.Element | null {
               <article className="col-start-2 col-end-13 text-lg md:col-start-3 lg:col-start-7 lg:col-end-13 lg:text-xl xl:col-start-8 xl:col-end-12">
                 <PortableText value={body} />
               </article>
-
-              {renderBlockImages()}
             </Grid>
+          </Container>
+        </Section>
+
+        <Section>
+          <Container>
+            <Grid>{renderBlockImages()} </Grid>
           </Container>
         </Section>
       </Main>

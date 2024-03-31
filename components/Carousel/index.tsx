@@ -31,9 +31,6 @@ export default function Carousel({ collections }: any) {
       return (
         <div key={index} className={styles.carouselItem}>
           <div className={styles.carouselContent}>
-            <p className={styles.collectionYear}>
-              Collection <span>2022</span>
-            </p>
             <div className={styles.titleWrap}>
               <h1 className={styles.title}>
                 {newTitle[0]} <span>{" " + newTitle[1]}</span>
@@ -82,7 +79,7 @@ export default function Carousel({ collections }: any) {
 
   return (
     <Section className="overflow-hidden pt-0">
-      <Container className="pt-0">
+      <Container>
         <Slider ref={sliderRef} {...sliderConfig} arrows={false}>
           {renderCollections()}
         </Slider>
