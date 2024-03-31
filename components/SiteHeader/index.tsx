@@ -3,10 +3,11 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { Button, Container, MobileDraw, SearchPopup } from "@/components"
 import FullLogo from "@/components/svg/FullLogo"
-import { useDialogBox, useHeaderCollapse } from "@/hooks"
+import { useHeaderCollapse } from "@/hooks"
 import { useShoppingCart } from "@/context/Cart"
 import { useAuth } from "@/context/User"
 import { useWindowDimension } from "@/hooks"
+import { cn } from "@/utils"
 
 const SiteHeader = () => {
   const router = useRouter()
@@ -21,12 +22,10 @@ const SiteHeader = () => {
   const isHeaderCollapsed = useHeaderCollapse()
   const { isDesktop, isWidescreen } = useWindowDimension()
 
-  const isLandingPage =
-    router?.asPath === "/" || router?.asPath.includes("/collections")
-  const isCollectionPage = router?.asPath === "/collections"
-  const headerClasses = `fixed w-full top-0 left-0 z-50 transition-all duration-500 ${
-    isCollectionPage ? `` : isHeaderCollapsed ? "bg-[#E9EBE0] text-black" : ``
-  }`
+  // const isCollectionPage = router?.asPath === "/collections"
+  // const headerClasses = `fixed w-full top-0 left-0 z-50 transition-all duration-500 ${
+  //   isCollectionPage ? `` : isHeaderCollapsed ? "" : ``
+  // }`
 
   const handleCartOpen = () => {
     setIsCartOpen(!isCartOpen)
@@ -35,7 +34,19 @@ const SiteHeader = () => {
   return (
     <>
       {isDesktop || isWidescreen ? (
-        <header className={headerClasses}>
+        <header
+          className={
+            "fixed left-0 top-0 z-50 w-full transition-all duration-500"
+          }
+        >
+          <div className="absolute inset-0">
+            <div
+              className={cn(
+                "absolute inset-0 bg-white bg-opacity-80 backdrop-blur-lg backdrop-filter duration-500",
+                isHeaderCollapsed ? "opacity-100" : "opacity-0"
+              )}
+            ></div>
+          </div>
           <nav className="relative py-6">
             <Container>
               <div className="flex items-center justify-between">
