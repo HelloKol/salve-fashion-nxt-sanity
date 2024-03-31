@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { useRouter } from "next/router"
 import { useState, useEffect } from "react"
 import { useShoppingCart } from "@/context/Cart"
 import { Container } from "@/components"
@@ -11,21 +10,16 @@ import Hamburger from "@/components/svg/Hamburger"
 import Search from "@/components/svg/Search"
 import Bag from "@/components/svg/Bag"
 import styles from "./styles.module.scss"
+import { cn } from "@/utils"
 
 interface props {
   setIsSearchModalOpen: (isOpen: boolean) => void
 }
 
 const MobileDraw = ({ setIsSearchModalOpen }: props) => {
-  const router = useRouter()
   const isHeaderCollapsed = useHeaderCollapse()
   const { isCartOpen, setIsCartOpen, cart } = useShoppingCart()
   const [isMobileDrawActive, setIsMobileDrawActive] = useState(false)
-  const isLandingPage =
-    router?.asPath === "/" || router?.asPath.includes("/collections")
-  const headerClasses = `${styles.mobileDrawHeader} ${
-    isHeaderCollapsed || !isLandingPage ? styles.scrolled : ""
-  }`
 
   useEffect(() => {
     if (isMobileDrawActive) document.body.style.overflow = "hidden"
@@ -37,7 +31,15 @@ const MobileDraw = ({ setIsSearchModalOpen }: props) => {
   }
 
   return (
-    <header className={headerClasses}>
+    <header className={styles.mobileDrawHeader}>
+      <div className="absolute inset-0">
+        <div
+          className={cn(
+            "absolute inset-0 bg-white bg-opacity-80 backdrop-blur-lg backdrop-filter duration-500",
+            isHeaderCollapsed ? "opacity-100" : "opacity-0"
+          )}
+        ></div>
+      </div>
       <nav className={styles.mobileDrawNav}>
         <Container>
           <div className={styles.iconsWrap}>

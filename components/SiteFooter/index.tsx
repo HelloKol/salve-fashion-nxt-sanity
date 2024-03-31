@@ -1,120 +1,75 @@
-import React from "react";
-import Link from "next/link";
-import { Container } from "@/components";
-import FullLogoStack from "@/components/svg/FullLogoStack";
+import React from "react"
+import Link from "next/link"
+import { Container } from "@/components"
+import FullLogoStack from "@/components/svg/FullLogoStack"
+import settings from "../../data/settings.json"
 
 const SiteFooter = () => {
+  const { footer } = settings
+  const { credit, columns } = footer
+
+  const renderFooterLinks = (links: any) => {
+    return (
+      links &&
+      links.map((link: any, index: number) => {
+        const { title, internalLink, externalLink } = link
+
+        if (!internalLink && !externalLink) return null
+
+        return (
+          <Link
+            key={index}
+            href={
+              externalLink
+                ? externalLink
+                : `/${internalLink.dynamicRoute || ""}/${internalLink.slug}`
+            }
+            target="_blank"
+            className="mb-2 block text-gray-400 transition-colors duration-300 hover:text-white"
+          >
+            {title}
+          </Link>
+        )
+      })
+    )
+  }
+
+  const renderFooterColumns = () => {
+    return (
+      columns &&
+      columns.map((link, index) => {
+        const { title, links } = link
+
+        return (
+          <div className="w-full md:w-1/4">
+            <h5 className="mb-4 text-lg font-medium uppercase">{title}</h5>
+            {renderFooterLinks(links)}
+          </div>
+        )
+      })
+    )
+  }
+
   return (
-    <footer className="bg-black text-white px-4 lg:px-6 pt-16 pb-10">
+    <footer className="bg-black px-4 pb-10 pt-16 text-white lg:px-6">
       <Container>
-        <div className="text-center mb-8">
+        <div className="mb-8 text-center">
           <Link
             href="/"
-            className="hover:text-white transition-colors duration-300"
+            className="transition-colors duration-300 hover:text-white"
           >
-            <FullLogoStack className="h-12 w-auto mx-auto fill-current text-gray-400 hover:text-white transition-colors duration-300" />
+            <FullLogoStack className="mx-auto h-12 w-auto fill-current text-gray-400 transition-colors duration-300 hover:text-white" />
           </Link>
         </div>
-        <div className="flex flex-wrap justify-start md:justify-between py-14">
-          <div className="w-full md:w-1/4">
-            <h5 className="text-lg font-medium mb-4">COLLECTIONS</h5>
-            <Link
-              href="/shop/men"
-              className="block text-gray-400 hover:text-white transition-colors duration-300 mb-2"
-            >
-              Men
-            </Link>
-            <Link
-              href="/shop/women"
-              className="block text-gray-400 hover:text-white transition-colors duration-300 mb-2"
-            >
-              Women
-            </Link>
-            <Link
-              href="/shop/men"
-              className="block text-gray-400 hover:text-white transition-colors duration-300 mb-2"
-            >
-              Accessories
-            </Link>
-            <Link
-              href="/shop/women"
-              className="block text-gray-400 hover:text-white transition-colors duration-300 mb-2"
-            >
-              Digital
-            </Link>
-            <Link
-              href="/shop/women"
-              className="block text-gray-400 hover:text-white transition-colors duration-300 mb-2"
-            >
-              Sales
-            </Link>
-          </div>
-          <div className="w-full md:w-1/4">
-            <h5 className="text-lg font-medium mb-4">INFORMATION</h5>
-            <Link
-              href="/shop/men"
-              className="block text-gray-400 hover:text-white transition-colors duration-300 mb-2"
-            >
-              Returns
-            </Link>
-            <Link
-              href="/shop/women"
-              className="block text-gray-400 hover:text-white transition-colors duration-300 mb-2"
-            >
-              Shipping
-            </Link>
-            <Link
-              href="/shop/men"
-              className="block text-gray-400 hover:text-white transition-colors duration-300 mb-2"
-            >
-              Terms
-            </Link>
-            <Link
-              href="/shop/women"
-              className="block text-gray-400 hover:text-white transition-colors duration-300 mb-2"
-            >
-              Privacy
-            </Link>
-          </div>
-          <div className="w-full md:w-1/4">
-            <h5 className="text-lg font-medium mb-4">MORE</h5>
-            <Link
-              href="/shop/men"
-              className="block text-gray-400 hover:text-white transition-colors duration-300 mb-2"
-            >
-              About
-            </Link>
-            <Link
-              href="/shop/women"
-              className="block text-gray-400 hover:text-white transition-colors duration-300 mb-2"
-            >
-              Contact
-            </Link>
-            <Link
-              href="/shop/women"
-              className="block text-gray-400 hover:text-white transition-colors duration-300 mb-2"
-            >
-              FAQ
-            </Link>
-          </div>
-          <div className="w-full md:w-1/4">
-            <h5 className="text-lg font-medium mb-4">SOCIAL</h5>
-            <Link
-              href="/shop/women"
-              className="block text-gray-400 hover:text-white transition-colors duration-300 mb-2"
-            >
-              Instagram
-            </Link>
-          </div>
+        <div className="flex flex-wrap justify-start py-14 md:justify-between">
+          {renderFooterColumns()}
         </div>
         <div className="text-end">
-          <p className="text-gray-400 text-sm">
-            &copy; 2023 AllSaints All Rights Reserved
-          </p>
+          <p className="text-sm text-gray-400">{credit}</p>
         </div>
       </Container>
     </footer>
-  );
-};
+  )
+}
 
-export default SiteFooter;
+export default SiteFooter

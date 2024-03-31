@@ -29,6 +29,7 @@ type CartItem = {
 }
 
 type ShoppingCartContextProps = {
+  cartLoading: boolean
   cart: any
   cartId: string
   isSearchModalOpen: boolean
@@ -166,7 +167,6 @@ function ShoppingCartHooks() {
 
   const handleLoggedInUserCart = async (userToken: string) => {
     const customer = await getCustomer(userToken)
-    console.log(customer, "customer")
     if (customer && customer?.lastIncompleteCart) {
       return setCookie("cartId", customer.lastIncompleteCart.id, { path: "/" })
     } else {
@@ -232,6 +232,7 @@ function ShoppingCartHooks() {
   }
 
   return {
+    cartLoading: loading,
     cart,
     cartId: currentCartID,
     isSearchModalOpen: isOpen,

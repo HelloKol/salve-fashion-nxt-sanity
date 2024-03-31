@@ -1,4 +1,6 @@
+import { GetStaticPaths, GetStaticProps } from "next/types"
 import React, { useEffect, useState } from "react"
+import { ParsedUrlQuery } from "querystring"
 import groq from "groq"
 // @ts-ignore
 import { useSpringCarousel } from "react-spring-carousel"
@@ -14,16 +16,13 @@ import {
   Section,
   Seo,
 } from "@/components"
-import styles from "./styles.module.scss"
-import { GetStaticPaths, GetStaticProps } from "next/types"
-import { ParsedUrlQuery } from "querystring"
 import {
   ALL_PRODUCTS,
   SEARCH_QUERY_PREDICTIVE,
   SINGLE_PRODUCT_BY_HANDLE,
 } from "@/services/queries"
-import { graphqlClient, sanityClient } from "@/utils"
-import PRODUCT_ACCORDION from "../../../../utils/productAccordion"
+import { graphqlClient, sanityClient, PRODUCT_ACCORDION } from "@/utils"
+import styles from "./styles.module.scss"
 
 export interface ProductProps {
   page: any
@@ -294,14 +293,16 @@ export default function Page({
                   <RadixAccordion data={ACCORDION} />
                 </div>
               </div>
-
-              <div className="col-span-full mt-16 md:mt-20 lg:mt-32 xl:mt-36">
-                <HorizontalFeedBasic
-                  title={"Similar Products"}
-                  productsData={predictiveSearch}
-                />
-              </div>
             </Grid>
+          </Container>
+        </Section>
+
+        <Section className="lg:pt-44">
+          <Container>
+            <HorizontalFeedBasic
+              title={"Similar Products"}
+              productsData={predictiveSearch}
+            />
           </Container>
         </Section>
       </Main>

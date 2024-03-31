@@ -1,4 +1,4 @@
-const ACCORDION = [
+const PRODUCT_ACCORDION = [
   {
     _key: "0b4708ddb716",
     _type: "group",
@@ -57,4 +57,4 @@ const ACCORDION = [
   },
 ]
 
-export default ACCORDION
+export { PRODUCT_ACCORDION }

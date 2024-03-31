@@ -40,7 +40,7 @@ export default function Page({ page }: props): JSX.Element | null {
   const [isLoading, setIsLoading] = useState(false)
   const [isSucess, setIsSuccess] = useState(false)
   const [globalError, setGlobalError] = useState("")
-  const { cart, cartId, lineItemRemove, lineItemUpdateQuantity } =
+  const { cartLoading, cart, cartId, lineItemRemove, lineItemUpdateQuantity } =
     useShoppingCart()
   const {
     isFetching: isCopyFetching,
@@ -187,9 +187,9 @@ export default function Page({ page }: props): JSX.Element | null {
       const { title, handle } = product
 
       return (
-        <div key={id} className="mb-8 flex gap-6 lg:mb-10">
+        <div key={id} className="mt-8 flex gap-6 lg:mb-10 lg:mt-0">
           <Link
-            className="mb-0 h-44 w-36 flex-none overflow-hidden rounded-md lg:h-56 lg:w-44"
+            className="h-44 w-36 flex-none overflow-hidden rounded-md lg:h-56 lg:w-44"
             href={`/shop/product/${handle}`}
           >
             <ImageTag src={image?.originalSrc} />
@@ -336,7 +336,7 @@ export default function Page({ page }: props): JSX.Element | null {
                 </h1>
               </button>
 
-              <div className="col-span-full my-14 lg:col-start-1 lg:col-end-10 xl:col-end-9">
+              <div className="col-span-full lg:col-start-1 lg:col-end-10 lg:mt-14 xl:col-end-9">
                 {cart?.cart?.lines?.nodes?.length ? (
                   renderCart()
                 ) : (
@@ -349,7 +349,7 @@ export default function Page({ page }: props): JSX.Element | null {
                 )}
               </div>
 
-              <div className="col-span-full mt-14 md:col-start-3 md:col-end-11 lg:col-start-10 lg:col-end-13">
+              <div className="col-span-full my-14 md:col-start-3 md:col-end-11 lg:col-start-10 lg:col-end-13 lg:my-0 lg:mt-14">
                 <h2 className="mb-4 text-2xl lg:mb-6 xl:mb-8">Order Summary</h2>
 
                 <form onSubmit={handleSubmit(onSubmit)}>

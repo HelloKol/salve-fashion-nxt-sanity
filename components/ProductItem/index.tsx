@@ -16,7 +16,7 @@ const ProductItem = ({ product, node }: any) => {
           className={`duration-250 absolute bottom-0 left-0 right-0 top-0 z-0 bg-black bg-opacity-60 opacity-0 transition-opacity ease-in-out group-hover:opacity-100`}
         >
           <div
-            className={`absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 transform items-center justify-center`}
+            className={`absolute left-1/2 top-1/2 z-10 flex w-full -translate-x-1/2 -translate-y-1/2 transform items-center justify-center`}
           >
             <div className={`flex flex-col gap-4`}>
               {/* @ts-ignore */}

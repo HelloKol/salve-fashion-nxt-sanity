@@ -1,6 +1,5 @@
 import React from "react"
 import Link from "next/link"
-import { useRouter } from "next/router"
 import { Button, Container, MobileDraw, SearchPopup } from "@/components"
 import FullLogo from "@/components/svg/FullLogo"
 import { useHeaderCollapse } from "@/hooks"
@@ -10,7 +9,6 @@ import { useWindowDimension } from "@/hooks"
 import { cn } from "@/utils"
 
 const SiteHeader = () => {
-  const router = useRouter()
   const { isAuthenticated } = useAuth()
   const {
     cart,
@@ -21,11 +19,6 @@ const SiteHeader = () => {
   } = useShoppingCart()
   const isHeaderCollapsed = useHeaderCollapse()
   const { isDesktop, isWidescreen } = useWindowDimension()
-
-  // const isCollectionPage = router?.asPath === "/collections"
-  // const headerClasses = `fixed w-full top-0 left-0 z-50 transition-all duration-500 ${
-  //   isCollectionPage ? `` : isHeaderCollapsed ? "" : ``
-  // }`
 
   const handleCartOpen = () => {
     setIsCartOpen(!isCartOpen)

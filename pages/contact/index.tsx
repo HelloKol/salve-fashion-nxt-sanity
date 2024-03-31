@@ -38,47 +38,47 @@ export default function Page({ page }: props): JSX.Element | null {
                 Let us know how we can help.
               </h3>
 
-              <div className="col-span-full rounded-2xl border border-gray-400 p-5 sm:col-span-6 md:col-span-3">
-                <span className="block w-min rounded-2xl border border-gray-400 p-2">
+              <div className="col-span-full rounded-2xl border-2 border-deepPurple p-5 sm:col-span-6 md:col-span-3">
+                <span className="block w-min rounded-2xl border-2 border-gray-600 p-2">
                   <MessageSmile className="h-8 rounded-2xl fill-[#E9EBE0]" />
                 </span>
                 <p className="mt-10 text-xl font-semibold lg:mt-16">
                   Chat to sales
                 </p>
                 <p className="mt-3 text-sm">Speak to our friendly team.</p>
-                <Link href={`/`} className="text-deepPurple mt-5 block">
+                <Link href={`/`} className="mt-5 block text-deepPurple">
                   sales@example.com
                 </Link>
               </div>
-              <div className="col-span-full rounded-2xl border border-gray-400 p-5 sm:col-span-6 md:col-span-3">
-                <span className="block w-min rounded-2xl border border-gray-400 p-2">
+              <div className="col-span-full rounded-2xl border-2 border-deepPurple p-5 sm:col-span-6 md:col-span-3">
+                <span className="block w-min rounded-2xl border-2 border-gray-600 p-2">
                   <MessageChat className="h-8 rounded-2xl fill-[#E9EBE0]" />
                 </span>
                 <p className="mt-10 text-xl font-semibold lg:mt-16">
                   Chat to support
                 </p>
                 <p className="mt-3 text-sm">We`re here to help.</p>
-                <Link href={`/`} className="text-deepPurple mt-5 block">
+                <Link href={`/`} className="mt-5 block text-deepPurple">
                   sales@example.com
                 </Link>
               </div>
-              <div className="col-span-full rounded-2xl border border-gray-400 p-5 sm:col-span-6 md:col-span-3">
-                <span className="block w-min rounded-2xl border border-gray-400 p-2">
+              <div className="col-span-full rounded-2xl border-2 border-deepPurple p-5 sm:col-span-6 md:col-span-3">
+                <span className="block w-min rounded-2xl border-2 border-gray-600 p-2">
                   <Location className="h-8 rounded-2xl fill-[#E9EBE0]" />
                 </span>
                 <p className="mt-10 text-xl font-semibold lg:mt-16">Visit us</p>
                 <p className="mt-3 text-sm">Visit our office HQ.</p>
-                <Link href={`/`} className="text-deepPurple mt-5 block">
+                <Link href={`/`} className="mt-5 block text-deepPurple">
                   sales@example.com
                 </Link>
               </div>
-              <div className="col-span-full rounded-2xl border border-gray-400 p-5 sm:col-span-6 md:col-span-3">
-                <span className="block w-min rounded-2xl border border-gray-400 p-2">
+              <div className="col-span-full rounded-2xl border-2 border-deepPurple p-5 sm:col-span-6 md:col-span-3">
+                <span className="block w-min rounded-2xl border-2 border-gray-600 p-2">
                   <Phone className="h-8 rounded-2xl fill-[#E9EBE0]" />
                 </span>
                 <p className="mt-10 text-xl font-semibold lg:mt-16">Call us</p>
                 <p className="mt-3 text-sm">Mon-Fri from 9am to 5am</p>
-                <Link href={`/`} className="text-deepPurple mt-5 block">
+                <Link href={`/`} className="mt-5 block text-deepPurple">
                   sales@example.com
                 </Link>
               </div>
