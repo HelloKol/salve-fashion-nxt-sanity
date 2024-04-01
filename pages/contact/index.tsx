@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { GetStaticPropsResult } from "next"
 import groq from "groq"
+import { PortableTextBlock } from "@portabletext/types"
 import {
   Main,
   Section,
@@ -14,9 +15,21 @@ import MessageChat from "@/components/svg/MessageChat"
 import MessageSmile from "@/components/svg/MessageSmile"
 import Location from "@/components/svg/Location"
 import Phone from "@/components/svg/Phone"
+import { SeoType } from "@/types"
 
 interface props {
-  page: any
+  page: {
+    title: string
+    slug: string
+    blockAccordion: {
+      groups: {
+        title: string
+        body: PortableTextBlock
+        htmlText: string
+      }[]
+    }
+    seo: SeoType
+  }
 }
 
 export default function Page({ page }: props): JSX.Element | null {

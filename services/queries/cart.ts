@@ -41,7 +41,6 @@ export const CREATE_CART = gql`
     cartCreate {
       cart {
         id
-        checkoutUrl
       }
       userErrors {
         code
@@ -153,7 +152,6 @@ export const REMOVE_FROM_CART = gql`
     cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
       cart {
         id
-        checkoutUrl
       }
       userErrors {
         field
@@ -167,7 +165,6 @@ export const GET_CART = gql`
   query getCart($cartId: ID!) {
     cart(id: $cartId) {
       id
-      checkoutUrl
       cost {
         checkoutChargeAmount {
           amount

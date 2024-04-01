@@ -2,11 +2,25 @@ import { GetStaticPropsResult } from "next"
 import React from "react"
 import groq from "groq"
 import { PortableText } from "@portabletext/react"
+import { PortableTextBlock } from "@portabletext/types"
 import { Container, Grid, ImageTag, Main, Seo, Section } from "@/components"
 import { sanityClient } from "@/utils"
+import { Media, SeoType } from "@/types"
 
 interface props {
-  page: any
+  page: {
+    title: string
+    standfirst: PortableTextBlock
+    body: PortableTextBlock
+    image: Media
+    blockImages: {
+      modules: {
+        body: PortableTextBlock
+        image: Media
+      }[]
+    }
+    seo: SeoType
+  }
 }
 
 export default function Page({ page }: props): JSX.Element | null {
@@ -16,7 +30,7 @@ export default function Page({ page }: props): JSX.Element | null {
   const renderBlockImages = () => {
     return (
       blockImages &&
-      blockImages.modules.map((block: any, index: number) => {
+      blockImages.modules.map((block, index: number) => {
         const { image, body } = block
 
         if (index === 0)

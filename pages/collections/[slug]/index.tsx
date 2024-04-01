@@ -12,10 +12,24 @@ import {
 import { graphqlClient, sanityClient } from "@/utils"
 import { GetStaticPropsResult } from "next/types"
 import { COLLECTION_PRODUCTS } from "@/services/queries"
+import { SeoType, ShopifyProduct } from "@/types"
 
 interface props {
-  page: any
-  collectionByHandle: any
+  page: {
+    store: {
+      title: string
+      descriptionHtml: string
+      imageUrl: string
+    }
+    seo: SeoType
+  }
+  collectionByHandle: {
+    collection: {
+      products: {
+        edges: ShopifyProduct[]
+      }
+    }
+  }
 }
 
 export default function Page({ page, collectionByHandle }: props) {
@@ -53,7 +67,7 @@ export default function Page({ page, collectionByHandle }: props) {
         <Section withPadding={false}>
           <Container>
             <Grid withRowGap={false}>
-              <h1 className="text-deepPurple col-span-full mb-7 text-center text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
+              <h1 className="col-span-full mb-7 text-center text-5xl text-deepPurple md:text-6xl lg:text-7xl xl:text-8xl">
                 {title}
               </h1>
 

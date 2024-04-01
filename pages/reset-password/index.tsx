@@ -13,9 +13,16 @@ import {
 import { useDialogBox, useResetPasswordForm } from "@/hooks"
 import { useToastOpen } from "@/context/Toast"
 import { sanityClient } from "@/utils"
+import { Media, SeoType } from "@/types"
 
 interface props {
-  page: any
+  page: {
+    title: string
+    subtitle: string
+    contentTitle: string
+    image: Media
+    seo: SeoType
+  }
 }
 
 export default function Page({ page }: props): JSX.Element | null {

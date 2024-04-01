@@ -1,3 +1,5 @@
+import { PortableTextBlock } from "@portabletext/types"
+
 export interface ShopifyCollection {
   node: {
     id: string
@@ -42,18 +44,16 @@ export interface ShopifyProduct {
 }
 
 export interface ShopifySingleProduct {
-  productByHandle: {
-    id: string
-    title: string
-    handle: string
-    description: string
-    descriptionHtml: string
-    images: {
-      edges: ProductImageNode[]
-    }
-    variants: {
-      edges: ProductVariantNode[]
-    }
+  id: string
+  title: string
+  handle: string
+  description: string
+  descriptionHtml: string
+  images: {
+    edges: ProductImageNode[]
+  }
+  variants: {
+    edges: ProductVariantNode[]
   }
 }
 
@@ -111,5 +111,35 @@ export type CustomerCreateResult = {
       field: string
       message: string
     }[]
+  }
+}
+
+export type LinksType = {
+  title: string
+  url: {
+    current: string
+  }
+}
+
+export type Media = {
+  _type: string
+  asset: {
+    _id: string
+    url: string
+    metadata: {
+      lqip: string
+    }
+  }
+}
+
+export type SeoType = {
+  metaTitle: string
+  metaDescription: string
+  shareTitle: string
+  shareDescription: string
+  shareGraphic: {
+    asset: {
+      url: string
+    }
   }
 }

@@ -10,13 +10,58 @@ import {
   Seo,
   VideoPlayer,
 } from "@/components"
-import { ShopifyProduct } from "@/types"
-import { ALL_PRODUCTS } from "@/services/queries"
-import { graphqlClient } from "@/utils/graphql"
 import { sanityClient } from "@/utils"
+import { LinksType, Media, SeoType, ShopifySingleProduct } from "@/types"
 
 interface props {
-  page: any
+  page: {
+    seo: SeoType
+    hero: {
+      collections: {
+        modules: {
+          image: Media
+        }[]
+      }
+    }
+    categories: {
+      blockImages: {
+        modules: {
+          callToAction: {
+            links: LinksType[]
+          }
+          image: Media
+        }[]
+      }
+    }
+    productFeedMen: {
+      title: string
+      text: string
+      links: LinksType[]
+      productWithVariant: {
+        product: {
+          store: {
+            variants: ShopifySingleProduct[]
+          }
+        }
+      }[]
+    }
+    productFeedWomen: {
+      title: string
+      text: string
+      links: LinksType[]
+      productWithVariant: {
+        product: {
+          store: {
+            variants: ShopifySingleProduct[]
+          }
+        }
+      }[]
+    }
+    videoPlayer: {
+      videoUrl: string
+      previewImage: Media
+    }
+  }
   instagramAccount: any
   instagramPosts: any
 }

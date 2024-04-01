@@ -13,9 +13,25 @@ import {
 import { useDialogBox, useChangePasswordForm } from "@/hooks"
 import { useToastOpen } from "@/context/Toast"
 import { sanityClient } from "@/utils"
+import { SeoType } from "@/types"
 
 interface props {
-  page: any
+  page: {
+    title: string
+    subtitle: string
+    contentTitle: string
+    image: {
+      _type: string
+      asset: {
+        _id: string
+        url: string
+        metadata: {
+          lqip: string
+        }
+      }
+    }
+    seo: SeoType
+  }
 }
 
 export default function Page({ page }: props): JSX.Element | null {

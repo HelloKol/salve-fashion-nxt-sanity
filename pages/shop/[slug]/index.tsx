@@ -1,11 +1,21 @@
 import React from "react"
+import { PortableTextBlock } from "@portabletext/types"
 import { Container, Main, Section, Seo, ShopIndex } from "@/components"
 import { sanityClient } from "@/utils"
 import { GetStaticPropsResult } from "next/types"
 import groq from "groq"
+import { SeoType } from "@/types"
 
 interface props {
-  page: any
+  page: {
+    slug: {
+      current: string
+    }
+    title: string
+    body: PortableTextBlock
+    suggestedSearch: string[]
+    seo: SeoType
+  }
 }
 
 export default function Page({ page }: props) {

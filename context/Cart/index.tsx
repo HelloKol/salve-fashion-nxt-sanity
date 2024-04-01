@@ -41,7 +41,6 @@ type ShoppingCartContextProps = {
   cartItems: CartItem[]
   setCartItems: (items: CartItem[]) => void
   totalCartPrice: number
-  checkoutUrl: string
   // fetchCartItems: () => void
   lineItemUpdateQuantity: (id: string, quantity: number) => void
   lineItemRemove: (id: string) => void
@@ -68,7 +67,6 @@ function ShoppingCartHooks() {
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [cartItems, setCartItems] = useState<CartItem[]>([])
   const [totalCartPrice, setTotalCartPrice] = useState(0)
-  const [checkoutUrl, setCartUrl] = useState<string>("")
   const [cookies, setCookie, removeCookie] = useCookies(["cartId"])
   const currentCartID: string = cookies["cartId"]
 
@@ -244,7 +242,6 @@ function ShoppingCartHooks() {
     cartItems,
     setCartItems,
     totalCartPrice,
-    checkoutUrl,
     // fetchCartItems,
     lineItemUpdateQuantity,
     lineItemRemove,

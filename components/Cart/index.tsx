@@ -3,16 +3,14 @@ import { useShoppingCart } from "@/context/Cart"
 import { Button, ClickOut, ImageTag } from "@/components"
 import Close from "@/components/svg/Close"
 import Bag from "@/components/svg/Bag"
-import styles from "./styles.module.scss"
 import { useTruncateString } from "@/hooks"
+import styles from "./styles.module.scss"
 
 export default function Cart() {
   const {
     isCartOpen,
     setIsCartOpen,
-    cartItems,
     cart,
-    checkoutUrl,
     lineItemRemove,
     lineItemUpdateQuantity,
   } = useShoppingCart()

@@ -15,9 +15,14 @@ import {
 import { useDialogBox, useRegisterForm } from "@/hooks"
 import { sanityClient } from "@/utils"
 import { useToastOpen } from "@/context/Toast"
+import { Media, SeoType } from "@/types"
 
 interface props {
-  page: any
+  page: {
+    title: string
+    image: Media
+    seo: SeoType
+  }
 }
 
 export default function Page({ page }: props): JSX.Element | null {

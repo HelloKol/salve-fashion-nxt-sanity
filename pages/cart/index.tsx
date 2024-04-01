@@ -24,13 +24,16 @@ import { ADD_DISCOUNT_TO_CART, GET_CART } from "@/services/queries/cart"
 import { useCopyToClipboard } from "@/hooks"
 import { useToastOpen } from "@/context/Toast"
 import { sanityClient } from "@/utils"
+import { SeoType } from "@/types"
 
 const schema = yup.object().shape({
   discountCode: yup.string().required("Enter a discount code"),
 })
 
 interface props {
-  page: any
+  page: {
+    seo: SeoType
+  }
 }
 
 export default function Page({ page }: props): JSX.Element | null {

@@ -14,7 +14,7 @@ interface Collection {
   }
 }
 
-interface Props {
+interface props {
   page: {
     title: string
     seo: {
@@ -26,7 +26,7 @@ interface Props {
   collections: Collection[]
 }
 
-export default function Page({ page, collections }: Props) {
+export default function Page({ page, collections }: props) {
   const [titlePosition, setTitlePosition] = useState({ x: 0, y: 0 })
   if (!page) return null
   const { seo } = page
@@ -72,7 +72,7 @@ export default function Page({ page, collections }: Props) {
   )
 }
 
-export async function getStaticProps(): Promise<GetStaticPropsResult<Props>> {
+export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
   try {
     const page = await sanityClient.fetch(
       groq`*[_type == "collectionIndex" && !(_id in path('drafts.**'))][0] {
