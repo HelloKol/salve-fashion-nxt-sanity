@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import Head from "next/head"
 import groq from "groq"
 import { ImageTag, Main, Section, Seo } from "@/components"
 import { sanityClient } from "@/utils"
@@ -17,7 +16,6 @@ interface Collection {
 
 interface props {
   page: {
-    title: string
     seo: SeoType
   }
   collections: Collection[]
@@ -36,7 +34,9 @@ export default function Page({ page, collections }: props) {
     collections &&
     collections.map((collection) => {
       const { store } = collection
+      if (!store) return null
       const { title, slug, imageUrl } = store
+      if (!imageUrl) return null
 
       return (
         <Link
@@ -54,7 +54,7 @@ export default function Page({ page, collections }: props) {
           >
             {title}
           </h1>
-          <ImageTag src={imageUrl} />
+          <ImageTag src={imageUrl || ""} />
         </Link>
       )
     })
@@ -73,12 +73,11 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
   try {
     const page = await sanityClient.fetch(
       groq`*[_type == "collectionIndex" && !(_id in path('drafts.**'))][0] {
-          title,
           seo
       }`
     )
 
-    const collections = await sanityClient.fetch(
+    const collections: Collection[] = await sanityClient.fetch(
       groq`*[_type == "collection" && !(_id in path('drafts.**'))] {
          store {
           title,

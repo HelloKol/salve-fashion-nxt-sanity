@@ -1,6 +1,5 @@
-import { gql, useQuery } from "@apollo/client"
+import { gql } from "@apollo/client"
 import type { NextApiRequest, NextApiResponse } from "next"
-import fetch from "node-fetch"
 import { graphqlClientPrivate } from "@/utils"
 
 export default async function handler(
@@ -11,14 +10,12 @@ export default async function handler(
   // Get the user's IP address from the x-forwarded-for header
   const forwardedFor = req.headers["x-forwarded-for"]
 
-  const userIP = Array.isArray(forwardedFor)
+  Array.isArray(forwardedFor)
     ? forwardedFor[0]
     : forwardedFor || req.connection.remoteAddress
 
-  console.log(userIP, "<<<req")
-
   try {
-    const response = await graphqlClientPrivate.request(
+    await graphqlClientPrivate.request(
       gql`
         mutation customerRecover($email: String!) {
           customerRecover(email: $email) {
@@ -33,9 +30,6 @@ export default async function handler(
       }
     )
 
-    console.log(response, "<<<req")
-
-    // const data = await response.json()
     res.status(200).json({
       hello: `hellooo`,
     })

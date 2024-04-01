@@ -38,11 +38,11 @@ export default function Page({ page, collectionByHandle }: props) {
   if (!page) return null
   const { store, seo } = page
   const { collection } = collectionByHandle
-  const { products } = collection
   const { title, descriptionHtml, imageUrl } = store
 
   const renderProducts = () =>
-    products.edges.map((product: any, index: any) => {
+    collection?.products &&
+    collection.products.edges.map((product: any, index: any) => {
       const { node } = product
       const { variants } = node
       // Find the first available variant
@@ -88,7 +88,7 @@ export default function Page({ page, collectionByHandle }: props) {
                 className="col-span-full mt-4 xl:mt-8"
                 withRowGap={false}
               >
-                {!products?.edges.length ? (
+                {!collection?.products?.edges.length ? (
                   <h3 className="col-span-full text-center text-xl">
                     <b className="mb-2 block">We&apos;re sorry,</b>
                     We can&apos;t seem to find any results
