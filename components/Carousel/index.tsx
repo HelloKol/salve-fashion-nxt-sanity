@@ -2,11 +2,25 @@ import React, { useRef } from "react"
 import Link from "next/link"
 // @ts-ignore
 import Slider from "react-slick"
-import { Button, Container, ImageTag, Section } from "@/components"
+import { Container, ImageTag, Section } from "@/components"
 import ArrowRight from "@/components/svg/ArrowRight"
 import styles from "./styles.module.scss"
+import { Media, ShopifyCollection } from "@/types"
 
-export default function Carousel({ collections }: any) {
+interface props {
+  collections: {
+    _type: string
+    modules: Media[]
+    _updatedAt: string
+    showHero: boolean
+    _createdAt: string
+    _rev: string
+    _id: string
+    store: ShopifyCollection
+  }[]
+}
+
+export default function Carousel({ collections }: props) {
   const sliderRef = useRef(null)
 
   const sliderConfig = {

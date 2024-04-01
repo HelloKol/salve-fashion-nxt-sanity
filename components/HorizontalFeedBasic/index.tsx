@@ -3,11 +3,14 @@ import React, { useRef } from "react"
 import { Grid, ProductItem, Section } from "@/components"
 // Utils
 import { useDragScroll } from "@/hooks"
+import { ShopifyProduct } from "@/types"
 
 // Props
 interface Props {
   title?: string
-  productsData: any
+  productsData: {
+    products: ShopifyProduct[]
+  }
 }
 
 export default function HorizontalFeedBasic({ title, productsData }: Props) {

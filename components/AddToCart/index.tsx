@@ -6,6 +6,7 @@ import { useTruncateString } from "@/hooks"
 import { useShoppingCart } from "@/context/Cart"
 import { ImageTag, RadixPopoverCart } from "@/components"
 import { GET_CART } from "@/services/queries/cart"
+import { ProductVariantNode } from "@/types"
 
 export default function AddToCart({
   productTitle,
@@ -15,7 +16,7 @@ export default function AddToCart({
   className,
 }: {
   productTitle: string
-  selectedVariant: any
+  selectedVariant: ProductVariantNode
   quantity: number
   disabled?: boolean
   className?: string

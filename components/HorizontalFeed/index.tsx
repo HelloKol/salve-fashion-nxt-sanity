@@ -3,10 +3,22 @@ import React, { useRef } from "react"
 import { Button, Container, Grid, ProductItem, Section } from "@/components"
 // Utils
 import { useDragScroll, useHorizontalScroll } from "@/hooks"
+import { LinksType, ShopifyProduct } from "@/types"
 
 // Props
 interface Props {
-  productsData: any
+  productsData: {
+    title: string
+    text: string
+    links: LinksType[]
+    productWithVariant: {
+      product: {
+        store: {
+          variants: ShopifyProduct[]
+        }
+      }
+    }[]
+  }
 }
 
 export default function HorizontalFeed({ productsData }: Props) {
@@ -22,7 +34,7 @@ export default function HorizontalFeed({ productsData }: Props) {
 
   const renderProduct = () =>
     productWithVariant &&
-    productWithVariant.map((item: any, index: any) => {
+    productWithVariant.map((item, index) => {
       const { product } = item
       const { store } = product
       // Find the first available variant

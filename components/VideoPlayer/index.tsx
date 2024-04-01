@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from "react"
 import ReactPlayer from "react-player/lazy"
 import { ImageTag, Section } from "@/components"
+import { Media } from "@/types"
 
 interface VideoPlayerProps {
   data: {
     videoUrl: string
-    previewImage: {
-      asset: {
-        url: string
-        metadata: {
-          lqip: string
-        }
-      }
-    }
+    previewImage: Media
   }
 }
 

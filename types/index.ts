@@ -1,59 +1,121 @@
 import { PortableTextBlock } from "@portabletext/types"
 
 export interface ShopifyCollection {
-  node: {
-    id: string
-    title: string
-    handle: string
-    image: {
-      transformedSrc: string
-      altText: string
-    }
+  id: string
+  title: string
+  handle: string
+  image: {
+    transformedSrc: string
+    altText: string
   }
+  isDeleted: boolean
+  sortOrder: string
+  slug: {
+    _type: string
+    current: string
+  }
+  imageUrl: string
+  descriptionHtml: string
+  createdAt: string
+  gid: string
 }
 
 export interface ProductImageNode {
-  node: {
-    altText: string
-    transformedSrc: string
-  }
+  altText: string
+  height: number
+  id: string
+  originalSrc: string
+  src: string
+  transformedSrc: string
+  url: string
+  width: number
 }
 
 export interface ProductVariantNode {
-  node: {
-    id: string
-    title: string
-    price: string
-    compareAtPrice?: string
+  availableForSale: boolean
+  barcode: null
+  currentlyNotInStock: boolean
+  id: string
+  image: ProductImageNode
+  price: {
+    amount: string
+    currencyCode: string
+  }
+  priceV2: {
+    amount: string
+    currencyCode: string
+  }
+  requiresShipping: boolean
+  sku: string
+  taxable: boolean
+  title: string
+  unitPrice: null
+  weight: number
+  weightUnit: string
+  selectedOptions: {
+    name: string
+    value: string
+  }[]
+  compareAtPrice?: string
+  compareAtPriceV2?: {
+    amount: string
+    currencyCode: string
   }
 }
 
 export interface ShopifyProduct {
-  node: {
-    id: string
-    title: string
-    handle: string
-    description: string
-    images: {
-      edges: ProductImageNode[]
-    }
-    variants: {
-      edges: ProductVariantNode[]
-    }
-  }
-}
-
-export interface ShopifySingleProduct {
-  id: string
-  title: string
-  handle: string
+  availableForSale: boolean
+  createdAt: string
   description: string
   descriptionHtml: string
+  featuredImage: ProductImageNode
+  compareAtPriceRange: {
+    maxVariantPrice: {
+      amount: string
+      currencyCode: string
+    }
+    minVariantPrice: {
+      amount: string
+      currencyCode: string
+    }
+  }
+  handle: string
+  id: string
+  isGiftCard: boolean
+  onlineStoreUrl: string
+  productType: string
+  publishedAt: string
+  requiresSellingPlan: boolean
+  tags: string[]
+  title: string
+  totalInventory: number
+  trackingParameters: string
+  updatedAt: string
+  vendor: string
+  options: {
+    id: string
+    name: string
+    values: string[]
+  }[]
+  priceRange: {
+    maxVariantPrice: {
+      amount: string
+      currencyCode: string
+    }
+    minVariantPrice: {
+      amount: string
+      currencyCode: string
+    }
+  }
   images: {
-    edges: ProductImageNode[]
+    edges: {
+      node: ProductImageNode
+    }[]
   }
   variants: {
-    edges: ProductVariantNode[]
+    edges: {
+      node: ProductVariantNode
+    }[]
   }
 }
 

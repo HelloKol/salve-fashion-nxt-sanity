@@ -1,9 +1,20 @@
 import React from "react"
 import Link from "next/link"
 import { Container, Grid, ImageTag, Section } from "@/components"
+import { LinksType, Media } from "@/types"
+
 // Props
 interface Props {
-  data: any
+  data: {
+    blockImages: {
+      modules: {
+        callToAction: {
+          links: LinksType[]
+        }
+        image: Media
+      }[]
+    }
+  }
 }
 
 export default function Category({ data }: Props) {

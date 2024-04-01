@@ -70,7 +70,7 @@ const PRODUCT_BASE = `
 `
 
 const PRODUCT_VARIANT = `
-  variants(first: 100) {
+  variants(first: 50) {
     edges {
       node {
         availableForSale

@@ -11,17 +11,28 @@ import {
   VideoPlayer,
 } from "@/components"
 import { sanityClient } from "@/utils"
-import { LinksType, Media, SeoType, ShopifySingleProduct } from "@/types"
+import {
+  LinksType,
+  Media,
+  SeoType,
+  ShopifyCollection,
+  ShopifyProduct,
+} from "@/types"
 
 interface props {
   page: {
     seo: SeoType
     hero: {
       collections: {
-        modules: {
-          image: Media
-        }[]
-      }
+        _type: string
+        modules: Media[]
+        _updatedAt: string
+        showHero: boolean
+        _createdAt: string
+        _rev: string
+        _id: string
+        store: ShopifyCollection
+      }[]
     }
     categories: {
       blockImages: {
@@ -40,7 +51,7 @@ interface props {
       productWithVariant: {
         product: {
           store: {
-            variants: ShopifySingleProduct[]
+            variants: ShopifyProduct[]
           }
         }
       }[]
@@ -52,7 +63,7 @@ interface props {
       productWithVariant: {
         product: {
           store: {
-            variants: ShopifySingleProduct[]
+            variants: ShopifyProduct[]
           }
         }
       }[]
@@ -81,6 +92,8 @@ export default function Page({
     videoPlayer,
   } = page
   const { collections } = hero
+
+  console.log(collections)
 
   return (
     <>

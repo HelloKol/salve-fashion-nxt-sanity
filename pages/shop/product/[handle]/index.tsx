@@ -23,18 +23,18 @@ import {
 } from "@/services/queries"
 import { graphqlClient, sanityClient, PRODUCT_ACCORDION } from "@/utils"
 import styles from "./styles.module.scss"
-import { SeoType, ShopifySingleProduct } from "@/types"
+import { SeoType, ShopifyProduct } from "@/types"
 
 export interface ProductProps {
   page: {
     seo: SeoType
   }
   productByHandle: {
-    product: ShopifySingleProduct
+    product: ShopifyProduct
   }
   predictiveProducts: {
     predictiveSearch: {
-      products: ShopifySingleProduct[]
+      products: ShopifyProduct[]
     }
   }
 }

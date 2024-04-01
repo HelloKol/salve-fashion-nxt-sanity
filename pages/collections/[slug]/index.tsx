@@ -26,7 +26,9 @@ interface props {
   collectionByHandle: {
     collection: {
       products: {
-        edges: ShopifyProduct[]
+        edges: {
+          node: ShopifyProduct
+        }[]
       }
     }
   }
