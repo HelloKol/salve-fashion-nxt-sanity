@@ -1,6 +1,7 @@
 import { graphqlClient } from "@/utils"
 import {
-  FormData,
+  FormDataRegister,
+  FormDataLogin,
   CustomerAccessTokenCreateResult,
   CustomerCreateResult,
 } from "@/types"
@@ -19,7 +20,7 @@ export const authHooks = (
   setIsLoggedIn: (isLoggedIn: boolean) => void
 ) => {
   // USER REGISTER
-  const signUp = async (input: FormData) => {
+  const signUp = async (input: FormDataRegister) => {
     try {
       const result = await graphqlClient.request<CustomerCreateResult>(
         REGISTER_CUSTOMER,
@@ -48,7 +49,7 @@ export const authHooks = (
   }
 
   // USER LOG IN
-  const signIn = async (details: FormData) => {
+  const signIn = async (details: FormDataLogin) => {
     try {
       const result =
         await graphqlClient.request<CustomerAccessTokenCreateResult>(
@@ -110,35 +111,9 @@ export const authHooks = (
     }
   }
 
-  // USER TOKEN VALIDATE
-  const verifyToken = async (accessToken: string) => {
-    return null
-    try {
-      const result = await graphqlClient.request<any>(VERIFY_TOKEN, {
-        accessToken,
-      })
-      if (result.customer)
-        return {
-          isValid: true,
-          customer: result.customer,
-        }
-      else
-        return {
-          isValid: false,
-          error: "Invalid token",
-        }
-    } catch (err: any) {
-      return {
-        isValid: false,
-        error: err.message,
-      }
-    }
-  }
-
   return {
     signUp,
     signIn,
     logOut,
-    verifyToken,
   }
 }

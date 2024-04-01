@@ -73,8 +73,17 @@ interface props {
       previewImage: Media
     }
   }
-  instagramAccount: any
-  instagramPosts: any
+  instagramAccount: {
+    id: string
+    username: string
+    account_type: string
+  }
+  instagramPosts: {
+    id: string
+    media_type: string
+    media_url: string
+    permalink: string
+  }[]
 }
 
 export default function Page({
@@ -115,7 +124,7 @@ export default function Page({
 
 export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
   try {
-    const page: any = await sanityClient.fetch(
+    const page = await sanityClient.fetch(
       groq`*[_type == "home" && !(_id in path('drafts.**'))][0] {
         ...,
         hero {

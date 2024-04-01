@@ -33,7 +33,9 @@ export default function Page({}: PageProps): JSX.Element | null {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<any>({
+  } = useForm<{
+    phone: string
+  }>({
     resolver: yupResolver(schema),
   })
 
@@ -56,7 +58,7 @@ export default function Page({}: PageProps): JSX.Element | null {
     setValue("phone", userDetails?.phone)
   }, [userDetails])
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: { phone: string }) => {
     if (!accessToken) return
     const variables = {
       customer: data,

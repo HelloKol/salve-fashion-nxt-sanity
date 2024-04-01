@@ -117,6 +117,126 @@ export interface ShopifyProduct {
   }
 }
 
+export type Cart = {
+  cart: {
+    __typename: string
+    id: string
+    cost: {
+      __typename: string
+      checkoutChargeAmount: {
+        __typename: string
+        amount: string
+        currencyCode: string
+      }
+      subtotalAmount: {
+        __typename: string
+        amount: string
+        currencyCode: string
+      }
+      totalAmount: {
+        __typename: string
+        amount: string
+        currencyCode: string
+      }
+      totalDutyAmount: null
+      totalTaxAmount: null
+    }
+    createdAt: string
+    discountAllocations: []
+    discountCodes: []
+    lines: {
+      __typename: string
+      nodes: [
+        {
+          __typename: string
+          cost: {
+            __typename: string
+            amountPerQuantity: {
+              __typename: string
+              amount: string
+              currencyCode: string
+            }
+            compareAtAmountPerQuantity: null
+            subtotalAmount: {
+              __typename: string
+              amount: string
+              currencyCode: string
+            }
+            totalAmount: {
+              __typename: string
+              amount: string
+              currencyCode: string
+            }
+          }
+          discountAllocations: []
+          id: string
+          merchandise: {
+            __typename: string
+            availableForSale: boolean
+            barcode: null
+            compareAtPrice: null
+            compareAtPriceV2: null
+            currentlyNotInStock: boolean
+            id: string
+            image: {
+              __typename: string
+              altText: string
+              height: number
+              id: string
+              originalSrc: string
+              src: string
+              transformedSrc: string
+              url: string
+              width: number
+            }
+            price: {
+              __typename: string
+              amount: string
+              currencyCode: string
+            }
+            priceV2: {
+              __typename: string
+              amount: string
+              currencyCode: string
+            }
+            product: {
+              __typename: string
+              id: string
+              handle: string
+              title: string
+            }
+            quantityAvailable: number
+            requiresShipping: boolean
+            selectedOptions: [
+              {
+                __typename: string
+                name: string
+                value: string
+              },
+              {
+                __typename: string
+                name: string
+                value: string
+              },
+            ]
+            sku: string
+            taxable: boolean
+            title: string
+          }
+          quantity: number
+        },
+      ]
+    }
+    totalQuantity: number
+  }
+}
+
+// USER TYPES - LOGIN/REGISTER
+export type FormDataLogin = {
+  email: string
+  password: string
+}
+
 type CommonFormField =
   | "email"
   | "password"
@@ -124,10 +244,9 @@ type CommonFormField =
   | "firstName"
   | "lastName"
 
-type CommonFormFieldRecord = Record<CommonFormField, string>
+export type CommonFormFieldRecord = Record<CommonFormField, string>
 
-// USER TYPES - LOGIN/REGISTER
-export type FormData = {
+export type FormDataRegister = {
   rememberMeCheckbox?: boolean
   acceptPrivacy?: boolean
 } & CommonFormFieldRecord

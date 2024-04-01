@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form"
 // @ts-ignore
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
-import { FormData } from "@/types"
+import { FormDataRegister } from "@/types"
 import { useAuth } from "@/context/User"
 
 const registerSchema = yup.object().shape({
@@ -31,11 +31,11 @@ const useRegisterForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<FormDataRegister>({
     resolver: yupResolver(registerSchema),
   })
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: FormDataRegister) => {
     setIsLoading(true)
     try {
       const { acceptPrivacy, ...rest } = data

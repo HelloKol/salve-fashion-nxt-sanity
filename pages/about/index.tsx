@@ -109,7 +109,7 @@ export default function Page({ page }: props): JSX.Element | null {
 
 export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
   try {
-    const page: any = await sanityClient.fetch(
+    const page = await sanityClient.fetch(
       groq`*[_type == "about" && !(_id in path('drafts.**'))][0] {
       title,
       body,

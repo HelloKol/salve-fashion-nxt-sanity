@@ -4,8 +4,17 @@ import { Button, Container, Grid, ImageTag, Section } from "@/components"
 // Props
 interface Props {
   title: string
-  instagramAccount: any
-  instagramPosts: any
+  instagramAccount: {
+    id: string
+    username: string
+    account_type: string
+  }
+  instagramPosts: {
+    id: string
+    media_type: string
+    media_url: string
+    permalink: string
+  }[]
 }
 
 export default function index({
@@ -18,7 +27,7 @@ export default function index({
 
   const renderInstagramPosts = () =>
     instagramPosts &&
-    instagramPosts.slice(0, 8).map((post: any, index: any) => {
+    instagramPosts.slice(0, 8).map((post) => {
       const { id, media_url, permalink } = post
       return (
         <Link

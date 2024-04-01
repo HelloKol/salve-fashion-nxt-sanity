@@ -16,7 +16,7 @@ import {
 } from "@/components"
 import { UPDATE_USER_EMAIL, USER_DETAILS } from "@/services/queries"
 import { useAuth } from "@/context/User"
-import { FormData } from "@/types"
+import { FormDataRegister } from "@/types"
 import { useToastOpen } from "@/context/Toast"
 
 const schema = yup.object().shape({
@@ -35,7 +35,7 @@ export default function Page({}: PageProps): JSX.Element | null {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<FormDataRegister>({
     resolver: yupResolver(schema),
   })
 
@@ -53,7 +53,7 @@ export default function Page({}: PageProps): JSX.Element | null {
     }
   )
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: FormDataRegister) => {
     if (!accessToken) return
     const variables = {
       customer: data,

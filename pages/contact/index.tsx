@@ -23,6 +23,7 @@ interface props {
     slug: string
     blockAccordion: {
       groups: {
+        _key: string
         title: string
         body: PortableTextBlock
         htmlText: string
@@ -118,7 +119,7 @@ export default function Page({ page }: props): JSX.Element | null {
 
 export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
   try {
-    const page: any = await sanityClient.fetch(
+    const page = await sanityClient.fetch(
       groq`*[_type == "contact" && !(_id in path('drafts.**'))][0] {
       ...
     }

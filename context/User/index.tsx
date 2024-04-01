@@ -1,7 +1,7 @@
-import { FormData } from "@/types"
 import React, { createContext, ReactNode, useContext, useState } from "react"
 import { useCookies } from "react-cookie"
 import { authHooks } from "./hooks"
+import { FormDataRegister, FormDataLogin } from "@/types"
 import { useQuery } from "@apollo/client"
 import { USER_DETAILS } from "@/services/queries"
 
@@ -10,11 +10,38 @@ type ProviderProps = {
 }
 
 type AuthContextType = {
-  userDetails: any
+  userDetails: {
+    __typename: string
+    acceptsMarketing: boolean
+    createdAt: string
+    defaultAddress?: {
+      __typename?: string
+      id?: string
+      address1?: string
+      address2?: string
+      city?: string
+      company?: string
+      country?: string
+      countryCodeV2?: string
+      name?: string
+      firstName?: string
+      lastName?: string
+      phone?: string
+      province?: string
+      zip?: string
+    }
+    email: string
+    id: string
+    firstName: string
+    lastName: string
+    numberOfOrders: string
+    phone: string
+    updatedAt: string
+  }
   accessToken: string | undefined
   isAuthenticated: boolean
-  signUp: (inputs: FormData) => Promise<any>
-  signIn: (inputs: FormData) => Promise<any>
+  signUp: (details: FormDataRegister) => Promise<any>
+  signIn: (details: FormDataLogin) => Promise<any>
   logOut: () => Promise<any>
 }
 
@@ -40,8 +67,6 @@ function AuthFuncHooks() {
     variables: { customerAccessToken: token },
     skip: !isAuthenticated,
   })
-
-  console.log(data?.customer)
 
   const setToken = (accessToken: string, expiresAt: string) =>
     setCookie("accessToken", accessToken, {

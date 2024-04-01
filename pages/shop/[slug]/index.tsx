@@ -60,7 +60,9 @@ export async function getStaticPaths() {
 }
 
 interface params {
-  params: any
+  params: {
+    slug: string
+  }
 }
 
 export async function getStaticProps({

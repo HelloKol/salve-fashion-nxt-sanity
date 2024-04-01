@@ -99,10 +99,10 @@ export default function Page({ page }: props): JSX.Element | null {
       }
 
       removeDiscount({ variables })
-    } catch (err: any) {}
+    } catch (err) {}
   }
 
-  const onSubmit = async ({ discountCode }: any) => {
+  const onSubmit = async ({ discountCode }: { discountCode: string }) => {
     try {
       const variables = {
         cartId,
@@ -111,7 +111,7 @@ export default function Page({ page }: props): JSX.Element | null {
 
       addDiscount({ variables })
       setValue("discountCode", ``)
-    } catch (err: any) {
+    } catch (err) {
       setGlobalError("An error occurred while changing password")
       setIsLoading(false)
       return setIsSuccess(false)
@@ -144,8 +144,13 @@ export default function Page({ page }: props): JSX.Element | null {
     onClose: () => null,
   })
 
-  const renderVariantOptions = (options: any) =>
-    options.map((item: any) => {
+  const renderVariantOptions = (
+    options: {
+      name: string
+      value: string
+    }[]
+  ) =>
+    options.map((item) => {
       const { name, value } = item
       return (
         <p className="lg:text-md text-sm">
@@ -155,32 +160,34 @@ export default function Page({ page }: props): JSX.Element | null {
     })
 
   const renderDiscountCode = () =>
-    cart?.cart?.discountCodes.map((discount: any) => {
-      const { applicable, code } = discount
-      if (!applicable) return null
-      return (
-        <div className="flex items-center rounded-full border-[1px] border-black p-1">
-          {code}
-          <button type="button" onClick={handleRemoveDiscount}>
-            <svg
-              className="h-4 w-4 text-gray-800"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1"
-                d="M6 18 18 6m0 12L6 6"
-              />
-            </svg>
-          </button>
-        </div>
-      )
-    })
+    cart?.cart?.discountCodes.map(
+      (discount: { applicable: boolean; code: string }) => {
+        const { applicable, code } = discount
+        if (!applicable) return null
+        return (
+          <div className="flex items-center rounded-full border-[1px] border-black p-1">
+            {code}
+            <button type="button" onClick={handleRemoveDiscount}>
+              <svg
+                className="h-4 w-4 text-gray-800"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1"
+                  d="M6 18 18 6m0 12L6 6"
+                />
+              </svg>
+            </button>
+          </div>
+        )
+      }
+    )
 
   const renderCart = () =>
     cart?.cart?.lines?.nodes?.map((item: any) => {
@@ -432,7 +439,7 @@ export default function Page({ page }: props): JSX.Element | null {
 
 export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
   try {
-    const page: any = await sanityClient.fetch(
+    const page = await sanityClient.fetch(
       groq`*[_type == "cart" && !(_id in path('drafts.**'))][0] {
         seo
       }

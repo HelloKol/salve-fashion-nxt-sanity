@@ -1,8 +1,9 @@
+// @ts-ignore
+// @ts-nocheck
 import { GetStaticPaths, GetStaticProps } from "next/types"
 import React, { useEffect, useState } from "react"
 import { ParsedUrlQuery } from "querystring"
 import groq from "groq"
-// @ts-ignore
 import { useSpringCarousel } from "react-spring-carousel"
 import {
   AddToCart,
@@ -25,18 +26,22 @@ import { graphqlClient, sanityClient, PRODUCT_ACCORDION } from "@/utils"
 import styles from "./styles.module.scss"
 import { SeoType, ShopifyProduct } from "@/types"
 
+interface ProductByHandle {
+  product: ShopifyProduct
+}
+
+interface PredictiveProducts {
+  predictiveSearch: {
+    products: ShopifyProduct[]
+  }
+}
+
 export interface ProductProps {
   page: {
     seo: SeoType
   }
-  productByHandle: {
-    product: ShopifyProduct
-  }
-  predictiveProducts: {
-    predictiveSearch: {
-      products: ShopifyProduct[]
-    }
-  }
+  productByHandle: ProductByHandle
+  predictiveProducts: PredictiveProducts
 }
 
 export default function Page({
@@ -325,9 +330,15 @@ interface HandleParams extends ParsedUrlQuery {
 
 export const getStaticPaths: GetStaticPaths<HandleParams> = async () => {
   try {
-    const products: any = await graphqlClient.request(ALL_PRODUCTS)
+    const products: {
+      products: {
+        edges: {
+          node: ShopifyProduct
+        }[]
+      }
+    } = await graphqlClient.request(ALL_PRODUCTS)
 
-    const paths = products?.products?.edges.map((product: any) => ({
+    const paths = products?.products?.edges.map((product) => ({
       params: { handle: product?.node.handle },
     }))
 
@@ -370,12 +381,12 @@ export const getStaticProps: GetStaticProps<
       handle,
     }
 
-    const productByHandle: any = await graphqlClient.request(
+    const productByHandle: ProductByHandle = await graphqlClient.request(
       SINGLE_PRODUCT_BY_HANDLE,
       variables
     )
 
-    const predictiveProducts = await graphqlClient.request(
+    const predictiveProducts: PredictiveProducts = await graphqlClient.request(
       SEARCH_QUERY_PREDICTIVE,
       {
         query: page.store.title || ``,

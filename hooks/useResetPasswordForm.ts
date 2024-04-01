@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form"
 // @ts-ignore
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
-import { FormData } from "@/types"
+import { FormDataRegister } from "@/types"
 import { useAuth } from "@/context/User"
 import { graphqlClient } from "@/utils"
 import { gql } from "@apollo/client"
@@ -25,11 +25,11 @@ const useResetPasswordForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<FormDataRegister>({
     resolver: yupResolver(schema),
   })
 
-  const onSubmit = async ({ email }: FormData) => {
+  const onSubmit = async ({ email }: FormDataRegister) => {
     // setIsLoading(true)
     try {
       const response = graphqlClient.request(

@@ -29,7 +29,7 @@ const useFetchShopProducts = (type: string, inView: boolean) => {
       )
     },
     {
-      getNextPageParam: (lastPage) => {
+      getNextPageParam: (lastPage: any) => {
         return lastPage.pageInfo.hasNextPage
           ? lastPage.edges[lastPage.edges.length - 1].cursor
           : undefined

@@ -17,6 +17,7 @@ import {
 } from "@/services/queries/cart"
 import { UPDATE_QUANTITY, REMOVE_FROM_CART } from "@/services/queries"
 import { useDialogBox } from "@/hooks"
+import { Cart } from "@/types"
 
 type ProviderProps = {
   children: ReactNode | ReactNode[]
@@ -30,7 +31,7 @@ type CartItem = {
 
 type ShoppingCartContextProps = {
   cartLoading: boolean
-  cart: any
+  cart: Cart
   cartId: string
   isSearchModalOpen: boolean
   setIsSearchModalOpen: (isOpen: boolean) => void
@@ -158,7 +159,13 @@ function ShoppingCartHooks() {
   // }
 
   const createNewCart = async () => {
-    const response: any = await graphqlClient.request(CREATE_CART)
+    const response: {
+      cartCreate: {
+        cart: {
+          id: string
+        }
+      }
+    } = await graphqlClient.request(CREATE_CART)
     setCookie("cartId", response.cartCreate.cart.id, { path: "/" })
     return response
   }
@@ -181,15 +188,22 @@ function ShoppingCartHooks() {
 
   const getCustomer = async (userToken: string) => {
     const variables = { customerAccessToken: userToken }
-    const response: any = await graphqlClient.request(
-      GET_LAST_CHECKOUT_ID,
-      variables
-    )
+    const response: {
+      customer: {
+        lastIncompleteCart: {
+          id: string
+        }
+      }
+    } = await graphqlClient.request(GET_LAST_CHECKOUT_ID, variables)
     return response.customer
   }
 
   const associateCartWithCustomer = async (userToken: string) => {
-    let response: any = {
+    let response: {
+      checkoutCustomerAssociateV2: {
+        checkout: {}
+      }
+    } = {
       checkoutCustomerAssociateV2: {
         checkout: {},
       },

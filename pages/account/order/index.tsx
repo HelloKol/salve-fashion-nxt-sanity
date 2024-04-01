@@ -24,25 +24,34 @@ export default function Page({}: PageProps): JSX.Element | null {
   const [cookies, setCookie, removeCookie] = useCookies(["exampleOrderPage"])
   const [isDialogOpen, setIsDialogOpen] = useState(true)
   const cookieValid: string = cookies["exampleOrderPage"]
-  const orders = [
-    {
-      image: `/static/mock_product_images/men_1.webp`,
-    },
-    {
-      image: `/static/mock_product_images/men_2.webp`,
-    },
-    {
-      image: `/static/mock_product_images/men_3.webp`,
-    },
-    {
-      image: `/static/mock_product_images/hoodie_1.webp`,
-    },
-    {
-      image: `/static/mock_product_images/hoodie_2.webp`,
-    },
-  ]
 
-  const { data, isLoading }: { data: any; isLoading: boolean } = useQuery({
+  const {
+    data,
+    isLoading,
+  }: {
+    data?: {
+      products: {
+        edges: {
+          node: {
+            title: string
+            featuredImage: {
+              transformedSrc: string
+            }
+            variants: {
+              edges: {
+                node: {
+                  price: {
+                    amount: number
+                  }
+                }
+              }[]
+            }
+          }
+        }[]
+      }
+    }
+    isLoading: boolean
+  } = useQuery({
     queryKey: ["getPredictive"],
     queryFn: async () => {
       return await graphqlClient.request(EXAMPLE_PRODUCTS)
@@ -61,7 +70,7 @@ export default function Page({}: PageProps): JSX.Element | null {
 
   const renderProducts = () =>
     data?.products?.edges &&
-    data.products.edges.map((item: any, index: any) => {
+    data.products.edges.map((item, index) => {
       const { node } = item
       const { featuredImage } = node
       const title = useTruncateString(node.title, 50)

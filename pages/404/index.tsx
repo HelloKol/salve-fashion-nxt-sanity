@@ -2,23 +2,13 @@ import { GetStaticPropsResult } from "next/types"
 import groq from "groq"
 import { Container, Main, Seo, Section, Grid, Button } from "@/components"
 import { sanityClient } from "@/utils"
-import { LinksType } from "@/types"
+import { LinksType, SeoType } from "@/types"
 
 interface props {
   page: {
     title: string
     links: LinksType[]
-    seo: {
-      metaTitle: string
-      metaDescription: string
-      shareTitle: string
-      shareDescription: string
-      shareGraphic: {
-        asset: {
-          url: string
-        }
-      }
-    }
+    seo: SeoType
   }
 }
 
@@ -62,7 +52,7 @@ export default function Page({ page }: props): JSX.Element | null {
 
 export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
   try {
-    const page: any = await sanityClient.fetch(
+    const page = await sanityClient.fetch(
       groq`*[_type == "page404" && !(_id in path('drafts.**'))][0] {
         title,
         body,
@@ -83,17 +73,7 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
           page: {
             title: "404",
             links: [],
-            seo: {
-              metaTitle: "404",
-              metaDescription: "404",
-              shareTitle: "404",
-              shareDescription: "404",
-              shareGraphic: {
-                asset: {
-                  url: "",
-                },
-              },
-            },
+            seo: {},
           },
         },
       }
@@ -110,17 +90,7 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
         page: {
           title: "404",
           links: [],
-          seo: {
-            metaTitle: "404",
-            metaDescription: "404",
-            shareTitle: "404",
-            shareDescription: "404",
-            shareGraphic: {
-              asset: {
-                url: "",
-              },
-            },
-          },
+          seo: {},
         },
       },
     }

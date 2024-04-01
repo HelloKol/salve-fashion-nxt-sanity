@@ -33,7 +33,9 @@ export default function Page({}: PageProps): JSX.Element | null {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<any>({
+  } = useForm<{
+    acceptsMarketing: boolean
+  }>({
     resolver: yupResolver(schema),
   })
 
@@ -56,7 +58,7 @@ export default function Page({}: PageProps): JSX.Element | null {
     setValue("acceptsMarketing", userDetails?.acceptsMarketing)
   }, [userDetails])
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: { acceptsMarketing: boolean }) => {
     if (!accessToken) return
     const variables = {
       customer: data,

@@ -15,8 +15,13 @@ export default function Cart() {
     lineItemUpdateQuantity,
   } = useShoppingCart()
 
-  const renderVariantOptions = (options: any) =>
-    options.map((item: any) => {
+  const renderVariantOptions = (
+    options: {
+      name: string
+      value: string
+    }[]
+  ) =>
+    options.map((item) => {
       const { name, value } = item
       return (
         <p className="text-sm">
@@ -26,7 +31,7 @@ export default function Cart() {
     })
 
   const renderCart = () =>
-    cart?.cart?.lines?.nodes?.map((item: any) => {
+    cart?.cart?.lines?.nodes?.map((item) => {
       const { id, cost, quantity, merchandise } = item
       const { subtotalAmount } = cost
       const { product, selectedOptions, image } = merchandise

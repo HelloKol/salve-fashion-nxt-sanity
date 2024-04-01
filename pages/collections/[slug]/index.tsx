@@ -147,10 +147,15 @@ export async function getStaticProps({
       handle: page.store.slug.current,
     }
 
-    const collectionByHandle: any = await graphqlClient.request(
-      COLLECTION_PRODUCTS,
-      variables
-    )
+    const collectionByHandle: {
+      collection: {
+        products: {
+          edges: {
+            node: ShopifyProduct
+          }[]
+        }
+      }
+    } = await graphqlClient.request(COLLECTION_PRODUCTS, variables)
 
     if (!page) {
       return {

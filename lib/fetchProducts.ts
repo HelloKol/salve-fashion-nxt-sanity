@@ -1,5 +1,6 @@
 import { graphqlClient } from "@/utils"
 import { PRODUCT_BASE, PRODUCT_VARIANT } from "@/services/queries"
+import { ShopifyProduct } from "@/types"
 
 const fetchProducts = async (
   cursor?: any,
@@ -29,7 +30,11 @@ const fetchProducts = async (
     cursor,
   }
 
-  const data: any = await graphqlClient.request(productsQuery, variables)
+  const data: {
+    products: {
+      node: ShopifyProduct
+    }[]
+  } = await graphqlClient.request(productsQuery, variables)
   return data.products
 }
 

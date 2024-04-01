@@ -4,8 +4,7 @@ import { useForm } from "react-hook-form"
 // @ts-ignore
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
-import { FormData } from "@/types"
-import { useAuth } from "@/context/User"
+import { FormDataRegister } from "@/types"
 import { graphqlClient } from "@/utils"
 import { gql } from "@apollo/client"
 
@@ -25,17 +24,17 @@ const useChangePasswordForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<FormDataRegister>({
     resolver: yupResolver(schema),
   })
 
-  const onSubmit = async ({ password }: FormData) => {
+  const onSubmit = async ({ password }: FormDataRegister) => {
     // setIsLoading(true)
     const { query } = router
     if (!query?.reset_url) return
 
     try {
-      const response = graphqlClient.request(
+      graphqlClient.request(
         gql`
           mutation customerResetByUrl($password: String!, $resetUrl: URL!) {
             customerResetByUrl(password: $password, resetUrl: $resetUrl) {
@@ -58,9 +57,7 @@ const useChangePasswordForm = () => {
         `,
         { password: password, resetUrl: query?.reset_url }
       )
-
-      console.log(response)
-    } catch (err: any) {
+    } catch (err) {
       setGlobalError("An error occurred while changing password")
       setIsLoading(false)
       return setIsSuccess(false)

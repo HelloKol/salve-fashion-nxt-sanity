@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { fetchProductsSearch } from "@/lib"
 
-const useFetchSearchProducts = (inView: any) => {
+const useFetchSearchProducts = (inView: boolean) => {
   const router = useRouter()
   const PRODUCT_LIMIT = 20
 

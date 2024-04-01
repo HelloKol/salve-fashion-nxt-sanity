@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form"
 // @ts-ignore
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
-import { FormData } from "@/types"
+import { FormDataLogin } from "@/types"
 import { useAuth } from "@/context/User"
 
 const loginSchema = yup.object().shape({
@@ -29,14 +29,17 @@ const useLoginForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<FormDataLogin>({
     resolver: yupResolver(loginSchema),
   })
 
-  const onSubmit = async ({ email, password }: FormData) => {
+  const onSubmit = async ({ email, password }: FormDataLogin) => {
     setIsLoading(true)
     try {
-      const response = await signIn({ email, password })
+      const response = await signIn({
+        email,
+        password,
+      })
       if (response.status === "OK") {
         setGlobalError("")
         setIsLoading(false)
@@ -47,7 +50,7 @@ const useLoginForm = () => {
         setIsLoading(false)
         return setIsSuccess(false)
       }
-    } catch (err: any) {
+    } catch (err) {
       setGlobalError("An error occurred while logging in")
       setIsLoading(false)
       return setIsSuccess(false)

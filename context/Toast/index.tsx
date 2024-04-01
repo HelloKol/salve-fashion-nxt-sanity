@@ -13,7 +13,7 @@ import {
 
 interface ToastData {
   type: "foreground" | "background" | undefined
-  description: any
+  description: React.ReactNode | React.ReactNode[]
   duration: number
   status?: "success" | "error"
   open?: boolean

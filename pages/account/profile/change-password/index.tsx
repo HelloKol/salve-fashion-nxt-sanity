@@ -17,7 +17,7 @@ import {
 import { UPDATE_USER_PASSWORD, USER_DETAILS } from "@/services/queries"
 import { useState } from "react"
 import { useAuth } from "@/context/User"
-import { FormData } from "@/types"
+import { FormDataRegister } from "@/types"
 import { useCookies } from "react-cookie"
 import { useToastOpen } from "@/context/Toast"
 
@@ -45,7 +45,7 @@ export default function Page({}: PageProps): JSX.Element | null {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<FormDataRegister>({
     resolver: yupResolver(schema),
   })
 
@@ -63,7 +63,7 @@ export default function Page({}: PageProps): JSX.Element | null {
     }
   )
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: FormDataRegister) => {
     const { password, confirmPassword } = data
     if (password !== confirmPassword) return
     if (!accessToken) return
