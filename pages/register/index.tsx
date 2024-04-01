@@ -26,8 +26,6 @@ interface props {
 }
 
 export default function Page({ page }: props): JSX.Element | null {
-  if (!page) return null
-  const { title, image, seo } = page
   const registerToast = useDialogBox()
   const {
     register,
@@ -64,6 +62,9 @@ export default function Page({ page }: props): JSX.Element | null {
     type: "foreground",
     onClose: () => null,
   })
+
+  if (!page) return null
+  const { title, image, seo } = page
 
   return (
     <>

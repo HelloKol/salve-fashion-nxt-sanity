@@ -8,13 +8,7 @@ const SiteFooter = () => {
   const { footer } = settings
   const { credit, columns } = footer
 
-  const renderFooterLinks = (
-    links: {
-      title: string
-      internalLink: { dynamicRoute: string; slug: string }
-      externalLink: string
-    }[]
-  ) => {
+  const renderFooterLinks = (links: any[]) => {
     return (
       links &&
       links.map((link, index: number) => {
@@ -47,7 +41,7 @@ const SiteFooter = () => {
         const { title, links } = link
 
         return (
-          <div className="w-full md:w-1/4">
+          <div key={index} className="w-full md:w-1/4">
             <h5 className="mb-4 text-lg font-medium uppercase">{title}</h5>
             {renderFooterLinks(links)}
           </div>

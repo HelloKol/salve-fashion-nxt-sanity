@@ -12,7 +12,7 @@ export interface FormInputTextProps {
 }
 
 const FormInputText = forwardRef<HTMLInputElement, FormInputTextProps>(
-  function forwardFormEntry(
+  function ForwardFormEntry(
     { type, placeholder, label, error, ...rest }: FormInputTextProps,
     ref
   ) {

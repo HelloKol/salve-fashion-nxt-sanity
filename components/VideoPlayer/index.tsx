@@ -19,8 +19,6 @@ const ResponsivePlayer = ({ url }: { url: string }) => {
 }
 
 const VideoPlayer = ({ data }: VideoPlayerProps) => {
-  if (!data) return null
-  const { videoUrl, previewImage } = data
   const [showThumbnail, setShowThumbnail] = useState(true)
   const [isMounted, setIsMounted] = useState(false)
 
@@ -33,6 +31,9 @@ const VideoPlayer = ({ data }: VideoPlayerProps) => {
   }
 
   if (!isMounted) return null
+
+  if (!data) return null
+  const { videoUrl, previewImage } = data
 
   return (
     <Section>

@@ -90,8 +90,8 @@ export default function Page({ page, collectionByHandle }: props) {
               >
                 {!products?.edges.length ? (
                   <h3 className="col-span-full text-center text-xl">
-                    <b className="mb-2 block">We're sorry,</b>
-                    We can't seem to find any results
+                    <b className="mb-2 block">We&apos;re sorry,</b>
+                    We can&apos;t seem to find any results
                   </h3>
                 ) : (
                   renderProducts()

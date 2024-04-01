@@ -1,12 +1,11 @@
 import { useMutation } from "@apollo/client"
-import { Button } from "@/components"
+import { Button, TruncateString } from "@/components"
 import { ADD_PRODUCT_TO_CART } from "@/services/queries"
 import { cn } from "@/utils"
-import { useTruncateString } from "@/hooks"
 import { useShoppingCart } from "@/context/Cart"
 import { ImageTag, RadixPopoverCart } from "@/components"
-import { GET_CART } from "@/services/queries/cart"
 import { ProductVariantNode } from "@/types"
+import { GET_CART } from "@/services/queries/cart"
 
 export default function AddToCart({
   productTitle,
@@ -21,10 +20,7 @@ export default function AddToCart({
   disabled?: boolean
   className?: string
 }) {
-  if (!selectedVariant) return null
   const { cartId } = useShoppingCart()
-  const title = useTruncateString(productTitle, 40)
-  const { id, image, selectedOptions } = selectedVariant
 
   const [addProductToCart, { data, loading, error, reset }] = useMutation(
     ADD_PRODUCT_TO_CART,
@@ -40,6 +36,9 @@ export default function AddToCart({
     }
   )
 
+  if (!selectedVariant) return null
+  const { id, image, selectedOptions } = selectedVariant
+
   const handleAddToCart = async () => {
     if (!cartId) return
     const variables = {
@@ -52,11 +51,11 @@ export default function AddToCart({
 
   const renderVariantOptions = () =>
     selectedOptions &&
-    selectedOptions.map((item) => {
+    selectedOptions.map((item, index) => {
       const { name, value } = item
 
       return (
-        <div>
+        <div key={index}>
           {name}: {value}
         </div>
       )
@@ -107,7 +106,9 @@ export default function AddToCart({
         </div>
 
         <div>
-          <h1 className="text-sm font-semibold uppercase">{title}</h1>
+          <h1 className="text-sm font-semibold uppercase">
+            <TruncateString string={productTitle} truncateValue={40} />
+          </h1>
           <div className="mt-2 text-sm">{renderVariantOptions()}</div>
         </div>
       </div>

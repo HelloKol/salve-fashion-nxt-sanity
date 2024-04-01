@@ -13,9 +13,8 @@ export default function AccountNavigation() {
   return (
     <ul className="col-span-full flex gap-2 sm:gap-4">
       {navigationLinks.map((link, index) => (
-        <li>
+        <li key={index}>
           <Button
-            key={index}
             href={link.href}
             variant="tertiary"
             isActive={router.pathname.includes(link.href)}

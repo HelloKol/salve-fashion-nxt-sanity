@@ -13,10 +13,10 @@ import {
   RadixDialog,
   Section,
   Seo,
+  TruncateString,
 } from "@/components"
 import { graphqlClient } from "@/utils"
 import { EXAMPLE_PRODUCTS } from "@/services/queries"
-import { useTruncateString } from "@/hooks"
 
 interface PageProps {}
 
@@ -61,7 +61,7 @@ export default function Page({}: PageProps): JSX.Element | null {
   useEffect(() => {
     if (cookieValid) return setIsDialogOpen(false)
     return setIsDialogOpen(true)
-  }, [])
+  }, [cookieValid])
 
   const handleCloseDialog = () => {
     setCookie("exampleOrderPage", true)
@@ -73,7 +73,6 @@ export default function Page({}: PageProps): JSX.Element | null {
     data.products.edges.map((item, index) => {
       const { node } = item
       const { featuredImage } = node
-      const title = useTruncateString(node.title, 50)
       const firstVariant = node.variants.edges[0].node
 
       return (
@@ -81,7 +80,9 @@ export default function Page({}: PageProps): JSX.Element | null {
           key={index}
           className="col-span-full mb-8 md:col-span-6 lg:mb-12 xl:col-span-4 xl:mb-14"
         >
-          <p className="text-sm">{title}</p>
+          <p className="text-sm">
+            <TruncateString string={node.title} truncateValue={50} />
+          </p>
           <p className="text-sm">Delivered: 219143</p>
           <p className="text-sm">01/04/26</p>
 
@@ -115,8 +116,8 @@ export default function Page({}: PageProps): JSX.Element | null {
                 <ProductSkeleton />
               ) : !data?.products?.edges?.length ? (
                 <h3 className="col-span-full text-center text-xl">
-                  <b className="mb-2 block">We're sorry,</b>
-                  We can't seem to find any results for
+                  <b className="mb-2 block">We&apos;re sorry,</b>
+                  We can&apos;t seem to find any results for
                 </h3>
               ) : (
                 renderProducts()

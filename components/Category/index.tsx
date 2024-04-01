@@ -22,7 +22,7 @@ export default function Category({ data }: Props) {
   const { blockImages } = data
 
   const renderCategory = () =>
-    blockImages.modules.map((item) => {
+    blockImages.modules.map((item, index) => {
       const { callToAction, image } = item
       const { asset } = image
       const { links } = callToAction
@@ -30,6 +30,7 @@ export default function Category({ data }: Props) {
 
       return (
         <Link
+          key={index}
           href={`/shop/${links[0].url.current}`}
           className="relative h-[300px] w-full overflow-hidden sm:h-[400px] md:h-[480px] lg:h-[550px] lg:w-1/2 xl:h-[700px]"
         >

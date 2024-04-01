@@ -47,12 +47,12 @@ export default function CookiesModal() {
             browsing patterns and device.
           </p>
           <p>
-            By clicking "Accept all cookies", you accept this, and agree that we
-            share this information with third parties, such as our advertising
-            partners. If you prefer, you can choose to continue with "Only
-            required cookies". But keep in mind that blocking some types of
-            cookies may impact how we can deliver tailored content that you
-            might like.
+            By clicking &quot;Accept all cookies&quot;, you accept this, and
+            agree that we share this information with third parties, such as our
+            advertising partners. If you prefer, you can choose to continue with
+            &quot;Only required cookies&quot;. But keep in mind that blocking
+            some types of cookies may impact how we can deliver tailored content
+            that you might like.
           </p>
         </article>
 

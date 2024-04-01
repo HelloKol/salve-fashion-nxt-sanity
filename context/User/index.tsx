@@ -15,20 +15,20 @@ type AuthContextType = {
     acceptsMarketing: boolean
     createdAt: string
     defaultAddress?: {
-      __typename?: string
-      id?: string
-      address1?: string
-      address2?: string
-      city?: string
-      company?: string
-      country?: string
-      countryCodeV2?: string
-      name?: string
-      firstName?: string
-      lastName?: string
-      phone?: string
-      province?: string
-      zip?: string
+      __typename: string
+      id: string
+      address1: string
+      address2: string
+      city: string
+      company: string
+      country: string
+      countryCodeV2: string
+      name: string
+      firstName: string
+      lastName: string
+      phone: string
+      province: string
+      zip: string
     }
     email: string
     id: string

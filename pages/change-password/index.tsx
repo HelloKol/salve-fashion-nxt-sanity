@@ -13,30 +13,19 @@ import {
 import { useDialogBox, useChangePasswordForm } from "@/hooks"
 import { useToastOpen } from "@/context/Toast"
 import { sanityClient } from "@/utils"
-import { SeoType } from "@/types"
+import { Media, SeoType } from "@/types"
 
 interface props {
   page: {
     title: string
     subtitle: string
     contentTitle: string
-    image: {
-      _type: string
-      asset: {
-        _id: string
-        url: string
-        metadata: {
-          lqip: string
-        }
-      }
-    }
+    image: Media
     seo: SeoType
   }
 }
 
 export default function Page({ page }: props): JSX.Element | null {
-  if (!page) return null
-  const { image, seo } = page
   const changePasswordToast = useDialogBox()
   const {
     register,
@@ -73,6 +62,9 @@ export default function Page({ page }: props): JSX.Element | null {
     type: "foreground",
     onClose: () => null,
   })
+
+  if (!page) return null
+  const { image, seo } = page
 
   return (
     <>

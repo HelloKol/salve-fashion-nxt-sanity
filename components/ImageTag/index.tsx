@@ -18,7 +18,7 @@ export default function ImageTag({
   quality?: number
   priority?: boolean
   blurDataURL?: string
-  placeholder?: string
+  placeholder?: "blur" | "empty" | undefined
 }) {
   return (
     <div className="relative h-full w-full">

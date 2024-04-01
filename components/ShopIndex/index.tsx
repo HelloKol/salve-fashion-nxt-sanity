@@ -74,8 +74,9 @@ export default function ShopIndex({
     })
 
   const renderCategory = () =>
-    suggestedSearch.map((item: string) => (
+    suggestedSearch.map((item: string, index) => (
       <Button
+        key={index}
         className="capitalize"
         variant="primary"
         isActive={router.query.q === item.toLowerCase()}
@@ -123,8 +124,8 @@ export default function ShopIndex({
             <ProductSkeleton />
           ) : !products.length ? (
             <h3 className="col-span-full text-center text-xl">
-              <b className="mb-2 block">We're sorry,</b>
-              We can't seem to find any results for {`"${type}"`}
+              <b className="mb-2 block">We&apos;re sorry,</b>
+              We can&apos;t seem to find any results for {`"${type}"`}
             </h3>
           ) : (
             renderProducts()

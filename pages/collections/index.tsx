@@ -5,6 +5,7 @@ import { ImageTag, Main, Section, Seo } from "@/components"
 import { sanityClient } from "@/utils"
 import { GetStaticPropsResult } from "next/types"
 import Link from "next/link"
+import { SeoType } from "@/types"
 
 interface Collection {
   store: {
@@ -17,11 +18,7 @@ interface Collection {
 interface props {
   page: {
     title: string
-    seo: {
-      title: string
-      description: string
-      image: string
-    }
+    seo: SeoType
   }
   collections: Collection[]
 }

@@ -1,9 +1,8 @@
 import Link from "next/link"
 import { useShoppingCart } from "@/context/Cart"
-import { Button, ClickOut, ImageTag } from "@/components"
+import { Button, ClickOut, ImageTag, TruncateString } from "@/components"
 import Close from "@/components/svg/Close"
 import Bag from "@/components/svg/Bag"
-import { useTruncateString } from "@/hooks"
 import styles from "./styles.module.scss"
 
 export default function Cart() {
@@ -21,10 +20,10 @@ export default function Cart() {
       value: string
     }[]
   ) =>
-    options.map((item) => {
+    options.map((item, index) => {
       const { name, value } = item
       return (
-        <p className="text-sm">
+        <p key={index} className="text-sm">
           {name}: {value}
         </p>
       )
@@ -36,7 +35,6 @@ export default function Cart() {
       const { subtotalAmount } = cost
       const { product, selectedOptions, image } = merchandise
       const { handle } = product
-      const title = useTruncateString(product.title, 30)
 
       return (
         <li key={id} className={styles.product}>
@@ -57,7 +55,7 @@ export default function Cart() {
                   className="text-sm font-semibold uppercase"
                   href={`/shop/product/${handle}`}
                 >
-                  {title}
+                  <TruncateString string={product.title} truncateValue={30} />
                 </Link>
                 <div className="mt-2">
                   {renderVariantOptions(selectedOptions)}

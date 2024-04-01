@@ -37,8 +37,6 @@ interface props {
 }
 
 export default function Page({ page }: props): JSX.Element | null {
-  if (!page) return null
-  const { seo } = page
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [isSucess, setIsSuccess] = useState(false)
@@ -150,10 +148,10 @@ export default function Page({ page }: props): JSX.Element | null {
       value: string
     }[]
   ) =>
-    options.map((item) => {
+    options.map((item, index) => {
       const { name, value } = item
       return (
-        <p className="lg:text-md text-sm">
+        <p key={index} className="lg:text-md text-sm">
           {name}: {value}
         </p>
       )
@@ -161,11 +159,15 @@ export default function Page({ page }: props): JSX.Element | null {
 
   const renderDiscountCode = () =>
     cart?.cart?.discountCodes.map(
-      (discount: { applicable: boolean; code: string }) => {
+      (discount: { applicable: boolean; code: string }, index) => {
         const { applicable, code } = discount
         if (!applicable) return null
+
         return (
-          <div className="flex items-center rounded-full border-[1px] border-black p-1">
+          <div
+            key={index}
+            className="flex items-center rounded-full border-[1px] border-black p-1"
+          >
             {code}
             <button type="button" onClick={handleRemoveDiscount}>
               <svg
@@ -190,7 +192,7 @@ export default function Page({ page }: props): JSX.Element | null {
     )
 
   const renderCart = () =>
-    cart?.cart?.lines?.nodes?.map((item: any) => {
+    cart?.cart?.lines?.nodes?.map((item) => {
       const { id, cost, quantity, merchandise } = item
       const { subtotalAmount } = cost
       const { product, selectedOptions, image } = merchandise
@@ -314,6 +316,9 @@ export default function Page({ page }: props): JSX.Element | null {
         </div>
       )
     })
+
+  if (!page) return null
+  const { seo } = page
 
   return (
     <>

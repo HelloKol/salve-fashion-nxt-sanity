@@ -20,7 +20,7 @@ const RadixAccordion = ({ data }: props) => {
     data.map((item) => {
       const { _key, title, body, htmlText } = item
       return (
-        <Item className={styles.AccordionItem} value={_key}>
+        <Item key={_key} className={styles.AccordionItem} value={_key}>
           <AccordionTrigger>
             <p className="text-md font-semibold capitalize">{title}</p>
             <ChevronDown className="h-4 fill-black" />

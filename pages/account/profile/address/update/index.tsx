@@ -1,4 +1,3 @@
-import { useRouter } from "next/router"
 import { useForm } from "react-hook-form"
 // @ts-ignore
 import { yupResolver } from "@hookform/resolvers/yup"
@@ -36,7 +35,6 @@ const schema = yup.object().shape({
 interface PageProps {}
 
 export default function Page({}: PageProps): JSX.Element | null {
-  const router = useRouter()
   const { accessToken, userDetails } = useAuth()
   const {
     register,

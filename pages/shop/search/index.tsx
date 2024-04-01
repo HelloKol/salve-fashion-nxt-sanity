@@ -81,8 +81,8 @@ export default function Page() {
                   <ProductSkeleton />
                 ) : !products.length ? (
                   <h3 className="col-span-full text-center text-xl">
-                    <b className="mb-2 block">We're sorry,</b>
-                    We can't seem to find any results for{" "}
+                    <b className="mb-2 block">We&apos;re sorry,</b>
+                    We can&apos;t seem to find any results for{" "}
                     {`"${router.query.title}"`}
                   </h3>
                 ) : (

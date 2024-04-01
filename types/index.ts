@@ -138,8 +138,12 @@ export type Cart = {
         amount: string
         currencyCode: string
       }
-      totalDutyAmount: null
-      totalTaxAmount: null
+      totalDutyAmount: {
+        amount: string
+      }
+      totalTaxAmount: {
+        amount: string
+      }
     }
     createdAt: string
     discountAllocations: []
@@ -235,6 +239,7 @@ export type Cart = {
 export type FormDataLogin = {
   email: string
   password: string
+  rememberMeCheckbox?: boolean
 }
 
 type CommonFormField =

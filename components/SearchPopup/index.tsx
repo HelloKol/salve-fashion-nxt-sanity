@@ -41,9 +41,9 @@ export default function SearchPopup({
   })
 
   const renderMostSearchedTerms = () =>
-    mostSearchedProducts.map((term: string) => {
+    mostSearchedProducts.map((term: string, index) => {
       return (
-        <li onClick={() => setIsSearchModalOpen(false)}>
+        <li key={index} onClick={() => setIsSearchModalOpen(false)}>
           <Link
             className="md:text-md col-span-full uppercase sm:text-sm"
             href={`/shop/search?title=${term}`}

@@ -14,10 +14,11 @@ interface Props {
 }
 
 export default function HorizontalFeedBasic({ title, productsData }: Props) {
-  if (!productsData?.products) return null
-  const { products } = productsData
   const feedRef = useRef<HTMLUListElement | null>(null)
   useDragScroll(feedRef)
+
+  if (!productsData?.products) return null
+  const { products } = productsData
 
   const renderProduct = () =>
     products.map((product) => {

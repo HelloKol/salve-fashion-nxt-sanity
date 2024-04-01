@@ -1,5 +1,4 @@
-import { AddToCart, Button, ImageTag } from "@/components"
-import { useTruncateString } from "@/hooks"
+import { AddToCart, Button, ImageTag, TruncateString } from "@/components"
 import { ShopifyProduct, ProductVariantNode } from "@/types"
 
 interface props {
@@ -9,8 +8,7 @@ interface props {
 
 const ProductItem = ({ product, node }: props) => {
   const { image, price } = product
-  const { handle } = node
-  const title = useTruncateString(node.title, 45)
+  const { title, handle } = node
 
   return (
     <>
@@ -39,7 +37,9 @@ const ProductItem = ({ product, node }: props) => {
         </div>
       </div>
       <div className="mt-4 flex justify-between">
-        <p className="text-sm uppercase">{title}</p>
+        <p className="text-sm uppercase">
+          <TruncateString string={node.title} truncateValue={45} />
+        </p>
         <p className="text-sm uppercase">£{price.amount}</p>
       </div>
     </>

@@ -49,7 +49,6 @@ export default function Page({
   productByHandle,
   predictiveProducts,
 }: ProductProps): JSX.Element | null {
-  if (!page || !productByHandle) return null
   const { seo } = page
   const { predictiveSearch } = predictiveProducts
   const { product } = productByHandle
