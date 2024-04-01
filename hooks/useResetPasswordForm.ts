@@ -41,7 +41,7 @@ const useResetPasswordForm = () => {
         { email: email }
       )
     } catch (err: any) {
-      setGlobalError("An error occurred while resetting password")
+      setGlobalError("An error occurred while resetting password ")
       setIsLoading(false)
       return setIsSuccess(false)
     }
