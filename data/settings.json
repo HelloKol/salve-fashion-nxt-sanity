@@ -1,1 +1,131 @@
-{"_id":"settings","_updatedAt":"2024-03-31T16:37:28Z","searchModal":{"mostSearchedProducts":["Hats","Coats","Jackets"],"predictiveSearchQuery":"black"},"seoSettings":{"siteName":"Salve Fashion | Official website | Designer clothing","siteNamePosition":"after","_type":"seo.settings"},"footer":{"credit":"© 2023 Salve Fashion. All Rights Reserved","columns":[{"title":"COLLECTIONS","links":[{"internalLink":{"dynamicRoute":null,"slug":"collections"},"_type":"linkInternal","_key":"b6d7ebf782d1","title":"Men","externalLink":null},{"_key":"8f81a4b99c1e","title":"Women","externalLink":null,"internalLink":{"dynamicRoute":null,"slug":"collections"},"_type":"linkInternal"},{"_key":"a6235e5456b0","title":"Accessories","externalLink":null,"internalLink":{"dynamicRoute":null,"slug":"collections"},"_type":"linkInternal"}]},{"title":"INFORMATION","links":[{"externalLink":null,"internalLink":{"dynamicRoute":"pages","slug":"shipping"},"_type":"linkInternal","_key":"0f474556a73c","title":"Returns"},{"_key":"62add39860c0","title":"Shipping","externalLink":null,"internalLink":{"dynamicRoute":"pages","slug":"shipping"},"_type":"linkInternal"},{"internalLink":{"dynamicRoute":"pages","slug":"terms-of-service"},"_type":"linkInternal","_key":"0bd55d0ec2e3","title":"Terms","externalLink":null},{"title":"Privacy","externalLink":null,"internalLink":{"dynamicRoute":"pages","slug":"cookies-policy"},"_type":"linkInternal","_key":"fd25b607ab84"}]},{"title":"MORE","links":[{"internalLink":{"dynamicRoute":null,"slug":"about"},"_type":"linkInternal","_key":"4969932d32d9","title":"About","externalLink":null},{"_key":"9ce0690cdafa","title":"Contact","externalLink":null,"internalLink":{"dynamicRoute":null,"slug":"contact"},"_type":"linkInternal"},{"_key":"99af629b85e5","title":"FAQ","externalLink":null,"internalLink":{"dynamicRoute":null,"slug":"contact"},"_type":"linkInternal"}]},{"title":"SOCIAL","links":[{"_key":"0f9fa6ce30da","title":"Instagram","externalLink":"https://www.instagram.com/","internalLink":null,"_type":"linkExternal"},{"title":"Facebook","externalLink":"https://www.facebook.com/","internalLink":null,"_type":"linkExternal","_key":"79d9415901e7"}]}]},"_createdAt":"2023-11-24T21:43:38Z","_rev":"4nHiAiCDrFrMhA2bPbcjmd","_type":"settings"}
+{
+  "_id": "settings",
+  "_updatedAt": "2024-03-31T16:37:28Z",
+  "searchModal": {
+    "mostSearchedProducts": ["Hats", "Coats", "Jackets"],
+    "predictiveSearchQuery": "black"
+  },
+  "seoSettings": {
+    "siteName": "Salve Fashion | Official website | Designer clothing",
+    "siteNamePosition": "after",
+    "_type": "seo.settings"
+  },
+  "footer": {
+    "credit": "© 2023 Salve Fashion. All Rights Reserved",
+    "columns": [
+      {
+        "title": "COLLECTIONS",
+        "links": [
+          {
+            "internalLink": { "dynamicRoute": null, "slug": "collections" },
+            "_type": "linkInternal",
+            "_key": "b6d7ebf782d1",
+            "title": "Men",
+            "externalLink": null
+          },
+          {
+            "_key": "8f81a4b99c1e",
+            "title": "Women",
+            "externalLink": null,
+            "internalLink": { "dynamicRoute": null, "slug": "collections" },
+            "_type": "linkInternal"
+          },
+          {
+            "_key": "a6235e5456b0",
+            "title": "Accessories",
+            "externalLink": null,
+            "internalLink": { "dynamicRoute": null, "slug": "collections" },
+            "_type": "linkInternal"
+          }
+        ]
+      },
+      {
+        "title": "INFORMATION",
+        "links": [
+          {
+            "externalLink": null,
+            "internalLink": { "dynamicRoute": "pages", "slug": "shipping" },
+            "_type": "linkInternal",
+            "_key": "0f474556a73c",
+            "title": "Returns"
+          },
+          {
+            "_key": "62add39860c0",
+            "title": "Shipping",
+            "externalLink": null,
+            "internalLink": { "dynamicRoute": "pages", "slug": "shipping" },
+            "_type": "linkInternal"
+          },
+          {
+            "internalLink": {
+              "dynamicRoute": "pages",
+              "slug": "terms-of-service"
+            },
+            "_type": "linkInternal",
+            "_key": "0bd55d0ec2e3",
+            "title": "Terms",
+            "externalLink": null
+          },
+          {
+            "title": "Privacy",
+            "externalLink": null,
+            "internalLink": {
+              "dynamicRoute": "pages",
+              "slug": "cookies-policy"
+            },
+            "_type": "linkInternal",
+            "_key": "fd25b607ab84"
+          }
+        ]
+      },
+      {
+        "title": "MORE",
+        "links": [
+          {
+            "internalLink": { "dynamicRoute": null, "slug": "about" },
+            "_type": "linkInternal",
+            "_key": "4969932d32d9",
+            "title": "About",
+            "externalLink": null
+          },
+          {
+            "_key": "9ce0690cdafa",
+            "title": "Contact",
+            "externalLink": null,
+            "internalLink": { "dynamicRoute": null, "slug": "contact" },
+            "_type": "linkInternal"
+          },
+          {
+            "_key": "99af629b85e5",
+            "title": "FAQ",
+            "externalLink": null,
+            "internalLink": { "dynamicRoute": null, "slug": "contact" },
+            "_type": "linkInternal"
+          }
+        ]
+      },
+      {
+        "title": "SOCIAL",
+        "links": [
+          {
+            "_key": "0f9fa6ce30da",
+            "title": "Instagram",
+            "externalLink": "https://www.instagram.com/",
+            "internalLink": null,
+            "_type": "linkExternal"
+          },
+          {
+            "title": "Facebook",
+            "externalLink": "https://www.facebook.com/",
+            "internalLink": null,
+            "_type": "linkExternal",
+            "_key": "79d9415901e7"
+          }
+        ]
+      }
+    ]
+  },
+  "_createdAt": "2023-11-24T21:43:38Z",
+  "_rev": "4nHiAiCDrFrMhA2bPbcjmd",
+  "_type": "settings"
+}

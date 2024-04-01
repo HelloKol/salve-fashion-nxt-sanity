@@ -9,8 +9,8 @@ import Close from "@/components/svg/Close"
 import Hamburger from "@/components/svg/Hamburger"
 import Search from "@/components/svg/Search"
 import Bag from "@/components/svg/Bag"
-import styles from "./styles.module.scss"
 import { cn } from "@/utils"
+import styles from "./styles.module.scss"
 
 interface props {
   setIsSearchModalOpen: (isOpen: boolean) => void

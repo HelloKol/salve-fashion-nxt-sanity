@@ -1,22 +1,32 @@
 import Head from "next/head"
 import { useRouter } from "next/router"
 import settings from "../../data/settings.json"
+import { Media } from "@/types"
 
 interface Props {
-  seo?: any
+  seo?: {
+    description?: string
+    image?: Media
+    keywords?: string
+    tags?: string
+    title?: string
+  }
+}
+
+interface SettingsSeo {
+  title: string
+  siteName: string
+  siteNamePosition: string
+  description: string
+  keywords: string
+  image: Media
+  canonicalUrl: string
 }
 
 const Seo = ({ seo }: Props) => {
   const router = useRouter()
-  const {
-    title,
-    siteName,
-    siteNamePosition,
-    description,
-    keywords,
-    image,
-    canonicalUrl,
-  } = settings.seoSettings
+  const { title, siteName, siteNamePosition, description, keywords, image } =
+    settings.seoSettings as unknown as SettingsSeo
   const path = process.env.NEXT_PUBLIC_BASE_URL + router.asPath
 
   return (
@@ -76,11 +86,6 @@ const Seo = ({ seo }: Props) => {
         content={seo?.image?.asset?.url || image?.asset?.url}
       />
       <meta name="twitter:card" content="summary_large_image" />
-
-      {/* Article-specific Tags */}
-      <meta property="article:published_time" content="2024-03-10T12:00:00Z" />
-      <meta property="article:modified_time" content="2024-03-10T14:30:00Z" />
-      <meta property="article:author" content="John Doe" />
 
       {/* Favicon */}
       <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />

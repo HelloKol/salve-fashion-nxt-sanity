@@ -25,7 +25,7 @@ interface props {
     hero: {
       collections: {
         _type: string
-        modules: Media[]
+        modules: { image: Media }[]
         _updatedAt: string
         showHero: boolean
         _createdAt: string
@@ -92,8 +92,6 @@ export default function Page({
     videoPlayer,
   } = page
   const { collections } = hero
-
-  console.log(collections)
 
   return (
     <>

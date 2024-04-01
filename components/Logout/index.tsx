@@ -1,6 +1,5 @@
 import { useAuth } from "@/context/User"
 import { useRouter } from "next/router"
-import styles from "./styles.module.scss"
 import { Button } from "@/components"
 
 function Logout() {

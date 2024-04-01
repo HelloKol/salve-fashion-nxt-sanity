@@ -8,10 +8,16 @@ const SiteFooter = () => {
   const { footer } = settings
   const { credit, columns } = footer
 
-  const renderFooterLinks = (links: any) => {
+  const renderFooterLinks = (
+    links: {
+      title: string
+      internalLink: { dynamicRoute: string; slug: string }
+      externalLink: string
+    }[]
+  ) => {
     return (
       links &&
-      links.map((link: any, index: number) => {
+      links.map((link, index: number) => {
         const { title, internalLink, externalLink } = link
 
         if (!internalLink && !externalLink) return null

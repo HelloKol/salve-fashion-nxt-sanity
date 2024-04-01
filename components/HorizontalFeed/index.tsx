@@ -34,7 +34,7 @@ export default function HorizontalFeed({ productsData }: Props) {
 
   const renderProduct = () =>
     productWithVariant &&
-    productWithVariant.map((item, index) => {
+    productWithVariant.map((item: any, index) => {
       const { product } = item
       const { store } = product
       // Find the first available variant
@@ -63,6 +63,7 @@ export default function HorizontalFeed({ productsData }: Props) {
           key={index}
           className={`w-[220px] sm:w-[250px] md:w-[340px] lg:w-[400px] xl:w-[500px]`}
         >
+          {/* @ts-ignore */}
           <ProductItem product={productDetails} node={nodeDetails} />
         </li>
       )

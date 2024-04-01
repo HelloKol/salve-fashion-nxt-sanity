@@ -52,7 +52,7 @@ export default function AddToCart({
 
   const renderVariantOptions = () =>
     selectedOptions &&
-    selectedOptions.map((item: any) => {
+    selectedOptions.map((item) => {
       const { name, value } = item
 
       return (

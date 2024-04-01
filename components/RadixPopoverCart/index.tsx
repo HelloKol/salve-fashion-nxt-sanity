@@ -2,7 +2,12 @@ import React from "react"
 import styles from "./styles.module.scss"
 import * as Popover from "@radix-ui/react-popover"
 
-const RadixPopoverCart = ({ trigger, children }: any) => (
+interface props {
+  trigger: React.ReactNode
+  children: React.ReactNode | React.ReactNode[]
+}
+
+const RadixPopoverCart = ({ trigger, children }: props) => (
   <Popover.Root>
     <Popover.Trigger asChild>{trigger}</Popover.Trigger>
     <Popover.Portal>

@@ -22,7 +22,7 @@ export default function Category({ data }: Props) {
   const { blockImages } = data
 
   const renderCategory = () =>
-    blockImages.modules.map((item: any) => {
+    blockImages.modules.map((item) => {
       const { callToAction, image } = item
       const { asset } = image
       const { links } = callToAction

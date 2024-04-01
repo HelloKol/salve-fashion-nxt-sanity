@@ -20,12 +20,12 @@ export default function HorizontalFeedBasic({ title, productsData }: Props) {
   useDragScroll(feedRef)
 
   const renderProduct = () =>
-    products.map((product: any) => {
+    products.map((product) => {
       const { id, variants } = product
       const { edges } = variants
       // Find the first available variant
       const availableVariant = edges.find(
-        (variant: any) => variant.node.availableForSale
+        (variant) => variant.node.availableForSale
       )
       if (!availableVariant) return null
       const { node: firstVariant } = availableVariant

@@ -1,11 +1,15 @@
-import { SiteHeader, SiteFooter } from "@/components";
+import { SiteHeader, SiteFooter } from "@/components"
 
-export default function Layout({ children }: any) {
+interface props {
+  children: React.ReactNode | React.ReactNode[]
+}
+
+export default function Layout({ children }: props) {
   return (
     <>
       <SiteHeader />
       {children}
       <SiteFooter />
     </>
-  );
+  )
 }

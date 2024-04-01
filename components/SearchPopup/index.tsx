@@ -6,6 +6,7 @@ import { useSearchForm } from "@/hooks"
 import { graphqlClient } from "@/utils"
 import { SEARCH_QUERY_PREDICTIVE } from "@/services/queries"
 import settings from "../../data/settings.json"
+import { ShopifyProduct } from "@/types"
 
 interface props {
   isSearchModalOpen: boolean
@@ -21,7 +22,15 @@ export default function SearchPopup({
   const { searchModal } = settings
   const { mostSearchedProducts, predictiveSearchQuery } = searchModal
 
-  const { data, isLoading }: { data: any; isLoading: boolean } = useQuery({
+  const {
+    data,
+  }: {
+    data?: {
+      predictiveSearch: {
+        products: ShopifyProduct[]
+      }
+    }
+  } = useQuery({
     queryKey: ["getPredictive", predictiveSearchQuery],
     queryFn: async () => {
       return await await graphqlClient.request(SEARCH_QUERY_PREDICTIVE, {

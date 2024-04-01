@@ -1,5 +1,3 @@
-import { PortableTextBlock } from "@portabletext/types"
-
 export interface ShopifyCollection {
   id: string
   title: string
@@ -195,13 +193,9 @@ export type Media = {
 }
 
 export type SeoType = {
-  metaTitle: string
-  metaDescription: string
-  shareTitle: string
-  shareDescription: string
-  shareGraphic: {
-    asset: {
-      url: string
-    }
-  }
+  description?: string
+  image?: Media
+  keywords?: string
+  tags?: string
+  title?: string
 }

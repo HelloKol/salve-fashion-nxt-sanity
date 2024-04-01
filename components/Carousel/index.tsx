@@ -10,7 +10,7 @@ import { Media, ShopifyCollection } from "@/types"
 interface props {
   collections: {
     _type: string
-    modules: Media[]
+    modules: { image: Media }[]
     _updatedAt: string
     showHero: boolean
     _createdAt: string
@@ -34,7 +34,7 @@ export default function Carousel({ collections }: props) {
 
   const renderCollections = () =>
     collections &&
-    collections.map((item: any, index: number) => {
+    collections.map((item, index: number) => {
       if (!item?.modules?.length) return null
       const { modules, store } = item
       const { title, slug, imageUrl } = store

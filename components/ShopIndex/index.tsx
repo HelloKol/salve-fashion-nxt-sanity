@@ -1,6 +1,7 @@
 import { useRouter } from "next/router"
 import React from "react"
 import { PortableText } from "@portabletext/react"
+import { PortableTextBlock } from "@portabletext/types"
 import { useInView } from "react-intersection-observer"
 import {
   Button,
@@ -10,13 +11,14 @@ import {
   ProductSkeleton,
 } from "@/components"
 import { useFetchShopProducts } from "@/hooks"
+import { ShopifyProduct } from "@/types"
 
 // Props
 interface Props {
-  title: any
-  body: any
-  suggestedSearch: any
-  type: any
+  title: string
+  body: PortableTextBlock
+  suggestedSearch: string[]
+  type: string
 }
 
 export default function ShopIndex({
@@ -27,17 +29,25 @@ export default function ShopIndex({
 }: Props) {
   const router = useRouter()
   const { ref, inView } = useInView({ threshold: 0 })
-  const { products, isLoading } = useFetchShopProducts(type, inView)
+  const {
+    products,
+    isLoading,
+  }: {
+    products: {
+      node: ShopifyProduct
+    }[]
+    isLoading: boolean
+  } = useFetchShopProducts(type, inView)
 
   const renderProducts = () =>
     products &&
-    products.map((product: any, index: number) => {
+    products.map((product, index) => {
       const { node } = product
       const { variants } = node
       const lastItem = index === products.length - 1
       // Find the first available variant
       const availableVariant = variants?.edges.find(
-        (variant: any) => variant.node.availableForSale
+        (variant) => variant.node.availableForSale
       )
       if (!availableVariant) return null
       const { node: firstVariant } = availableVariant

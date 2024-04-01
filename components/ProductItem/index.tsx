@@ -1,7 +1,13 @@
 import { AddToCart, Button, ImageTag } from "@/components"
 import { useTruncateString } from "@/hooks"
+import { ShopifyProduct, ProductVariantNode } from "@/types"
 
-const ProductItem = ({ product, node }: any) => {
+interface props {
+  product: ProductVariantNode
+  node: ShopifyProduct
+}
+
+const ProductItem = ({ product, node }: props) => {
   const { image, price } = product
   const { handle } = node
   const title = useTruncateString(node.title, 45)

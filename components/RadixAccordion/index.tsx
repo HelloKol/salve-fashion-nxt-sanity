@@ -1,13 +1,23 @@
 import React from "react"
 import { Root, Trigger, Header, Content, Item } from "@radix-ui/react-accordion"
+import { PortableTextBlock } from "@portabletext/types"
 import classNames from "classnames"
 import { PortableText } from "@portabletext/react"
 import ChevronDown from "@/components/svg/ChevronDown"
 import styles from "./styles.module.scss"
 
-const RadixAccordion = ({ data }: any) => {
+interface props {
+  data: {
+    _key: string
+    title: string
+    body?: PortableTextBlock
+    htmlText?: string
+  }[]
+}
+
+const RadixAccordion = ({ data }: props) => {
   const renderAccordion = () =>
-    data.map((item: any) => {
+    data.map((item) => {
       const { _key, title, body, htmlText } = item
       return (
         <Item className={styles.AccordionItem} value={_key}>
@@ -42,7 +52,11 @@ const RadixAccordion = ({ data }: any) => {
 
 const AccordionTrigger = React.forwardRef(
   (
-    { children, className, ...props }: { children?: any; className?: any },
+    {
+      children,
+      className,
+      ...props
+    }: { children?: React.ReactNode; className?: string },
     forwardedRef: any
   ) => (
     <Header className={styles.AccordionHeader}>
@@ -59,7 +73,11 @@ const AccordionTrigger = React.forwardRef(
 
 const AccordionContent = React.forwardRef(
   (
-    { children, className, ...props }: { children?: any; className?: any },
+    {
+      children,
+      className,
+      ...props
+    }: { children?: React.ReactNode; className?: string },
     forwardedRef: any
   ) => (
     <Content

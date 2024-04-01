@@ -1,7 +1,6 @@
+import { useEffect, useState } from "react"
 import * as DialogRadix from "@radix-ui/react-dialog"
 import styles from "./styles.module.scss"
-import { useEffect, useState } from "react"
-// import Close from "../../svgs/Close";
 
 export default function Dialog({
   children,
@@ -12,7 +11,7 @@ export default function Dialog({
   children: React.ReactNode | React.ReactNode[]
   variant: "consentCookie" | "cookieSettings" | "exampleOrder" | "search"
   isOpen: boolean
-  setIsOpen: any
+  setIsOpen: (value: boolean) => void
 }) {
   const [isMounted, setIsMounted] = useState(false)
 
