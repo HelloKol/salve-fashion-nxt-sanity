@@ -196,13 +196,13 @@ export default function Page({
       return {
         id,
         renderItem: (
-          <div className="pointer-events-none h-[500px] w-full select-none overflow-hidden rounded-2xl sm:h-[700px] md:h-[500px] lg:h-[800px]">
+          <div className="pointer-events-none h-[500px] w-full select-none overflow-hidden rounded-md sm:h-[700px] md:h-[500px] lg:h-[800px]">
             <ImageTag src={transformedSrc} />
           </div>
         ),
         renderThumb: (
           <div className={`cursor-pointer`} onClick={() => slideToItem(i)}>
-            <div className="pointer-events-none h-24 w-24 select-none overflow-hidden rounded-lg">
+            <div className="pointer-events-none h-24 w-24 select-none overflow-hidden rounded">
               <ImageTag src={transformedSrc} />
             </div>
           </div>
@@ -234,7 +234,7 @@ export default function Page({
               </div>
 
               <div className="col-span-full md:col-start-7 lg:col-start-8 lg:col-end-13 xl:col-start-7 xl:col-end-11">
-                <h1 className="text-3xl">{title}</h1>
+                <h1 className="text-2xl md:text-3xl">{title}</h1>
 
                 <h3 className="mt-2 text-xl">
                   {edges[0].node.priceV2.currencyCode}{" "}
@@ -388,7 +388,7 @@ export const getStaticProps: GetStaticProps<
     const predictiveProducts: PredictiveProducts = await graphqlClient.request(
       SEARCH_QUERY_PREDICTIVE,
       {
-        query: page.store.title || ``,
+        query: page.store.title?.slice(0, 20) || ``,
       }
     )
 

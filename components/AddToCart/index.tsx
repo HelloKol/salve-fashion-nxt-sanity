@@ -68,7 +68,7 @@ export default function AddToCart({
           onClick={handleAddToCart}
           disabled={disabled || loading}
           className={cn(
-            "flex h-fit w-fit shrink-0 items-center justify-center rounded-full bg-[#171717] px-5 py-2 text-sm uppercase text-white duration-300 ease-in-out hover:border-[#474747] hover:bg-[#474747]",
+            "flex h-fit w-fit shrink-0 items-center justify-center rounded-full bg-[#171717] px-5 py-2 text-xs uppercase text-white duration-300 ease-in-out hover:border-[#474747] hover:bg-[#474747] sm:text-sm",
             disabled && "cursor-no-drop bg-[#474747]",
             className
           )}

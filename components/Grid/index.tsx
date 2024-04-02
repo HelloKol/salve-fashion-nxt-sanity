@@ -20,7 +20,7 @@ export default function index({
   return (
     <Element
       className={`grid grid-cols-12 ${withRowGap ? `gap-y-4` : ``} ${
-        withColumnGap ? `gap-x-4` : ``
+        withColumnGap ? `gap-x-2 md:gap-x-4` : ``
       } ${className || ""}`}
     >
       {children}

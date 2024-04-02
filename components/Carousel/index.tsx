@@ -35,12 +35,11 @@ export default function Carousel({ collections }: props) {
   const renderCollections = () =>
     collections &&
     collections.map((item, index: number) => {
-      if (!item?.modules?.length) return null
       const { modules, store } = item
       const { title, slug, imageUrl } = store
       const newTitle = title.split(" ")
-      const thumbnailTop = modules[0]
-      const thumbnailBottom = modules[1]
+      const thumbnailTop = modules?.[0]
+      const thumbnailBottom = modules?.[1]
 
       return (
         <div key={index} className={styles.carouselItem}>
@@ -61,22 +60,26 @@ export default function Carousel({ collections }: props) {
               </Link>
             </div>
             <div className={styles.thumbnailWrap}>
-              <div className={styles.thumbnailTop}>
-                <ImageTag
-                  src={thumbnailTop?.image?.asset.url}
-                  layout="fill"
-                  objectFit="cover"
-                  priority={false}
-                />
-              </div>
-              <div className={styles.thumbnailBottom}>
-                <ImageTag
-                  src={thumbnailBottom?.image?.asset.url}
-                  layout="fill"
-                  objectFit="cover"
-                  priority={false}
-                />
-              </div>
+              {thumbnailTop && (
+                <div className={styles.thumbnailTop}>
+                  <ImageTag
+                    src={thumbnailTop?.image?.asset.url}
+                    layout="fill"
+                    objectFit="cover"
+                    priority={false}
+                  />
+                </div>
+              )}
+              {thumbnailBottom && (
+                <div className={styles.thumbnailBottom}>
+                  <ImageTag
+                    src={thumbnailBottom?.image?.asset.url}
+                    layout="fill"
+                    objectFit="cover"
+                    priority={false}
+                  />
+                </div>
+              )}
             </div>
           </div>
           <div className={styles.featureImage}>

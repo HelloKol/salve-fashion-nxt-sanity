@@ -139,10 +139,6 @@ export default function Page({ page }: props): JSX.Element | null {
                     >
                       Forgot your password?
                     </Link>
-
-                    {globalError && (
-                      <p className="mt-2 text-sm text-red-500">{globalError}</p>
-                    )}
                   </form>
                 </div>
               </div>

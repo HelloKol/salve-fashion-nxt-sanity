@@ -1,28 +1,27 @@
 import React from "react"
-import Head from "next/head"
-import { Container, Grid, Main, Section } from "@/components"
+import { Container, Grid, Main, Section, Seo } from "@/components"
 import { PortableText } from "@portabletext/react"
 import { PortableTextBlock } from "@portabletext/types"
 import { GetStaticPropsResult } from "next"
 import { sanityClient } from "@/utils"
 import groq from "groq"
+import { SeoType } from "@/types"
 
 interface props {
   page: {
     title: string
     body: PortableTextBlock
+    seo: SeoType
   }
 }
 
 export default function Page({ page }: props) {
   if (!page) return null
-  const { title, body } = page
+  const { title, body, seo } = page
 
   return (
     <>
-      <Head>
-        <title>Pages</title>
-      </Head>
+      <Seo seo={seo} />
       <Main>
         <Section withPadding={false}>
           <Container>
@@ -75,6 +74,7 @@ export async function getStaticProps({
         slug,
         title,
         body,
+        seo
       }`,
       { slug: slug }
     )

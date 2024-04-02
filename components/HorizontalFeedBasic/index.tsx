@@ -51,7 +51,7 @@ export default function HorizontalFeedBasic({ title, productsData }: Props) {
         </h1>
 
         <ul
-          className="grid-cols-[auto auto] col-start-1 col-end-13 mt-5 grid cursor-grab snap-x grid-flow-col gap-4 overflow-x-auto overflow-y-auto overscroll-contain scroll-smooth"
+          className="grid-cols-[auto auto] col-start-1 col-end-13 mt-5 grid cursor-grab snap-x grid-flow-col gap-2 overflow-x-auto overflow-y-auto overscroll-contain scroll-smooth md:gap-4"
           ref={feedRef}
         >
           {renderProduct()}

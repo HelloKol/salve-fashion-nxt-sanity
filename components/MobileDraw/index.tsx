@@ -64,7 +64,7 @@ const MobileDraw = ({ setIsSearchModalOpen }: props) => {
             <div className={styles.iconRight}>
               <button className={styles.bagBtn} onClick={handleCart}>
                 <Bag />
-                <span>({`${cart?.cart?.totalQuantity || 0}`})</span>
+                <span>({`${cart?.cart?.lines?.nodes?.length || 0}`})</span>
               </button>
               <input
                 id="active"
@@ -106,7 +106,7 @@ const MobileDraw = ({ setIsSearchModalOpen }: props) => {
               </li>
               <li onClick={() => setIsMobileDrawActive(false)}>
                 <Link href="/about" className={styles.link}>
-                  About
+                  Brand
                 </Link>
               </li>
               <li onClick={() => setIsMobileDrawActive(false)}>

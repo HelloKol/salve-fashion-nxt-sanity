@@ -110,7 +110,7 @@ export default function HorizontalFeed({ productsData }: Props) {
           </div>
 
           <ul
-            className="grid-cols-[auto auto] col-span-full grid cursor-grab snap-x grid-flow-col gap-4 overflow-x-auto overflow-y-auto overscroll-contain scroll-smooth lg:col-start-5 lg:col-end-13 xl:col-start-4"
+            className="grid-cols-[auto auto] col-span-full grid cursor-grab snap-x grid-flow-col gap-2 overflow-x-auto overflow-y-auto overscroll-contain scroll-smooth md:gap-4 lg:col-start-5 lg:col-end-13 xl:col-start-4"
             ref={feedRef}
           >
             {renderProduct()}

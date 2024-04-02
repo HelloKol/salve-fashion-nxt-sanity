@@ -103,10 +103,6 @@ export default function Page({ page }: props): JSX.Element | null {
                     >
                       {isLoading ? "Loading...." : "Continue"}
                     </button>
-
-                    {globalError && (
-                      <p className="mt-2 text-red-500">{globalError}</p>
-                    )}
                   </form>
                 </div>
               </div>

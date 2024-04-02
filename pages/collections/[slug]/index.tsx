@@ -73,7 +73,7 @@ export default function Page({ page, collectionByHandle }: props) {
                 {title}
               </h1>
 
-              <div className="text-md col-span-full mb-8 text-center">
+              <div className="text-md col-span-full mb-8 text-center md:col-start-2 md:col-end-12 lg:col-start-3 lg:col-end-11 xl:col-start-4 xl:col-end-10">
                 <article
                   dangerouslySetInnerHTML={{ __html: descriptionHtml }}
                 />
@@ -89,7 +89,7 @@ export default function Page({ page, collectionByHandle }: props) {
                 withRowGap={false}
               >
                 {!collection?.products?.edges.length ? (
-                  <h3 className="col-span-full text-center text-xl">
+                  <h3 className="col-span-full mb-8 text-center text-xl">
                     <b className="mb-2 block">We&apos;re sorry,</b>
                     We can&apos;t seem to find any results
                   </h3>

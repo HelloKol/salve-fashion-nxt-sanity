@@ -166,10 +166,6 @@ export default function Page({ page }: props): JSX.Element | null {
                     <button className="mt-6 flex h-fit w-full shrink-0 items-center justify-center rounded-md bg-[#171717] py-4 text-sm uppercase text-white">
                       {isLoading ? "Loading...." : "Create account"}
                     </button>
-
-                    {globalError && (
-                      <p className="mt-2 text-red-500">{globalError}</p>
-                    )}
                   </form>
                 </div>
               </div>
