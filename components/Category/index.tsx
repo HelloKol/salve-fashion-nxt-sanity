@@ -35,7 +35,7 @@ export default function Category({ data }: Props) {
           className="relative h-[300px] w-full overflow-hidden sm:h-[400px] md:h-[480px] lg:h-[550px] lg:w-1/2 xl:h-[700px]"
         >
           <ImageTag src={asset.url} />
-          <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full bg-black opacity-50" />
+          <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full bg-black opacity-20 transition-opacity hover:opacity-0" />
           <p className="absolute bottom-0 left-0 z-10 p-10 text-2xl text-deepPurple">
             {isMen ? `For Men` : `For Women`}
           </p>
