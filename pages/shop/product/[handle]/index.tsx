@@ -371,7 +371,19 @@ export const getStaticProps: GetStaticProps<
         store {
           title
         },
-        seo
+      seo {
+        ...,
+        image {
+          ...,
+          asset->{
+            _id,
+            url,
+            metadata{
+              lqip
+            }
+          }
+        }
+      },
       }`,
       { slug: handle }
     )

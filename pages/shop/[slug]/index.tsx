@@ -77,7 +77,19 @@ export async function getStaticProps({
         title,
         body,
         suggestedSearch,
-        seo
+      seo {
+        ...,
+        image {
+          ...,
+          asset->{
+            _id,
+            url,
+            metadata{
+              lqip
+            }
+          }
+        }
+      },
       }`,
       { slug: slug }
     )

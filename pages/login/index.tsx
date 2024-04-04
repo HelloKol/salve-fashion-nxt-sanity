@@ -167,7 +167,19 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
             }
           }
         },
-        seo
+      seo {
+        ...,
+        image {
+          ...,
+          asset->{
+            _id,
+            url,
+            metadata{
+              lqip
+            }
+          }
+        }
+      },
       }
     `
     )

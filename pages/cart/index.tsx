@@ -446,7 +446,19 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
   try {
     const page = await sanityClient.fetch(
       groq`*[_type == "cart" && !(_id in path('drafts.**'))][0] {
-        seo
+        seo {
+          ...,
+          image {
+            ...,
+            asset->{
+              _id,
+              url,
+              metadata{
+                lqip
+              }
+            }
+          }
+        },
       }
     `
     )

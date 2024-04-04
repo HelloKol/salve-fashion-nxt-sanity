@@ -138,7 +138,20 @@ export async function getStaticProps({
   try {
     const page = await sanityClient.fetch(
       groq`*[_type == "collection" && store.slug.current == $slug && !(_id in path('drafts.**'))][0] {
-        ...
+        ...,
+        seo {
+          ...,
+          image {
+            ...,
+            asset->{
+              _id,
+              url,
+              metadata{
+                lqip
+              }
+            }
+          }
+        },
       }`,
       { slug: slug }
     )

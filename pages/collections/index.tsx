@@ -84,6 +84,19 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
           "slug": slug.current,
           imageUrl
          },
+        seo {
+          ...,
+          image {
+            ...,
+            asset->{
+              _id,
+              url,
+              metadata{
+                lqip
+              }
+            }
+          }
+        },
       }`
     )
 
