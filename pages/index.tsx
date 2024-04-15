@@ -245,11 +245,11 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
     )
 
     const instagramAccountRes = await fetch(
-      `https://salvefashion.com/api/instagramAccount?accessToken=${process.env.NEXT_PUBLIC_INSTAGRAM_ACCESS_TOKEN}`
+      `https://salvefashion-nextjs.vercel.app/api/instagramAccount?accessToken=${process.env.NEXT_PUBLIC_INSTAGRAM_ACCESS_TOKEN}`
     )
     const instagramAccount = await instagramAccountRes.json()
     const instagramPostsRes = await fetch(
-      `https://salvefashion.com/api/instagramPosts?accessToken=${process.env.NEXT_PUBLIC_INSTAGRAM_ACCESS_TOKEN}`
+      `https://salvefashion-nextjs.vercel.app/api/instagramPosts?accessToken=${process.env.NEXT_PUBLIC_INSTAGRAM_ACCESS_TOKEN}`
     )
     const instagramPostsData = await instagramPostsRes.json()
     const instagramPosts = instagramPostsData.data ?? []
