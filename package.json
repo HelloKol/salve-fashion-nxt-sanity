@@ -1,0 +1,21 @@
+{
+  "name": "salve-fashion",
+  "version": "1.0.0",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "devDependencies": {
+    "prettier": "latest",
+    "turbo": "^1.13.1"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "packageManager": "npm@8.11.0"
+}
