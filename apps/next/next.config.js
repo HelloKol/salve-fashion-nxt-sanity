@@ -1,13 +1,23 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
   images: {
-    domains: [
-      'cdn.sanity.io',
-      'source.unsplash.com',
-      'cdn.shopify.com',
-      'scontent-iad3-2.cdninstagram.com',
-      'scontent-iad3-1.cdninstagram.com'
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**'
+      }
     ]
+  },
+  // Redirects
+  async redirects() {
+    return [
+      {
+        source: '/account',
+        destination: '/account/profile',
+        permanent: false
+      }
+    ];
   }
 };
 

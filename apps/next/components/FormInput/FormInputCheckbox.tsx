@@ -2,7 +2,7 @@ import React, { ReactNode, forwardRef } from 'react';
 
 //Props
 export interface FormInputCheckboxProps {
-  label?: string;
+  label?: React.ReactElement | string;
   error?: {
     message?: string;
   };
