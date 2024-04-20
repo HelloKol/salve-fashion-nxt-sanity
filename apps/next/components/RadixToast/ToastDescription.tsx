@@ -4,7 +4,7 @@ import styles from "./styles.module.scss"
 
 // Poprs
 export interface DescriptionProps {
-  children: React.ReactNode | React.ReactNode[]
+  children: any
 }
 
 const Description = ({ children }: DescriptionProps) => {

@@ -1,10 +1,10 @@
 // @ts-ignore
 // @ts-nocheck
-import { GetStaticPaths, GetStaticProps } from "next/types"
-import React, { useEffect, useState } from "react"
-import { ParsedUrlQuery } from "querystring"
-import groq from "groq"
-import { useSpringCarousel } from "react-spring-carousel"
+import { GetStaticPaths, GetStaticProps } from 'next/types';
+import React, { useEffect, useState } from 'react';
+import { ParsedUrlQuery } from 'querystring';
+import groq from 'groq';
+import { useSpringCarousel } from 'react-spring-carousel';
 import {
   AddToCart,
   Button,
@@ -15,183 +15,150 @@ import {
   Main,
   RadixAccordion,
   Section,
-  Seo,
-} from "@/components"
-import {
-  ALL_PRODUCTS,
-  SEARCH_QUERY_PREDICTIVE,
-  SINGLE_PRODUCT_BY_HANDLE,
-} from "@/services/queries"
-import { graphqlClient, sanityClient, PRODUCT_ACCORDION } from "@/utils"
-import styles from "./styles.module.scss"
-import { SeoType, ShopifyProduct } from "@/types"
+  Seo
+} from '@/components';
+import { ALL_PRODUCTS, SEARCH_QUERY_PREDICTIVE, SINGLE_PRODUCT_BY_HANDLE } from '@/services/queries';
+import { graphqlClient, sanityClient, PRODUCT_ACCORDION } from '@/utils';
+import styles from './styles.module.scss';
+import { SeoType, ShopifyProduct } from '@/types';
 
 interface ProductByHandle {
-  product: ShopifyProduct
+  product: ShopifyProduct;
 }
 
 interface PredictiveProducts {
   predictiveSearch: {
-    products: ShopifyProduct[]
-  }
+    products: ShopifyProduct[];
+  };
 }
 
 export interface ProductProps {
   page: {
-    seo: SeoType
-  }
-  productByHandle: ProductByHandle
-  predictiveProducts: PredictiveProducts
+    seo: SeoType;
+  };
+  productByHandle: ProductByHandle;
+  predictiveProducts: PredictiveProducts;
 }
 
 export default function Page({
   page,
   productByHandle,
-  predictiveProducts,
+  predictiveProducts
 }: ProductProps): JSX.Element | null {
-  const { seo } = page
-  const { predictiveSearch } = predictiveProducts
-  const { product } = productByHandle
-  const { title, descriptionHtml, images, variants } = product
-  const { edges } = variants
+  const { seo } = page;
+  const { predictiveSearch } = predictiveProducts;
+  const { product } = productByHandle;
+  const { title, descriptionHtml, images, variants } = product;
+  const { edges } = variants;
   const ACCORDION = [
     {
-      _key: "0b4708ddb216",
-      _type: "group",
+      _key: '0b4708ddb216',
+      _type: 'group',
       htmlText: descriptionHtml,
-      title: "Description",
+      title: 'Description'
     },
-    ...PRODUCT_ACCORDION,
-  ]
+    ...PRODUCT_ACCORDION
+  ];
 
   // State variables
-  const [index, setIndex] = useState(0)
-  const [quantity, setQuanity] = useState(1)
-  const [selectedSize, setSelectedSize] = useState(null)
-  const [selectedColor, setSelectedColor] = useState(null)
-  const [selectedVariant, setSelectedVariant] = useState(null)
+  const [index, setIndex] = useState(0);
+  const [quantity, setQuanity] = useState(1);
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedColor, setSelectedColor] = useState(null);
+  const [selectedVariant, setSelectedVariant] = useState(null);
 
   // // Create a list of unique colors and sizes
-  const colors = [
-    ...new Set(
-      product.variants.edges.map(
-        (variant) => variant.node.selectedOptions[0].value
-      )
-    ),
-  ]
-  const sizes = [
-    ...new Set(
-      product.variants.edges.map(
-        (variant) => variant.node.selectedOptions[1].value
-      )
-    ),
-  ]
+  const colors = [...new Set(product.variants.edges.map((variant) => variant.node.selectedOptions[0].value))];
+  const sizes = [...new Set(product.variants.edges.map((variant) => variant.node.selectedOptions[1].value))];
 
   useEffect(() => {
     // Update selectedSize if sizes array changes
     if (!sizes.includes(selectedSize)) {
-      setSelectedSize(sizes[0] || null)
+      setSelectedSize(sizes[0] || null);
     }
-  }, [sizes])
+  }, [sizes]);
 
   useEffect(() => {
     // Update selectedColor if colors array changes
     if (!colors.includes(selectedColor)) {
-      setSelectedColor(colors[0] || null)
+      setSelectedColor(colors[0] || null);
     }
-  }, [colors])
+  }, [colors]);
 
   useEffect(() => {
-    if (!variants.edges.length) return
+    if (!variants.edges.length) return;
     // Find the index of the selected variant
     const selectedIndex = variants.edges.findIndex((variant) =>
       variant.node.selectedOptions.every(
         (option) =>
-          (option.name === "Color" && option.value === selectedColor) ||
-          (option.name === "Size" && option.value === selectedSize)
+          (option.name === 'Color' && option.value === selectedColor) ||
+          (option.name === 'Size' && option.value === selectedSize)
       )
-    )
+    );
 
     // Set the index state variable
-    slideToItem(selectedIndex >= 0 ? selectedIndex : 0)
-    updateSelectedVariant()
-  }, [selectedSize, selectedColor, variants])
+    slideToItem(selectedIndex >= 0 ? selectedIndex : 0);
+    updateSelectedVariant();
+  }, [selectedSize, selectedColor, variants]);
 
   const handleSizeSelect = (size) => {
-    setSelectedSize(size)
-    updateSelectedVariant()
-  }
+    setSelectedSize(size);
+    updateSelectedVariant();
+  };
 
   const handleColorSelect = (color) => {
-    setSelectedColor(color)
-    updateSelectedVariant()
-  }
+    setSelectedColor(color);
+    updateSelectedVariant();
+  };
 
   const updateSelectedVariant = () => {
     if (selectedSize && selectedColor) {
       const variant = variants.edges.find(
         (variant) =>
-          variant.node.selectedOptions.find((option) => option.name === "Color")
-            .value === selectedColor &&
-          variant.node.selectedOptions.find((option) => option.name === "Size")
-            .value === selectedSize
-      )
-      setSelectedVariant(variant)
+          variant.node.selectedOptions.find((option) => option.name === 'Color').value === selectedColor &&
+          variant.node.selectedOptions.find((option) => option.name === 'Size').value === selectedSize
+      );
+      setSelectedVariant(variant);
     }
-  }
+  };
 
   const renderSizes = () =>
     sizes &&
     sizes.map((size) => (
-      <Button
-        key={size}
-        onClick={() => handleSizeSelect(size)}
-        isActive={selectedSize === size}
-      >
+      <Button key={size} onClick={() => handleSizeSelect(size)} isActive={selectedSize === size}>
         {size}
       </Button>
-    ))
+    ));
 
   const renderColors = () =>
     colors &&
     colors.map((color) => (
-      <Button
-        key={color}
-        onClick={() => handleColorSelect(color)}
-        isActive={selectedColor === color}
-      >
+      <Button key={color} onClick={() => handleColorSelect(color)} isActive={selectedColor === color}>
         {color}
       </Button>
-    ))
+    ));
 
   const isVariantAvailable = () => {
-    if (!variants.edges.length) return false
-    if (!selectedSize || !selectedColor) return false
+    if (!variants.edges.length) return false;
+    if (!selectedSize || !selectedColor) return false;
 
     const variant = variants.edges.find(
       (variant) =>
-        variant.node.selectedOptions.find((option) => option.name === "Color")
-          .value === selectedColor &&
-        variant.node.selectedOptions.find((option) => option.name === "Size")
-          .value === selectedSize
-    )
+        variant.node.selectedOptions.find((option) => option.name === 'Color').value === selectedColor &&
+        variant.node.selectedOptions.find((option) => option.name === 'Size').value === selectedSize
+    );
 
-    return variant ? variant.node.availableForSale : false
-  }
+    return variant ? variant.node.availableForSale : false;
+  };
 
-  const {
-    carouselFragment,
-    thumbsFragment,
-    slideToItem,
-    useListenToCustomEvent,
-  } = useSpringCarousel({
+  const { carouselFragment, thumbsFragment, slideToItem, useListenToCustomEvent } = useSpringCarousel({
     withLoop: true,
     withThumbs: true,
     items: edges.map((item: any, i: number) => {
-      const { node } = item
-      const { image } = node
-      const { transformedSrc } = image
-      const id = i
+      const { node } = item;
+      const { image } = node;
+      const { transformedSrc } = image;
+      const id = i;
 
       return {
         id,
@@ -206,16 +173,16 @@ export default function Page({
               <ImageTag src={transformedSrc} />
             </div>
           </div>
-        ),
-      }
-    }),
-  })
+        )
+      };
+    })
+  });
 
   useListenToCustomEvent((data: any) => {
-    if (data.eventName === "onSlideStartChange") {
-      setIndex(data.nextItem.index)
+    if (data.eventName === 'onSlideStartChange') {
+      setIndex(data.nextItem.index);
     }
-  })
+  });
 
   return (
     <>
@@ -228,33 +195,23 @@ export default function Page({
                 <div className="h-[500px] w-full overflow-hidden sm:h-[700px] md:h-[500px] lg:h-[800px]">
                   {carouselFragment}
                 </div>
-                {images && (
-                  <div className={styles.thumbsFragment}>{thumbsFragment}</div>
-                )}
+                {images && <div className={styles.thumbsFragment}>{thumbsFragment}</div>}
               </div>
 
               <div className="col-span-full md:col-start-7 lg:col-start-8 lg:col-end-13 xl:col-start-7 xl:col-end-11">
                 <h1 className="text-2xl md:text-3xl">{title}</h1>
 
                 <h3 className="mt-2 text-xl">
-                  {edges[0].node.priceV2.currencyCode}{" "}
-                  {edges[0].node.priceV2.amount}
+                  {edges[0].node.priceV2.currencyCode} {edges[0].node.priceV2.amount}
                 </h3>
 
-                <div className={`mt-6 flex flex-wrap items-center gap-4`}>
-                  {renderSizes()}
-                </div>
+                <div className={`mt-6 flex flex-wrap items-center gap-4`}>{renderSizes()}</div>
 
-                <div className={`mt-6 flex flex-wrap items-center gap-4`}>
-                  {renderColors()}
-                </div>
+                <div className={`mt-6 flex flex-wrap items-center gap-4`}>{renderColors()}</div>
 
                 <div className={`mt-6 flex flex-wrap items-center gap-4`}>
                   <div className="flex items-center gap-5 rounded-full border-[1px] border-black px-3 py-1">
-                    <button
-                      onClick={() => setQuanity(quantity - 1)}
-                      disabled={quantity <= 1}
-                    >
+                    <button onClick={() => setQuanity(quantity - 1)} disabled={quantity <= 1}>
                       <svg
                         className="h-4 w-4 text-gray-800"
                         aria-hidden="true"
@@ -272,10 +229,7 @@ export default function Page({
                       </svg>
                     </button>
                     <span>{quantity}</span>
-                    <button
-                      onClick={() => setQuanity(quantity + 1)}
-                      disabled={quantity >= 100}
-                    >
+                    <button onClick={() => setQuanity(quantity + 1)} disabled={quantity >= 100}>
                       <svg
                         className="h-4 w-4 text-gray-800"
                         aria-hidden="true"
@@ -298,7 +252,7 @@ export default function Page({
                     selectedVariant={selectedVariant?.node}
                     quantity={quantity}
                     disabled={!isVariantAvailable()}
-                    className={"w-full flex-1"}
+                    className={'w-full flex-1'}
                   />
                 </div>
 
@@ -312,19 +266,16 @@ export default function Page({
 
         <Section className="lg:pt-44">
           <Container>
-            <HorizontalFeedBasic
-              title={"Similar Products"}
-              productsData={predictiveSearch}
-            />
+            <HorizontalFeedBasic title={'Similar Products'} productsData={predictiveSearch} />
           </Container>
         </Section>
       </Main>
     </>
-  )
+  );
 }
 
 interface HandleParams extends ParsedUrlQuery {
-  handle: string
+  handle: string;
 }
 
 export const getStaticPaths: GetStaticPaths<HandleParams> = async () => {
@@ -332,39 +283,36 @@ export const getStaticPaths: GetStaticPaths<HandleParams> = async () => {
     const products: {
       products: {
         edges: {
-          node: ShopifyProduct
-        }[]
-      }
-    } = await graphqlClient.request(ALL_PRODUCTS)
+          node: ShopifyProduct;
+        }[];
+      };
+    } = await graphqlClient.request(ALL_PRODUCTS);
 
     const paths = products?.products?.edges.map((product) => ({
-      params: { handle: product?.node.handle },
-    }))
+      params: { handle: product?.node.handle }
+    }));
 
     return {
       paths,
-      fallback: false,
-    }
+      fallback: false
+    };
   } catch {
     return {
       paths: [],
-      fallback: false,
-    }
+      fallback: false
+    };
   }
-}
+};
 
 interface HandleParams extends ParsedUrlQuery {
-  handle: string
+  handle: string;
 }
 
-export const getStaticProps: GetStaticProps<
-  ProductProps,
-  HandleParams
-> = async ({ params }) => {
-  if (!params) return { notFound: true }
+export const getStaticProps: GetStaticProps<ProductProps, HandleParams> = async ({ params }) => {
+  if (!params) return { notFound: true };
 
   try {
-    const { handle } = params
+    const { handle } = params;
 
     const page = await sanityClient.fetch(
       groq`*[_type == "product" && store.slug.current == $slug && !(_id in path('drafts.**'))][0] {
@@ -386,33 +334,27 @@ export const getStaticProps: GetStaticProps<
       },
       }`,
       { slug: handle }
-    )
+    );
 
     const variables = {
-      handle,
-    }
+      handle
+    };
 
-    const productByHandle: ProductByHandle = await graphqlClient.request(
-      SINGLE_PRODUCT_BY_HANDLE,
-      variables
-    )
+    const productByHandle: ProductByHandle = await graphqlClient.request(SINGLE_PRODUCT_BY_HANDLE, variables);
 
-    const predictiveProducts: PredictiveProducts = await graphqlClient.request(
-      SEARCH_QUERY_PREDICTIVE,
-      {
-        query: page.store.title?.slice(0, 20) || ``,
-      }
-    )
+    const predictiveProducts: PredictiveProducts = await graphqlClient.request(SEARCH_QUERY_PREDICTIVE, {
+      query: page.store.title?.slice(0, 20) || ``
+    });
 
     return {
       props: {
         page,
         productByHandle,
-        predictiveProducts,
-      },
-    }
+        predictiveProducts
+      }
+    };
   } catch (error) {
-    console.error("Error fetching product:", error)
-    return { notFound: true }
+    console.error('Error fetching product:', error);
+    return { notFound: true };
   }
-}
+};

@@ -2,9 +2,9 @@
 
 # dependencies
 /node_modules
-node_modules
 /.pnp
 .pnp.js
+.yarn/install-state.gz
 
 # testing
 /coverage
@@ -12,6 +12,8 @@ node_modules
 # next.js
 /.next/
 /out/
+
+/data/settings.json
 
 # production
 /build
@@ -26,7 +28,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env
+.env*
 .env*.local
 
 # vercel
@@ -35,6 +37,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-data/settings.json
-/data/settings.json

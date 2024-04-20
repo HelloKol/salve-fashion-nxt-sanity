@@ -1,10 +1,10 @@
-import React from "react"
-import styles from "./styles.module.scss"
-import * as Popover from "@radix-ui/react-popover"
+import React from 'react';
+import styles from './styles.module.scss';
+import * as Popover from '@radix-ui/react-popover';
 
 interface props {
-  trigger: React.ReactNode
-  children: React.ReactNode | React.ReactNode[]
+  trigger: React.ReactNode;
+  children: React.ReactNode | React.ReactNode[];
 }
 
 const RadixPopoverCart = ({ trigger, children }: props) => (
@@ -13,10 +13,7 @@ const RadixPopoverCart = ({ trigger, children }: props) => (
     <Popover.Portal>
       <Popover.Content className={styles.PopoverContent} sideOffset={5}>
         {children}
-        <Popover.Close
-          className="absolute right-[15px] top-[15px]"
-          aria-label="Close"
-        >
+        <Popover.Close className="absolute right-[15px] top-[15px]" aria-label="Close">
           <svg
             className="h-6 w-6 text-gray-800"
             aria-hidden="true"
@@ -37,6 +34,6 @@ const RadixPopoverCart = ({ trigger, children }: props) => (
       </Popover.Content>
     </Popover.Portal>
   </Popover.Root>
-)
+);
 
-export default RadixPopoverCart
+export default RadixPopoverCart;

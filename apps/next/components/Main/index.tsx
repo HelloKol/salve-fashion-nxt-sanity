@@ -1,7 +1,7 @@
 import React from "react"
 // Props
 interface Props {
-  children: React.ReactNode | React.ReactNode[]
+  children: any
   className?: string
   withPadding?: boolean
 }

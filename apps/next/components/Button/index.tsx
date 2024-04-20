@@ -5,7 +5,7 @@ export type ButtonVariant = "primary" | "secondary" | "tertiary" | "quaternary"
 export type ButtonType = "submit" | "reset" | "button"
 // Props
 interface Props {
-  children: React.ReactNode | React.ReactNode[]
+  children: any
   className?: string
   type?: ButtonType
   variant?: ButtonVariant

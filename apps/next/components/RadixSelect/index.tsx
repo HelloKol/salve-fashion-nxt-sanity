@@ -1,44 +1,43 @@
-import React from "react"
-import * as Select from "@radix-ui/react-select"
-import classnames from "classnames"
-import Plus from "@/components/svg/Plus"
-import ChevronUp from "@/components/svg/ChevronUp"
-import Link from "next/link"
-import { useRouter } from "next/router"
+import React from 'react';
+import * as Select from '@radix-ui/react-select';
+import classnames from 'classnames';
+import Plus from '@/components/svg/Plus';
+import ChevronUp from '@/components/svg/ChevronUp';
+import { useRouter } from 'next/router';
 
 type SelectItemProps = {
-  value: string
-  children: React.ReactNode
-  className?: string
-  disabled?: boolean
-}
+  value: string;
+  children: any;
+  className?: string;
+  disabled?: boolean;
+};
 
 const SelectItem = React.forwardRef<HTMLDivElement, SelectItemProps>(
   ({ children, className, ...props }, forwardedRef) => {
     return (
       <Select.Item
-        className={classnames("SelectItem flex items-center gap-2", className)}
+        className={classnames('SelectItem flex items-center gap-2', className)}
         ref={forwardedRef}
         {...props}
       >
         <Select.ItemIndicator className="SelectItemIndicator">
           <div className="h-1.5 w-1.5 rounded-full bg-black" />
         </Select.ItemIndicator>
-        <Select.ItemText>{children}</Select.ItemText>{" "}
+        <Select.ItemText>{children}</Select.ItemText>{' '}
       </Select.Item>
-    )
+    );
   }
-)
-SelectItem.displayName = "SelectItem"
+);
+SelectItem.displayName = 'SelectItem';
 
 const RadixSelect = ({ isSearchPage }: { isSearchPage?: boolean }) => {
-  const router = useRouter()
+  const router = useRouter();
 
   const updateSortParam = (val: string) => {
     router.replace({
-      query: { ...router.query, sort: val },
-    })
-  }
+      query: { ...router.query, sort: val }
+    });
+  };
 
   return (
     <Select.Root onValueChange={updateSortParam}>
@@ -62,32 +61,20 @@ const RadixSelect = ({ isSearchPage }: { isSearchPage?: boolean }) => {
                 Sort by
               </Select.Label>
               {isSearchPage ? (
-                <SelectItem
-                  className="cursor-pointer px-6 py-2 text-xs sm:text-sm"
-                  value="relevance"
-                >
+                <SelectItem className="cursor-pointer px-6 py-2 text-xs sm:text-sm" value="relevance">
                   Relevance
                 </SelectItem>
               ) : (
                 <>
-                  <SelectItem
-                    className="cursor-pointer px-6 py-2 text-xs sm:text-sm"
-                    value="latest"
-                  >
+                  <SelectItem className="cursor-pointer px-6 py-2 text-xs sm:text-sm" value="latest">
                     Latest
                   </SelectItem>
-                  <SelectItem
-                    className="cursor-pointer px-6 py-2 text-xs sm:text-sm"
-                    value="oldest"
-                  >
+                  <SelectItem className="cursor-pointer px-6 py-2 text-xs sm:text-sm" value="oldest">
                     Oldest
                   </SelectItem>
                 </>
               )}
-              <SelectItem
-                className="cursor-pointer px-6 py-2 text-xs sm:text-sm"
-                value="highest_price"
-              >
+              <SelectItem className="cursor-pointer px-6 py-2 text-xs sm:text-sm" value="highest_price">
                 Highest Price
               </SelectItem>
               <SelectItem
@@ -104,7 +91,7 @@ const RadixSelect = ({ isSearchPage }: { isSearchPage?: boolean }) => {
         </Select.Content>
       </Select.Portal>
     </Select.Root>
-  )
-}
+  );
+};
 
-export default RadixSelect
+export default RadixSelect;

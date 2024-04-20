@@ -4,7 +4,7 @@ import styles from "./styles.module.scss"
 
 // Poprs
 export interface ToastProps {
-  children: React.ReactNode | React.ReactNode[]
+  children: any
   type: "foreground" | "background" | undefined
   elementRef: Ref<HTMLLIElement> | undefined
   duration: number

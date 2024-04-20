@@ -1,10 +1,10 @@
-import React from "react"
-import styles from "./styles.module.scss"
-import * as Popover from "@radix-ui/react-popover"
+import React from 'react';
+import styles from './styles.module.scss';
+import * as Popover from '@radix-ui/react-popover';
 
 interface props {
-  trigger: React.ReactNode
-  children: React.ReactNode | React.ReactNode[]
+  trigger: React.ReactNode;
+  children: any;
 }
 
 const RadixPopover = ({ trigger, children }: props) => (
@@ -17,6 +17,6 @@ const RadixPopover = ({ trigger, children }: props) => (
       </Popover.Content>
     </Popover.Portal>
   </Popover.Root>
-)
+);
 
-export default RadixPopover
+export default RadixPopover;

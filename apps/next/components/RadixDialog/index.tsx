@@ -8,7 +8,7 @@ export default function Dialog({
   isOpen,
   setIsOpen,
 }: {
-  children: React.ReactNode | React.ReactNode[]
+  children: any
   variant: "consentCookie" | "cookieSettings" | "exampleOrder" | "search"
   isOpen: boolean
   setIsOpen: (value: boolean) => void

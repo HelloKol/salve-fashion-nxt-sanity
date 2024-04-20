@@ -1,13 +1,9 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
-@import "./base/variables";
-@import "slick-carousel/slick/slick.css";
-@import "slick-carousel/slick/slick-theme.css";
-
-// body {
-//   background-color: #e9ebe0;
-// }
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import './base/variables';
+@import 'slick-carousel/slick/slick.scss';
+@import 'slick-carousel/slick/slick-theme.scss';
 
 article {
   a {
@@ -25,7 +21,7 @@ a.tertiary {
   position: relative;
   padding-left: 30px;
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 50%;
     left: 18px;

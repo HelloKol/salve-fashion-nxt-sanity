@@ -1,24 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "**",
-      },
-    ],
-  },
-  // Redirects
-  async redirects() {
-    return [
-      {
-        source: "/account",
-        destination: "/account/profile",
-        permanent: false,
-      },
-    ];
-  },
+    domains: [
+      'cdn.sanity.io',
+      'source.unsplash.com',
+      'cdn.shopify.com',
+      'scontent-iad3-2.cdninstagram.com',
+      'scontent-iad3-1.cdninstagram.com'
+    ]
+  }
 };
 
 module.exports = nextConfig;

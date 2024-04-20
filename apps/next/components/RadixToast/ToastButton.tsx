@@ -1,6 +1,6 @@
-import React from "react";
-import { Close } from "@radix-ui/react-toast";
-import styles from "./styles.module.scss";
+import React from 'react';
+import { Close } from '@radix-ui/react-toast';
+import styles from './styles.module.scss';
 
 // Poprs
 export interface ToastButtonProps {

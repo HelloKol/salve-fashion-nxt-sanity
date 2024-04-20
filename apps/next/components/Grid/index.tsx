@@ -1,7 +1,7 @@
 import React from "react"
 
 interface Props {
-  children: React.ReactNode | React.ReactNode[]
+  children: any
   className?: string
   as?: keyof JSX.IntrinsicElements
   withRowGap?: boolean
