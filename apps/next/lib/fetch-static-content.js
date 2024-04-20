@@ -40,8 +40,6 @@ const fetchSiteSettings = async () => {
     }
   `);
 
-  console.log(data, 'data');
-
   fs.writeFileSync('./data/settings.json', JSON.stringify(data));
 };
 
