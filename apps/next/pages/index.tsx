@@ -3,6 +3,7 @@ import groq from 'groq';
 import { AboutUs, Carousel, Category, FollowUs, HorizontalFeed, Main, Seo, VideoPlayer } from '@/components';
 import { sanityClient } from '@/utils';
 import { LinksType, Media, SeoType, ShopifyCollection, ShopifyProduct } from '@/types';
+import { env } from '@/utils/env';
 
 interface props {
   page: {
@@ -219,11 +220,11 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
     );
 
     const instagramAccountRes = await fetch(
-      `${process.env.NEXT_PUBLIC_SITE_URL}/api/instagramAccount?accessToken=${process.env.NEXT_PUBLIC_INSTAGRAM_ACCESS_TOKEN}`
+      `${env.NEXT_PUBLIC_BASE_URL}/api/instagramAccount?accessToken=${env.NEXT_PUBLIC_INSTAGRAM_ACCESS_TOKEN}`
     );
     const instagramAccount = await instagramAccountRes.json();
     const instagramPostsRes = await fetch(
-      `${process.env.NEXT_PUBLIC_SITE_URL}/api/instagramPosts?accessToken=${process.env.NEXT_PUBLIC_INSTAGRAM_ACCESS_TOKEN}`
+      `${env.NEXT_PUBLIC_BASE_URL}/api/instagramPosts?accessToken=${env.NEXT_PUBLIC_INSTAGRAM_ACCESS_TOKEN}`
     );
     const instagramPostsData = await instagramPostsRes.json();
     const instagramPosts = instagramPostsData.data ?? [];

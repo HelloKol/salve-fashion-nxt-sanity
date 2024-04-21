@@ -10,6 +10,7 @@
     "fetch-static-content": "rm -rf ./data && node ./lib/fetch-static-content.js"
   },
   "dependencies": {
+    "@t3-oss/env-nextjs": "0.9.1",
     "@apollo/client": "^3.8.2",
     "@hookform/resolvers": "^2.9.11",
     "@portabletext/react": "^3.0.11",

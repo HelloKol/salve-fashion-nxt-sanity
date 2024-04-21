@@ -1,9 +1,10 @@
 import React, { createContext, ReactNode, useContext, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { authHooks } from './hooks';
 import { FormDataRegister, FormDataLogin } from '@/types';
 import { useQuery } from '@apollo/client';
 import { USER_DETAILS } from '@/services/queries';
+import { env } from '@/utils/env';
+import { authHooks } from './hooks';
 
 type ProviderProps = {
   children: ReactNode | ReactNode[];
@@ -67,7 +68,7 @@ function AuthFuncHooks() {
     setCookie('accessToken', accessToken, {
       path: '/',
       expires: new Date(expiresAt),
-      secure: process.env.NODE_ENV === 'production',
+      secure: env.NEXT_PUBLIC_NODE_ENV === 'production',
       sameSite: 'lax'
       //   httpOnly: true
     });

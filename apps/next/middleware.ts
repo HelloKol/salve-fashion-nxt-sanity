@@ -1,24 +1,24 @@
-import { NextRequest, NextResponse } from "next/server";
-import fetch from "isomorphic-unfetch";
-import { VERIFY_TOKEN } from "./services/queries";
+import { NextRequest, NextResponse } from 'next/server';
+import fetch from 'isomorphic-unfetch';
+import { VERIFY_TOKEN } from './services/queries';
+import { env } from '@/utils/env';
 
 export default async function userAuthMiddleware(request: NextRequest) {
-  const token = request.cookies.get("accessToken");
+  const token = request.cookies.get('accessToken');
 
   const verifyToken = async () => {
     try {
       const headers = {
-        "Content-Type": "application/json",
-        "X-Shopify-Storefront-Access-Token":
-          process.env.NEXT_PUBLIC_SHOPIFY_ACCESS_TOKEN ?? "",
+        'Content-Type': 'application/json',
+        'X-Shopify-Storefront-Access-Token': env.NEXT_PUBLIC_SHOPIFY_ACCESS_TOKEN ?? ''
       };
 
-      const variables = { accessToken: token?.value || "" };
+      const variables = { accessToken: token?.value || '' };
       const body = JSON.stringify({ query: VERIFY_TOKEN, variables });
-      const response = await fetch(process.env.NEXT_PUBLIC_GRAPHQL_URI ?? "", {
-        method: "POST",
+      const response = await fetch(env.NEXT_PUBLIC_GRAPHQL_URI ?? '', {
+        method: 'POST',
         headers,
-        body,
+        body
       });
       const { data, errors } = await response.json();
 
@@ -26,30 +26,29 @@ export default async function userAuthMiddleware(request: NextRequest) {
       if (data && data.customer) {
         return {
           isValid: true,
-          customer: data.customer,
+          customer: data.customer
         };
       } else {
         return {
           isValid: false,
-          error: "Invalid token",
+          error: 'Invalid token'
         };
       }
     } catch (err: any) {
       console.error(err);
       return {
         isValid: false,
-        error: err.message,
+        error: err.message
       };
     }
   };
 
   const isAuthenticated = await verifyToken();
   if (isAuthenticated.isValid) {
-    if (request.url.includes("/login") || request.url.includes("/register"))
-      return NextResponse.redirect(new URL("/account", request.url));
+    if (request.url.includes('/login') || request.url.includes('/register'))
+      return NextResponse.redirect(new URL('/account', request.url));
   } else {
-    if (request.url.includes("/account"))
-      return NextResponse.redirect(new URL("/login", request.url));
+    if (request.url.includes('/account')) return NextResponse.redirect(new URL('/login', request.url));
   }
 
   return NextResponse.next();

@@ -1,5 +1,7 @@
 import {AssetSource, defineConfig, isDev} from 'sanity'
 
+import config from './config'
+
 import {deskTool} from 'sanity/desk'
 import {schemaTypes} from './schemas'
 import {structure} from './desk'
@@ -14,9 +16,9 @@ const devOnlyPlugins = [visionTool()]
 
 export default defineConfig({
   name: 'default',
-  title: process.env.SANITY_STUDIO_TITLE,
-  projectId: process.env.SANITY_STUDIO_ID || '',
-  dataset: process.env.SANITY_STUDIO_DATASET || '',
+  title: config.studioTitle,
+  projectId: config.projectId,
+  dataset: config.dataset,
 
   plugins: [
     deskTool({structure}),
