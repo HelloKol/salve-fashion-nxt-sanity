@@ -1,106 +1,80 @@
-import { GetStaticPropsResult } from "next/types"
-import groq from "groq"
-import {
-  AboutUs,
-  Carousel,
-  Category,
-  FollowUs,
-  HorizontalFeed,
-  Main,
-  Seo,
-  VideoPlayer,
-} from "@/components"
-import { sanityClient } from "@/utils"
-import {
-  LinksType,
-  Media,
-  SeoType,
-  ShopifyCollection,
-  ShopifyProduct,
-} from "@/types"
+import { GetStaticPropsResult } from 'next/types';
+import groq from 'groq';
+import { AboutUs, Carousel, Category, FollowUs, HorizontalFeed, Main, Seo, VideoPlayer } from '@/components';
+import { sanityClient } from '@/utils';
+import { LinksType, Media, SeoType, ShopifyCollection, ShopifyProduct } from '@/types';
 
 interface props {
   page: {
-    seo: SeoType
+    seo: SeoType;
     hero: {
       collections: {
-        _type: string
-        modules: { image: Media }[]
-        _updatedAt: string
-        showHero: boolean
-        _createdAt: string
-        _rev: string
-        _id: string
-        store: ShopifyCollection
-      }[]
-    }
+        _type: string;
+        modules: { image: Media }[];
+        _updatedAt: string;
+        showHero: boolean;
+        _createdAt: string;
+        _rev: string;
+        _id: string;
+        store: ShopifyCollection;
+      }[];
+    };
     categories: {
       blockImages: {
         modules: {
           callToAction: {
-            links: LinksType[]
-          }
-          image: Media
-        }[]
-      }
-    }
+            links: LinksType[];
+          };
+          image: Media;
+        }[];
+      };
+    };
     productFeedMen: {
-      title: string
-      text: string
-      links: LinksType[]
+      title: string;
+      text: string;
+      links: LinksType[];
       productWithVariant: {
         product: {
           store: {
-            variants: ShopifyProduct[]
-          }
-        }
-      }[]
-    }
+            variants: ShopifyProduct[];
+          };
+        };
+      }[];
+    };
     productFeedWomen: {
-      title: string
-      text: string
-      links: LinksType[]
+      title: string;
+      text: string;
+      links: LinksType[];
       productWithVariant: {
         product: {
           store: {
-            variants: ShopifyProduct[]
-          }
-        }
-      }[]
-    }
+            variants: ShopifyProduct[];
+          };
+        };
+      }[];
+    };
     videoPlayer: {
-      videoUrl: string
-      previewImage: Media
-    }
-  }
+      videoUrl: string;
+      previewImage: Media;
+    };
+  };
   instagramAccount: {
-    id: string
-    username: string
-    account_type: string
-  }
+    id: string;
+    username: string;
+    account_type: string;
+  };
   instagramPosts: {
-    id: string
-    media_type: string
-    media_url: string
-    permalink: string
-  }[]
+    id: string;
+    media_type: string;
+    media_url: string;
+    permalink: string;
+  }[];
 }
 
-export default function Page({
-  page,
-  instagramAccount,
-  instagramPosts,
-}: props): JSX.Element | null {
-  if (!page) return null
-  const {
-    seo,
-    hero,
-    categories,
-    productFeedMen,
-    productFeedWomen,
-    videoPlayer,
-  } = page
-  const { collections } = hero
+export default function Page({ page, instagramAccount, instagramPosts }: props): JSX.Element | null {
+  if (!page) return null;
+  const { seo, hero, categories, productFeedMen, productFeedWomen, videoPlayer } = page;
+  const { collections } = hero;
 
   return (
     <>
@@ -113,13 +87,13 @@ export default function Page({
         <VideoPlayer data={videoPlayer} />
         <HorizontalFeed productsData={productFeedWomen} />
         <FollowUs
-          title={"Follow us on instagram"}
+          title={'Follow us on instagram'}
           instagramAccount={instagramAccount}
           instagramPosts={instagramPosts}
         />
       </Main>
     </>
-  )
+  );
 }
 
 export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
@@ -242,34 +216,34 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
         },
       }
     `
-    )
+    );
 
     const instagramAccountRes = await fetch(
-      `https://salvefashion-nextjs.vercel.app/api/instagramAccount?accessToken=${process.env.NEXT_PUBLIC_INSTAGRAM_ACCESS_TOKEN}`
-    )
-    const instagramAccount = await instagramAccountRes.json()
+      `${process.env.NEXT_PUBLIC_SITE_URL}/api/instagramAccount?accessToken=${process.env.NEXT_PUBLIC_INSTAGRAM_ACCESS_TOKEN}`
+    );
+    const instagramAccount = await instagramAccountRes.json();
     const instagramPostsRes = await fetch(
-      `https://salvefashion-nextjs.vercel.app/api/instagramPosts?accessToken=${process.env.NEXT_PUBLIC_INSTAGRAM_ACCESS_TOKEN}`
-    )
-    const instagramPostsData = await instagramPostsRes.json()
-    const instagramPosts = instagramPostsData.data ?? []
+      `${process.env.NEXT_PUBLIC_SITE_URL}/api/instagramPosts?accessToken=${process.env.NEXT_PUBLIC_INSTAGRAM_ACCESS_TOKEN}`
+    );
+    const instagramPostsData = await instagramPostsRes.json();
+    const instagramPosts = instagramPostsData.data ?? [];
 
     if (!page)
       return {
-        notFound: true,
-      }
+        notFound: true
+      };
 
     return {
       props: {
         page,
         instagramAccount,
-        instagramPosts,
+        instagramPosts
       },
-      revalidate: 30,
-    }
+      revalidate: 30
+    };
   } catch (err) {
     return {
-      notFound: true,
-    }
+      notFound: true
+    };
   }
 }
