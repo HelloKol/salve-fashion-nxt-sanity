@@ -1,7 +1,7 @@
-import React from "react"
-import { GetStaticPropsResult } from "next/types"
-import Link from "next/link"
-import groq from "groq"
+import React from 'react';
+import { GetStaticPropsResult } from 'next/types';
+import Link from 'next/link';
+import groq from 'groq';
 import {
   Container,
   FormInputCheckbox,
@@ -10,63 +10,55 @@ import {
   ImageTag,
   Main,
   Seo,
-  Section,
-} from "@/components"
-import { useDialogBox, useLoginForm } from "@/hooks"
-import { useToastOpen } from "@/context/Toast"
-import { sanityClient } from "@/utils"
-import { Media, SeoType } from "@/types"
+  Section
+} from '@/components';
+import { useDialogBox, useLoginForm } from '@/hooks';
+import { useToastOpen } from '@/context/Toast';
+import { sanityClient } from '@/utils';
+import { Media, SeoType } from '@/types';
 
 interface props {
   page: {
-    title: string
-    subtitle: string
-    contentTitle: string
-    image: Media
-    seo: SeoType
-  }
+    title: string;
+    subtitle: string;
+    contentTitle: string;
+    image: Media;
+    seo: SeoType;
+  };
 }
 
 export default function Page({ page }: props): JSX.Element | null {
-  const loginToast = useDialogBox()
-  const {
-    register,
-    handleSubmit,
-    errors,
-    globalError,
-    onSubmit,
-    isLoading,
-    isSucess,
-  } = useLoginForm()
+  const loginToast = useDialogBox();
+  const { register, handleSubmit, errors, globalError, onSubmit, isLoading, isSucess } = useLoginForm();
 
   const message = isLoading ? (
     <>
-      <h6 className={"text-deepPurple"}>Loading</h6>
+      <h6 className={'text-deepPurple'}>Loading</h6>
       <p>Your are being logged in...</p>
     </>
   ) : !!globalError ? (
     <>
-      <h6 className={"text-deepOrange"}>Error</h6>
+      <h6 className={'text-deepOrange'}>Error</h6>
       <p>{globalError}</p>
     </>
   ) : (
     isSucess && (
       <>
-        <h6 className={"text-deepGreen"}>Success</h6>
+        <h6 className={'text-deepGreen'}>Success</h6>
         <p>You are successfully logged in</p>
       </>
     )
-  )
+  );
 
   useToastOpen(isLoading, !!globalError, isSucess, loginToast.close, {
     description: message,
     duration: 5000,
-    type: "foreground",
-    onClose: () => null,
-  })
+    type: 'foreground',
+    onClose: () => null
+  });
 
-  if (!page) return null
-  const { image, seo } = page
+  if (!page) return null;
+  const { image, seo } = page;
 
   return (
     <>
@@ -76,18 +68,12 @@ export default function Page({ page }: props): JSX.Element | null {
           <Container>
             <Grid className="lg:min-h-screen">
               <div className="col-span-full h-full w-full lg:col-end-8">
-                <ImageTag
-                  src={image.asset.url}
-                  blurDataURL={image.asset.metadata.lqip}
-                  placeholder="blur"
-                />
+                <ImageTag src={image.asset.url} blurDataURL={image.asset.metadata.lqip} placeholder="blur" />
               </div>
 
               <div className="relative col-span-full mt-24 md:col-start-4 md:col-end-10 md:mt-28 lg:col-start-8 lg:col-end-13 lg:mt-0">
                 <div className="z-10 w-full lg:absolute lg:left-1/2 lg:top-1/2 lg:w-9/12 lg:max-w-[500px] lg:-translate-x-1/2 lg:-translate-y-1/2 ">
-                  <p className="mb-6 text-3xl uppercase">
-                    Login to your account
-                  </p>
+                  <p className="mb-6 text-3xl uppercase">Login to your account</p>
 
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="mb-6">
@@ -95,7 +81,7 @@ export default function Page({ page }: props): JSX.Element | null {
                         type="email"
                         placeholder="yourname@gmail.com"
                         label="E-mail"
-                        {...register("email")}
+                        {...register('email')}
                         error={errors.email}
                       />
                     </div>
@@ -105,15 +91,15 @@ export default function Page({ page }: props): JSX.Element | null {
                         type="password"
                         placeholder="******"
                         label="Password"
-                        {...register("password")}
+                        {...register('password')}
                         error={errors.password}
                       />
                     </div>
 
                     <div className="mt-6 flex items-center justify-between">
                       <FormInputCheckbox
-                        label={"Remember me"}
-                        {...register("rememberMeCheckbox")}
+                        label={'Remember me'}
+                        {...register('rememberMeCheckbox')}
                         error={errors.rememberMeCheckbox}
                       />
                     </div>
@@ -123,7 +109,7 @@ export default function Page({ page }: props): JSX.Element | null {
                       type="submit"
                       disabled={isLoading}
                     >
-                      {isLoading ? "Loading...." : "LogIn"}
+                      {isLoading ? 'Loading....' : 'LogIn'}
                     </button>
 
                     <Link
@@ -133,10 +119,7 @@ export default function Page({ page }: props): JSX.Element | null {
                       Create an account
                     </Link>
 
-                    <Link
-                      className="mt-2 text-sm text-deepPurple"
-                      href={`/reset-password`}
-                    >
+                    <Link className="mt-2 text-sm text-deepPurple" href={`/reset-password`}>
                       Forgot your password?
                     </Link>
                   </form>
@@ -147,7 +130,7 @@ export default function Page({ page }: props): JSX.Element | null {
         </Section>
       </Main>
     </>
-  )
+  );
 }
 
 export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
@@ -182,22 +165,22 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<props>> {
       },
       }
     `
-    )
+    );
 
     if (!page)
       return {
-        notFound: true,
-      }
+        notFound: true
+      };
 
     return {
       props: {
-        page,
+        page
       },
-      revalidate: 30,
-    }
+      revalidate: 30
+    };
   } catch (err) {
     return {
-      notFound: true,
-    }
+      notFound: true
+    };
   }
 }

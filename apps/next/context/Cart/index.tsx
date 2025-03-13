@@ -147,15 +147,19 @@ function ShoppingCartHooks() {
   // }
 
   const createNewCart = async () => {
-    const response: {
-      cartCreate: {
-        cart: {
-          id: string;
+    try {
+      const response: {
+        cartCreate: {
+          cart: {
+            id: string;
+          };
         };
-      };
-    } = await graphqlClient.request(CREATE_CART);
-    setCookie('cartId', response.cartCreate.cart.id, { path: '/' });
-    return response;
+      } = await graphqlClient.request(CREATE_CART);
+      setCookie('cartId', response.cartCreate.cart.id, { path: '/' });
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleLoggedInUserCart = async (userToken: string) => {

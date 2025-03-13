@@ -6,7 +6,7 @@ const apolloClient = new ApolloClient({
   uri: env.NEXT_PUBLIC_GRAPHQL_URI,
   cache: new InMemoryCache(),
   headers: {
-    'X-Shopify-Storefront-Access-Token': env.NEXT_PUBLIC_SHOPIFY_ACCESS_TOKEN || ''
+    'X-Shopify-Storefront-Access-Token': env.NEXT_PUBLIC_SHOPIFY_ACCESS_TOKEN
   }
 });
 
