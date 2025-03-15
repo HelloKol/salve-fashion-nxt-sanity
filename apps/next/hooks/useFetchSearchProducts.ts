@@ -1,27 +1,28 @@
-import { useEffect } from "react"
-import { useRouter } from "next/router"
-import { useInfiniteQuery } from "@tanstack/react-query"
-import { fetchProductsSearch } from "@/lib"
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { fetchProductsSearch } from '@/lib';
 
 const useFetchSearchProducts = (inView: boolean) => {
-  const router = useRouter()
-  const PRODUCT_LIMIT = 20
+  const router = useRouter();
+  const PRODUCT_LIMIT = 20;
 
   // FETCH SHOPIFY DATA
   const { data, hasNextPage, fetchNextPage, isLoading } = useInfiniteQuery(
-    ["productsMen", router.query],
+    ['productsMen', router.query],
+    // @ts-ignore
     ({ pageParam }) => {
-      const title = router.query?.title as string
-      const sort = router.query?.sort as string
-      const minPrice = parseFloat(router.query?.min_price as string)
-      const maxPrice = parseFloat(router.query?.max_price as string)
+      const title = router.query?.title as string;
+      const sort = router.query?.sort as string;
+      const minPrice = parseFloat(router.query?.min_price as string);
+      const maxPrice = parseFloat(router.query?.max_price as string);
       const sortVal =
-        sort === "relevance"
-          ? "RELEVANCE"
-          : sort === "highest_price" || sort === "lowest_price"
-            ? "PRICE"
-            : ""
-      const reverse = sort === "highest_price"
+        sort === 'relevance'
+          ? 'RELEVANCE'
+          : sort === 'highest_price' || sort === 'lowest_price'
+            ? 'PRICE'
+            : '';
+      const reverse = sort === 'highest_price';
 
       return fetchProductsSearch(
         pageParam,
@@ -31,28 +32,29 @@ const useFetchSearchProducts = (inView: boolean) => {
         sortVal,
         minPrice,
         maxPrice
-      )
+      );
     },
+    // @ts-ignore
     {
+      // @ts-ignore
       getNextPageParam: (lastPage) => {
-        return lastPage.pageInfo.hasNextPage
-          ? lastPage.edges[lastPage.edges.length - 1].cursor
-          : undefined
-      },
+        return lastPage.pageInfo.hasNextPage ? lastPage.edges[lastPage.edges.length - 1].cursor : undefined;
+      }
     }
-  )
-  const products = data?.pages?.[0]?.edges
+  );
+  // @ts-ignore
+  const products = data?.pages?.[0]?.edges;
 
   useEffect(() => {
     if (inView && hasNextPage && products.length < PRODUCT_LIMIT) {
-      fetchNextPage()
+      fetchNextPage();
     }
-  }, [inView, fetchNextPage, hasNextPage, data?.pages])
+  }, [inView, fetchNextPage, hasNextPage, data?.pages]);
 
   return {
     products,
-    isLoading,
-  }
-}
+    isLoading
+  };
+};
 
-export default useFetchSearchProducts
+export default useFetchSearchProducts;

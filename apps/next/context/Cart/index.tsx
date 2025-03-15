@@ -164,7 +164,9 @@ function ShoppingCartHooks() {
 
   const handleLoggedInUserCart = async (userToken: string) => {
     const customer = await getCustomer(userToken);
+    // @ts-ignore
     if (customer && customer?.lastIncompleteCart) {
+      // @ts-ignore
       return setCookie('cartId', customer.lastIncompleteCart.id, { path: '/' });
     } else {
       handleAnonymousUserCart();

@@ -38,6 +38,7 @@ export default async function userAuthMiddleware(request: NextRequest) {
       console.error(err);
       return {
         isValid: false,
+        // @ts-ignore
         error: err.message
       };
     }

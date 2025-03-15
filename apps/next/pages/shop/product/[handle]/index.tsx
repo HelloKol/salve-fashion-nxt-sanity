@@ -45,6 +45,12 @@ export default function Page({
   productByHandle,
   predictiveProducts
 }: ProductProps): JSX.Element | null {
+  const { seo } = page;
+  const { predictiveSearch } = predictiveProducts;
+  const { product } = productByHandle;
+  const { title, descriptionHtml, images, variants } = product;
+  const { edges } = variants;
+
   const ACCORDION = [
     {
       _key: '0b4708ddb216',
@@ -178,13 +184,6 @@ export default function Page({
       setIndex(data.nextItem.index);
     }
   });
-
-  if (!page) return null;
-  const { seo } = page;
-  const { predictiveSearch } = predictiveProducts;
-  const { product } = productByHandle;
-  const { title, descriptionHtml, images, variants } = product;
-  const { edges } = variants;
 
   return (
     <>

@@ -87,11 +87,11 @@ export default function Page({ page, instagramAccount, instagramPosts }: props):
         <Category data={categories} />
         <VideoPlayer data={videoPlayer} />
         <HorizontalFeed productsData={productFeedWomen} />
-        <FollowUs
+        {/* <FollowUs
           title={'Follow us on instagram'}
           instagramAccount={instagramAccount}
           instagramPosts={instagramPosts}
-        />
+        /> */}
       </Main>
     </>
   );
