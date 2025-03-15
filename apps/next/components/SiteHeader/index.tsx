@@ -81,15 +81,6 @@ const SiteHeader = () => {
                   >
                     Register
                   </Link>
-                  <Link
-                    className={cn(
-                      'text-black hover:text-gray-700',
-                      router.asPath.includes('/account/profile') && 'text-deepPurple'
-                    )}
-                    href="/account/profile"
-                  >
-                    Account
-                  </Link>
                 </div>
 
                 <div className="absolute left-1/2 -translate-x-1/2 transform">

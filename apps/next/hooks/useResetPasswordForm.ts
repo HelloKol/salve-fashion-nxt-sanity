@@ -1,30 +1,27 @@
-import { useState } from "react"
-import { useForm } from "react-hook-form"
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 // @ts-ignore
-import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
-import { FormDataRegister } from "@/types"
-import { graphqlClient } from "@/utils"
-import { gql } from "@apollo/client"
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { FormDataRegister } from '@/types';
+import { graphqlClient } from '@/utils';
+import { gql } from '@apollo/client';
 
 const schema = yup.object().shape({
-  email: yup
-    .string()
-    .email("Enter a valid e-mail address")
-    .required("Enter your e-mail address"),
-})
+  email: yup.string().email('Enter a valid e-mail address').required('Enter your e-mail address')
+});
 
 const useResetPasswordForm = () => {
-  const [isLoading, setIsLoading] = useState(false)
-  const [isSucess, setIsSuccess] = useState(false)
-  const [globalError, setGlobalError] = useState("")
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSucess, setIsSuccess] = useState(false);
+  const [globalError, setGlobalError] = useState('');
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }
   } = useForm<FormDataRegister>({
-    resolver: yupResolver(schema),
-  })
+    resolver: yupResolver(schema)
+  });
 
   const onSubmit = async ({ email }: FormDataRegister) => {
     try {
@@ -39,13 +36,13 @@ const useResetPasswordForm = () => {
           }
         `,
         { email: email }
-      )
-    } catch (err: any) {
-      setGlobalError("An error occurred while resetting password ")
-      setIsLoading(false)
-      return setIsSuccess(false)
+      );
+    } catch (err: unknown) {
+      setGlobalError('An error occurred while resetting password ');
+      setIsLoading(false);
+      return setIsSuccess(false);
     }
-  }
+  };
 
   return {
     register,
@@ -54,8 +51,8 @@ const useResetPasswordForm = () => {
     globalError,
     onSubmit,
     isLoading,
-    isSucess,
-  }
-}
+    isSucess
+  };
+};
 
-export default useResetPasswordForm
+export default useResetPasswordForm;

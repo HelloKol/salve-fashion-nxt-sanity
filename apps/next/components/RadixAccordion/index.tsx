@@ -48,7 +48,7 @@ const RadixAccordion = ({ data }: props) => {
 const AccordionTrigger = React.forwardRef(
   (
     { children, className, ...props }: { children?: React.ReactNode; className?: string },
-    forwardedRef: any
+    forwardedRef: React.ForwardedRef<HTMLButtonElement>
   ) => (
     <Header className={styles.AccordionHeader}>
       <Trigger className={`py-8 ${styles.AccordionTrigger}`} {...props} ref={forwardedRef}>
@@ -61,7 +61,7 @@ const AccordionTrigger = React.forwardRef(
 const AccordionContent = React.forwardRef(
   (
     { children, className, ...props }: { children?: React.ReactNode; className?: string },
-    forwardedRef: any
+    forwardedRef: React.ForwardedRef<HTMLDivElement>
   ) => (
     <Content className={classNames(styles.AccordionContent, className)} {...props} ref={forwardedRef}>
       <article className={`pb-4 text-lg ${styles.AccordionContentText}`}>{children}</article>

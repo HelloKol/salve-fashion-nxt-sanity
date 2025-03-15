@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client"
+import { gql } from '@apollo/client';
 
 export const PRODUCT_CART = `
   id
@@ -34,7 +34,7 @@ export const PRODUCT_CART = `
     weight
     weightUnit
   }
-`
+`;
 
 export const CREATE_CART = gql`
   mutation cartCreate {
@@ -49,7 +49,7 @@ export const CREATE_CART = gql`
       }
     }
   }
-`
+`;
 
 export const ADD_PRODUCT_TO_CART = gql`
   mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
@@ -90,7 +90,7 @@ export const ADD_PRODUCT_TO_CART = gql`
       }
     }
   }
-`
+`;
 
 export const ADD_DISCOUNT_TO_CART = gql`
   mutation cartDiscountCodesUpdate($cartId: ID!, $discountCodes: [String!]) {
@@ -104,7 +104,7 @@ export const ADD_DISCOUNT_TO_CART = gql`
       }
     }
   }
-`
+`;
 
 export const UPDATE_QUANTITY = gql`
   mutation cartLinesUpdate($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
@@ -145,7 +145,7 @@ export const UPDATE_QUANTITY = gql`
       }
     }
   }
-`
+`;
 
 export const REMOVE_FROM_CART = gql`
   mutation cartLinesRemove($cartId: ID!, $lineIds: [ID!]!) {
@@ -159,7 +159,7 @@ export const REMOVE_FROM_CART = gql`
       }
     }
   }
-`
+`;
 
 export const GET_CART = gql`
   query getCart($cartId: ID!) {
@@ -287,19 +287,16 @@ export const GET_CART = gql`
       totalQuantity
     }
   }
-`
+`;
 
-export const GET_LAST_CHECKOUT_ID = gql`
+export const GET_CUSTOMER = gql`
   query ($customerAccessToken: String!) {
     customer(customerAccessToken: $customerAccessToken) {
       id
       email
-      lastIncompleteCheckout {
-        id
-      }
     }
   }
-`
+`;
 
 export const GET_CHECKOUT_CUSTOMER_ASSOCIATE_V2 = gql`
   mutation checkoutCustomerAssociateV2(
@@ -328,4 +325,4 @@ export const GET_CHECKOUT_CUSTOMER_ASSOCIATE_V2 = gql`
       }
     }
   }
-`
+`;

@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client"
+import { gql } from '@apollo/client';
 
 const PRODUCT_BASE = `
   availableForSale
@@ -67,7 +67,7 @@ const PRODUCT_BASE = `
       currencyCode
     }
   }
-`
+`;
 
 const PRODUCT_VARIANT = `
   variants(first: 50) {
@@ -120,11 +120,11 @@ const PRODUCT_VARIANT = `
       }
     }
   }
-`
+`;
 
 const ALL_PRODUCTS = gql`
   query {
-    products(first: 100) {
+    products(first: 250) {
       edges {
         node {
           ${PRODUCT_BASE}
@@ -133,7 +133,7 @@ const ALL_PRODUCTS = gql`
       }
     }
   }
-`
+`;
 const EXAMPLE_PRODUCTS = gql`
   query {
     products(first: 5) {
@@ -145,7 +145,7 @@ const EXAMPLE_PRODUCTS = gql`
       }
     }
   }
-`
+`;
 
 const SINGLE_PRODUCT_BY_HANDLE = `
 query getProductByHandle($handle: String!) {
@@ -154,7 +154,7 @@ query getProductByHandle($handle: String!) {
     ${PRODUCT_VARIANT}
   }
 }
-  `
+  `;
 
 const SINGLE_PRODUCT_BY_ID = `
   query getProductById($id: ID!) {
@@ -163,7 +163,7 @@ const SINGLE_PRODUCT_BY_ID = `
       ${PRODUCT_VARIANT}
     }
   }
-    `
+    `;
 
 export {
   ALL_PRODUCTS,
@@ -171,5 +171,5 @@ export {
   PRODUCT_BASE,
   PRODUCT_VARIANT,
   SINGLE_PRODUCT_BY_HANDLE,
-  SINGLE_PRODUCT_BY_ID,
-}
+  SINGLE_PRODUCT_BY_ID
+};

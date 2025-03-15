@@ -1,21 +1,15 @@
-import React from "react"
+import React from 'react';
 // Props
 interface Props {
-  children: any
-  className?: string
-  withPadding?: boolean
+  children: React.ReactNode;
+  className?: string;
+  withPadding?: boolean;
 }
 
-export default function index({
-  children,
-  className,
-  withPadding = true,
-}: Props) {
+export default function index({ children, className, withPadding = true }: Props) {
   return (
-    <main
-      className={`${withPadding ? `pt-24 md:pt-28 lg:pt-36` : ``} ${className || ""} min-h-screen`}
-    >
+    <main className={`${withPadding ? `pt-24 md:pt-28 lg:pt-36` : ``} ${className || ''} min-h-screen`}>
       {children}
     </main>
-  )
+  );
 }

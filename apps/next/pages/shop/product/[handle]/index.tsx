@@ -45,11 +45,6 @@ export default function Page({
   productByHandle,
   predictiveProducts
 }: ProductProps): JSX.Element | null {
-  const { seo } = page;
-  const { predictiveSearch } = predictiveProducts;
-  const { product } = productByHandle;
-  const { title, descriptionHtml, images, variants } = product;
-  const { edges } = variants;
   const ACCORDION = [
     {
       _key: '0b4708ddb216',
@@ -184,6 +179,13 @@ export default function Page({
     }
   });
 
+  if (!page) return null;
+  const { seo } = page;
+  const { predictiveSearch } = predictiveProducts;
+  const { product } = productByHandle;
+  const { title, descriptionHtml, images, variants } = product;
+  const { edges } = variants;
+
   return (
     <>
       <Seo seo={seo} />
@@ -292,11 +294,14 @@ export const getStaticPaths: GetStaticPaths<HandleParams> = async () => {
       params: { handle: product?.node.handle }
     }));
 
+    console.log(paths, '<<<<<');
+
     return {
       paths,
       fallback: false
     };
-  } catch {
+  } catch (error) {
+    console.log(error, 'failed', '<<<<<');
     return {
       paths: [],
       fallback: false
@@ -313,6 +318,7 @@ export const getStaticProps: GetStaticProps<ProductProps, HandleParams> = async 
 
   try {
     const { handle } = params;
+    console.log(handle, '>>>>>> handle');
 
     const page = await sanityClient.fetch(
       groq`*[_type == "product" && store.slug.current == $slug && !(_id in path('drafts.**'))][0] {

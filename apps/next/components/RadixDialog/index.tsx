@@ -1,38 +1,34 @@
-import { useEffect, useState } from "react"
-import * as DialogRadix from "@radix-ui/react-dialog"
-import styles from "./styles.module.scss"
+import { useEffect, useState } from 'react';
+import * as DialogRadix from '@radix-ui/react-dialog';
+import styles from './styles.module.scss';
 
 export default function Dialog({
   children,
   variant,
   isOpen,
-  setIsOpen,
+  setIsOpen
 }: {
-  children: any
-  variant: "consentCookie" | "cookieSettings" | "exampleOrder" | "search"
-  isOpen: boolean
-  setIsOpen: (value: boolean) => void
+  children: React.ReactNode;
+  variant: 'consentCookie' | 'cookieSettings' | 'exampleOrder' | 'search';
+  isOpen: boolean;
+  setIsOpen: (value: boolean) => void;
 }) {
-  const [isMounted, setIsMounted] = useState(false)
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true)
-  }, [])
+    setIsMounted(true);
+  }, []);
 
-  if (!isMounted) return null
+  if (!isMounted) return null;
 
   return (
     <DialogRadix.Root open={isOpen} onOpenChange={setIsOpen}>
       <DialogRadix.Portal>
-        {variant !== "consentCookie" && (
-          <div className={styles.dialogOverlay} />
-        )}
-        <DialogRadix.Content
-          className={`${styles.dialogContent} ${styles[variant]}`}
-        >
+        {variant !== 'consentCookie' && <div className={styles.dialogOverlay} />}
+        <DialogRadix.Content className={`${styles.dialogContent} ${styles[variant]}`}>
           {children}
         </DialogRadix.Content>
       </DialogRadix.Portal>
     </DialogRadix.Root>
-  )
+  );
 }

@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 
 type SelectItemProps = {
   value: string;
-  children: any;
+  children: React.ReactNode;
   className?: string;
   disabled?: boolean;
 };

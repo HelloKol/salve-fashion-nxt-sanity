@@ -34,7 +34,7 @@ export default async function userAuthMiddleware(request: NextRequest) {
           error: 'Invalid token'
         };
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
       return {
         isValid: false,

@@ -21,7 +21,7 @@ interface ToastData {
 }
 
 interface ToastsProps {
-  children: any;
+  children: React.ReactNode;
 }
 
 type ToastDispatch = {

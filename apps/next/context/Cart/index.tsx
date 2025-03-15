@@ -7,14 +7,14 @@ import {
   CREATE_CART,
   GET_CHECKOUT_CUSTOMER_ASSOCIATE_V2,
   GET_CART,
-  GET_LAST_CHECKOUT_ID
+  GET_CUSTOMER
 } from '@/services/queries/cart';
 import { UPDATE_QUANTITY, REMOVE_FROM_CART } from '@/services/queries';
 import { useDialogBox } from '@/hooks';
 import { Cart } from '@/types';
 
 type ProviderProps = {
-  children: any;
+  children: React.ReactNode;
 };
 
 type CartItem = {
@@ -182,11 +182,11 @@ function ShoppingCartHooks() {
     const variables = { customerAccessToken: userToken };
     const response: {
       customer: {
-        lastIncompleteCart: {
-          id: string;
-        };
+        id: string;
+        email: string;
       };
-    } = await graphqlClient.request(GET_LAST_CHECKOUT_ID, variables);
+    } = await graphqlClient.request(GET_CUSTOMER, variables);
+
     return response.customer;
   };
 

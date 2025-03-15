@@ -21,4 +21,4 @@ const san = sanityClient.createClient({
   useCdn: false,
 })
 
-san.delete({query: '*[_type == "product"][0...10]'}).then(console.log).catch(console.error)
+san.delete({query: '*[_type == "product"][0...100]'}).then(console.log).catch(console.error)

@@ -4,7 +4,7 @@ import * as Popover from '@radix-ui/react-popover';
 
 interface props {
   trigger: React.ReactNode;
-  children: any;
+  children: React.ReactNode;
 }
 
 const RadixPopover = ({ trigger, children }: props) => (
