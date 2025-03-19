@@ -5,7 +5,7 @@ import { fetchProducts } from '@/lib';
 
 const useFetchShopProducts = (type: string, inView: boolean) => {
   const router = useRouter();
-  const PRODUCT_LIMIT = 20;
+  const PRODUCT_LIMIT = 200;
 
   const { data, isLoading, hasNextPage, fetchNextPage } = useInfiniteQuery(
     ['type', router.query, type],
