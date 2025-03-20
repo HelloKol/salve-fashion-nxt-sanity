@@ -1,6 +1,7 @@
 // @ts-ignore
 // @ts-nocheck
 import { GetStaticPaths, GetStaticProps } from 'next/types';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { ParsedUrlQuery } from 'querystring';
 import groq from 'groq';
@@ -21,6 +22,7 @@ import { ALL_PRODUCTS, SEARCH_QUERY_PREDICTIVE, SINGLE_PRODUCT_BY_HANDLE } from 
 import { graphqlClient, sanityClient, PRODUCT_ACCORDION } from '@/utils';
 import styles from './styles.module.scss';
 import { SeoType, ShopifyProduct } from '@/types';
+import { trpc } from '@/utils/trpc';
 
 interface ProductByHandle {
   product: ShopifyProduct;
@@ -45,6 +47,14 @@ export default function Page({
   productByHandle,
   predictiveProducts
 }: ProductProps): JSX.Element | null {
+  const router = useRouter();
+  const { handle } = router.query;
+  const { data, isLoading, error } = trpc.shopify.getProductByHandle.useQuery({
+    handle: handle
+  });
+
+  console.log(handle, 'handle', data?.product?.title, isLoading, error);
+
   const { predictiveSearch } = predictiveProducts;
   const { product } = productByHandle;
   const { title, descriptionHtml, images, variants } = product;
