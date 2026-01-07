@@ -5,7 +5,7 @@ import { fetchProductsSearch } from '@/lib';
 
 const useFetchSearchProducts = (inView: boolean) => {
   const router = useRouter();
-  const PRODUCT_LIMIT = 20;
+  const PRODUCT_LIMIT = 200;
 
   // FETCH SHOPIFY DATA
   const { data, hasNextPage, fetchNextPage, isLoading } = useInfiniteQuery(
