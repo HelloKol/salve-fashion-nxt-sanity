@@ -3,7 +3,7 @@ A headless luxury e-commerce experience integrating Shopify operations with Sani
 
 ---
 
-**Live demo:** [api-normaliser.vercel.app](https://salvefashion.com/)
+**Live demo:** [api-normaliser.vercel.app](https://salvefashion.com)
 
 ---
 
